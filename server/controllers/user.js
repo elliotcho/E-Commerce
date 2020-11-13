@@ -6,6 +6,7 @@ exports.login = async (req, res) => {
     const auth = await User.login(username,password);
 
     if (auth.msg === "Success") {
+        req.sesssion.uid = auth.uid;
         res.json({msg: 'Login Successful'});
     } 
     else if (auth.msg === "Incorrect password") {
