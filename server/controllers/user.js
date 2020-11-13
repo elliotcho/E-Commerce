@@ -1,7 +1,19 @@
 const User = require('../models/user');
 
-exports.login = (req, res) => {
-    
+exports.login = async (req, res) => {
+    const {username, password} = req.body;
+
+    const auth = await User.login(username,password);
+
+    if (auth.msg === "Success") {
+        res.json({msg: 'Login Successful'});
+    } 
+    else if (auth.msg === "Incorrect password") {
+        res.json({msg: 'Password Incorrect'});
+    }
+    else {
+        res.json({msg: 'User not registered'})
+    } 
 }
 
 exports.register = async (req, res) => {
