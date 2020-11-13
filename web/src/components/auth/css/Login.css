@@ -1,0 +1,8 @@
+.login{
+    height: 100vh;
+}
+
+.login form{
+    max-width: 330px;
+    margin: 0 auto;
+}
