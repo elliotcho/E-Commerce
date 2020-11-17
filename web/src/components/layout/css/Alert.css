@@ -1,0 +1,8 @@
+.alert{
+    z-index: 99;
+}
+
+.alert button:focus{
+    outline: none;
+    box-shadow: none;
+}

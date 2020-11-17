@@ -3,9 +3,23 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { Provider as AlertProvider } from 'react-alert';
+import Alert from './components/layout/Alert';
+
+const AlertTemplate = ({style, options, message, close}) => (
+  <Alert
+     style = {style}
+     options = {options}
+     message = {message}
+     colse = {close}
+  />
+);
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AlertProvider template={AlertTemplate}>
+      <App />
+    </AlertProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

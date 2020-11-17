@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import redis from 'redis';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
@@ -6,6 +7,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import userRouter from './routes/user';
 
+dotenv.config();
 const app = express();
 
 //redis cache set up
@@ -14,12 +16,12 @@ const redisClient = redis.createClient();
 
 app.use(
     session({
-        name: 'cid',
+        name: process.env.COOKIE_NAME,
         store: new RedisStore({
             client: redisClient,
             disableTouch: true
         }),
-        secret: 'armaan is the goat',
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
         cookie: {
@@ -31,11 +33,10 @@ app.use(
     })
 );
 
-
 app.use(bodyParser.json());
 
 //db set up
-mongoose.connect('mongodb+srv://giggsy:tangatanga333@cluster0.udqr5.mongodb.net/ECommerce?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 });
@@ -50,6 +51,6 @@ mongoose.connection.once('open', () => {
 //routes set up
 app.use('/api/user', userRouter);
 
-app.listen(5000, () => {
+app.listen(process.env.PORT || 5000, () => {
     console.log('Listening to port 5000');
 });

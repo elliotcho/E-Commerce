@@ -37,7 +37,6 @@ export const register = async (req, res) => {
         });
 
         const user = await newUser.save();
-
         req.session.uid = user._id;
         
         res.json({msg: 'Success'});
