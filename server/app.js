@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import express from 'express';
 import userRouter from './routes/user';
+import productRouter from './routes/product';
 
 dotenv.config();
 const app = express();
@@ -50,6 +51,7 @@ mongoose.connection.once('open', () => {
 
 //routes set up
 app.use('/api/user', userRouter);
+app.use('/api/product', productRouter);
 
 app.listen(process.env.PORT || 5000, () => {
     console.log('Listening to port 5000');

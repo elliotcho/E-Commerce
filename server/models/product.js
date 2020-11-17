@@ -1,25 +1,19 @@
 import mongoose from 'mongoose';
 
-
 const DescriptionSchema = new mongoose.Schema({
     summary: String,
-    colour: String,
+    color: String,
     size: String,
-    manufacture: String,
-})
-const ProductSchema = new mongoose.Schema({
-    userid: String,
-    datePosted: String,
-    price: String,
-    description: [DescriptionSchema],
-    productName: String,
+    manufacture: String
+});
 
-    
-})
+const ProductSchema = new mongoose.Schema({
+    userId: String,
+    datePosted: Date,
+    price: String,
+    description: DescriptionSchema,
+    productName: String
+});
 
 export const Description = mongoose.model('descirption', DescriptionSchema);
-const Product = mongoose.model('product', ProductSchema);
-
-export default Product;
-
-
+export const Product = mongoose.model('product', ProductSchema);

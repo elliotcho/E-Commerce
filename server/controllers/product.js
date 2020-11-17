@@ -1,15 +1,18 @@
-import Product from '../models/product';
+import {Product, Description} from '../models/product';
 
 export const createProduct = async (req, res) => {
-    const {description, price, date, userid, productname} = req.body
+    const {description, price, userId, productName} = req.body
 
-    const newProduct = await new Product ({
-        description: description,
-        price: price,
-        datePosted: date,
-        userid: userid,
-        productName: productname 
+    const newDescription = new Description({
+        ...description
+    });
 
+    const newProduct = new Product ({
+        description: newDescription,
+        price,
+        datePosted: new Date(),
+        userId,
+        productName 
     });
 
    await newProduct.save();
@@ -18,12 +21,11 @@ export const createProduct = async (req, res) => {
 }
 
 export const deleteProduct = async (req, res) => {
-    const {id} = req.body;
+    const {id} = req.params;
 
-    await Product.deleteOne({_id:id});
+    await Product.deleteOne({_id: id});
 
-        res.json({msg: "Product Successfully Deleted"});
-    
+    res.json({msg: "Product Successfully Deleted"});
 }
 
 

@@ -4,7 +4,7 @@ import { createProduct,  deleteProduct } from '../controllers/product';
 
 const router = express.Router();
 
-router.post('/createp', createProduct);
-router.delete('/deletep', deleteProduct);
+router.post('/', createProduct);
+router.delete('/:id', deleteProduct);
 
 export default router;
