@@ -4,8 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
-    "start": "nodemon app.js"
+    "start": "nodemon --exec babel-node app.js"
   },
   "keywords": [],
   "author": "",
@@ -13,11 +12,17 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "connect-redis": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.10.13"
+    "express-session": "^1.17.1",
+    "mongoose": "^5.10.13",
+    "redis": "^3.0.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
     "nodemon": "^2.0.6"
   }
 }
