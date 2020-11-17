@@ -3,24 +3,31 @@
     background-color: #0c2233;
     align-items: center;
     display: flex;
-    
-
 }
+
 .register form{
     margin: 0 auto;
     font-family: 'Nunito Sans';
     font-size: 17px;
+    border: 3px solid #34626c;
+    border-radius: 10px;
+    padding: 2rem 3rem;
+    width: 30%;
 }
 
-.register h2{
-    color: #4ceb34
+.register h1{
+    color: #4ceb34;
+    margin-bottom: 40px;
+    text-align: center;
+    font-family: 'Big Shoulders Stencil Text', cursive;
+    font-size: 3rem;
 }
 
 .register input{
     display: block;
     border: 1px blue solid;
     margin-bottom: 20px;
-    font-family: 'Arial'
+    width: 90%;
 }
 
 .register input:focus{
@@ -34,7 +41,8 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 22px;
+    font-family: 'Big Shoulders Stencil Text', cursive;
 }
 
 .register button:focus{
@@ -45,4 +53,5 @@
 
 .register label{
     color: #4ceb34;
+    font-family: 'Balsamiq Sans', cursive;
 }

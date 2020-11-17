@@ -23,21 +23,28 @@ class Login extends Component{
         return(
             <div className='login d-flex align-items-center'>
                 <form>
-                    <h3>Sign In</h3>
+                    <h1>Log In</h1>
 
+                    <label htmlFor="username">Username</label>
                     <input 
                         id = 'username'
                         type = 'text'
                         onChange = {this.handleChange}
                         value = {username}
                     />
-
+                    
+                    <label htmlFor="password">Password</label>
                     <input
                         id = 'password'
                         type = 'password'
                         onChange = {this.handleChange}
                         value = {password}
                     />
+
+                    <button className='btn btn-outline-success btn-block'>
+                        Sign In 
+                    </button>
+
                 </form>
             </div>
         )

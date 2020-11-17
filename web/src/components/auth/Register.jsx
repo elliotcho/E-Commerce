@@ -42,7 +42,8 @@ class Register extends Component{
         return(
             <div className="register">
                 <form onSubmit={this.handleSubmit}>
-                    <h2>New Users Register Here </h2>
+                    <h1>Sign Up</h1>
+                    
 
                     <label htmlFor='email'>Email Address </label>
                     <input
