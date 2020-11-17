@@ -1,5 +1,5 @@
-const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
+import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
     username: String,
@@ -28,4 +28,4 @@ UserSchema.statics.login = async function(username, password){
 }
 
 const User = mongoose.model('user', UserSchema);
-module.exports = User;
+export default User;

@@ -1,12 +1,15 @@
-const redis = require('redis');
-const session = require('express-session');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const express = require('express');
+import redis from 'redis';
+import connectRedis from 'connect-redis';
+import session from 'express-session';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import express from 'express';
+import userRouter from './routes/user';
+
 const app = express();
 
 //redis cache set up
-const RedisStore = require('connect-redis')(session);
+const RedisStore = connectRedis(session);
 const redisClient = redis.createClient();
 
 app.use(
@@ -45,7 +48,7 @@ mongoose.connection.once('open', () => {
 });
 
 //routes set up
-app.use('/api/user', require('./routes/user'));
+app.use('/api/user', userRouter);
 
 app.listen(5000, () => {
     console.log('Listening to port 5000');
