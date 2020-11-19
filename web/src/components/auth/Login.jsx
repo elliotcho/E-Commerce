@@ -23,33 +23,16 @@ class Login extends Component{
     }
 
     render(){
-        const {username, password} = this.state;
-
         return(
-            <div className='login d-flex align-items-center'>
+            <div className= 'login'>
+                <h3>Login</h3>
                 <form>
-                    <h1>Log In</h1>
+                    <input type='text' />
 
-                    <label htmlFor="username">Username</label>
-                    <input 
-                        id = 'username'
-                        type = 'text'
-                        onChange = {this.handleChange}
-                        value = {username}
-                    />
-                    
-                    <label htmlFor="password">Password</label>
-                    <input
-                        id = 'password'
-                        type = 'password'
-                        onChange = {this.handleChange}
-                        value = {password}
-                    />
+                    <input type='password' />
 
-                    <button className='btn btn-outline-success btn-block'>
-                        Sign In 
-                    </button>
-
+                    <button>Sign in</button>
+                  
                     <p className='text-white' onClick={this.toForgotPassword}>
                         Forgot Password?
                     </p>
