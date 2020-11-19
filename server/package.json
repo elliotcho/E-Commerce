@@ -17,7 +17,9 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "ioredis": "^4.19.2",
-    "mongoose": "^5.10.13"
+    "mongoose": "^5.10.13",
+    "nodemailer": "^6.4.16",
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -1,5 +1,8 @@
 import bcyrpt from 'bcrypt';
 import User from '../models/user';
+import { redis } from '../app'; 
+import { sendEmail } from '../utils/sendEmail';
+import { v4 } from 'uuid';
 
 export const login = async (req, res) => {
     const {username, password} = req.body;
@@ -104,11 +107,76 @@ export const logout = async (req, res) => {
         res.clearCookie(process.env.COOKIE_NAME);
 
         if(err){
-           res.json({msg: 'Something went wrong'});
+           res.json({message: 'Something went wrong'});
         } 
         
         else{
-            res.json({msg: 'Successfully signed out'});
+            res.json({message: 'Successfully signed out'});
         }
     });
+}
+
+export const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if(!user){
+        res.json({success: true});
+    } 
+
+    else{
+        const token = v4();
+        const href = `<a href="http://localhost:3000/change_password/${token}">Reset Password</a>`
+
+        await redis.set(
+           'forget-password:' + token,
+            user._id,
+            'ex',
+            1000 * 60 * 60 * 24 * 3
+        ); //token expires in 3 days
+
+        await sendEmail(email, href);
+
+        res.json({success: true});
+    }
+}
+
+export const changePassword = async (req, res) => {
+    const {token, newPassword} = req.body;
+    const errors = [];
+
+    const key = 'forget-password:' + token;
+    const uid = await redis.get(key);
+
+    if(!uid){
+        errors.push({
+            field: 'token',
+            message: 'token expired'
+        });
+    }
+
+    const user = await User.findOne({_id: uid});
+
+    if(!user){
+        errors.push({
+            field: 'token',
+            message: 'user no longer exists'
+        });
+    }
+
+    if(user && errors.length === 0){
+        const salt = await bcyrpt.genSalt();
+        const hashedPassword = await bcyrpt.hash(newPassword, salt)
+
+        await User.updateOne({_id: uid}, {password: hashedPassword});
+
+        req.session.uid = user._id;
+
+        res.json({user, errors});
+    }
+
+    else{
+        res.json({user: null, errors});
+    }
 }

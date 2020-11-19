@@ -11,11 +11,16 @@ class Login extends Component{
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.toForgotPassword = this.toForgotPassword.bind(this);
     }
 
     handleChange(e){
         this.setState({[e.target.id]: e.target.value}); 
     }   
+
+    toForgotPassword(){
+        this.props.history.push('/forgot_password');
+    }
 
     render(){
         const {username, password} = this.state;
@@ -45,6 +50,9 @@ class Login extends Component{
                         Sign In 
                     </button>
 
+                    <p className='text-white' onClick={this.toForgotPassword}>
+                        Forgot Password?
+                    </p>
                 </form>
             </div>
         )

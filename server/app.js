@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import cors from 'cors';
 import Redis from 'ioredis';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
@@ -13,7 +14,7 @@ const app = express();
 
 //redis cache set up
 const RedisStore = connectRedis(session);
-const redis = new Redis();
+export const redis = new Redis();
 
 app.use(
     session({
@@ -34,6 +35,7 @@ app.use(
     })
 );
 
+app.use(cors());
 app.use(bodyParser.json());
 
 //db set up
