@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import redis from 'redis';
+import Redis from 'ioredis';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
 import mongoose from 'mongoose';
@@ -13,13 +13,13 @@ const app = express();
 
 //redis cache set up
 const RedisStore = connectRedis(session);
-const redisClient = redis.createClient();
+const redis = new Redis();
 
 app.use(
     session({
         name: process.env.COOKIE_NAME,
         store: new RedisStore({
-            client: redisClient,
+            client: redis,
             disableTouch: true
         }),
         secret: process.env.SESSION_SECRET,
@@ -38,6 +38,7 @@ app.use(bodyParser.json());
 
 //db set up
 mongoose.connect(process.env.DATABASE, {
+    useCreateIndex: true,
     useUnifiedTopology: true,
     useNewUrlParser: true
 });
