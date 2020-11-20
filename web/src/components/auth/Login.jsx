@@ -25,14 +25,19 @@ class Login extends Component{
     render(){
         return(
             <div className= 'login'>
-                <h3>Login</h3>
                 <form>
-                    <input type='text' />
+                    <h1>Login</h1>
 
-                    <input type='password' />
+                    <label htmlFor='username'>Username</label>
+                    <input id='username' type='text' />
 
-                    <button>Sign in</button>
-                  
+                    <label htmlFor='password'>Password</label>
+                    <input id='password' type='password' />
+
+                    <button className='btn btn-outline-success btn-block'>
+                        Sign in
+                    </button>
+
                     <p className='text-white' onClick={this.toForgotPassword}>
                         Forgot Password?
                     </p>
