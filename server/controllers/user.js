@@ -184,24 +184,17 @@ export const changePassword = async (req, res) => {
 }
 
 export const change_username = async (req, res) => {
-    const {username, id} = req.body;
+    const { username } = req.body;
+    const { uid } = req.session;
 
-    const nuser = await User.findOne({username});
+    const user = await User.findOne({username}); 
 
-    if(nuser === newusername){
+    if(user !== null){
         res.json({msg:"Username already exists"});
     }
 
     else{
-        await User.updateOne({
-            _id:id
-        },{username});
-       
-
+        await User.updateOne({ _id: uid } , { username });
+        res.json({msg: 'Username changed successfully'});
     }
-
-
-
-
-
 }

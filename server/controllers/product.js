@@ -31,11 +31,7 @@ export const deleteProduct = async (req, res) => {
 export const getProduct = async (req, res) => {
     const {id} = req.params;
     
-    let productDetails = await Product.findOne({_id:id});
+    const product = await Product.findOne({_id:id});
 
-    res.json(productDetails);
+    res.json(product);
 }
-
-
-
-

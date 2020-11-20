@@ -1,5 +1,8 @@
 .login{
     height: 100vh;
+    background-color: #0c2233;
+    align-items: center;
+    display: flex;
 }
 
 .login form{
