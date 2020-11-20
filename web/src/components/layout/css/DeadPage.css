@@ -1,0 +1,36 @@
+.dead-page {
+    color: black;
+    background-color: #34626c;
+    font-family: 'Chakra Petch', sans-serif;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+}
+
+.dead-page h1 {
+    font-size: 80px;
+}
+
+.dead-page p {
+    margin-top: 35px;
+    font-size: 30px;
+}
+
+.dead-page i {
+    font-size: 100px;
+}    
+
+.dead-page ul {
+    margin-top: 80px;
+    font-size: 20px;
+}
+
+.dead-page li{ 
+    margin-right: 10px;
+    display: inline-block;
+    color: black;
+}
+
+.dead-page li:hover{
+    text-decoration: underline;
+}
