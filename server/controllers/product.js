@@ -36,6 +36,13 @@ export const getProduct = async (req, res) => {
     res.json(productDetails);
 }
 
+export const productDepartment = async (req, res) => {
+    const {departmentId} = req.body;
+
+    let sameDepartment = await Product.find({departmentId});
+
+    res.json(sameDepartment);
+}
 
 
 
