@@ -13,6 +13,7 @@ function App() {
           <Route exact path='/register' component={Register}/>
         </Switch>
       </BrowserRouter>
+      
     </div>
   );
 }

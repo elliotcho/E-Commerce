@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './css/Register.css';
 
-
 class Register extends Component{
     constructor(){
         super();
@@ -91,6 +90,7 @@ class Register extends Component{
                     <button className='btn btn-outline-success btn-block'>
                         Register
                     </button>
+                    
                 </form>
             </div>
         )
