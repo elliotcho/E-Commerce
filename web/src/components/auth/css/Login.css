@@ -1,57 +1,12 @@
 .login{
     height: 100vh;
-    background-color: #0c2233;
-    align-items: center;
-    display: flex;
 }
 
 .login form{
+    max-width: 330px;
     margin: 0 auto;
-    font-family: 'Nunito Sans';
-    font-size: 17px;
-    border: 3px solid #34626c;
-    border-radius: 10px;
-    padding: 2rem 3rem;
-    width: 30%;
-}
-
-.login h1{
-    color: #4ceb34;
-    margin-bottom: 40px;
-    text-align: center;
-    font-family: 'Big Shoulders Stencil Text', cursive;
-    font-size: 3rem;
 }
 
 .login input{
-    display: block;
-    border: 1px blue solid;
-    margin-bottom: 20px;
-    width: 90%;
-}
-
-.login input:focus{
-    outline: none;
-    border-width: 2px;
-}
-
-.login button{
-    margin: 12px 0 9px;
-    border-radius: 17px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 22px;
-    font-family: 'Big Shoulders Stencil Text', cursive;
-}
-
-.login button:focus{
-    outline: none;
-    box-shadow:none;
-    padding: 15px 32px;
-}
-
-.login label{
-    color: #4ceb34;
-    font-family: 'Balsamiq Sans', cursive;
+    width: 100%;
 }
