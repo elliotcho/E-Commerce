@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import { changePassword } from '../../routes/authRoutes';
 
 class ChangePassword extends Component{
     constructor(){
@@ -23,11 +23,8 @@ class ChangePassword extends Component{
         const { newPassword } = this.state;
         const { token } = this.props.match.params;
 
-        const config = {headers: {'content-type': 'application/json'}};
+        const user = await changePassword({token, newPassword});
 
-        const response = await axios.post('http://localhost:5000/api/user/change_password', {token, newPassword}, config);
-        const { user } = response.data;
-        
         if(user){
             this.props.history.push('/');
         }

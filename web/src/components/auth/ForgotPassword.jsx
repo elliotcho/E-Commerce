@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import { forgotPassword } from '../../routes/authRoutes';
 
 class ForgotPassword extends Component{
     constructor(){
@@ -22,9 +22,8 @@ class ForgotPassword extends Component{
         e.preventDefault();
 
         const {email} = this.state;
-        const config = {headers: {'content-type': 'application/json'}};
-
-        await axios.post('http://localhost:5000/api/user/forgot_password', {email}, config);
+        
+        await forgotPassword({email});
 
         this.setState({submitted: true});
     }
