@@ -1,7 +1,7 @@
 import {Product, Description} from '../models/product';
 
 export const createProduct = async (req, res) => {
-    const {description, price, userId, productName} = req.body
+    const {description, price, userId, productName} = req.body;
 
     const newDescription = new Description({
         ...description
@@ -28,7 +28,10 @@ export const deleteProduct = async (req, res) => {
     res.json({msg: "Product Successfully Deleted"});
 }
 
+export const getProduct = async (req, res) => {
+    const {id} = req.params;
+    
+    const product = await Product.findOne({_id:id});
 
-
-
-
+    res.json(product);
+}

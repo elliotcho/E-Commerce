@@ -13,7 +13,7 @@ const ProductSchema = new mongoose.Schema({
     price: String,
     description: DescriptionSchema,
     productName: String,
-    departmentId: String 
+    departmentId: String
 });
 
 export const Description = mongoose.model('descirption', DescriptionSchema);

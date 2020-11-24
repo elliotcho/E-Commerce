@@ -9,10 +9,10 @@
     margin: 0 auto;
     font-family: 'Nunito Sans';
     font-size: 17px;
-    border: 3px solid #34626c;
+    border: 3px dotted #34626c;
     border-radius: 10px;
     padding: 2rem 3rem;
-    width: 30%;
+    width: 34%;
 }
 
 .register h1{
@@ -24,7 +24,7 @@
 }
 
 .register input{
-    display: block;
+    display: inline-block;
     border: 1px blue solid;
     margin-bottom: 20px;
     width: 90%;
@@ -53,5 +53,20 @@
 
 .register label{
     color: #4ceb34;
+    font-family: 'Balsamiq Sans', cursive;
+}
+
+.register ul{
+    position: relative;
+    right: 20px;
+    text-align: center;
+    color: beige;
+}
+
+.register li{
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 1.6rem;
+    text-decoration: none;
     font-family: 'Balsamiq Sans', cursive;
 }

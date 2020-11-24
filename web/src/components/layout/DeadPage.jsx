@@ -1,35 +1,36 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './css/DeadPage.css';
 
-class DeadPage extends Component{
-    render(){
-        return(
-            <div className= 'deadpage'> 
-                <h1> 404 </h1>
-                <p>The Page You're Looking For Does Not Exist</p>
-                <i class="fas fa-unlink"></i>
+function DeadPage(props){
+    const goBack = (e) => {
+        e.preventDefault();
+        props.history.goBack();
+    }
 
+    return(
+        <div className= 'dead-page text-center'> 
+            <h1 className='mt-5'>404</h1>
 
-            <ul>
-                <li>HOME</li>
+            <p>
+                The Page You're Looking For Does Not Exist
+            </p>
 
+            <i className = "fas fa-unlink mt-2"/>
 
-
+            <ul className='text-center mr-3'>
+                <Link to='/'>
+                    <li>HOME</li>
+                </Link>
 
                 <li>|</li>
 
-
-
-
-                <li>BACK</li>
+                <Link to='/' onClick={goBack}>
+                    <li>BACK</li>
+                </Link>
             </ul>
-            </div>
-
-        )
-
-    }
-
-
+        </div>
+    )
 }
 
 
