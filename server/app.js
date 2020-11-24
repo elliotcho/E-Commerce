@@ -35,7 +35,7 @@ app.use(
     })
 );
 
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(bodyParser.json());
 
 //db set up

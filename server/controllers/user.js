@@ -45,8 +45,10 @@ export const login = async (req, res) => {
     res.json({user, errors});
 }
 
+
+
 export const register = async (req, res) => {
-    const {username, password, email} = req.body;
+    const { username, password, email } = req.body;
 
     const errors = [];
     let user;
@@ -178,5 +180,21 @@ export const changePassword = async (req, res) => {
 
     else{
         res.json({user: null, errors});
+    }
+}
+
+export const change_username = async (req, res) => {
+    const { username } = req.body;
+    const { uid } = req.session;
+
+    const user = await User.findOne({username}); 
+
+    if(user !== null){
+        res.json({msg:"Username already exists"});
+    }
+
+    else{
+        await User.updateOne({ _id: uid } , { username });
+        res.json({msg: 'Username changed successfully'});
     }
 }

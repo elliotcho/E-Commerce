@@ -16,7 +16,7 @@ function DeadPage(props){
                 The Page You're Looking For Does Not Exist
             </p>
 
-            <i class="fas fa-unlink mt-2"/>
+            <i className = "fas fa-unlink mt-2"/>
 
             <ul className='text-center mr-3'>
                 <Link to='/'>

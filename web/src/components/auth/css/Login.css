@@ -6,6 +6,7 @@
 }
 
 .login form{
+    max-width: 330px;
     margin: 0 auto;
     font-family: 'Nunito Sans';
     font-size: 17px;
@@ -54,7 +55,5 @@
     outline: none;
     box-shadow:none;
     padding: 15px 32px;
+    width: 100%;
 }
-
-
-
