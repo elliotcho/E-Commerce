@@ -12,7 +12,8 @@ const ProductSchema = new mongoose.Schema({
     datePosted: Date,
     price: String,
     description: DescriptionSchema,
-    productName: String
+    productName: String,
+    departmentId: String
 });
 
 export const Description = mongoose.model('descirption', DescriptionSchema);
