@@ -93,7 +93,7 @@ export const register = async (req, res) => {
         const salt = await bcyrpt.genSalt();
         const hashedPassword = await bcyrpt.hash(password, salt);
         
-        const newUser = new User({...req.body, password: hashedPassword});
+        const newUser = new User({...req.body, password: hashedPassword, cart: []});
                 
         user = await newUser.save();
         user.password = '';
@@ -183,7 +183,7 @@ export const changePassword = async (req, res) => {
     }
 }
 
-export const change_username = async (req, res) => {
+export const changeUsername = async (req, res) => {
     const { username } = req.body;
     const { uid } = req.session;
 

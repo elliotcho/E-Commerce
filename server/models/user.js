@@ -11,6 +11,14 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String
+    },
+    cart: {
+        type: [String],
+        default: []
+    },
+    profilePic: {
+        type: String,
+        default: null
     }
 });
 
