@@ -7,6 +7,7 @@ import { v4 } from 'uuid';
 export const login = async (req, res) => {
     const {username, password} = req.body;
 
+
     let user;
     const errors = [];
     let field;
@@ -196,5 +197,17 @@ export const changeUsername = async (req, res) => {
     else{
         await User.updateOne({ _id: uid } , { username });
         res.json({msg: 'Username changed successfully'});
+    }
+}
+
+export const deleteAccount = async(req, res) => {
+    let deleted = false;
+    if(req.session.uid){
+        deleted = await User.deleteOne({_id: req.session.uid}); 
+    }
+    if(deleted){
+        res.json({deleted});
+    } else if(!deleted){
+        res.json({deleted});
     }
 }
