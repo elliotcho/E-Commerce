@@ -6,6 +6,7 @@ import Register from "./components/auth/Register";
 import ForgotPassword from './components/auth/ForgotPassword';
 import changePassword from './components/auth/ChangePassword';
 import ProductDepartment from './components/products/ProductDeparment';
+import CreateProduct from './components/products/CreateProduct';
 import DeadPage from "./components/layout/DeadPage";
 import './App.css';
 
@@ -21,6 +22,7 @@ function App() {
           <Route exact path='/forgot_password' component={ForgotPassword}/>
           <Route exact path='/change_password/:token' component={changePassword}/>
           <Route exact path='/product' component={ProductDepartment}/>
+          <Route exact path='/create_product' component={CreateProduct}/>
           <Route path='/' component={DeadPage}/>
         </Switch>
       </BrowserRouter>

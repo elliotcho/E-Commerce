@@ -1,0 +1,9 @@
+.createProduct {
+    display: flex;
+    margin: 30px auto;
+    
+}
+
+.createProduct input {
+    display: block;
+}
