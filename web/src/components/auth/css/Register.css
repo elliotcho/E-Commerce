@@ -1,72 +1,47 @@
-.register{
-    height: 100vh;
-    background-color: #0c2233;
-    align-items: center;
-    display: flex;
-}
-
-.register form{
-    margin: 0 auto;
-    font-family: 'Nunito Sans';
-    font-size: 17px;
-    border: 3px dotted #34626c;
-    border-radius: 10px;
-    padding: 2rem 3rem;
-    width: 34%;
+.register form{    
+    margin: 50px auto;
+    max-width: 350px;
+    color: #4ceb34;
 }
 
 .register h1{
-    color: #4ceb34;
     margin-bottom: 40px;
     text-align: center;
-    font-family: 'Big Shoulders Stencil Text', cursive;
     font-size: 3rem;
 }
 
 .register input{
-    display: inline-block;
-    border: 1px blue solid;
-    margin-bottom: 20px;
-    width: 90%;
+    display: block;
+    width: 100%;
+    border-radius: 25px;
+    font-family: 'Arial';
+    margin-bottom: 25px;
+    padding: 6px;
 }
 
 .register input:focus{
     outline: none;
-    border-width: 2px;
 }
 
 .register button{
-    margin: 12px 0 9px;
-    border-radius: 17px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 22px;
-    font-family: 'Big Shoulders Stencil Text', cursive;
+    border-radius: 25px;
+    width: 40%;
 }
 
 .register button:focus{
     outline: none;
-    box-shadow:none;
-    padding: 15px 32px;
+    box-shadow: none;
 }
 
-.register label{
-    color: #4ceb34;
-    font-family: 'Balsamiq Sans', cursive;
+.register p{
+    cursor: pointer;
 }
 
-.register ul{
-    position: relative;
-    right: 20px;
-    text-align: center;
-    color: beige;
+.register p:hover{
+    text-decoration: underline;
 }
 
-.register li{
-    display: inline-block;
-    margin-left: 20px;
-    font-size: 1.6rem;
-    text-decoration: none;
-    font-family: 'Balsamiq Sans', cursive;
+.register .errors{
+    color: red;
+    font-weight: bold;
 }

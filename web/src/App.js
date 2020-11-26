@@ -15,7 +15,7 @@ function App() {
       
       <BrowserRouter>
         <Switch>
-          <Route exact path ='/auth' component = {AuthContainer}/>
+          <Route exact path ='/auth/:page' component = {AuthContainer}/>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/register' component={Register}/>
           <Route exact path='/forgot_password' component={ForgotPassword}/>

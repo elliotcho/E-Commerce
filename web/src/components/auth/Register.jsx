@@ -98,11 +98,13 @@ class Register extends Component{
                         required
                     />
                     
-                    <button className='btn btn-outline-success btn-block'>
-                        Register
-                    </button>
+                    <div className = 'text-center'>
+                        <button className='btn btn-primary'>
+                            Register
+                        </button>
+                    </div>
 
-                    <div style={{color: 'red'}}>
+                    <div className='errors'>
                         {errors.map(err => `${err.field} error: ${err.message}`)}
                     </div>
                 </form>

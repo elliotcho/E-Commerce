@@ -3,41 +3,40 @@ import Login from './Login';
 import Register from './Register';
 import './css/AuthContainer.css';
 
-function AuthContainer(){
+function AuthContainer(props){
+    const  { page } = props.match.params;
+
+    const toggleAuth = () => {
+        if(page === 'login'){
+            props.history.push('/auth/register')
+        } else{
+            props.history.push('/auth/login');
+        }
+    }
+
+    if(page !== 'login'  && page !== 'register'){
+        props.history.push('/ERROR');
+    }
+
     return(
         <div className='auth'>
-           
-            <div className='panels-container d-flex align-items-center'>
-                <div className='panel left-panel'>
-                    <div className='content'>
-                        <h3>New here?</h3>
+            <div className='sidebar text-center text-white'>
+                <h3>
+                    {page === 'login' ? "Don't have an account?" : "One of us?"}
+                </h3>
 
-                        <p>
-                            Welcome!
-                        </p>
+                <p>
+                    {page === 'login' ? 'Get started today!' : 'Sign in!'}
+                </p>
 
-                        <button>
-                            Register Here
-                        </button>
-                    </div>
-                </div>
-
-                {/* <div className='panel right-panel'>
-                    <div className='content'>
-                        <h3>One of us?</h3>
-
-                        <p>
-                            Welcome back!
-                        </p>
-
-                        <button>
-                            Sign In Here
-                        </button>
-                    </div>
-                </div> */}
+                <button className='btn btn-secondary' onClick={toggleAuth}>
+                    Click here!
+                </button>
             </div>
 
-            < Login />
+            <div className ='content'>
+                {page === 'login' ? (< Login />) : (< Register />)}
+            </div>
         </div>
     )
 }   
