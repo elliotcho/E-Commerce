@@ -64,6 +64,7 @@ class Register extends Component{
                         maxLength='50'
                         value={email}
                         onChange={this.handleChange}
+                        placeholder='Email...'
                         required
                     />
                     
@@ -75,6 +76,7 @@ class Register extends Component{
                         minLength='2'
                         maxLength='30'
                         onChange={this.handleChange}
+                        placeholder='Username...'
                         required
                     />
                     
@@ -86,6 +88,7 @@ class Register extends Component{
                         maxLength='50'
                         value={password}
                         onChange={this.handleChange}
+                        placeholder='Password...'
                         required
                     />
 
@@ -95,6 +98,7 @@ class Register extends Component{
                         type='password'
                         value={confirmPassword}
                         onChange={this.handleChange}
+                        placeholder='Confirm password...'
                         required
                     />
                     

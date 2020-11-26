@@ -14,9 +14,8 @@
     display: block;
     width: 100%;
     border-radius: 25px;
-    font-family: 'Arial';
     margin-bottom: 25px;
-    padding: 6px;
+    padding: 9px;
 }
 
 .login input:focus{

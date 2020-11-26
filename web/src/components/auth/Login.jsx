@@ -51,6 +51,7 @@ class Login extends Component{
                 <form onSubmit={this.handleSubmit}>
                     <h1>Login</h1>
 
+                    <label htmlFor='username'>Enter Username </label>
                     <input 
                         name='username'
                         value={username}
@@ -60,6 +61,7 @@ class Login extends Component{
                         required
                     />
 
+                    <label htmlFor='password'>Enter Password </label>
                     <input 
                         name='password' 
                         value={password}
