@@ -105,20 +105,6 @@ export const register = async (req, res) => {
     res.json({user, errors});
 }
 
-export const logout = async (req, res) => {
-    await req.session.destroy(err => {
-        res.clearCookie(process.env.COOKIE_NAME);
-
-        if(err){
-           res.json({message: 'Something went wrong'});
-        } 
-        
-        else{
-            res.json({message: 'Successfully signed out'});
-        }
-    });
-}
-
 export const forgotPassword = async (req, res) => {
     const { email } = req.body;
 
@@ -200,14 +186,33 @@ export const changeUsername = async (req, res) => {
     }
 }
 
-export const deleteAccount = async(req, res) => {
-    let deleted = false;
-    if(req.session.uid){
-        deleted = await User.deleteOne({_id: req.session.uid}); 
+export const logout = async (req, res) => {
+    const msg = await clearSession(req, res);
+    res.json( { msg });
+}
+
+export const deleteUser = async(req, res) => {
+    if(!req.session.uid){
+        res.json({ msg: 'User is not authenticated'});
+    } 
+    
+    else{
+        await User.deleteOne({ _id : req.session.uid });
+
+        const msg = await clearSession(req, res);
+        res.json( { msg });     
     }
-    if(deleted){
-        res.json({deleted});
-    } else if(!deleted){
-        res.json({deleted});
+}
+
+const clearSession = async (req, res) => {
+    try { 
+        req.session.destroy();
+        res.clearCookie(process.env.COOKIE_NAME);
+
+        return 'Success';
+    } 
+
+    catch (err) {
+        return 'Something went wrong';
     }
 }

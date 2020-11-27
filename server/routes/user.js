@@ -6,7 +6,7 @@ import {
     changeUsername,
     forgotPassword, 
     changePassword,
-    deleteAccount 
+    deleteUser
 } from '../controllers/user';
 
 const router = express.Router();
@@ -17,6 +17,6 @@ router.post('/change_username', changeUsername);
 router.get('/logout', logout);
 router.post('/forgot_password', forgotPassword);
 router.post('/change_password', changePassword);
-router.delete('/deleteAccount', deleteAccount);
+router.delete('/', deleteUser);
 
 export default router;
