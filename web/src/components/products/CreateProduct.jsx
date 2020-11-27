@@ -43,9 +43,9 @@ class CreateProduct extends Component {
         const {price, productName, departmentId} = this.state;
 
         return(
-            <div>
-                <form className='createProduct' onSubmit={this.handleSubmit}>
-                    <h1>List A Product</h1>
+            <div className='createProduct'>
+                <form onSubmit={this.handleSubmit}>
+                    <h1>List Your Product</h1>
                     <label htmlFor="productName">Product Name</label>
                     <input 
                         name='productName'
@@ -69,8 +69,10 @@ class CreateProduct extends Component {
                         onChange={this.handleChange} 
                         type="number" 
                         placeholder='$'
+                        required
                     />
-                    <button>CREATE</button>
+                    <button className='btn btn-block btn-outline-primary' style={{verticalAlign:'middle'}}>
+                        <span>Create </span></button>
                 </form>
             </div>
         );

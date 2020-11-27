@@ -1,18 +1,19 @@
-import {Product, Description} from '../models/product';
+import {Product} from '../models/product';
 
 export const createProduct = async (req, res) => {
-    const {description, price, userId, productName} = req.body;
+    const { price, productName, departmentId} = req.body;
 
-    const newDescription = new Description({
-        ...description
-    });
+    // const newDescription = new Description({
+    //     ...description
+    // });
 
     const newProduct = new Product ({
-        description: newDescription,
+        // description: newDescription,
         price,
         datePosted: new Date(),
-        userId,
-        productName 
+        // userId,
+        productName,
+        departmentId
     });
 
    await newProduct.save();
@@ -34,4 +35,12 @@ export const getProduct = async (req, res) => {
     const product = await Product.findOne({_id:id});
 
     res.json(product);
+}
+
+export const getProductInDepartment = async (req, res) => {
+    const {departmentId} = req.params;
+
+    const sameDepartment = await Product.find({departmentId});
+
+    res.json(sameDepartment);
 }

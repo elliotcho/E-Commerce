@@ -19,7 +19,7 @@
     color: #4ceb34;
     margin-bottom: 40px;
     text-align: center;
-    font-family: 'Big Shoulders Stencil Text', cursive;
+    font-family: 'Sansita Swashed', cursive;
     font-size: 3rem;
 }
 
@@ -42,7 +42,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 22px;
-    font-family: 'Big Shoulders Stencil Text', cursive;
+    font-family: 'Sansita Swashed', cursive;
 }
 
 .register button:focus{
