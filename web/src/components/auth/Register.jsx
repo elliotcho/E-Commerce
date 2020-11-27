@@ -30,7 +30,7 @@ class Register extends Component{
         if(password !== confirmPassword){
             this.setState({errors: [{
                     field: 'Password',
-                    message: 'Passwords do not match'
+                    msg: 'Passwords do not match'
                 }]
             });
 
@@ -108,8 +108,12 @@ class Register extends Component{
                         </button>
                     </div>
 
-                    <div className='errors'>
-                        {errors.map(err => `${err.field} error: ${err.msg}`)}
+                    <div className='errors mt-3'>
+                        {errors.map((err, i) => 
+                            <div key={i}>
+                                {`${err.field} error: ${err.msg}`}
+                            </div>
+                        )}
                     </div>
                 </form>
             </div>

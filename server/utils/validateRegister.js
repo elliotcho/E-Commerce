@@ -54,4 +54,6 @@ export const validateRegister = async (req) => {
         
         req.session.uid = user._id;
     }
+
+    return { user, errors };
 }
