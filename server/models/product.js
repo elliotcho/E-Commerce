@@ -8,13 +8,13 @@ const DescriptionSchema = new mongoose.Schema({
 });
 
 const ProductSchema = new mongoose.Schema({
-    // userId: String,
+    //userId: String,
     datePosted: Date,
     price: String,
-    // description: DescriptionSchema,
+    //description: DescriptionSchema,
     productName: String,
     departmentId: String
 });
 
-// export const Description = mongoose.model('descirption', DescriptionSchema);
+//export const Description = mongoose.model('description', DescriptionSchema);
 export const Product = mongoose.model('product', ProductSchema);
