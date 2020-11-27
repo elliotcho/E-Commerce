@@ -3,6 +3,8 @@ import User from '../models/user';
 import { redis } from '../app'; 
 import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
+import { validateLogin } from '../utils/validateLogin';
+import { validateRegister } from '../utils/validateRegister';
 import { initImgStorage } from '../utils/initImgStorage';
 import path from 'path';
 import fs from 'fs';
@@ -10,180 +12,75 @@ import fs from 'fs';
 const profileUpload = initImgStorage('profile');
 
 export const login = async (req, res) => {
-    const {username, password} = req.body;
-
-    let user;
-    const errors = [];
-    let field;
- 
-    if(username.includes('@')){
-        user = await User.findOne({email: username});
-        field = 'Email'
-    } else{
-        user = await User.findOne({username});
-        field = 'Username';
-    }
-
-    if(!user){
-        errors.push({
-            field, 
-            message: `${field} doesn't exist`
-        });
-    } 
-    
-    else{
-        const valid = await bcyrpt.compare(password, user.password);
-
-        if(valid){
-            user.password = '';
-            req.session.uid = user._id;
-        } else{
-            errors.push({
-                field: 'Password', 
-                message: 'Incorrect password'
-            });
-            
-            user = null;
-        }
-    } 
-
-    res.json({user, errors});
+    const userResponse = await validateLogin(req);
+    res.json(userResponse);
 }
 
 export const register = async (req, res) => {
-    const { username, password, email } = req.body;
-
-    const errors = [];
-    let user;
-
-    if(username.includes('@')){
-        errors.push({
-            field: 'Username', 
-            message: 'Username cannot include the @ sign'
-        });
-    }
-
-    if(!email.includes('@')){
-        errors.push({
-            field: 'Email', 
-            message: 'Email should include the @ sign'
-        });
-    }
-  
-    user = await User.findOne({email});
-    
-    if(user){
-        errors.push({
-            field: 'Email', 
-            message: 'Email is already taken'
-        });
-
-        user = null;
-    }
-
-    user = await User.findOne({username});
-
-    if(user){
-        errors.push({
-            field: 'Username', 
-            message: 'Username is already taken'
-        });
-
-        user = null;
-    }
-
-    if(errors.length === 0){
-        const salt = await bcyrpt.genSalt();
-        const hashedPassword = await bcyrpt.hash(password, salt);
-        
-        const newUser = new User({...req.body, password: hashedPassword, cart: []});
-                
-        user = await newUser.save();
-        user.password = '';
-        
-        req.session.uid = user._id;
-    }
-       
-    res.json({user, errors});
+    const userResponse = await validateRegister(req);    
+    res.json(userResponse);
 }
 
 export const forgotPassword = async (req, res) => {
-    const { email } = req.body;
-
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: req.body.email });
 
     if(!user){
         res.json({success: true});
     } 
 
     else{
-        const token = v4();
+        const token = 'forget-password:' + v4();
         const href = `<a href="http://localhost:3000/change_password/${token}">Reset Password</a>`
+        const expiresIn = 1000 * 60 * 60 * 24 * 3; //3 days
 
-        await redis.set(
-           'forget-password:' + token,
-            user._id,
-            'ex',
-            1000 * 60 * 60 * 24 * 3
-        ); //token expires in 3 days
-
-        await sendEmail(email, href);
+        //set token as key and uid as value in redis, then send email
+        await redis.set(token, user._id, 'ex', expiresIn);
+        await sendEmail(req.body.email, href);
 
         res.json({success: true});
     }
 }
 
 export const changePassword = async (req, res) => {
-    const {token, newPassword} = req.body;
     const errors = [];
 
-    const key = 'forget-password:' + token;
+    const key = 'forget-password:' + req.body.token;
     const uid = await redis.get(key);
-
-    if(!uid){
-        errors.push({
-            field: 'token',
-            message: 'token expired'
-        });
-    }
 
     const user = await User.findOne({_id: uid});
 
+    if(!uid){
+        errors.push({ field: 'token', msg:'token expired' });
+    }
+
     if(!user){
-        errors.push({
-            field: 'token',
-            message: 'user no longer exists'
-        });
+        errors.push({ field: 'token', msg:'user no longer exists' });
     }
 
     if(user && errors.length === 0){
         const salt = await bcyrpt.genSalt();
-        const hashedPassword = await bcyrpt.hash(newPassword, salt)
+        const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt)
 
         await User.updateOne({_id: uid}, {password: hashedPassword});
-
         req.session.uid = user._id;
-
-        res.json({user, errors});
-    }
-
+        
+        res.json({ user, errors });
+    } 
+    
     else{
-        res.json({user: null, errors});
+        res.json({ user: null, errors });
     }
 }
 
 export const changeUsername = async (req, res) => {
-    const { username } = req.body;
-    const { uid } = req.session;
+    const user = await User.findOne({username : req.body.username}); 
 
-    const user = await User.findOne({username}); 
-
-    if(user !== null){
+    if(user){
         res.json({msg:"Username already exists"});
     }
 
     else{
-        await User.updateOne({ _id: uid } , { username });
+        await User.updateOne({ _id: req.session.uid } , { username: req.body.username });
         res.json({msg: 'Username changed successfully'});
     }
 }
@@ -205,9 +102,7 @@ export const changeProfilePic = async (req, res) => {
             console.log(err);
         }
 
-        const { uid } = req.session;
-    
-        const user = await User.findOne({ _id: uid });
+        const user = await User.findOne({ _id: req.session.uid });
         const { profilePic } = user;
     
         if(profilePic){
@@ -218,7 +113,7 @@ export const changeProfilePic = async (req, res) => {
             });
         } 
 
-        await User.updateOne( { _id: uid} , {profilePic: req.file.filename});
+        await User.updateOne( { _id: req.session.uid } , {profilePic: req.file.filename});
         res.json({msg: 'Success'});
    });
 }
@@ -231,9 +126,7 @@ export const logout = async (req, res) => {
 export const deleteUser = async(req, res) => {
     if(!req.session.uid){
         res.json({ msg: 'User is not authenticated'});
-    } 
-    
-    else{
+    } else{
         await User.deleteOne({ _id : req.session.uid });
 
         const msg = await clearSession(req, res);
@@ -245,11 +138,8 @@ const clearSession = async (req, res) => {
     try { 
         req.session.destroy();
         res.clearCookie(process.env.COOKIE_NAME);
-
         return 'Success';
-    } 
-
-    catch (err) {
+    } catch (err) {
         return 'Something went wrong';
     }
 }
