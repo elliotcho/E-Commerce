@@ -7,7 +7,8 @@ import {
     forgotPassword, 
     changePassword,
     deleteUser,
-    changeProfilePic
+    changeProfilePic,
+    loadProfilePic
 } from '../controllers/user';
 
 const router = express.Router();
@@ -18,6 +19,7 @@ router.post('/change_username', changeUsername);
 router.get('/logout', logout);
 router.post('/forgot_password', forgotPassword);
 router.post('/change_password', changePassword);
+router.get('/profile_pic', loadProfilePic);
 router.post('/profile_pic', changeProfilePic);
 router.delete('/', deleteUser);
 

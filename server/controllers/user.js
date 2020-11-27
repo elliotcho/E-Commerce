@@ -188,6 +188,17 @@ export const changeUsername = async (req, res) => {
     }
 }
 
+export const loadProfilePic = async (req, res) => {
+    const { uid } = req.session;
+    const user = await User.findOne({ _id : uid });
+
+    if(user && user.profilePic){
+        res.sendFile(path.join(__dirname, '../', `images/profile/${user.profilePic}`));
+    } else {
+        res.sendFile(path.join(__dirname, '../', 'images/profile/default.png'));
+    }
+}
+
 export const changeProfilePic = async (req, res) => {
    profileUpload(req, res, async err => {
         if(err){
