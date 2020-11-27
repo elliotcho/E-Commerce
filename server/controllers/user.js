@@ -3,10 +3,14 @@ import User from '../models/user';
 import { redis } from '../app'; 
 import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
+import { initImgStorage } from '../utils/initImgStorage';
+import path from 'path';
+import fs from 'fs';
+
+const profileUpload = initImgStorage('profile');
 
 export const login = async (req, res) => {
     const {username, password} = req.body;
-
 
     let user;
     const errors = [];
@@ -45,8 +49,6 @@ export const login = async (req, res) => {
 
     res.json({user, errors});
 }
-
-
 
 export const register = async (req, res) => {
     const { username, password, email } = req.body;
@@ -184,6 +186,30 @@ export const changeUsername = async (req, res) => {
         await User.updateOne({ _id: uid } , { username });
         res.json({msg: 'Username changed successfully'});
     }
+}
+
+export const changeProfilePic = async (req, res) => {
+   profileUpload(req, res, async err => {
+        if(err){
+            console.log(err);
+        }
+
+        const { uid } = req.session;
+    
+        const user = await User.findOne({ _id: uid });
+        const { profilePic } = user;
+    
+        if(profilePic){
+            fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
+                if(err){
+                    console.log(err);
+                }
+            });
+        } 
+
+        await User.updateOne( { _id: uid} , {profilePic: req.file.filename});
+        res.json({msg: 'Success'});
+   });
 }
 
 export const logout = async (req, res) => {
