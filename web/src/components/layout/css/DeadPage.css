@@ -1,5 +1,5 @@
 .dead-page {
-    color: black;
+    color: #0fe9ba;
     background-color: #34626c;
     font-family: 'Chakra Petch', sans-serif;
     height: 100vh;
@@ -28,7 +28,7 @@
 .dead-page li{ 
     margin-right: 10px;
     display: inline-block;
-    color: black;
+    color: #0fe9ba;
 }
 
 .dead-page li:hover{
