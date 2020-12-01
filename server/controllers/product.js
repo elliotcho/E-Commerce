@@ -1,7 +1,7 @@
-import {Product} from '../models/product';
+import { Product } from '../models/product';
 
 export const createProduct = async (req, res) => {
-    const { price, productName, departmentId} = req.body;
+    const { price, productName, departmentId } = req.body;
 
     // const newDescription = new Description({
     //     ...description

@@ -7,28 +7,46 @@
     overflow: hidden;
 }
 
-.panels-container{
-    position: absolute;
-    width: 40%;
-    height: 100%;
+.auth .sidebar{
+    margin: 0;
+    padding: 10px;
+    width: 200px;
     background: #5f5f9b;
-    border-top-right-radius: 82%;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
 }
 
-.left-panel{
-    padding: 3rem 17% 2rem 12%;
+.auth .sidebar h3, .auth .sidebar p{
+    margin-bottom: 20px;
 }
 
-.panel .content{
-    color: #fff;
+.auth .content{
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
 }
 
-.panel h3{
-    font-weight: 600;
-    font-size: 1.5rem;
+.auth button:focus{
+    outline: none;
+    box-shadow: none;
 }
 
-.panel p{
-    font-size: 0.95rem;
-    padding: 0.7rem 0;
+@media screen and (max-width: 700px){
+    .auth .sidebar{
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .auth .content{
+        margin-left: 0;
+        margin-top: 0;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    .auth .content{
+        margin-left: 150px;
+    }
 }

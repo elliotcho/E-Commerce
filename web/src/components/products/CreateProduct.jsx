@@ -23,20 +23,16 @@ class CreateProduct extends Component {
 
     async handleSubmit(e){
         e.preventDefault();
+<<<<<<< HEAD
 
         const {price, productName, departmentId} = this.state;
 
         const response = await axios.post('http://localhost:5000/api/product', this.state);
 
+=======
+        await axios.post('http://localhost:5000/api/product', this.state);
+>>>>>>> 0a35bf9f67abfb5ec6aef35119be71d76318a542
     }
-
-    // async componentDidMount(){
-    //     const response = await axios.post('http://localhost:5000/api/product');
-    //     const newProduct = response.data;
-
-    //     this.setState({newProduct:newProduct});
-    // }
-
 
     render(){
         const {price, productName, departmentId} = this.state;

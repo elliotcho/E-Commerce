@@ -7,6 +7,7 @@ import ForgotPassword from './components/auth/ForgotPassword';
 import changePassword from './components/auth/ChangePassword';
 import ProductDepartment from './components/products/ProductDeparment';
 import CreateProduct from './components/products/CreateProduct';
+import Profile from './components/profile/Profile';
 import DeadPage from "./components/layout/DeadPage";
 import './App.css';
 
@@ -16,11 +17,12 @@ function App() {
       
       <BrowserRouter>
         <Switch>
-          <Route exact path ='/auth' component = {AuthContainer}/>
+          <Route exact path ='/auth/:page' component = {AuthContainer}/>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/register' component={Register}/>
           <Route exact path='/forgot_password' component={ForgotPassword}/>
           <Route exact path='/change_password/:token' component={changePassword}/>
+          <Route exact path='/profile' component={Profile}/>
           <Route exact path='/product' component={ProductDepartment}/>
           <Route exact path='/create_product' component={CreateProduct}/>
           <Route path='/' component={DeadPage}/>

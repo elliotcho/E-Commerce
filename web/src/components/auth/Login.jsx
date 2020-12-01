@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { withRouter } from 'react-router-dom';
 import { login } from '../../routes/authRoutes';
 import './css/Login.css';
 
@@ -50,34 +51,38 @@ class Login extends Component{
                 <form onSubmit={this.handleSubmit}>
                     <h1>Login</h1>
 
-                    <label htmlFor='username'>Username</label>
+                    <label htmlFor='username'>Enter Username </label>
                     <input 
                         name='username'
                         value={username}
                         onChange={this.handleChange} 
+                        placeholder ='Username here...'
                         type='text' 
                         required
                     />
 
-                    <label htmlFor='password'>Password</label>
+                    <label htmlFor='password'>Enter Password </label>
                     <input 
                         name='password' 
                         value={password}
                         onChange={this.handleChange}
+                        placeholder = 'Password here...'
                         type='password' 
                         required
                     />
 
-                    <button className='btn btn-outline-success btn-block'>
-                        Sign in
-                    </button>
+                    <div className = 'text-center'>
+                        <button className='btn btn-primary'>
+                            Sign in
+                        </button>
+                    </div>
 
-                    <p className='text-white' onClick={this.toForgotPassword}>
+                    <p className='text-white mt-4' onClick={this.toForgotPassword}>
                         Forgot Password?
                     </p>
 
-                    <div style={{color: 'red'}}>
-                        {errors.map(err => `${err.field} error: ${err.message}`)}
+                    <div className='errors'>
+                        {errors.map(err => `${err.field} error: ${err.msg}`)}
                     </div>
                 </form>
             </div>
@@ -85,4 +90,4 @@ class Login extends Component{
     }
 }
 
-export default Login;
+export default withRouter(Login);

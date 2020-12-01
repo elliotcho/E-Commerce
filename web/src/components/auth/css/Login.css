@@ -1,12 +1,7 @@
-.login form{
-    max-width: 330px;
-    margin: 0 auto;
+.login form{    
+    margin: 50px auto;
+    max-width: 350px;
     color: #4ceb34;
-    font-size: 17px;
-    border: 3px dotted #34626c;
-    border-radius: 10px;
-    padding: 2rem 3rem; 
-    width: 34%;
 }
 
 .login h1{
@@ -15,33 +10,37 @@
     font-size: 3rem;
 }
 
-
-
 .login input{
     display: block;
-    border: 1px blue solid;
-    font-family: 'Nunito Sans';
-    margin-bottom: 20px;
-    width: 90%;
+    width: 100%;
+    border-radius: 25px;
+    margin-bottom: 25px;
+    padding: 9px;
 }
 
 .login input:focus{
     outline: none;
-    border-width: 2px;
 }
 
 .login button{
-    margin: 12px 0 9px;
-    border-radius: 17px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 22px;
+    border-radius: 25px;
+    width: 40%;
 }
 
 .login button:focus{
     outline: none;
-    box-shadow:none;
-    padding: 15px 32px;
-    width: 100%;
+    box-shadow: none;
+}
+
+.login p{
+    cursor: pointer;
+}
+
+.login p:hover{
+    text-decoration: underline;
+}
+
+.login .errors{
+    color: red;
+    font-weight: bold;
 }

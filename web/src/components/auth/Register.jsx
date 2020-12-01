@@ -30,7 +30,7 @@ class Register extends Component{
         if(password !== confirmPassword){
             this.setState({errors: [{
                     field: 'Password',
-                    message: 'Passwords do not match'
+                    msg: 'Passwords do not match'
                 }]
             });
 
@@ -64,6 +64,7 @@ class Register extends Component{
                         maxLength='50'
                         value={email}
                         onChange={this.handleChange}
+                        placeholder='Email...'
                         required
                     />
                     
@@ -75,6 +76,7 @@ class Register extends Component{
                         minLength='2'
                         maxLength='30'
                         onChange={this.handleChange}
+                        placeholder='Username...'
                         required
                     />
                     
@@ -86,6 +88,7 @@ class Register extends Component{
                         maxLength='50'
                         value={password}
                         onChange={this.handleChange}
+                        placeholder='Password...'
                         required
                     />
 
@@ -95,15 +98,22 @@ class Register extends Component{
                         type='password'
                         value={confirmPassword}
                         onChange={this.handleChange}
+                        placeholder='Confirm password...'
                         required
                     />
                     
-                    <button className='btn btn-outline-success btn-block'>
-                        Register
-                    </button>
+                    <div className = 'text-center'>
+                        <button className='btn btn-primary'>
+                            Register
+                        </button>
+                    </div>
 
-                    <div style={{color: 'red'}}>
-                        {errors.map(err => `${err.field} error: ${err.message}`)}
+                    <div className='errors mt-3'>
+                        {errors.map((err, i) => 
+                            <div key={i}>
+                                {`${err.field} error: ${err.msg}`}
+                            </div>
+                        )}
                     </div>
                 </form>
             </div>
