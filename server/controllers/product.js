@@ -8,11 +8,12 @@ export const createProduct = async (req, res) => {
     // });
 
     const newProduct = new Product ({
-        //description: newDescription,
+        // description: newDescription,
         price,
         datePosted: new Date(),
+        // userId,
         productName,
-        departmentId,
+        departmentId
     });
 
    await newProduct.save();
@@ -34,4 +35,12 @@ export const getProduct = async (req, res) => {
     const product = await Product.findOne({_id:id});
 
     res.json(product);
+}
+
+export const getProductInDepartment = async (req, res) => {
+    const {departmentId} = req.params;
+
+    const sameDepartment = await Product.find({departmentId});
+
+    res.json(sameDepartment);
 }

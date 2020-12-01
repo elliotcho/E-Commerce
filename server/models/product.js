@@ -16,5 +16,5 @@ const ProductSchema = new mongoose.Schema({
     departmentId: String
 });
 
-//export const Description = mongoose.model('descirption', DescriptionSchema);
+//export const Description = mongoose.model('description', DescriptionSchema);
 export const Product = mongoose.model('product', ProductSchema);

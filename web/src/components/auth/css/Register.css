@@ -17,6 +17,7 @@
     font-family: 'Chakra Petch', sans-serif;
     margin-bottom: 40px;
     text-align: center;
+    font-family: 'Sansita Swashed', cursive;
     font-size: 3rem;
 }
 
@@ -33,8 +34,13 @@
 }
 
 .register button{
-    border-radius: 25px;
-    width: 40%;
+    margin: 12px 0 9px;
+    border-radius: 17px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    font-family: 'Sansita Swashed', cursive;
 }
 
 .register button:focus{
