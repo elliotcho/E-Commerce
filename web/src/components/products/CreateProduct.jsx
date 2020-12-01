@@ -28,7 +28,6 @@ class CreateProduct extends Component {
 
         const response = await axios.post('http://localhost:5000/api/product', this.state);
 
-
     }
 
     // async componentDidMount(){
