@@ -1,7 +1,16 @@
+.register{
+    position: relative;
+   width: 100%;
+   height: 92vh;
+   background-color: #34626c;
+   font-family: 'Chakra Petch', sans-serif;
+   overflow: hidden;
+}
+
 .register form{    
     margin: 50px auto;
-    max-width: 350px;
-    color: #4ceb34;
+    max-width: 400px;
+    color: #0fe9ba;
 }
 
 .register h1{
@@ -14,7 +23,7 @@
 .register input{
     display: block;
     width: 100%;
-    border-radius: 25px;
+    border-radius: 11px;
     margin-bottom: 25px;
     padding: 9px;
 }

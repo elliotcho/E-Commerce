@@ -1,5 +1,6 @@
 import bcyrpt from 'bcrypt';
 import User from '../models/user';
+import Product from '../models/product';
 import { redis } from '../app'; 
 import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
@@ -141,5 +142,45 @@ const clearSession = async (req, res) => {
         return 'Success';
     } catch (err) {
         return 'Something went wrong';
+    }
+}
+
+export const addToCart = async (req, res) => {
+    if (!req.session.uid) {
+        res.json({msg: 'User is not authenticated'});
+    } else{
+        const {productId} = req.body;
+
+        const user = await User.findOne({_id: req.session.uid});
+
+        const {cart} = user
+        cart.push(productId);
+
+        await User.updateOne({_id: req.session.uid}, {cart});
+
+        res.json({msg: 'Cart Updated'});
+
+    }
+}
+
+export const deleteFromCart = async (req, res) => {
+    if (!req.session.uid) {
+        res.json({msg: 'User is not authenticated'});
+    } else {
+        const {productId} = req.body;
+
+        const user = await User.findOne({_id: req.session.uid});
+        const {cart} = user;
+
+        for (let i=0; i < cart.length; i++) {
+            if (productId === cart[i]) {
+                cart.slice(i, 1);
+                break;
+            } 
+        }
+        
+        await User.updateOne({_id: req.body.uid}, {cart});
+
+        res.json({msg: 'Cart Updated'});
     }
 }

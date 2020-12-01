@@ -1,6 +1,5 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import AuthContainer from './components/auth/AuthContainer';
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ForgotPassword from './components/auth/ForgotPassword';
@@ -9,6 +8,7 @@ import ProductDepartment from './components/products/ProductDeparment';
 import CreateProduct from './components/products/CreateProduct';
 import Profile from './components/profile/Profile';
 import DeadPage from "./components/layout/DeadPage";
+import Navbar from './components/layout/Navbar';
 import './App.css';
 
 function App() {
@@ -16,8 +16,9 @@ function App() {
     <div>
       
       <BrowserRouter>
+        < Navbar />
+
         <Switch>
-          <Route exact path ='/auth/:page' component = {AuthContainer}/>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/register' component={Register}/>
           <Route exact path='/forgot_password' component={ForgotPassword}/>
