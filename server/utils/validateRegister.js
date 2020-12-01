@@ -1,4 +1,5 @@
 import bcyrpt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import User from '../models/user';
 
 export const validateRegister = async (req) => {
@@ -50,6 +51,8 @@ export const validateRegister = async (req) => {
         const newUser = new User({...req.body, password: hashedPassword, cart: []});
                 
         user = await newUser.save();
+        
+        user._doc.token = jwt.sign({_id : user._id}, process.env.JWT_SECRET);
         user.password = '';
         
         req.session.uid = user._id;

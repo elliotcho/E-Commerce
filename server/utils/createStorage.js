@@ -1,7 +1,7 @@
 import multer from 'multer';
 import path from 'path';
 
-export const initImgStorage = (type) => {
+export const createStorage = (type) => {
     const destination = path.join(__dirname, '../', `images/${type}`);
 
     const storage = multer.diskStorage({

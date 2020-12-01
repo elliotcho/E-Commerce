@@ -5,11 +5,11 @@ import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
 import { validateLogin } from '../utils/validateLogin';
 import { validateRegister } from '../utils/validateRegister';
-import { initImgStorage } from '../utils/initImgStorage';
+import { createStorage } from '../utils/createStorage';
 import path from 'path';
 import fs from 'fs';
 
-const profileUpload = initImgStorage('profile');
+const profileUpload = createStorage('profile');
 
 export const login = async (req, res) => {
     const userResponse = await validateLogin(req);
@@ -123,7 +123,7 @@ export const logout = async (req, res) => {
     res.json( { msg });
 }
 
-export const deleteUser = async(req, res) => {
+export const deleteUser = async (req, res) => {
     if(!req.session.uid){
         res.json({ msg: 'User is not authenticated'});
     } else{

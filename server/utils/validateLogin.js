@@ -1,4 +1,5 @@
 import bcyrpt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import User from '../models/user';
 
 export const validateLogin = async (req) => {
@@ -27,7 +28,9 @@ export const validateLogin = async (req) => {
         const valid = await bcyrpt.compare(password, user.password);
 
         if(valid){
+            user._doc.token = jwt.sign({_id : user._id}, process.env.JWT_SECRET);
             user.password = '';
+
             req.session.uid = user._id;
         } else{
             errors.push({
