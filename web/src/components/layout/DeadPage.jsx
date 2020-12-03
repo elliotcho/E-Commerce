@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './css/DeadPage.css';
 
 function DeadPage(props){
-    const goBack = (e) => {
+    const goBack = async (e) => {
         e.preventDefault();
         props.history.goBack();
     }

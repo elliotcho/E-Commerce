@@ -16,9 +16,6 @@ class ProductDepartment extends Component {
         const department = response.data;
   
         this.setState({sameDepartment:department});
-        
-
-
     }
 
     render(){

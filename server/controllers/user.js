@@ -1,6 +1,5 @@
 import bcyrpt from 'bcrypt';
 import User from '../models/user';
-import Product from '../models/product';
 import { redis } from '../app'; 
 import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
@@ -63,7 +62,7 @@ export const changePassword = async (req, res) => {
         const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt)
 
         await User.updateOne({_id: uid}, {password: hashedPassword});
-        req.session.uid = user._id;
+        req.user._id = user._id;
         
         res.json({ user, errors });
     } 
@@ -81,14 +80,14 @@ export const changeUsername = async (req, res) => {
     }
 
     else{
-        await User.updateOne({ _id: req.session.uid } , { username: req.body.username });
+        await User.updateOne({ _id: req.user._id } , { username: req.body.username });
         res.json({msg: 'Username changed successfully'});
     }
 }
 
 export const loadProfilePic = async (req, res) => {
-    const { uid } = req.session;
-    const user = await User.findOne({ _id : uid });
+    const { _id } = req.user;
+    const user = await User.findOne({ _id });
 
     if(user && user.profilePic){
         res.sendFile(path.join(__dirname, '../', `images/profile/${user.profilePic}`));
@@ -103,7 +102,7 @@ export const changeProfilePic = async (req, res) => {
             console.log(err);
         }
 
-        const user = await User.findOne({ _id: req.session.uid });
+        const user = await User.findOne({ _id: req.user._id });
         const { profilePic } = user;
     
         if(profilePic){
@@ -114,49 +113,28 @@ export const changeProfilePic = async (req, res) => {
             });
         } 
 
-        await User.updateOne( { _id: req.session.uid } , {profilePic: req.file.filename});
+        await User.updateOne( { _id: req.user._id } , {profilePic: req.file.filename});
         res.json({msg: 'Success'});
    });
 }
 
-export const logout = async (req, res) => {
-    const msg = await clearSession(req, res);
-    res.json( { msg });
-}
-
 export const deleteUser = async (req, res) => {
-    if(!req.session.uid){
-        res.json({ msg: 'User is not authenticated'});
-    } else{
-        await User.deleteOne({ _id : req.session.uid });
-
-        const msg = await clearSession(req, res);
-        res.json( { msg });     
-    }
-}
-
-const clearSession = async (req, res) => {
-    try { 
-        req.session.destroy();
-        res.clearCookie(process.env.COOKIE_NAME);
-        return 'Success';
-    } catch (err) {
-        return 'Something went wrong';
-    }
+    await User.deleteOne({ _id : req.user._id });
+    res.json( { msg: 'Success' });     
 }
 
 export const addToCart = async (req, res) => {
-    if (!req.session.uid) {
+    if (!req.user) {
         res.json({msg: 'User is not authenticated'});
     } else{
         const {productId} = req.body;
 
-        const user = await User.findOne({_id: req.session.uid});
+        const user = await User.findOne({_id: req.user._id});
 
         const {cart} = user
         cart.push(productId);
 
-        await User.updateOne({_id: req.session.uid}, {cart});
+        await User.updateOne({_id: req.user._id}, {cart});
 
         res.json({msg: 'Cart Updated'});
 
@@ -164,12 +142,12 @@ export const addToCart = async (req, res) => {
 }
 
 export const deleteFromCart = async (req, res) => {
-    if (!req.session.uid) {
+    if (!req.user) {
         res.json({msg: 'User is not authenticated'});
     } else {
         const {productId} = req.body;
 
-        const user = await User.findOne({_id: req.session.uid});
+        const user = await User.findOne({_id: req.user._id});
         const {cart} = user;
 
         for (let i=0; i < cart.length; i++) {
@@ -179,7 +157,7 @@ export const deleteFromCart = async (req, res) => {
             } 
         }
         
-        await User.updateOne({_id: req.body.uid}, {cart});
+        await User.updateOne({_id: req.user._id}, {cart});
 
         res.json({msg: 'Cart Updated'});
     }

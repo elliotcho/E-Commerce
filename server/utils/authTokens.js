@@ -1,3 +1,4 @@
+import { User } from '../models/user';
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
 
@@ -9,7 +10,7 @@ export const createTokens = async (user, secret, secret2) => {
     return [token, refreshToken];
 }
 
-export const refreshTokens = async (token, refreshToken, User) => {
+export const refreshTokens = async (token, refreshToken) => {
     let uid;
 
     try {
