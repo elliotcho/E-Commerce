@@ -1,5 +1,5 @@
 import bcyrpt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import { createTokens } from './authTokens';
 import User from '../models/user';
 
 export const validateRegister = async (req) => {
@@ -52,10 +52,12 @@ export const validateRegister = async (req) => {
                 
         user = await newUser.save();
         
-        user._doc.token = jwt.sign({_id : user._id}, process.env.JWT_SECRET);
+        const refreshTokenSecret = user.password + process.env.REFRESH_SECRET;
+        const [ token , refreshToken ] = await createTokens(user, process.env.JWT_SECRET, refreshTokenSecret);
+
+        user._doc.token = token;
+        user._doc.refreshToken = refreshToken;
         user.password = '';
-        
-        req.session.uid = user._id;
     }
 
     return { user, errors };

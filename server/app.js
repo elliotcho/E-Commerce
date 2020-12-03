@@ -1,41 +1,19 @@
 import dotenv from 'dotenv';
 import cors from 'cors';
-import Redis from 'ioredis';
-import connectRedis from 'connect-redis';
-import session from 'express-session';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import express from 'express';
+import Redis from 'ioredis';
 import userRouter from './routes/user';
 import productRouter from './routes/product';
 
 dotenv.config();
 const app = express();
 
-//redis cache set up
-const RedisStore = connectRedis(session);
+
 export const redis = new Redis();
 
-app.use(
-    session({
-        name: process.env.COOKIE_NAME,
-        store: new RedisStore({
-            client: redis,
-            disableTouch: true
-        }),
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 365,//1 year
-            httpOnly: true,  
-            sameSite: 'lax', //handles csrf 
-            secure: false //cookie only works in https
-        }
-    })
-);
-
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors('*'));
 app.use(bodyParser.json());
 
 //db set up

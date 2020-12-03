@@ -2,7 +2,6 @@ import { API } from '../constants';
 import axios from 'axios';
 
 const config = {headers: {'content-type': 'application/json'}};
-axios.defaults.withCredentials = true;
 
 export const register = async (data) => {
     const response = await axios.post(`${API}/api/user/register`, data, config);
@@ -11,6 +10,7 @@ export const register = async (data) => {
 
     if(user){
         window.localStorage.setItem('token', user.token);
+        window.localStorage.setItem('refreshToken', user.refreshToken);
     }
 
     return userResponse;
@@ -23,6 +23,7 @@ export const login = async (data) => {
 
     if(user){
         window.localStorage.setItem('token', user.token);
+        window.localStorage.setItem('refreshToken', user.refreshToken);
     }
 
     return userResponse;
