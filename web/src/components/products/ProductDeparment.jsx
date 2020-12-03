@@ -16,9 +16,6 @@ class ProductDepartment extends Component {
         const department = response.data;
   
         this.setState({sameDepartment:department});
-        
-
-
     }
 
     render(){
@@ -26,7 +23,7 @@ class ProductDepartment extends Component {
             console.log(sameDepartment);
         return(
             <div>
-            
+                
             </div>
         )
     }

@@ -8,7 +8,10 @@ import {
     changePassword,
     deleteUser,
     changeProfilePic,
-    loadProfilePic
+    loadProfilePic,
+    addToCart,
+    deleteFromCart,
+    loadCart
 } from '../controllers/user';
 
 const router = express.Router();
@@ -22,5 +25,8 @@ router.post('/change_password', changePassword);
 router.get('/profile_pic', loadProfilePic);
 router.post('/profile_pic', changeProfilePic);
 router.delete('/', deleteUser);
+router.post('/', addToCart);
+router.post('/', deleteFromCart);
+router.post('/', loadCart);
 
 export default router;
