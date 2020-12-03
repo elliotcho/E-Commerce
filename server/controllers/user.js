@@ -184,3 +184,4 @@ export const deleteFromCart = async (req, res) => {
         res.json({msg: 'Cart Updated'});
     }
 }
+
