@@ -1,0 +1,11 @@
+.profile {
+    height: 100vh; 
+    background-color: #E4E9FD;
+    background-image: -webkit-linear-gradient(90deg, #222831 70%, #8ec6c5 50%);
+    text-align: center;
+}
+
+.profile i {
+    font-size: 6rem;
+    margin: 2rem 0 1.4rem;
+}
