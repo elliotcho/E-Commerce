@@ -1,18 +1,31 @@
 import { API } from '../constants';
 import axios from 'axios';
 
-const config = {headers: {'content-type': 'application/json'}, withCredentials: true};
-axios.defaults.withCredentials = true;
+const config = {headers: {'content-type': 'application/json'}};
 
 export const register = async (data) => {
     const response = await axios.post(`${API}/api/user/register`, data, config);
     const userResponse = response.data;
+    const { user } = userResponse;
+
+    if(user){
+        window.localStorage.setItem('token', user.token);
+        window.localStorage.setItem('refreshToken', user.refreshToken);
+    }
+
     return userResponse;
 }
 
 export const login = async (data) => {
     const response = await axios.post(`${API}/api/user/login`, data, config);
     const userResponse = response.data;
+    const { user } = userResponse;
+
+    if(user){
+        window.localStorage.setItem('token', user.token);
+        window.localStorage.setItem('refreshToken', user.refreshToken);
+    }
+
     return userResponse;
 }
 

@@ -1,4 +1,5 @@
 import bcyrpt from 'bcrypt';
+import { createTokens } from './authTokens';
 import User from '../models/user';
 
 export const validateLogin = async (req) => {
@@ -27,8 +28,12 @@ export const validateLogin = async (req) => {
         const valid = await bcyrpt.compare(password, user.password);
 
         if(valid){
+            const refreshTokenSecret = user.password + process.env.REFRESH_SECRET;
+            const [ token , refreshToken ] = await createTokens(user, process.env.JWT_SECRET, refreshTokenSecret);
+
+            user._doc.token = token;
+            user._doc.refreshToken = refreshToken;
             user.password = '';
-            req.session.uid = user._id;
         } else{
             errors.push({
                 field: 'Password', 

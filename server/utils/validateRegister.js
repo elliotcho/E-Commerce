@@ -1,4 +1,5 @@
 import bcyrpt from 'bcrypt';
+import { createTokens } from './authTokens';
 import User from '../models/user';
 
 export const validateRegister = async (req) => {
@@ -50,9 +51,13 @@ export const validateRegister = async (req) => {
         const newUser = new User({...req.body, password: hashedPassword, cart: []});
                 
         user = await newUser.save();
-        user.password = '';
         
-        req.session.uid = user._id;
+        const refreshTokenSecret = user.password + process.env.REFRESH_SECRET;
+        const [ token , refreshToken ] = await createTokens(user, process.env.JWT_SECRET, refreshTokenSecret);
+
+        user._doc.token = token;
+        user._doc.refreshToken = refreshToken;
+        user.password = '';
     }
 
     return { user, errors };
