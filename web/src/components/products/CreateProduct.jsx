@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-
+import { createProduct } from '../../api/product';
 import './css/CreateProduct.css';
 
 class CreateProduct extends Component {
@@ -8,9 +7,11 @@ class CreateProduct extends Component {
         super();
 
         this.state = {
-            price: null,
-            productName: '',
-            departmentId: ''
+            name: '',
+            departmentId: '',
+            description: {},
+            image: null,
+            price: 0
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,7 +24,8 @@ class CreateProduct extends Component {
 
     async handleSubmit(e){
         e.preventDefault();
-        await axios.post('http://localhost:5000/api/product', this.state);
+
+        await createProduct(this.state);
     }
 
     render(){

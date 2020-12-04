@@ -1,4 +1,4 @@
-export const afterMiddleware = (response) => {
+export const authAfterware = (response) => {
     const { headers } = response; 
 
     const token = headers['x-token'];
