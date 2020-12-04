@@ -11,7 +11,7 @@ export const createStorage = (type) => {
             const label = `${type.toUpperCase()}-`
             const extension = path.extname(file.originalname);
 
-            cb(null,  label + req.session.uid + Date.now() + extension);
+            cb(null,  label + req.user._id + Date.now() + extension);
 
         }
     });

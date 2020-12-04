@@ -41,6 +41,7 @@ class CreateProduct extends Component {
                         type='text'
                         required
                     />
+
                     <label htmlFor="departmentId">Department ID</label>
                     <input 
                         name='departmentId'
@@ -49,6 +50,7 @@ class CreateProduct extends Component {
                         type="text"
                         required
                     />
+
                     <label htmlFor="price">Price</label>
                     <input 
                         name='price'
@@ -58,6 +60,7 @@ class CreateProduct extends Component {
                         placeholder='$'
                         required
                     />
+                    
                     <button className='btn btn-block btn-outline-primary' style={{verticalAlign:'middle'}}>
                         <span>Create </span></button>
                 </form>
