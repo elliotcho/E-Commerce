@@ -33,6 +33,7 @@ class CreateProduct extends Component {
             <div className='createProduct'>
                 <form onSubmit={this.handleSubmit}>
                     <h1>List Your Product</h1>
+
                     <label htmlFor="productName">Product Name</label>
                     <input 
                         name='productName'
@@ -60,9 +61,10 @@ class CreateProduct extends Component {
                         placeholder='$'
                         required
                     />
-                    
+
                     <button className='btn btn-block btn-outline-primary' style={{verticalAlign:'middle'}}>
-                        <span>Create </span></button>
+                        <span>Create</span>
+                    </button>
                 </form>
             </div>
         );
