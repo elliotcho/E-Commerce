@@ -1,24 +1,36 @@
-import { Product } from '../models/product';
+import { Product, Description } from '../models/product';
+import { createStorage } from '../utils/createStorage';
+
+const productUpload = createStorage('product');
 
 export const createProduct = async (req, res) => {
-    const { price, productName, departmentId } = req.body;
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        productUpload(req, res, async err => {
+            if(err){
+                console.log(err);
+            }
+    
+            const { name, price, description, departmentId } = req.body;
+            
+            const newDescription = new Description({...description});
+    
+            const newProduct = ({
+                userId: req.user._id,
+                departmentId,
+                image: req.file.filename,
+                description: newDescription,
+                datePosted: new Date(),
+                name,
+                price
+            });
 
-    // const newDescription = new Description({
-    //     ...description
-    // });
+            const product = await newProduct.save();
 
-    const newProduct = new Product ({
-        // description: newDescription,
-        price,
-        datePosted: new Date(),
-        // userId,
-        productName,
-        departmentId
-    });
-
-   await newProduct.save();
-
-    res.json({msg: "Success"})
+            res.json({ ok: true, product });
+       });  
+    }
 }
 
 export const deleteProduct = async (req, res) => {

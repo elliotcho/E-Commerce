@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
-import { login } from '../../routes/authRoutes';
+import { login } from '../../api/auth';
 import './css/Login.css';
 
 class Login extends Component{

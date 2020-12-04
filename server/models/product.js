@@ -1,20 +1,44 @@
 import mongoose from 'mongoose';
 
 const DescriptionSchema = new mongoose.Schema({
-    summary: String,
-    color: String,
-    size: String,
-    manufacture: String
+    content:{
+        type: String
+    },
+    color: {
+        type: String
+    },
+    size: {
+        type: String
+    },
+    brand: {
+        type: String
+    }
 });
 
 const ProductSchema = new mongoose.Schema({
-    //userId: String,
-    datePosted: Date,
-    price: String,
-    //description: DescriptionSchema,
-    productName: String,
-    departmentId: String
+    name: {
+        type: String,
+        trim: true
+    },
+    image: {
+        type: String
+    },
+    price: {
+        type: Number
+    },
+    description: {
+        type: DescriptionSchema
+    },
+    userId: {
+        type: String
+    },
+    departmentId: {
+        type: String
+    },
+    datedPosted: {
+        type: Date
+    }
 });
 
-//export const Description = mongoose.model('description', DescriptionSchema);
+export const Description = mongoose.model('description', DescriptionSchema);
 export const Product = mongoose.model('product', ProductSchema);

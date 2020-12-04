@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-
+import { createProduct } from '../../api/product';
 import './css/CreateProduct.css';
 
 class CreateProduct extends Component {
@@ -8,9 +7,11 @@ class CreateProduct extends Component {
         super();
 
         this.state = {
-            price: null,
-            productName: '',
-            departmentId: ''
+            name: '',
+            departmentId: '',
+            description: {},
+            image: null,
+            price: 0
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,7 +24,8 @@ class CreateProduct extends Component {
 
     async handleSubmit(e){
         e.preventDefault();
-        await axios.post('http://localhost:5000/api/product', this.state);
+
+        await createProduct(this.state);
     }
 
     render(){
@@ -33,6 +35,7 @@ class CreateProduct extends Component {
             <div className='createProduct'>
                 <form onSubmit={this.handleSubmit}>
                     <h1>List Your Product</h1>
+
                     <label htmlFor="productName">Product Name</label>
                     <input 
                         name='productName'
@@ -41,6 +44,7 @@ class CreateProduct extends Component {
                         type='text'
                         required
                     />
+
                     <label htmlFor="departmentId">Department ID</label>
                     <input 
                         name='departmentId'
@@ -49,6 +53,7 @@ class CreateProduct extends Component {
                         type="text"
                         required
                     />
+
                     <label htmlFor="price">Price</label>
                     <input 
                         name='price'
@@ -58,8 +63,10 @@ class CreateProduct extends Component {
                         placeholder='$'
                         required
                     />
+
                     <button className='btn btn-block btn-outline-primary' style={{verticalAlign:'middle'}}>
-                        <span>Create </span></button>
+                        <span>Create</span>
+                    </button>
                 </form>
             </div>
         );

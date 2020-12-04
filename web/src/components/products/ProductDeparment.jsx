@@ -7,24 +7,30 @@ class ProductDepartment extends Component {
         super();
 
         this.state = {
-            sameDepartment: null
+            products: []
         }
     }
 
     async componentDidMount(){
         const response = await axios.get('http://localhost:5000/api/product/department/woo');
-        const department = response.data;
-  
-        this.setState({sameDepartment:department});
+        this.setState({products: response.data});
     }
 
     render(){
-            const {sameDepartment} = this.state;
-            console.log(sameDepartment);
+        const {products} = this.state;
+
         return(
             <div>
-                
-            </div>
+                {products.map(p => 
+                    <div key = {p._id}>
+                        <div>
+                            {p.productName}
+                        </div>
+
+                        <strong>{p.datePosted}</strong>
+                    </div>
+                )}
+            </div>        
         )
     }
 }
