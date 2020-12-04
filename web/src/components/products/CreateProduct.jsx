@@ -14,59 +14,83 @@ class CreateProduct extends Component {
             price: 0
         }
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.changeField = this.changeField.bind(this);
+        this.changeDescription = this.changeDescription.bind(this);
+        this.changeImage = this.changeImage.bind(this);
+    }
+    
+    changeField(e){
+        this.setState({[e.target.name] : e.target.value});
     }
 
-    handleChange(e){
-        this.setState({[e.target.name]: e.target.value});
+    changeDescription(e){
+        const { description } = this.state;
+
+        description[e.target.name] = e.target.value;
+
+        this.setState( { description });
     }
 
-    async handleSubmit(e){
-        e.preventDefault();
-
-        await createProduct(this.state);
+    changeImage(e){
+        this.setState({image: e.target.files[0]});
     }
 
     render(){
-        const {price, productName, departmentId} = this.state;
+        const { name, price } = this.state;
 
         return(
-            <div className='createProduct'>
-                <form onSubmit={this.handleSubmit}>
-                    <h1>List Your Product</h1>
-
-                    <label htmlFor="productName">Product Name</label>
-                    <input 
-                        name='productName'
-                        value={productName}
-                        onChange={this.handleChange}
-                        type='text'
-                        required
+            <div className='create-product'>
+                <form>
+                    <input
+                        type = 'text'
+                        name = 'name'
+                        placeholder = 'Product name...'
+                        onChange = {this.changeField}
+                        value = {name}
                     />
 
-                    <label htmlFor="departmentId">Department ID</label>
-                    <input 
-                        name='departmentId'
-                        value={departmentId}
-                        onChange={this.handleChange}
-                        type="text"
-                        required
+                    <input
+                        type = 'number'
+                        name = 'price'
+                        min = '0'
+                        step = '0.01'
+                        onChange = {this.changeField}
+                        value = {price}
                     />
 
-                    <label htmlFor="price">Price</label>
-                    <input 
-                        name='price'
-                        value={price}
-                        onChange={this.handleChange} 
-                        type="number" 
-                        placeholder='$'
-                        required
+                    <input
+                        type = 'file'
+                        onChange = {this.changeImage}
+                        accept = 'jpg jpeg png'
                     />
 
-                    <button className='btn btn-block btn-outline-primary' style={{verticalAlign:'middle'}}>
-                        <span>Create</span>
-                    </button>
+                    <input
+                        type = 'text'
+                        name = 'content'
+                        placeholder = 'Description...'
+                        onChange = {this.changeDescription}
+                    />
+
+                    <input 
+                        type = 'text'
+                        name = 'color'
+                        placeholder = 'Color...'
+                        onChange = {this.changeDescription}
+                    />
+
+                    <input
+                        type = 'text'
+                        name = 'size'
+                        placeholder = 'Size...'
+                        onChange = {this.changeDescription}
+                    />
+
+                    <input
+                        type = 'text'
+                        name = 'brand'
+                        placeholder = 'Brand...'
+                        onChange = {this.changeDescription}
+                    />
                 </form>
             </div>
         );

@@ -1,72 +1,17 @@
-.createProduct {
-    display: flex;
-    height: 100vh;
-    background-color: #9ad3bc;
-}
-
-.createProduct form {
-    margin: 10% auto;
-    border: 9px groove #e6e7e5;
-    border-radius: 20px;
-    padding: 3%;
-}
-
-.createProduct h1 {
-    text-align: center;
-    font-family: 'Sansita Swashed', cursive;
-    word-spacing: 6px;
-}
-
-.createProduct label {
-    display: block;
-    margin-top: 10%;
-    font-family: 'Balsamiq Sans', cursive;
-    font-size: 17px;
-}
-
-.createProduct input {
-    width: 90%;
-    border-radius: 20px;
-    outline: none;
-    font-family: 'Balsamiq Sans', cursive;
-}
- /* fancy button */
- .createProduct .btn {
-    display: inline-block;
-    border-radius: 4px;
-    background-color: #89beb3;
-    border: none;
-    color: black;
-    text-align: center;
-    font-size: 24px;
-    width: 100%;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 20px auto;
-    font-family: 'Sansita Swashed', cursive;
-  }
-  
-  .createProduct .btn span {
-    cursor: pointer;
-    display: inline-block;
+.create-product {
     position: relative;
-    transition: 0.5s;
-  }
-  
-  .createProduct .btn span:after {
-    content: '\00bb';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-  }
-  
-  .createProduct .btn:hover span {
-    padding-right: 25px;
-  }
-  
-  .createProduct .btn:hover span:after {
-    opacity: 1;
-    right: 0;
-  }
+    width: 100%;
+    height: 92vh;
+    background-color: #9ad3bc;
+    overflow: hidden;
+}
+
+.create-product form{
+  width: 600px;
+  margin: 30px auto;
+}
+
+.create-product input{
+  margin-bottom: 20px;
+  display: block;
+}
