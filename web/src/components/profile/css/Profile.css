@@ -1,11 +1,48 @@
 .profile {
     height: 100vh; 
     background-color: #E4E9FD;
-    background-image: -webkit-linear-gradient(90deg, #222831 70%, #8ec6c5 50%);
+    background-image: -webkit-linear-gradient(90deg, #89beb3 71%, #8ec6c5 50%);
     text-align: center;
+    padding: 0 3%'';
+    overflow: auto;
 }
 
 .profile i {
-    font-size: 6rem;
-    margin: 2rem 0 1.4rem;
+    font-size: 6.6rem;
+    margin: 2rem 0 1rem;
+}
+
+.profile h3 {
+    border: 4px solid #5f5f9b;
+    border-radius: 30px;
+    width: 14%;
+    margin: 0 auto;
+    padding: 4px;
+    font-size: 21px;
+    font-family: 'Sansita Swashed', cursive;
+}
+
+.profile h3:hover {
+    background-color: #89beb3;
+}
+
+.profile .stats {
+    margin: 4rem 2rem;
+    border: 6px solid #393e46;
+    border-radius: 30px/20px;
+    font-family: 'Balsamiq Sans', cursive;
+}
+
+.profile .stats h2 {
+    border: 4px solid #965d62;
+    border-radius: 30px;
+    width: 74%;
+    margin: 20px auto;
+    padding: 4px;
+    font-size: 21px;
+    font-family: 'Sansita Swashed', cursive;
+}
+.profile .stats h2:hover {
+    background-color: #ebcfc4;
+    
 }
