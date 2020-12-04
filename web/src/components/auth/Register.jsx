@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { register } from '../../routes/authRoutes';
+import { register } from '../../api/auth';
 import './css/Register.css';
 
 class Register extends Component{

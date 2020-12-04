@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { changePassword } from '../../routes/authRoutes';
+import { changePassword } from '../../api/auth';
 
 class ChangePassword extends Component{
     constructor(){

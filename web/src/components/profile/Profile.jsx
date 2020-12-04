@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-
 import './css/Profile.css';
 
-
 class Profile extends Component{
-    constructor(){
-        super();
-
-
-    }
-
     render(){
         return(
             <div className='profile'>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { forgotPassword } from '../../routes/authRoutes';
+import { forgotPassword } from '../../api/auth';
 
 class ForgotPassword extends Component{
     constructor(){
@@ -42,7 +42,6 @@ class ForgotPassword extends Component{
                             placeholder='Your email here'
                             onChange={this.handleChange}
                         />
-
 
                         <button className='btn btn-success'>
                             Submit
