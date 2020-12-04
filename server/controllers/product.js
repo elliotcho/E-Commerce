@@ -56,3 +56,12 @@ export const getProductInDepartment = async (req, res) => {
 
     res.json(sameDepartment);
 }
+
+export const getUserProducts = async (req, res) => {
+    const userId = req.user._id;
+
+    const userProducts = await Product.find({userId});
+
+    res.json(userProducts);
+}
+
