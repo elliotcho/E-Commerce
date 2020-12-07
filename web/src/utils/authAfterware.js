@@ -4,6 +4,11 @@ export const authAfterware = (response) => {
     const token = headers['x-token'];
     const refreshToken = headers['x-refresh-token'];
 
-    window.localStorage.setItem('token', token);
-    window.localStorage.setItem('refreshToken', refreshToken);
+    if(token){
+        window.localStorage.setItem('token', token);
+    }
+
+    if(refreshToken){
+        window.localStorage.setItem('refreshToken', refreshToken);
+    }
 }

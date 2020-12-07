@@ -5,11 +5,11 @@ import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
 import { validateLogin } from '../utils/validateLogin';
 import { validateRegister } from '../utils/validateRegister';
-import { createStorage } from '../utils/createStorage';
+import { createUpload } from '../utils/createUpload';
 import path from 'path';
 import fs from 'fs';
 
-const profileUpload = createStorage('profile');
+const profileUpload = createUpload('profile');
 
 export const login = async (req, res) => {
     const userResponse = await validateLogin(req);

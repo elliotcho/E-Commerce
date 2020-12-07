@@ -4,7 +4,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ForgotPassword from './components/auth/ForgotPassword';
 import changePassword from './components/auth/ChangePassword';
-import ProductDepartment from './components/products/ProductDeparment';
+import ProductList from './components/products/ProductList';
 import CreateProduct from './components/products/CreateProduct';
 import Profile from './components/profile/Profile';
 import DeadPage from "./components/layout/DeadPage";
@@ -24,7 +24,7 @@ function App() {
           <Route exact path='/forgot_password' component={ForgotPassword}/>
           <Route exact path='/change_password/:token' component={changePassword}/>
           <Route exact path='/profile' component={Profile}/>
-          <Route exact path='/product' component={ProductDepartment}/>
+          <Route exact path='/product/:dept' component={ProductList}/>
           <Route exact path='/create_product' component={CreateProduct}/>
           <Route path='/' component={DeadPage}/>
         </Switch>

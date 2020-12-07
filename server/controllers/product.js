@@ -1,7 +1,7 @@
 import { Product, Description } from '../models/product';
-import { createStorage } from '../utils/createStorage';
+import { createUpload } from '../utils/createUpload';
 
-const productUpload = createStorage('product');
+const productUpload = createUpload('product');
 
 export const createProduct = async (req, res) => {
     if(!req.user){
@@ -16,7 +16,7 @@ export const createProduct = async (req, res) => {
             
             const newDescription = new Description({...description});
     
-            const newProduct = ({
+            const newProduct = new Product({
                 userId: req.user._id,
                 departmentId,
                 image: req.file.filename,
@@ -64,4 +64,3 @@ export const getUserProducts = async (req, res) => {
 
     res.json(userProducts);
 }
-

@@ -17,6 +17,7 @@ class CreateProduct extends Component {
         this.changeField = this.changeField.bind(this);
         this.changeDescription = this.changeDescription.bind(this);
         this.changeImage = this.changeImage.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     
     changeField(e){
@@ -35,18 +36,43 @@ class CreateProduct extends Component {
         this.setState({image: e.target.files[0]});
     }
 
+    async handleSubmit(e){
+        e.preventDefault();
+        const { name, departmentId, description, image, price } = this.state;
+
+        const formData = new FormData();
+
+        formData.append('name', name);
+        formData.append('departmentId', departmentId);
+        formData.append('description', description);
+        formData.append('image', image);
+        formData.append('price', price);
+
+        await createProduct(formData);
+
+        this.props.history.push('/');
+    }
+
     render(){
-        const { name, price } = this.state;
+        const { name, price, departmentId } = this.state;
 
         return(
             <div className='create-product'>
-                <form>
+                <form onSubmit = {this.handleSubmit}>
                     <input
                         type = 'text'
                         name = 'name'
                         placeholder = 'Product name...'
                         onChange = {this.changeField}
                         value = {name}
+                    />
+
+                    <input
+                        type = 'text'
+                        name = 'departmentId'
+                        placeholder ='Department...'
+                        onChange = {this.changeField}
+                        value = {departmentId}
                     />
 
                     <input
@@ -91,6 +117,8 @@ class CreateProduct extends Component {
                         placeholder = 'Brand...'
                         onChange = {this.changeDescription}
                     />
+
+                    <button>Submit Product</button>
                 </form>
             </div>
         );

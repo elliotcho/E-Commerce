@@ -3,15 +3,18 @@ import { authMiddleware } from '../utils/authMiddlware';
 import { authAfterware } from '../utils/authAfterware';
 import axios from 'axios';
 
-const config = {headers: {'content-type': 'application/json'}};
+const config = {headers: {'content-type': 'multipart/form-data'}};
 
 export const createProduct = async (data) => {
     const response = await axios.post(`${API}/api/product`, data, authMiddleware(config));
     const { ok, product } = response.data
 
     if(ok){
-        console.log(product);
+        authAfterware(response);
+        return product;
     }
+}
 
-    authAfterware(response);
+export const getProductsByDepartment = () => {
+    
 }
