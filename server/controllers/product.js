@@ -1,5 +1,6 @@
 import { Product, Description } from '../models/product';
 import { createUpload } from '../utils/createUpload';
+import path from 'path';
 
 const productUpload = createUpload('product');
 
@@ -45,22 +46,38 @@ export const getProduct = async (req, res) => {
     const {id} = req.params;
     
     const product = await Product.findOne({_id:id});
+    product.image = '';
 
     res.json(product);
 }
 
-export const getProductInDepartment = async (req, res) => {
-    const {departmentId} = req.params;
+export const getProductImage = async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findOne({ _id: id });
+ 
+    if(product && product.image){
+        res.sendFile(path.join(__dirname, '../', `images/product/${product.image}`));
+    } else{
+        res.sendFile(null);
+    }
+}
 
-    const sameDepartment = await Product.find({departmentId});
+export const getProductsByDepartment = async (req, res) => {
+    const products = await Product.find({ departmentId : req.params.dept });
 
-    res.json(sameDepartment);
+    products.forEach(p => {
+        p.image = '';
+    });
+
+    res.json(products);
 }
 
 export const getUserProducts = async (req, res) => {
-    const userId = req.user._id;
+    const products = await Product.find({ userId : req.user._id });
 
-    const userProducts = await Product.find({userId});
+    products.forEach(p => {
+        p.image = '';
+    });
 
-    res.json(userProducts);
+    res.json(products);
 }

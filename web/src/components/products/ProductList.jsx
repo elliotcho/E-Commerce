@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-
+import { getProductsByDepartment } from '../../api/product';
 
 class ProductList extends Component {
     constructor(){
@@ -12,22 +11,30 @@ class ProductList extends Component {
     }
 
     async componentDidMount(){
-        const response = await axios.get('http://localhost:5000/api/product/department/woo');
-        this.setState({products: response.data});
+        const { dept } = this.props.match.params;
+
+        const products = await getProductsByDepartment(dept);
+
+        this.setState({ products });
     }
 
     render(){
-        const {products} = this.state;
+        const { products } = this.state;
 
         return(
             <div>
                 {products.map(p => 
                     <div key = {p._id}>
                         <div>
-                            {p.productName}
+                            {p.name}
                         </div>
 
-                        <strong>{p.datePosted}</strong>
+                        <img
+                            src = {p.image}
+                            alt = 'product'
+                            width='150'
+                            height='150'
+                        />
                     </div>
                 )}
             </div>        
