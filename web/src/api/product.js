@@ -22,7 +22,7 @@ export const getProductsByDepartment = async (dept) => {
     for(let i=0;i<products.length;i++){
         const config = { responseType: 'blob'};
 
-        const result = await axios.get( `${API}/api/product/image/${products[i]._id}`, config);
+        const result = await axios.get(`${API}/api/product/image/${products[i]._id}`, config);
         const file = result.data;
         
         products[i].image = URL.createObjectURL(file);
@@ -32,20 +32,28 @@ export const getProductsByDepartment = async (dept) => {
 }
 
 export const getUserProducts = async () => {
-    const config = {header: {}}
+    const config = { headers: {} };
 
-    const response = axios.get(`${API}/api/product/profile`, authMiddleware(config));
-    const products = response.data;
+    const response = await axios.get(`${API}/api/product/profile`, authMiddleware(config));
+    const products= response.data;
 
     for(let i=0;i<products.length;i++){
         const config = { responseType: 'blob'};
 
-        const result = await axios.get( `${API}/api/product/image/${products[i]._id}`, config);
+        const result = await axios.get(`${API}/api/product/image/${products[i]._id}`, config);
         const file = result.data;
         
         products[i].image = URL.createObjectURL(file);
     }
-
-    authAfterware(config);
+  
+    authAfterware(response);
     return products;
 }
+
+export const deleteProduct = async (id) => {
+    const config = {headers: {}};
+        
+    const response = await axios.delete(`${API}/api/product/${id}`, authMiddleware(config));
+
+    authAfterware(response);
+}   

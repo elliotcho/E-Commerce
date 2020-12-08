@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './css/Profile.css';
 import { getUserProducts } from '../../api/product';
-
+import Product from '../products/Product';
+import './css/Profile.css';
 
 class Profile extends Component{
     constructor(){
@@ -12,16 +12,18 @@ class Profile extends Component{
         }
     }
 
-    async componentDidMount() {
+    async componentDidMount(){
         const products = await getUserProducts();
-        this.setState({products});
+        this.setState({ products });
     }
 
     render(){
-        const {products} = this.state;
+        const { products } = this.state; 
+
         return(
             <div className='profile'>
-                <i className="fas fa-user-astronaut"></i>
+                <i class="fas fa-user-astronaut"></i>
+                
                 <h3>Master Elliot</h3>
 
                 <section className='container-fluid'>
@@ -32,11 +34,18 @@ class Profile extends Component{
                             <p>Successful Sales: </p>
                             <p>Average Rating: </p>
                         </div>
+                        
                         <div className='posts col-9'>
                             {products.map(p => 
-
-                            <div key={p._id}>{p.name}</div>
-                                
+                                <Product
+                                    key = {p._id}
+                                    productId = {p._id}
+                                    image = {p.image}
+                                    name = {p.name}
+                                    price = {p.price}
+                                    userId = {p.userId}
+                                    description = {p.description}
+                                />
                             )}
                         </div>
                     </div>

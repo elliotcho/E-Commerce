@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { getProductsByDepartment } from '../../api/product';
+import { getProductsByDepartment, deleteProduct } from '../../api/product';
+import Product from './Product';
 
 class ProductList extends Component {
     constructor(){
@@ -8,13 +9,28 @@ class ProductList extends Component {
         this.state = {
             products: []
         }
+
+        this.deleteProductFromList = this.deleteProductFromList.bind(this);
     }
 
     async componentDidMount(){
         const { dept } = this.props.match.params;
 
         const products = await getProductsByDepartment(dept);
+        this.setState({ products });
+    }
 
+    async deleteProductFromList(id){
+        const { products } = this.state;
+
+        for(let i=0;i<products.length;i++){
+            if(products[i]._id === id){
+                products.splice(i, 1);
+                break;
+            }
+        }
+
+        await deleteProduct(id);
         this.setState({ products });
     }
 
@@ -24,18 +40,16 @@ class ProductList extends Component {
         return(
             <div>
                 {products.map(p => 
-                    <div key = {p._id}>
-                        <div>
-                            {p.name}
-                        </div>
-
-                        <img
-                            src = {p.image}
-                            alt = 'product'
-                            width='150'
-                            height='150'
-                        />
-                    </div>
+                    <Product
+                        key = {p._id}
+                        productId = {p._id}
+                        description = {p.description}
+                        deleteProduct = {this.deleteProductFromList}
+                        image = {p.image}
+                        name = {p.name}
+                        price = {p.price}
+                        userId = {p.userId}
+                    />
                 )}
             </div>        
         )
