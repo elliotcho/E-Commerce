@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
+import { getUserProducts } from '../../api/product';
+import Product from '../products/Product';
 import './css/Profile.css';
 
 class Profile extends Component{
+    constructor(){
+        super();
+
+        this.state = {
+            products: []
+        }
+    }
+
+    async componentDidMount(){
+        const products = await getUserProducts();
+        this.setState({ products });
+    }
+
     render(){
+        const { products } = this.state; 
+
         return(
             <div className='profile'>
                 <i class="fas fa-user-astronaut"></i>
+                
                 <h3>Master Elliot</h3>
 
                 <section className='container-fluid'>
@@ -16,15 +34,17 @@ class Profile extends Component{
                             <p>Successful Sales: </p>
                             <p>Average Rating: </p>
                         </div>
+                        
                         <div className='posts col-9'>
-                            <h2>hella products</h2>
-                            <h2>hella products</h2>
-                            <h2>hella products</h2>
-                            <h2>hella products</h2>
-                            <h2>hella products</h2>
-                            <h2>hella products</h2>
-                            <h2>hella products</h2>
-                            <h2>hella products</h2>
+                            {products.map(p => 
+                                <Product
+                                    key = {p._id}
+                                    image = {p.image}
+                                    name = {p.name}
+                                    price = {p.price}
+                                    description = {p.description}
+                                />
+                            )}
                         </div>
                     </div>
                 </section>
