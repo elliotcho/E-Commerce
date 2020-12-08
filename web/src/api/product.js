@@ -30,3 +30,22 @@ export const getProductsByDepartment = async (dept) => {
 
     return products;
 }
+
+export const getUserProducts = async () => {
+    const config = {header: {}}
+
+    const response = axios.get(`${API}/api/product/profile`, authMiddleware(config));
+    const products = response.data;
+
+    for(let i=0;i<products.length;i++){
+        const config = { responseType: 'blob'};
+
+        const result = await axios.get( `${API}/api/product/image/${products[i]._id}`, config);
+        const file = result.data;
+        
+        products[i].image = URL.createObjectURL(file);
+    }
+
+    authAfterware(config);
+    return products;
+}
