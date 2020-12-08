@@ -39,6 +39,7 @@ class Profile extends Component{
                             {products.map(p => 
                                 <Product
                                     key = {p._id}
+                                    productId = {p._id}
                                     image = {p.image}
                                     name = {p.name}
                                     price = {p.price}

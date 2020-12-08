@@ -3,7 +3,13 @@ import decode from 'jwt-decode';
 import './css/Product.css';
 
 function Product({
-    image, name, price, userId, description: { content, color, brand, size }
+    productId,
+    description: { content, color, brand, size },
+    deleteProduct,
+    userId,
+    image, 
+    name, 
+    price
 }){
     let isOwner = false;
     let textSnippet = content;
@@ -21,7 +27,7 @@ function Product({
 
     return(
         <div className='product d-flex'>
-            <img src = {image} alt = 'product' />
+            <img src={image} alt='product' />
 
             <div className='ml-2 mt-2'>
                 <h2>{name}</h2>
@@ -42,7 +48,12 @@ function Product({
                 <p>Size: {size}</p>
                 <p>Color: {color}</p>
 
-                {isOwner? (<i className='fas fa-trash'/>): null}
+                {isOwner? 
+                    (<i 
+                        className='fas fa-trash'
+                        onClick = {() => {deleteProduct(productId)}}
+                    />) : null
+                }
             </div>
         </div>
     );

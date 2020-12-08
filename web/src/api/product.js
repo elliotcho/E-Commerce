@@ -50,6 +50,10 @@ export const getUserProducts = async () => {
     return products;
 }
 
-export const deleteProduct = () => {
-    
-}
+export const deleteProduct = async (id) => {
+    const config = {headers: {}};
+        
+    const response = await axios.delete(`${API}/api/product/${id}`, authMiddleware(config));
+
+    authAfterware(response);
+}   
