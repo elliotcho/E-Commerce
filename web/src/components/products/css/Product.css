@@ -3,6 +3,7 @@
     margin: 30px auto;
     font-family: 'Chakra Petch', sans-serif;
     border: solid black;
+    cursor: pointer;
 }
 
 .product img{ 

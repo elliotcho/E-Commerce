@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getUserProducts } from '../../api/product';
+import { getUserProducts, deleteProduct } from '../../api/product';
 import Product from '../products/Product';
 import './css/Profile.css';
 
@@ -10,10 +10,26 @@ class Profile extends Component{
         this.state = {
             products: []
         }
+
+        this.removeProduct = this.removeProduct.bind(this);
     }
 
     async componentDidMount(){
         const products = await getUserProducts();
+        this.setState({ products });
+    }
+
+    async removeProduct(id){
+        const { products } = this.state;
+
+        for(let i=0;i<products.length;i++){
+            if(products[i]._id === id){
+                products.splice(i, 1);
+                break;
+            }
+        }
+
+        await deleteProduct(id);
         this.setState({ products });
     }
 
@@ -40,11 +56,12 @@ class Profile extends Component{
                                 <Product
                                     key = {p._id}
                                     productId = {p._id}
+                                    description = {p.description}
+                                    deleteProduct = {this.removeProduct}
                                     image = {p.image}
                                     name = {p.name}
                                     price = {p.price}
                                     userId = {p.userId}
-                                    description = {p.description}
                                 />
                             )}
                         </div>

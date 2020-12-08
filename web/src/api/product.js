@@ -34,7 +34,7 @@ export const getProductsByDepartment = async (dept) => {
 export const getUserProducts = async () => {
     const config = { headers: {} };
 
-    const response = await axios.get(`${API}/api/product/profile`, authMiddleware(config));
+    const response = await axios.get(`${API}/api/product/user/profile`, authMiddleware(config));
     const products= response.data;
 
     for(let i=0;i<products.length;i++){
@@ -57,3 +57,14 @@ export const deleteProduct = async (id) => {
 
     authAfterware(response);
 }   
+
+export const getProductById = async (id) => {
+    const response = await axios.get(`${API}/api/product/${id}`);
+    const product = response.data;
+
+    const result = await axios.get(`${API}/api/product/image/${id}`, {responseType: 'blob'});
+    const file = result.data;
+    
+    product.image = URL.createObjectURL(file);
+    return product;
+}

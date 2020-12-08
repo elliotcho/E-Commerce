@@ -1,5 +1,6 @@
 import React from 'react';
 import decode from 'jwt-decode';
+import { withRouter } from 'react-router-dom';
 import './css/Product.css';
 
 function Product({
@@ -9,7 +10,8 @@ function Product({
     userId,
     image, 
     name, 
-    price
+    price,
+    history
 }){
     let isOwner = false;
     let textSnippet = content;
@@ -26,7 +28,12 @@ function Product({
     } catch (err) {}
 
     return(
-        <div className='product d-flex'>
+        <div 
+            className='product d-flex' 
+            onClick={() => {
+                history.push(`/product/${productId}`)}
+            }
+        >
             <img src={image} alt='product' />
 
             <div className='ml-2 mt-2'>
@@ -59,4 +66,4 @@ function Product({
     );
 }
 
-export default Product;
+export default withRouter(Product);

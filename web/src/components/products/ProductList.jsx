@@ -10,7 +10,7 @@ class ProductList extends Component {
             products: []
         }
 
-        this.deleteProductFromList = this.deleteProductFromList.bind(this);
+        this.removeProduct = this.removeProduct.bind(this);
     }
 
     async componentDidMount(){
@@ -20,7 +20,7 @@ class ProductList extends Component {
         this.setState({ products });
     }
 
-    async deleteProductFromList(id){
+    async removeProduct(id){
         const { products } = this.state;
 
         for(let i=0;i<products.length;i++){
@@ -44,7 +44,7 @@ class ProductList extends Component {
                         key = {p._id}
                         productId = {p._id}
                         description = {p.description}
-                        deleteProduct = {this.deleteProductFromList}
+                        deleteProduct = {this.removeProduct}
                         image = {p.image}
                         name = {p.name}
                         price = {p.price}
