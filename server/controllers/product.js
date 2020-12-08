@@ -55,6 +55,8 @@ export const deleteProduct = async (req, res) => {
             }
         });
 
+        await Product.deleteOne({ _id : id });
+
         res.json({msg: "Product Successfully Deleted"});
     }
 }

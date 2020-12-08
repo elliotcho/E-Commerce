@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { getProfilePic } from '../../api/user';
 import { getUserProducts, deleteProduct } from '../../api/product';
 import Product from '../products/Product';
+import loading from '../../images/loading.jpg';
 import './css/Profile.css';
 
 class Profile extends Component{
@@ -8,6 +10,7 @@ class Profile extends Component{
         super();
 
         this.state = {
+            imgURL: null,
             products: []
         }
 
@@ -16,7 +19,12 @@ class Profile extends Component{
 
     async componentDidMount(){
         const products = await getUserProducts();
-        this.setState({ products });
+        const imgURL = await getProfilePic();
+
+        this.setState({ 
+            imgURL,
+            products 
+        });
     }
 
     async removeProduct(id){
@@ -34,11 +42,11 @@ class Profile extends Component{
     }
 
     render(){
-        const { products } = this.state; 
+        const { imgURL, products } = this.state; 
 
         return(
             <div className='profile'>
-                <i class="fas fa-user-astronaut"></i>
+                <img src = {imgURL? imgURL: loading} alt = 'profile pic'/>
                 
                 <h3>Master Elliot</h3>
 

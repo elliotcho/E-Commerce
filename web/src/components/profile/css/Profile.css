@@ -8,8 +8,10 @@
     overflow: auto;
 }
 
-.profile i {
-    font-size: 6.6rem;
+.profile img {
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 11px;
     margin: 2rem 0 1rem;
 }
 

@@ -25,7 +25,9 @@ function Product({
         const { user } = decode(token);
 
         isOwner = user._id === userId
-    } catch (err) {}
+    } catch (err) {
+        console.log(err);
+    }
 
     return(
         <div 
