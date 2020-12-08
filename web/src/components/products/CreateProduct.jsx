@@ -42,9 +42,12 @@ class CreateProduct extends Component {
 
         const formData = new FormData();
 
+        for(let key in description){
+            formData.append(key, description[key]);
+        }
+        
         formData.append('name', name);
         formData.append('departmentId', departmentId);
-        formData.append('description', description);
         formData.append('image', image);
         formData.append('price', price);
 

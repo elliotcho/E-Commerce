@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { getProductsByDepartment } from '../../api/product';
+import Product from './Product';
 
 class ProductList extends Component {
     constructor(){
@@ -24,18 +25,13 @@ class ProductList extends Component {
         return(
             <div>
                 {products.map(p => 
-                    <div key = {p._id}>
-                        <div>
-                            {p.name}
-                        </div>
-
-                        <img
-                            src = {p.image}
-                            alt = 'product'
-                            width='150'
-                            height='150'
-                        />
-                    </div>
+                    <Product
+                        key = {p._id}
+                        image = {p.image}
+                        name = {p.name}
+                        price = {p.price}
+                        description = {p.description}
+                    />
                 )}
             </div>        
         )

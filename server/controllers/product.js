@@ -1,6 +1,7 @@
 import { Product, Description } from '../models/product';
 import { createUpload } from '../utils/createUpload';
 import path from 'path';
+import fs from 'fs';
 
 const productUpload = createUpload('product');
 
@@ -13,33 +14,49 @@ export const createProduct = async (req, res) => {
                 console.log(err);
             }
     
-            const { name, price, description, departmentId } = req.body;
+            const { name, price, departmentId } = req.body;
             
-            const newDescription = new Description({...description});
-    
-            const newProduct = new Product({
-                userId: req.user._id,
-                departmentId,
-                image: req.file.filename,
-                description: newDescription,
-                datePosted: new Date(),
-                name,
-                price
+            const newDescription = new Description({
+                content: req.body.content,
+                color: req.body.color,
+                size: req.body.size,
+                brand: req.body.brand
             });
 
-            const product = await newProduct.save();
-
-            res.json({ ok: true, product });
+            if(name){
+                const newProduct = new Product({
+                    userId: req.user._id,
+                    departmentId,
+                    image: req.file.filename,
+                    description: newDescription,
+                    datePosted: new Date(),
+                    name,
+                    price
+                });
+    
+                const product = await newProduct.save();
+    
+                res.json({ ok: true, product });
+            }
        });  
     }
 }
 
 export const deleteProduct = async (req, res) => {
     const {id} = req.params;
+    const product = await Product.findOne({ _id : id});
 
-    await Product.deleteOne({_id: id});
+    if(req.user && product.userId !== req.user._id){
+        res.json({msg: 'not authenticated'});
+    } else{
+        fs.unlink(path.join(__dirname, '../', `images/product/${product.image}`), err => {
+            if(err) {
+                console.log(err);
+            }
+        });
 
-    res.json({msg: "Product Successfully Deleted"});
+        res.json({msg: "Product Successfully Deleted"});
+    }
 }
 
 export const getProduct = async (req, res) => {
