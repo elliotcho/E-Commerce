@@ -49,3 +49,7 @@ export const getUserProducts = async () => {
     authAfterware(response);
     return products;
 }
+
+export const deleteProduct = () => {
+    
+}

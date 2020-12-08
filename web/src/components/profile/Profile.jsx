@@ -42,6 +42,7 @@ class Profile extends Component{
                                     image = {p.image}
                                     name = {p.name}
                                     price = {p.price}
+                                    userId = {p.userId}
                                     description = {p.description}
                                 />
                             )}

@@ -15,7 +15,6 @@ class ProductList extends Component {
         const { dept } = this.props.match.params;
 
         const products = await getProductsByDepartment(dept);
-
         this.setState({ products });
     }
 
@@ -30,6 +29,7 @@ class ProductList extends Component {
                         image = {p.image}
                         name = {p.name}
                         price = {p.price}
+                        userId = {p.userId}
                         description = {p.description}
                     />
                 )}

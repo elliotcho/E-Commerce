@@ -1,14 +1,23 @@
 import React from 'react';
+import decode from 'jwt-decode';
 import './css/Product.css';
 
 function Product({
-    image, name, price, description: { content, color, brand, size }
+    image, name, price, userId, description: { content, color, brand, size }
 }){
+    let isOwner = false;
     let textSnippet = content;
 
     if(content.length > 30){
         textSnippet = textSnippet.substring(0, 27) + '...';
     }
+
+    try {
+        const token = localStorage.getItem('token');
+        const { user } = decode(token);
+
+        isOwner = user._id === userId
+    } catch (err) {}
 
     return(
         <div className='product d-flex'>
@@ -32,6 +41,8 @@ function Product({
                 <p>Brand: {brand}</p>
                 <p>Size: {size}</p>
                 <p>Color: {color}</p>
+
+                {isOwner? (<i className='fas fa-trash'/>): null}
             </div>
         </div>
     );
