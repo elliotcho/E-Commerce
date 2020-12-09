@@ -125,13 +125,15 @@ export const removeProfilePic = async (req, res) => {
         const user = await User.findOne({ _id: req.user._id });
         const { profilePic } = user;
 
-        fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
-            if(err){
-                console.log(err);
-            }
-        });
+        if( profilePic ){
+            fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
+                if(err){
+                    console.log(err);
+                }
+            });
 
-        await User.updateOne({ _id: req.user._id }, { profilePic: null });
+            await User.updateOne({ _id: req.user._id }, { profilePic: null });
+        }
 
         res.sendFile(path.join(__dirname, '../', 'images/profile/default.png'));
     }
