@@ -118,8 +118,37 @@ export const changeProfilePic = async (req, res) => {
    });
 }
 
+export const removeProfilePic = async (req, res) => {
+    if(req.user){
+        const user = await User.findOne({ _id: req.user._id });
+        const { profilePic } = user;
+
+        fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
+            if(err){
+                console.log(err);
+            }
+        });
+
+        await User.updateOne({ _id: req.user._id }, { profilePic: null });
+
+        res.sendFile(path.join(__dirname, '../', 'images/profile/default.png'));
+    }
+}
+
 export const deleteUser = async (req, res) => {
-    await User.deleteOne({ _id : req.user._id });
+    const user = await User.findOne({ _id : req.user._id });
+    const { _id, profilePic } = user;
+
+    if(profilePic){
+        fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
+            if(err){
+                console.log(err);
+            }
+        });
+    } 
+
+    await User.deleteOne({ _id });
+
     res.json( { msg: 'Success' });     
 }
 
