@@ -25,3 +25,14 @@ export const updateProfilePic = async (data) => {
 
     return URL.createObjectURL(file);
 }
+
+export const deleteProfilePic = async () => {
+    const config = {headers: {}, responseType: 'blob'};
+
+    const response = await axios.delete(`${API}/api/user/profile_pic`, authMiddleware(config));
+    const file = response.data;
+
+    authAfterware(response);
+
+    return URL.createObjectURL(file);
+}

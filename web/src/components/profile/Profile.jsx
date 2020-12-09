@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getProfilePic, updateProfilePic } from '../../api/user';
+import { getProfilePic, updateProfilePic, deleteProfilePic } from '../../api/user';
 import { getUserProducts, deleteProduct } from '../../api/product';
 import Product from '../products/Product';
 import loading from '../../images/loading.jpg';
@@ -16,6 +16,7 @@ class Profile extends Component{
 
         this.removeProduct = this.removeProduct.bind(this);
         this.changeProfilePic = this.changeProfilePic.bind(this);
+        this.removeProfilePic = this.removeProfilePic.bind(this);
     }
 
     async componentDidMount(){
@@ -51,6 +52,11 @@ class Profile extends Component{
         this.setState({ imgURL });
     }
 
+    async removeProfilePic(){
+        const imgURL = await deleteProfilePic();
+        this.setState({ imgURL });
+    }
+
     render(){
         const { imgURL, products } = this.state; 
 
@@ -66,7 +72,7 @@ class Profile extends Component{
                     accept = 'jpg png jpeg'
                 />
                 
-                <button>
+                <button onClick={this.removeProfilePic}>
                     Remove
                 </button>
 

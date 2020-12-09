@@ -10,7 +10,8 @@ import {
     loadProfilePic,
     addToCart,
     deleteFromCart,
-    loadCart
+    loadCart,
+    removeProfilePic
 } from '../controllers/user';
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router.post('/forgot_password', forgotPassword);
 router.post('/change_password', changePassword);
 router.get('/profile_pic', loadProfilePic);
 router.post('/profile_pic', changeProfilePic);
+router.delete('/profile_pic', removeProfilePic);
 // router.delete('/', deleteUser);
 // router.post('/', addToCart);
 // router.post('/', deleteFromCart);
