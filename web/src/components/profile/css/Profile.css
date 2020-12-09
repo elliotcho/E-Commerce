@@ -15,7 +15,7 @@
     margin: 2rem 0 1rem;
 }
 
-.profile h3 {
+.profile h3{
     border: 4px solid #5f5f9b;
     border-radius: 30px;
     width: 14%;
@@ -23,9 +23,10 @@
     padding: 4px;
     font-size: 21px;
     font-family: 'Sansita Swashed', cursive;
+    cursor: pointer;
 }
 
-.profile h3:hover {
+.profile h3:hover{
     background-color: #89beb3;
 }
 

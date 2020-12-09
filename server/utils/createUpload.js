@@ -1,5 +1,6 @@
 import multer from 'multer';
 import path from 'path';
+import { v4 } from 'uuid';
 
 export const createUpload = (type) => {
     const destination = path.join(__dirname, '../', `images/${type}`);
@@ -11,7 +12,7 @@ export const createUpload = (type) => {
             const label = `${type.toUpperCase()}-`
             const extension = path.extname(file.originalname);
 
-            cb(null,  label + req.user._id + Date.now() + extension);
+            cb(null,  label + v4() + Date.now() + extension);
 
         }
     });

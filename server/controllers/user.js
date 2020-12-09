@@ -113,8 +113,10 @@ export const changeProfilePic = async (req, res) => {
             });
         } 
 
-        await User.updateOne( { _id: req.user._id } , {profilePic: req.file.filename});
-        res.json({msg: 'Success'});
+        const { filename } = req.file;
+
+        await User.updateOne( { _id: req.user._id } , {profilePic: filename});
+        res.sendFile(path.join(__dirname, '../', `images/profile/${filename}`));
    });
 }
 

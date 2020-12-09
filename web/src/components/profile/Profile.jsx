@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getProfilePic } from '../../api/user';
+import { getProfilePic, updateProfilePic } from '../../api/user';
 import { getUserProducts, deleteProduct } from '../../api/product';
 import Product from '../products/Product';
 import loading from '../../images/loading.jpg';
@@ -15,6 +15,7 @@ class Profile extends Component{
         }
 
         this.removeProduct = this.removeProduct.bind(this);
+        this.changeProfilePic = this.changeProfilePic.bind(this);
     }
 
     async componentDidMount(){
@@ -41,6 +42,15 @@ class Profile extends Component{
         this.setState({ products });
     }
 
+    async changeProfilePic(e){
+        const formData = new FormData();
+        formData.append('image', e.target.files[0]);
+
+        const imgURL = await updateProfilePic(formData);
+
+        this.setState({ imgURL });
+    }
+
     render(){
         const { imgURL, products } = this.state; 
 
@@ -49,6 +59,16 @@ class Profile extends Component{
                 <img src = {imgURL? imgURL: loading} alt = 'profile pic'/>
                 
                 <h3>Master Elliot</h3>
+
+                <input
+                    type = 'file'
+                    onChange = {this.changeProfilePic}
+                    accept = 'jpg png jpeg'
+                />
+                
+                <button>
+                    Remove
+                </button>
 
                 <section className='container-fluid'>
                     <div className='row'>

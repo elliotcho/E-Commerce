@@ -14,3 +14,14 @@ export const getProfilePic = async () => {
     
     return URL.createObjectURL(file);
 }
+
+export const updateProfilePic = async (data) => {
+    const config = {headers: {'content-type': 'multipart/form-data'}, responseType: 'blob'};
+
+    const response = await axios.post(`${API}/api/user/profile_pic`, data, authMiddleware(config));
+    const file = response.data;
+
+    authAfterware(response);
+
+    return URL.createObjectURL(file);
+}
