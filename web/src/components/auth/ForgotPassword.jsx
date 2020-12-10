@@ -21,9 +21,7 @@ class ForgotPassword extends Component{
     async handleSubmit(e){
         e.preventDefault();
 
-        const {email} = this.state;
-        
-        await forgotPassword({email});
+        await forgotPassword({email: this.state.email});
 
         this.setState({submitted: true});
     }

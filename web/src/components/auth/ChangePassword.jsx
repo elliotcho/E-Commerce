@@ -26,7 +26,7 @@ class ChangePassword extends Component{
         const user = await changePassword({token, newPassword});
 
         if(user){
-            this.props.history.push('/');
+            window.location.reload();
         }
     }
 

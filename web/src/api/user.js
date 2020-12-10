@@ -60,3 +60,13 @@ export const deleteFromCart = async () => {
     const response = await axios.delete(`${API}/api/user/deleteFromCart`, authMiddleware(config));
     authAfterware(response);
 }
+  
+export const getUserInfo = async () => {
+    const config = {headers: {}}
+
+    const response = await axios.get(`${API}/api/user/profile`, authMiddleware(config));
+    const info = response.data;
+
+    authAfterware(response);
+    return info;
+}
