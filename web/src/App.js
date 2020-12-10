@@ -28,7 +28,24 @@ const isAuthenticated = () => {
   return true;
 }
 
-const PrivateRoute = ({component: Component, ...rest}) => (
+const UnauthenticatedRoute = ({component: Component, ...rest}) => (
+  <Route
+    {...rest}
+    render = {props =>
+      (!isAuthenticated() ? (
+          <Component {...props} />
+        ) :
+        <Redirect
+           to = {{
+              pathname: '/'
+           }}
+        />  
+      )
+    }
+  />
+);
+
+const AuthenticatedRoute = ({component: Component, ...rest}) => (
   <Route
     {...rest}
     render = {props =>
@@ -46,25 +63,24 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 );
 
 function App() {
+  const signedIn = isAuthenticated();
+
   return (
-    <div>
-      
       <BrowserRouter>
-        < Navbar />
+        < Navbar signedIn = {signedIn} />
+        
         <Switch>
-          <Route exact path='/login' component={Login}/>
-          <Route exact path='/register' component={Register}/>
-          <Route exact path='/forgot_password' component={ForgotPassword}/>
-          <Route exact path='/change_password/:token' component={changePassword}/>
-          <PrivateRoute exact path='/profile' component={Profile}/>
+          <UnauthenticatedRoute exact path='/login' component={Login}/>
+          <UnauthenticatedRoute exact path='/register' component={Register}/>
+          <UnauthenticatedRoute exact path='/forgot_password' component={ForgotPassword}/>
+          <UnauthenticatedRoute exact path='/change_password/:token' component={changePassword}/>
+          <AuthenticatedRoute exact path='/profile' component={Profile}/>
           <Route exact path='/products/:dept' component={ProductList}/>
           <Route exact path='/product/:id' component={ProductDetails}/>
-          <PrivateRoute exact path='/create_product' component={CreateProduct}/>
+          <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
           <Route path='/' component={DeadPage}/>
         </Switch>
       </BrowserRouter>
-      
-    </div>
   );
 }
 
