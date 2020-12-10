@@ -1,0 +1,15 @@
+.search-bar{
+    margin: 15px auto;
+    font-family: 'Nunito Sans';
+}
+
+.search-bar input{
+    width: 100%;
+}
+
+@media screen and (min-width: 991px){
+    .search-bar{
+        margin: revert;
+        margin-top: 3px;
+    }
+}

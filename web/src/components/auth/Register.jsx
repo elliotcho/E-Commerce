@@ -40,7 +40,7 @@ class Register extends Component{
         const userResponse = await register({ email, username, password });
 
         if(userResponse.user){
-            this.props.history.push('/');
+            window.location.reload();
         } 
         
         else{

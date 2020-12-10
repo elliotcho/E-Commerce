@@ -1,6 +1,7 @@
 import React from 'react'
-import { withRouter, Link } from 'react-router-dom'
-import './css/Navbar.css'
+import { withRouter, Link } from 'react-router-dom';
+import Searchbar from './Searchbar';
+import './css/Navbar.css';
 
 function Navbar({ signedIn }){
     const logout = (e) => {
@@ -34,14 +35,16 @@ function Navbar({ signedIn }){
                                     Signup
                                 </Link>
                             </li>
-                        </ul>) : 
-                         (<ul className="navbar-nav ml-auto" onClick={logout}>
-                            <li>
-                                <Link to="/" className="nav-link mr-5">
-                                    Logout
-                                </Link>
-                            </li>
-                        </ul>)
+                        </ul>) : [
+                            <Searchbar />,
+                            <ul className="navbar-nav ml-auto" onClick={logout}>
+                                <li>
+                                    <Link to="/" className="nav-link mr-5">
+                                        Logout
+                                    </Link>
+                                </li>
+                            </ul>
+                        ]
                     }
                 </div>
             </div>

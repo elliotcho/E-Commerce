@@ -199,7 +199,6 @@ export const loadCart = async (req, res) => {
     if (!req.user) {
         res.json({msg: 'User is not authenticated'});
     } else {
-
         const user = await User.findOne({_id: req.user._id});
         const {cart} = user; 
 

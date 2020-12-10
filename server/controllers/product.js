@@ -64,10 +64,14 @@ export const deleteProduct = async (req, res) => {
 export const getProduct = async (req, res) => {
     const {id} = req.params;
     
-    const product = await Product.findOne({_id:id});
-    product.image = '';
+    try{
+        const product = await Product.findOne({_id:id});
+        product.image = '';
 
-    res.json(product);
+        res.json(product);
+    } catch (err) {
+        res.json(null);
+    }
 }
 
 export const getProductImage = async (req, res) => {

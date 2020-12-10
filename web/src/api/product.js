@@ -54,13 +54,16 @@ export const deleteProduct = async (id) => {
     const config = {headers: {}};
         
     const response = await axios.delete(`${API}/api/product/${id}`, authMiddleware(config));
-
     authAfterware(response);
 }   
 
 export const getProductById = async (id) => {
     const response = await axios.get(`${API}/api/product/${id}`);
     const product = response.data;
+
+    if(!product){
+        return null;
+    }
 
     const result = await axios.get(`${API}/api/product/image/${id}`, {responseType: 'blob'});
     const file = result.data;
