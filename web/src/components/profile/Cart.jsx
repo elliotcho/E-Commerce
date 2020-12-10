@@ -28,12 +28,18 @@ class Cart extends Component{
         await deleteFromCart(data);
     }
 
+    // async handleClick(){
+
+    // }
+
     render(){
         const{myCart} = this.state;
         console.log(myCart);
         return(
             <div className="cart">
                 <h1 className="title">Your Shopping Cart: </h1>
+
+            <button className="btn" >Continue To Payment </button>
             
 
             <div className='items'>
