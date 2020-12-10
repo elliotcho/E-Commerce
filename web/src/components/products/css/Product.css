@@ -11,7 +11,14 @@
     height: 10rem;
 }
 
+.product .fa-cart-plus{
+    cursor: pointer;
+    color: blue;
+    margin-right: 15px;
+}
+
 .product .fa-trash{
     cursor: pointer;
     color: red;
+    margin-left: 15px;
 }
