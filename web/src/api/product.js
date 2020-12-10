@@ -77,5 +77,13 @@ export const addToUserCart = async(productId) =>{
     const response = await axios.post(`${API}/api/user/cart`, {productId}, authMiddleware(config));
 
     authAfterware(response);
-    
+}
+
+export const searchProducts = async (data) => {
+    const config = {headers: {'content-type': 'application/json'}};
+
+    const response = await axios.post(`${API}/api/product/search`, data, config);
+    const products = response.data;
+
+    return products;
 }

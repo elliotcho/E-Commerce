@@ -86,21 +86,40 @@ export const getProductImage = async (req, res) => {
 }
 
 export const getProductsByDepartment = async (req, res) => {
-    const products = await Product.find({ departmentId : req.params.dept });
+    const { dept } = req.params;
 
-    products.forEach(p => {
-        p.image = '';
-    });
+    let products = [];
+
+    if(dept === 'all'){
+        products = await Product.find({ departmentId : req.params.dept });
+    } else{
+        products = await Product.find({});
+    }
 
     res.json(products);
 }
 
 export const getUserProducts = async (req, res) => {
     const products = await Product.find({ userId : req.user._id });
+    res.json(products);
+}
 
-    products.forEach(p => {
-        p.image = '';
-    });
+export const searchProducts = async (req, res) => {
+    const { dept, query } = req.body;
+
+    let products = [];
+
+    if(dept === 'all'){
+        products = await Product.find({name: { $regex: query, $options: 'i'} });
+    } else{
+        products = await Product.find({
+            departmentId: dept,
+            name: { 
+                $regex: query, 
+                $options: 'i'
+            }
+        });
+    }
 
     res.json(products);
 }

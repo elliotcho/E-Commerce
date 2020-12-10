@@ -1,61 +1,41 @@
 import React, { Component } from 'react';
+import { loadCart } from '../../api/user';
 import Product from '../products/Product';
-import {loadCart, deleteFromCart} from '../../api/user';
 
 class Cart extends Component{
     constructor(){
         super();
         this.state = {
-            myCart: []
+            cart: []
         }
     }
     async componentDidMount(){
-        const myCart = await loadCart();
-        this.setState({
-            myCart
-        });
+        const cart = await loadCart();
+        this.setState({ cart });
     }
-
-    async removeProduct(id){
-        const{myCart} = this.state;
-        for(let j=0; j < myCart.length; j++){
-            if(myCart[j]._id === id){
-                myCart.splice(j,1);
-                break;
-            }
-        }
-        const data = {id};
-        await deleteFromCart(data);
-    }
-
-    // async handleClick(){
-
-    // }
 
     render(){
-        const{myCart} = this.state;
-        console.log(myCart);
+        const { cart } = this.state;
+
         return(
             <div className="cart">
                 <h1 className="title">Your Shopping Cart: </h1>
-
-            <button className="btn" >Continue To Payment </button>
-            
-
-            <div className='items'>
-                {myCart.map(p => 
-                    <Product
-                        key = {p._id}
-                        productId = {p._id}
-                        description = {p.description}
-                        deleteProduct = {this.removeProduct}
-                        image = {p.image}
-                        name = {p.name}
-                        price = {p.price}
-                        userId = {p.userId}
-                />
-                )}
-            </div>
+                <button className="btn" >Continue To Payment </button>
+        
+                <div className='items'>
+                    {cart.map(p => 
+                        <Product
+                            key = {p._id}
+                            productId = {p._id}
+                            description = {p.description}
+                            deleteProduct = {this.removeProduct}
+                            image = {p.image}
+                            name = {p.name}
+                            price = {p.price}
+                            userId = {p.userId}
+                    />
+                    )}
+                </div>
             </div>
         )
         

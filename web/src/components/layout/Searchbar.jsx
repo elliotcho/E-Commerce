@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { searchProducts } from '../../api/product';
 import './css/Searchbar.css';
 
 class Searchbar extends Component{
@@ -17,8 +18,13 @@ class Searchbar extends Component{
         this.setState({[e.target.name] : e.target.value});
     }
 
-    handleSubmit(e){
+    async handleSubmit(e){
         e.preventDefault();
+        const { query } =this.state;
+
+        const products = await searchProducts({ query, dept: 'all'});
+
+        console.log(products);
     }
 
     render(){
@@ -28,9 +34,10 @@ class Searchbar extends Component{
             <form className='search-bar' onSubmit={this.handleSubmit}>
                 <input
                     type = 'text'
+                    name = 'query'
                     onChange = {this.handleChange}
                     placeholder = 'Search'
-                    name = {query}
+                    value ={query}
                 />
             </form>
         )
