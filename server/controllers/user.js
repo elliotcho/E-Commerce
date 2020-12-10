@@ -6,6 +6,7 @@ import { v4 } from 'uuid';
 import { validateLogin } from '../utils/validateLogin';
 import { validateRegister } from '../utils/validateRegister';
 import { createUpload } from '../utils/createUpload';
+import Product from '../models/product';
 import path from 'path';
 import fs from 'fs';
 

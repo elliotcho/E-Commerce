@@ -68,3 +68,11 @@ export const getProductById = async (id) => {
     product.image = URL.createObjectURL(file);
     return product;
 }
+
+export const addToUserCart = async(productId) =>{
+    const config = {headers: {}};
+    const response = await axios.post(`${API}/api/user/cart`, {productId}, authMiddleware(config));
+
+    authAfterware(response);
+    
+}

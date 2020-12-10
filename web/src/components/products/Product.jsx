@@ -1,6 +1,7 @@
 import React from 'react';
 import decode from 'jwt-decode';
 import { withRouter } from 'react-router-dom';
+import {addToUserCart} from '../../api/product';
 import './css/Product.css';
 
 function Product({
@@ -27,6 +28,12 @@ function Product({
         isOwner = user._id === userId
     } catch (err) {
         console.log(err);
+    }
+
+    const handleCartClick = async (productId) => {
+         
+         await addToUserCart(productId);                   
+
     }
 
     return(
@@ -56,6 +63,14 @@ function Product({
                 <p>Brand: {brand}</p>
                 <p>Size: {size}</p>
                 <p>Color: {color}</p>
+
+                {userId?
+                    (<i
+                    className="fas fa-cart-plus"
+                    onClick = {() => {handleCartClick(productId)}}
+                    />): null
+                }
+                
 
                 {isOwner? 
                     (<i 

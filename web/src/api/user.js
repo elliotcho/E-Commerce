@@ -36,3 +36,27 @@ export const deleteProfilePic = async () => {
 
     return URL.createObjectURL(file);
 }
+
+export const loadCart = async() => {
+    const config = {headers: {}};
+    const response = await axios.get(`${API}/api/user/cart`, authMiddleware(config));
+    const products = response.data;
+    for(let i=0; i <products.length; i++){
+        const config = { responseType: 'blob'};
+
+        const result = await axios.get(`${API}/api/product/image/${products[i]._id}`, config);
+        const file = result.data;
+        
+        products[i].image = URL.createObjectURL(file);
+    }
+    authAfterware(response);
+    console.log(products);
+    return products;
+}
+
+export const deleteFromCart = async () => {
+    const config = {headers: {}};
+
+    const response = await axios.delete(`${API}/api/user/deleteFromCart`, authMiddleware(config));
+    authAfterware(response);
+}
