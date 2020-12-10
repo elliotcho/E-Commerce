@@ -11,7 +11,8 @@ import {
     addToCart,
     deleteFromCart,
     loadCart,
-    removeProfilePic
+    removeProfilePic,
+    userInfo
 } from '../controllers/user';
 
 const router = express.Router();
@@ -28,5 +29,6 @@ router.delete('/profile_pic', removeProfilePic);
 // router.post('/', addToCart);
 // router.post('/', deleteFromCart);
 // router.post('/', loadCart);
+router.get('/profile', userInfo);
 
 export default router;

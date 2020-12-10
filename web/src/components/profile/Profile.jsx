@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getProfilePic, updateProfilePic, deleteProfilePic } from '../../api/user';
+import { getProfilePic, updateProfilePic, deleteProfilePic, getUserInfo } from '../../api/user';
 import { getUserProducts, deleteProduct } from '../../api/product';
 import Product from '../products/Product';
 import loading from '../../images/loading.jpg';
@@ -11,7 +11,8 @@ class Profile extends Component{
 
         this.state = {
             imgURL: null,
-            products: []
+            products: [],
+            info: null 
         }
 
         this.removeProduct = this.removeProduct.bind(this);
@@ -22,10 +23,12 @@ class Profile extends Component{
     async componentDidMount(){
         const products = await getUserProducts();
         const imgURL = await getProfilePic();
+        const info = await getUserInfo();
 
         this.setState({ 
             imgURL,
-            products 
+            products, 
+            info
         });
     }
 
@@ -58,13 +61,13 @@ class Profile extends Component{
     }
 
     render(){
-        const { imgURL, products } = this.state; 
+        const { imgURL, products, info } = this.state; 
 
         return(
             <div className='profile'>
                 <img src = {imgURL? imgURL: loading} alt = 'profile pic'/>
                 
-                <h3>Master Elliot</h3>
+                <h3>{info ? info.username:'Loading User...'}</h3>
 
                 <input
                     type = 'file'
@@ -80,7 +83,7 @@ class Profile extends Component{
                     <div className='row'>
                         <div className='stats col-3'>
                             <h2>Personal Stats</h2>
-                            <p># of Products Posted: </p>
+                            <p># of Products Posted: {products.length}</p>
                             <p>Successful Sales: </p>
                             <p>Average Rating: </p>
                         </div>

@@ -36,3 +36,13 @@ export const deleteProfilePic = async () => {
 
     return URL.createObjectURL(file);
 }
+
+export const getUserInfo = async () => {
+    const config = {headers: {}}
+
+    const response = await axios.get(`${API}/api/user/profile`, authMiddleware(config));
+    const info = response.data;
+
+    authAfterware(response);
+    return info;
+}
