@@ -8,6 +8,7 @@ import { validateRegister } from '../utils/validateRegister';
 import { createUpload } from '../utils/createUpload';
 import path from 'path';
 import fs from 'fs';
+import { Product } from '../models/product';
 
 const profileUpload = createUpload('profile');
 
@@ -211,5 +212,17 @@ export const loadCart = async (req, res) => {
         }
       
         res.json(cartProducts);
+    }
+}
+
+export const userInfo = async (req, res) => {
+    if (!req.user) {
+        res.json({msg: 'User is not authenticated'});
+    } else {
+        const user = await User.findOne({_id: req.user._id});
+
+        user.password = '';
+
+        res.json(user);
     }
 }
