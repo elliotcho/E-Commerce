@@ -12,7 +12,7 @@ import fs from 'fs';
 
 const profileUpload = createUpload('profile');
 
-export const login = async (req, res) => {
+export const login = async (req, res) => { 
     const userResponse = await validateLogin(req);
     res.json(userResponse);
 }

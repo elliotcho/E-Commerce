@@ -31,9 +31,7 @@ function Product({
     }
 
     const handleCartClick = async (productId) => {
-         
          await addToUserCart(productId);                   
-
     }
 
     return(

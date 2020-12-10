@@ -21,6 +21,8 @@ function Navbar({ signedIn }){
                     <span className="navbar-toggler-icon"/>
                 </button>
 
+                <Searchbar />
+
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     {!signedIn?
                          (<ul className="navbar-nav ml-auto">
@@ -35,16 +37,26 @@ function Navbar({ signedIn }){
                                     Signup
                                 </Link>
                             </li>
-                        </ul>) : [
-                            <Searchbar key ={1}/>,
-                            <ul className="navbar-nav ml-auto" onClick={logout} key={2}>
-                                <li>
-                                    <Link to="/" className="nav-link mr-5">
-                                        Logout
-                                    </Link>
-                                </li>
-                            </ul>
-                        ]
+                        </ul>) : 
+                        (<ul className="navbar-nav ml-auto">
+                            <li>
+                                <Link to="/profile" className="nav-link mr-5">
+                                    Profile
+                                </Link>
+                            </li>
+                            
+                            <li>
+                                <Link to="/cart" className="nav-link mr-5">
+                                    Cart
+                                </Link>
+                            </li>
+                                
+                            <li>
+                                <Link to="/" className="nav-link mr-5" onClick={logout}>
+                                    Logout
+                                </Link>
+                            </li>
+                        </ul>)
                     }
                 </div>
             </div>
