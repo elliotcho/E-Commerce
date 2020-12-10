@@ -1,15 +1,14 @@
 import bcyrpt from 'bcrypt';
 import User from '../models/user';
+import { Product }  from '../models/product';
 import { redis } from '../app'; 
 import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
 import { validateLogin } from '../utils/validateLogin';
 import { validateRegister } from '../utils/validateRegister';
 import { createUpload } from '../utils/createUpload';
-import Product from '../models/product';
 import path from 'path';
 import fs from 'fs';
-import { Product } from '../models/product';
 
 const profileUpload = createUpload('profile');
 

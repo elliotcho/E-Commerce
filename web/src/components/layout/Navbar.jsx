@@ -36,8 +36,8 @@ function Navbar({ signedIn }){
                                 </Link>
                             </li>
                         </ul>) : [
-                            <Searchbar />,
-                            <ul className="navbar-nav ml-auto" onClick={logout}>
+                            <Searchbar key ={1}/>,
+                            <ul className="navbar-nav ml-auto" onClick={logout} key={2}>
                                 <li>
                                     <Link to="/" className="nav-link mr-5">
                                         Logout
