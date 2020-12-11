@@ -21,9 +21,9 @@ function Navbar({ signedIn }){
                     <span className="navbar-toggler-icon"/>
                 </button>
 
-                <Searchbar />
-
                 <div className="collapse navbar-collapse" id="navbarResponsive">
+                    <Searchbar />
+
                     {!signedIn?
                          (<ul className="navbar-nav ml-auto">
                             <li>
@@ -33,7 +33,7 @@ function Navbar({ signedIn }){
                             </li>
                                 
                             <li>
-                                <Link to="/register" className="nav-link mr-5">
+                                <Link to="/register" className="nav-link">
                                     Signup
                                 </Link>
                             </li>
@@ -41,19 +41,22 @@ function Navbar({ signedIn }){
                         (<ul className="navbar-nav ml-auto">
                             <li>
                                 <Link to="/profile" className="nav-link mr-5">
-                                    Profile
+                                    <i className ='fas fa-address-card' />
+                                    <span className='ml-3'>Profile</span>
                                 </Link>
                             </li>
                             
                             <li>
                                 <Link to="/cart" className="nav-link mr-5">
-                                    Cart
+                                    <i className='fas fa-shopping-cart'/>
+                                    <span className='ml-3'>Cart</span>
                                 </Link>
                             </li>
                                 
                             <li>
-                                <Link to="/" className="nav-link mr-5" onClick={logout}>
-                                    Logout
+                                <Link to="/" className="nav-link" onClick={logout}>
+                                    <i className ='fas fa-sign-out-alt'/>
+                                    <span className='ml-3'>Sign Out</span>
                                 </Link>
                             </li>
                         </ul>)
