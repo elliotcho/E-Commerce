@@ -41,19 +41,22 @@ function Navbar({ signedIn }){
                         (<ul className="navbar-nav ml-auto">
                             <li>
                                 <Link to="/profile" className="nav-link mr-5">
-                                    Profile
+                                    <i className ='fas fa-address-card' />
+                                    <span className='ml-3'>Profile</span>
                                 </Link>
                             </li>
                             
                             <li>
                                 <Link to="/cart" className="nav-link mr-5">
-                                    Cart
+                                    <i className='fas fa-shopping-cart'/>
+                                    <span className='ml-3'>Cart</span>
                                 </Link>
                             </li>
                                 
                             <li>
                                 <Link to="/" className="nav-link" onClick={logout}>
-                                    Logout
+                                    <i className ='fas fa-sign-out-alt'/>
+                                    <span className='ml-3'>Sign Out</span>
                                 </Link>
                             </li>
                         </ul>)

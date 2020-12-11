@@ -21,7 +21,7 @@
     border: none;
 }
 
-.nav-link{
+.navbar .nav-link{
     font-size: 1.2rem;
 }
 
@@ -34,5 +34,13 @@
     .navbar ul, .navbar li {
         border-bottom: none;
         padding: 0;
+    }
+
+    .navbar span{
+        display: none;
+    }
+
+    .navbar i{
+        font-size: 1.4rem;
     }
 }
