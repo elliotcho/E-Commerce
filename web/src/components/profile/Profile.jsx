@@ -66,7 +66,7 @@ class Profile extends Component{
         return(
             <div className='profile'>
                 <div>
-                    <img src = {imgURL? imgURL: loading} alt = 'profile pic'/>  
+                    <img src = {imgURL? imgURL: loading} alt = 'profile pic'/> 
                 </div>
                 
                 <h3>{info ? info.username:'Loading User...'}</h3>
@@ -80,9 +80,9 @@ class Profile extends Component{
                     
                     <button onClick={this.removeProfilePic}>
                         Remove
-                    </button>
+                    </button>   
                 </div>
-                
+
                 <section className='container-fluid'>
                     <div className='row'>
                         <div className='stats col-3'>

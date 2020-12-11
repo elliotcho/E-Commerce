@@ -19,7 +19,8 @@
     border: 4px solid #5f5f9b;
     border-radius: 30px;
     display: inline-block;
-    padding: 4px;
+    margin: 0 auto;
+    padding: 4px 14px;
     font-size: 21px;
     font-family: 'Sansita Swashed', cursive;
     cursor: pointer;
@@ -41,11 +42,21 @@
     border-radius: 30px;
     display: inline-block;
     margin: 20px auto;
-    padding: 4px;
+    padding: 4px 14px;
     font-size: 21px;
     font-family: 'Sansita Swashed', cursive;
 }
 
 .profile .stats h2:hover {
     background-color: #ebcfc4;
+}
+
+@media screen and (max-width: 670px) {
+    .profile .stats {
+        font-size: smaller;
+    }
+
+    .profile .stats h2 {
+        font-size: 15px;
+    }
 }
