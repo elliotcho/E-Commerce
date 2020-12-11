@@ -7,6 +7,7 @@ import Register from "./components/auth/Register";
 import ForgotPassword from './components/auth/ForgotPassword';
 import changePassword from './components/auth/ChangePassword';
 import Cart from './components/profile/Cart';
+import DepartmentForm from './components/admin/DepartmentForm';
 import ProductList from './components/products/ProductList';
 import CreateProduct from './components/products/CreateProduct';
 import ProductDetails from './components/products/ProductDetails';
@@ -81,6 +82,7 @@ function App() {
           <Route exact path='/product/:id' component={ProductDetails}/>
           <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
           <Route path='/' component={DeadPage}/>
+          <Route exact path='/departments' component={DepartmentForm}/> 
         </Switch>
       </BrowserRouter>
   );
