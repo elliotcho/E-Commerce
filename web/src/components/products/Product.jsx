@@ -35,12 +35,7 @@ function Product({
     }
 
     return(
-        <div 
-            className='product d-flex' 
-            onClick={() => {
-                history.push(`/product/${productId}`)}
-            }
-        >
+        <div className='product d-flex'>
             <img src={image} alt='product' />
 
             <div className='ml-2 mt-2'>

@@ -77,6 +77,7 @@ class Profile extends Component{
                         onChange = {this.changeProfilePic}
                         accept = 'jpg png jpeg'
                     />
+                    
                     <button onClick={this.removeProfilePic}>
                         Remove
                     </button>   

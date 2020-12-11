@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { getProductsByDepartment, deleteProduct } from '../../api/product';
+import { getProductsByDepartment, deleteProduct, searchProducts } from '../../api/product';
 import Product from './Product';
 
 class ProductList extends Component {
@@ -10,14 +10,37 @@ class ProductList extends Component {
             products: []
         }
 
+        this.fetchProducts = this.fetchProducts.bind(this);
         this.removeProduct = this.removeProduct.bind(this);
     }
 
     async componentDidMount(){
-        const { dept } = this.props.match.params;
+        this.setState({ products: await this.fetchProducts() });
+    }
 
-        const products = await getProductsByDepartment(dept);
-        this.setState({ products });
+    async componentDidUpdate(prevProps){
+        const { dept, query } = this.props.match.params;
+
+        const prevDept = prevProps.match.params.dept;
+        const prevQuery = prevProps.match.params.query;
+
+        if(dept !== prevDept || query !== prevQuery){
+            this.setState({ products: await this.fetchProducts() });
+        }
+    }
+
+    async fetchProducts(){
+        const { dept, query } = this.props.match.params;
+
+        let products = [];
+
+        if(query){
+            products = await searchProducts({dept, query});
+        } else{
+            products = await getProductsByDepartment(dept);
+        }
+
+        return products;
     }
 
     async removeProduct(id){
