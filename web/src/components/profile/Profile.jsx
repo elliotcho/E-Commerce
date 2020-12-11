@@ -65,20 +65,24 @@ class Profile extends Component{
 
         return(
             <div className='profile'>
-                <img src = {imgURL? imgURL: loading} alt = 'profile pic'/>
+                <div>
+                    <img src = {imgURL? imgURL: loading} alt = 'profile pic'/>  
+                </div>
                 
                 <h3>{info ? info.username:'Loading User...'}</h3>
 
-                <input
-                    type = 'file'
-                    onChange = {this.changeProfilePic}
-                    accept = 'jpg png jpeg'
-                />
+                <div>
+                    <input
+                        type = 'file'
+                        onChange = {this.changeProfilePic}
+                        accept = 'jpg png jpeg'
+                    />
+                    
+                    <button onClick={this.removeProfilePic}>
+                        Remove
+                    </button>
+                </div>
                 
-                <button onClick={this.removeProfilePic}>
-                    Remove
-                </button>
-
                 <section className='container-fluid'>
                     <div className='row'>
                         <div className='stats col-3'>

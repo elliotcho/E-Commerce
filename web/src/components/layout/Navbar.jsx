@@ -21,9 +21,9 @@ function Navbar({ signedIn }){
                     <span className="navbar-toggler-icon"/>
                 </button>
 
-                <Searchbar />
-
                 <div className="collapse navbar-collapse" id="navbarResponsive">
+                    <Searchbar />
+
                     {!signedIn?
                          (<ul className="navbar-nav ml-auto">
                             <li>
@@ -33,7 +33,7 @@ function Navbar({ signedIn }){
                             </li>
                                 
                             <li>
-                                <Link to="/register" className="nav-link mr-5">
+                                <Link to="/register" className="nav-link">
                                     Signup
                                 </Link>
                             </li>
@@ -52,7 +52,7 @@ function Navbar({ signedIn }){
                             </li>
                                 
                             <li>
-                                <Link to="/" className="nav-link mr-5" onClick={logout}>
+                                <Link to="/" className="nav-link" onClick={logout}>
                                     Logout
                                 </Link>
                             </li>

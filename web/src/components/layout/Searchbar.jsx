@@ -33,6 +33,7 @@ class Searchbar extends Component{
         return(
             <form className='search-bar' onSubmit={this.handleSubmit}>
                 <input
+                    className = 'form-control'
                     type = 'text'
                     name = 'query'
                     onChange = {this.handleChange}

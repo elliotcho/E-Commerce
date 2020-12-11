@@ -8,6 +8,19 @@
     font-size: 1.6rem;
 }
 
+.navbar ul{
+    margin-left: auto;
+}
+
+.navbar li{
+    border-bottom: solid silver 1px;
+    padding: 10px;
+}
+
+.navbar li:last-child{
+    border: none;
+}
+
 .nav-link{
     font-size: 1.2rem;
 }
@@ -15,4 +28,11 @@
 .navbar button:focus{
     outline: none;
     box-shadow: none;
+}
+
+@media screen and (min-width: 991px){
+    .navbar ul, .navbar li {
+        border-bottom: none;
+        padding: 0;
+    }
 }
