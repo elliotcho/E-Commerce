@@ -85,5 +85,14 @@ export const searchProducts = async (data) => {
     const response = await axios.post(`${API}/api/product/search`, data, config);
     const products = response.data;
 
+    for(let i=0;i<products.length;i++){
+        const config = { responseType: 'blob'};
+
+        const result = await axios.get(`${API}/api/product/image/${products[i]._id}`, config);
+        const file = result.data;
+        
+        products[i].image = URL.createObjectURL(file);
+    }
+
     return products;
 }

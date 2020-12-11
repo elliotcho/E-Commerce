@@ -53,7 +53,7 @@ class CreateProduct extends Component {
 
         await createProduct(formData);
 
-        this.props.history.push('/');
+        this.props.history.push(`/products/${departmentId}`);
     }
 
     render(){

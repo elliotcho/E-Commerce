@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { searchProducts } from '../../api/product';
+import { withRouter } from 'react-router-dom';
 import './css/Searchbar.css';
 
 class Searchbar extends Component{
@@ -20,11 +20,11 @@ class Searchbar extends Component{
 
     async handleSubmit(e){
         e.preventDefault();
+
         const { query } =this.state;
+        const { history } = this.props;
 
-        const products = await searchProducts({ query, dept: 'all'});
-
-        console.log(products);
+        history.push(`/products/all/${query}`);
     }
 
     render(){
@@ -45,4 +45,4 @@ class Searchbar extends Component{
     }
 }
 
-export default Searchbar;
+export default withRouter(Searchbar);

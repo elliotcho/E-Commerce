@@ -47,6 +47,13 @@ function Navbar({ signedIn }){
                             </li>
                             
                             <li>
+                                <Link to="/create_product" className="nav-link mr-5">
+                                    <i className='fa fa-upload'/>
+                                    <span className='ml-3'>Upload Product</span>
+                                </Link>
+                            </li>
+
+                            <li>
                                 <Link to="/cart" className="nav-link mr-5">
                                     <i className='fas fa-shopping-cart'/>
                                     <span className='ml-3'>Cart</span>
