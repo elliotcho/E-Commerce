@@ -11,7 +11,6 @@ class ProductList extends Component {
         }
 
         this.fetchProducts = this.fetchProducts.bind(this);
-        this.removeProduct = this.removeProduct.bind(this);
     }
 
     async componentDidMount(){
@@ -43,35 +42,18 @@ class ProductList extends Component {
         return products;
     }
 
-    async removeProduct(id){
-        const { products } = this.state;
-
-        for(let i=0;i<products.length;i++){
-            if(products[i]._id === id){
-                products.splice(i, 1);
-                break;
-            }
-        }
-
-        await deleteProduct(id);
-        this.setState({ products });
-    }
-
     render(){
         const { products } = this.state;
 
         return(
-            <div>
+            <div className = 'd-flex justify-content-center'>
                 {products.map(p => 
                     <Product
                         key = {p._id}
                         productId = {p._id}
-                        description = {p.description}
-                        deleteProduct = {this.removeProduct}
                         image = {p.image}
                         name = {p.name}
                         price = {p.price}
-                        userId = {p.userId}
                     />
                 )}
             </div>        

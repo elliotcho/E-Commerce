@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-
+import React, { Component } from 'react';
 
 class DepartmentForm extends Component {
     constructor(){
@@ -11,15 +10,17 @@ class DepartmentForm extends Component {
     }
 
     render(){
-        <form className='department'>
-            <label htmlFor='name'></label>
-            <input 
-            name= 'name'    
-            type="text"
-            />
-        </form>
+        return(
+            <form className='department'>
+                <label htmlFor='name'></label>
+                
+                <input 
+                    name= 'name'    
+                    type="text"
+                />
+            </form>
+        )
     }
 }
-
 
 export default DepartmentForm;

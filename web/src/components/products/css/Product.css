@@ -1,9 +1,6 @@
 .product{
-    max-width: 600px;
-    margin: 30px auto;
-    font-family: 'Chakra Petch', sans-serif;
-    border: solid black;
-    cursor: pointer;
+    max-width: fit-content;
+    margin: 10px;
 }
 
 .product img{ 
@@ -11,14 +8,12 @@
     height: 10rem;
 }
 
-.product .fa-cart-plus{
+.product h5{
     cursor: pointer;
-    color: blue;
-    margin-right: 15px;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
 
-.product .fa-trash{
-    cursor: pointer;
-    color: red;
-    margin-left: 15px;
+.product h5:hover{
+    text-decoration: underline;
 }
