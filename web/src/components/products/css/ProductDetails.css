@@ -1,0 +1,30 @@
+.product-details{
+    max-width: 800px;
+    font-family: 'Arial';
+    margin: 50px auto;
+}
+
+.product-details img{
+    width: 100%;
+    height: 100%;
+    max-width: 15rem;
+    max-height: 15rem;
+}
+
+.product-details .description{
+    padding: 20px;
+}
+
+.product-details .description .name{
+    padding-bottom: 10px;
+    border-bottom: 1px solid gray;   
+}
+
+.product-details .description .price{
+    color: darkred;
+}
+
+.product-details .description .content{
+    font-size: 1.8rem;
+    color: gray;
+}

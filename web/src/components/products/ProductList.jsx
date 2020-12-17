@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { getProductsByDepartment, deleteProduct } from '../../api/product';
+import { getProductsByDepartment, deleteProduct, searchProducts } from '../../api/product';
 import Product from './Product';
 
 class ProductList extends Component {
@@ -10,45 +10,50 @@ class ProductList extends Component {
             products: []
         }
 
-        this.removeProduct = this.removeProduct.bind(this);
+        this.fetchProducts = this.fetchProducts.bind(this);
     }
 
     async componentDidMount(){
-        const { dept } = this.props.match.params;
-
-        const products = await getProductsByDepartment(dept);
-        this.setState({ products });
+        this.setState({ products: await this.fetchProducts() });
     }
 
-    async removeProduct(id){
-        const { products } = this.state;
+    async componentDidUpdate(prevProps){
+        const { dept, query } = this.props.match.params;
 
-        for(let i=0;i<products.length;i++){
-            if(products[i]._id === id){
-                products.splice(i, 1);
-                break;
-            }
+        const prevDept = prevProps.match.params.dept;
+        const prevQuery = prevProps.match.params.query;
+
+        if(dept !== prevDept || query !== prevQuery){
+            this.setState({ products: await this.fetchProducts() });
+        }
+    }
+
+    async fetchProducts(){
+        const { dept, query } = this.props.match.params;
+
+        let products = [];
+
+        if(query){
+            products = await searchProducts({dept, query});
+        } else{
+            products = await getProductsByDepartment(dept);
         }
 
-        await deleteProduct(id);
-        this.setState({ products });
+        return products;
     }
 
     render(){
         const { products } = this.state;
 
         return(
-            <div>
+            <div className = 'd-flex justify-content-center'>
                 {products.map(p => 
                     <Product
                         key = {p._id}
                         productId = {p._id}
-                        description = {p.description}
-                        deleteProduct = {this.removeProduct}
                         image = {p.image}
                         name = {p.name}
                         price = {p.price}
-                        userId = {p.userId}
                     />
                 )}
             </div>        

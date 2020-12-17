@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-
+import React, { Component } from 'react';
 
 class DepartmentForm extends Component {
     constructor(){
@@ -16,6 +15,7 @@ class DepartmentForm extends Component {
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value});
     }
+  
     handleSubmit(e) {
         e.preventDefault();
         const {name} = this.state;
@@ -34,13 +34,11 @@ class DepartmentForm extends Component {
                     type="text"
                     required
                 />
+            
                 <button>Add department</button>
             </form>
         )
     }
 }
-
-
-
 
 export default DepartmentForm;

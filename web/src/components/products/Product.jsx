@@ -1,81 +1,34 @@
 import React from 'react';
-import decode from 'jwt-decode';
 import { withRouter } from 'react-router-dom';
-import {addToUserCart} from '../../api/product';
 import './css/Product.css';
 
 function Product({
     productId,
-    description: { content, color, brand, size },
-    deleteProduct,
-    userId,
     image, 
     name, 
     price,
     history
-}){
-    let isOwner = false;
-    let textSnippet = content;
-
-    if(content.length > 30){
-        textSnippet = textSnippet.substring(0, 27) + '...';
-    }
-
-    try {
-        const token = localStorage.getItem('token');
-        const { user } = decode(token);
-
-        isOwner = user._id === userId
-    } catch (err) {
-        console.log(err);
-    }
-
-    const handleCartClick = async (productId) => {
-         await addToUserCart(productId);                   
+}){ 
+    const toProductDetails = () => {
+        history.push(`/product/${productId}`);
     }
 
     return(
-        <div 
-            className='product d-flex' 
-            onClick={() => {
-                history.push(`/product/${productId}`)}
-            }
-        >
-            <img src={image} alt='product' />
+        <div className='card product'>
+            <img
+                src = {image}
+                className = 'card-img-top'
+                alt = 'product pic'
+            />
 
-            <div className='ml-2 mt-2'>
-                <h2>{name}</h2>
+            <div className = 'card-body text-center'>
+                <h5 className = 'card-title' onClick={toProductDetails}>
+                    {name}
+                </h5>
 
-                <div>       
-                    <p>{textSnippet}</p>
-                </div>
-
-                <div>
-                    <h1>
-                        {price}$
-                    </h1>
-                </div>
-            </div>
-
-            <div className='ml-auto mr-2'>
-                <p>Brand: {brand}</p>
-                <p>Size: {size}</p>
-                <p>Color: {color}</p>
-
-                {userId?
-                    (<i
-                    className="fas fa-cart-plus"
-                    onClick = {() => {handleCartClick(productId)}}
-                    />): null
-                }
-                
-
-                {isOwner? 
-                    (<i 
-                        className='fas fa-trash'
-                        onClick = {() => {deleteProduct(productId)}}
-                    />) : null
-                }
+                <p>
+                    {price.toFixed(2)}$
+                </p>
             </div>
         </div>
     );
