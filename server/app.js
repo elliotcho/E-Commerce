@@ -8,6 +8,7 @@ import Redis from 'ioredis';
 import userRouter from './routes/user';
 import productRouter from './routes/product';
 import { refreshTokens } from './utils/authTokens';
+import departmentRouter from './routes/department';
 
 dotenv.config();
 const app = express();
@@ -60,6 +61,7 @@ mongoose.connection.once('open', () => {
 //routes set up
 app.use('/api/user', userRouter);
 app.use('/api/product', productRouter);
+app.use('/api/depatment', departmentRouter);
 
 app.listen(process.env.PORT || 5000, () => {
     console.log('Listening to port 5000');

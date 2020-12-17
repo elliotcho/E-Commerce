@@ -81,8 +81,9 @@ function App() {
           <Route exact path='/products/:dept' component={ProductList}/>
           <Route exact path='/product/:id' component={ProductDetails}/>
           <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
+          <Route exact path='/departments' component={DepartmentForm}/>
           <Route path='/' component={DeadPage}/>
-          <Route exact path='/departments' component={DepartmentForm}/> 
+           
         </Switch>
       </BrowserRouter>
   );
