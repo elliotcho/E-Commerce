@@ -49,41 +49,46 @@ class Profile extends Component{
         const { imgURL, products, info } = this.state; 
 
         return(
-            <div className='profile text-center'>
-                <header className='p-4'>
+            <div className='profile'>
+                <header className='p-2 text-center'>
                     <div>
                         <img src = {imgURL? imgURL: loading} alt = 'profile pic'/> 
                     </div>
                     
-                    <h3>
-                        {info ? info.username:'Loading User...'}
-                    </h3>
+                    <h3>{info ? info.username:'Loading User...'}</h3>
 
                     <div>
+                       <button className='btn-primary'>
+                            <label htmlFor='profilePic'>
+                                Update
+                            </label>
+                       </button>
+
                         <input
+                            id = 'profilePic'
                             type = 'file'
                             onChange = {this.changeProfilePic}
                             accept = 'jpg png jpeg'
                         />
                         
-                        <button onClick={this.removeProfilePic}>
-                            Remove
+                        <button className='btn-danger' onClick={this.removeProfilePic}>
+                            <label>Delete</label>
                         </button>   
                     </div>
                 </header>
 
            
-                <div className='row'>
-                    <div className='col-4'>
-                       <div className='stats'>
+                <main className='row mt-5'>
+                    <div className='col-12 col-xl-3'>
+                        <div className = 'stats text-center'>
                             <h2>Personal Stats</h2>
                             <p># of Products Posted: {products.length}</p>
                             <p>Successful Sales: </p>
                             <p>Average Rating: </p>
-                       </div>
+                        </div>
                     </div>
                         
-                    <div className='col-8 user-products'>
+                    <div className='col-12 col-xl-9 d-flex user-products'>
                         {products.map(p => 
                             <Product
                                 key = {p._id}
@@ -94,7 +99,7 @@ class Profile extends Component{
                             />
                         )}
                     </div>
-                </div>
+                </main>
             </div>
         )
     }

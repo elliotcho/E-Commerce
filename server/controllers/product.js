@@ -123,6 +123,4 @@ export const searchProducts = async (req, res) => {
     }
 
     res.json(products);
-
-    export 
 }
