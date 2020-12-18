@@ -61,7 +61,8 @@ mongoose.connection.once('open', () => {
 //routes set up
 app.use('/api/user', userRouter);
 app.use('/api/product', productRouter);
-app.use('/api/depatment', departmentRouter);
+app.use('/api/department', departmentRouter);
+
 
 app.listen(process.env.PORT || 5000, () => {
     console.log('Listening to port 5000');

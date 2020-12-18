@@ -1,4 +1,5 @@
 import { Product, Description } from '../models/product';
+import { Department } from '../models/product';
 import { createUpload } from '../utils/createUpload';
 import path from 'path';
 import fs from 'fs';
@@ -122,4 +123,6 @@ export const searchProducts = async (req, res) => {
     }
 
     res.json(products);
+
+    export 
 }
