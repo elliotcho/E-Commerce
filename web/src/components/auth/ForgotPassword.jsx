@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { forgotPassword } from '../../api/auth';
+import "./css/ForgotPassword.css"
 
 class ForgotPassword extends Component{
     constructor(){
@@ -30,9 +31,12 @@ class ForgotPassword extends Component{
         const { email, submitted } = this.state;
 
         return(
-            <div>
+            <div className="forgot">
+                <div className="input">
                 {!submitted?
                     (<form onSubmit={this.handleSubmit}>
+                        <h2>Forgot Your Password? Don't worry, we will send you an email to reset it </h2>
+                        <br></br>
                         <input
                             id = 'email'
                             value = {email}
@@ -49,6 +53,10 @@ class ForgotPassword extends Component{
                         If an account with that email exists, we sent you an email
                     </h3>)
                 }
+                </div>
+                
+                
+               
             </div>
         )
     }
