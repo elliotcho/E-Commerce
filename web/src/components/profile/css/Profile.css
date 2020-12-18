@@ -2,7 +2,6 @@
     height: 92vh; 
     position: relative;
     background-color: #89beb3;
-    text-align: center;
     overflow: auto;
 }
 
@@ -51,6 +50,10 @@
 
 .profile .stats h2:hover {
     background-color: #ebcfc4;
+}
+
+.profile .user-products .product{
+    flex-grow: 2;
 }
 
 @media screen and (max-width: 670px) {

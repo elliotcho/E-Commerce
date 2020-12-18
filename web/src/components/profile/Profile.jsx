@@ -49,7 +49,7 @@ class Profile extends Component{
         const { imgURL, products, info } = this.state; 
 
         return(
-            <div className='profile'>
+            <div className='profile text-center'>
                 <header className='p-4'>
                     <div>
                         <img src = {imgURL? imgURL: loading} alt = 'profile pic'/> 
@@ -83,7 +83,7 @@ class Profile extends Component{
                        </div>
                     </div>
                         
-                    <div className='col-8 user-products d-flex justify-content-center'>
+                    <div className='col-8 user-products'>
                         {products.map(p => 
                             <Product
                                 key = {p._id}

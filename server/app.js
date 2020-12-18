@@ -13,7 +13,6 @@ import departmentRouter from './routes/department';
 dotenv.config();
 const app = express();
 
-
 export const redis = new Redis();
 
 app.use(cors('*'));
