@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { searchProducts } from '../../api/product';
+import { withRouter } from 'react-router-dom';
 import './css/Searchbar.css';
 
 class Searchbar extends Component{
@@ -14,17 +14,27 @@ class Searchbar extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidUpdate(prevProps){
+      const { pathname } = this.props.location;
+      
+      const prevPathname = prevProps.location.pathname;
+
+      if(pathname !== prevPathname && !pathname.startsWith('/products')){
+          this.setState({ query: '' });
+      }
+    }
+
     handleChange(e){
         this.setState({[e.target.name] : e.target.value});
     }
 
     async handleSubmit(e){
         e.preventDefault();
+
         const { query } =this.state;
+        const { history } = this.props;
 
-        const products = await searchProducts({ query, dept: 'all'});
-
-        console.log(products);
+        history.push(`/products/all/${query}`);
     }
 
     render(){
@@ -33,6 +43,7 @@ class Searchbar extends Component{
         return(
             <form className='search-bar' onSubmit={this.handleSubmit}>
                 <input
+                    className = 'form-control'
                     type = 'text'
                     name = 'query'
                     onChange = {this.handleChange}
@@ -44,4 +55,4 @@ class Searchbar extends Component{
     }
 }
 
-export default Searchbar;
+export default withRouter(Searchbar);

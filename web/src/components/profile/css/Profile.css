@@ -1,11 +1,12 @@
 .profile {
     height: 92vh; 
     position: relative;
-    background-color: #E4E9FD;
-    background-image: -webkit-linear-gradient(90deg, #89beb3 71%, #8ec6c5 50%);
-    text-align: center;
-    padding: 0 3%'';
+    background-color: #89beb3;
     overflow: auto;
+}
+
+.profile header{
+    background: #8ec6c5;
 }
 
 .profile img {
@@ -46,8 +47,13 @@
     font-size: 21px;
     font-family: 'Sansita Swashed', cursive;
 }
+
 .profile .stats h2:hover {
     background-color: #ebcfc4;
+}
+
+.profile .user-products .product{
+    flex-grow: 2;
 }
 
 @media screen and (max-width: 670px) {

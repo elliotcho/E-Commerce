@@ -35,7 +35,7 @@ const ProductSchema = new mongoose.Schema({
     departmentId: {
         type: String
     },
-    datedPosted: {
+    datePosted: {
         type: Date
     }
 });
