@@ -26,7 +26,7 @@ class ProductDetails extends Component{
         } } = this.state;
 
         return(
-            <div className = 'product-details'>
+            <div className = 'product-details p-4'>
                 {this.state.fetching? 
                     (<div className = 'row'>
                         <div className = 'col-5'>
@@ -50,7 +50,7 @@ class ProductDetails extends Component{
                                 {description.content}
                             </p>
 
-                            <div className='mt-5'>
+                            <div className='mt-5 text-right'>
                                 <i className='fas fa-cart-plus'/>
                             </div>
                         </div>

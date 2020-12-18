@@ -1,6 +1,7 @@
 .product-details{
     max-width: 800px;
     font-family: 'Arial';
+    border: 1px solid black;
     margin: 50px auto;
 }
 
@@ -27,4 +28,10 @@
 .product-details .description .content{
     font-size: 1.8rem;
     color: gray;
+}
+
+.product-details .fa-cart-plus{
+    font-size: 2rem;
+    cursor: pointer;
+    color: blue;
 }

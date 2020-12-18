@@ -1,0 +1,7 @@
+.product-list{
+    height: 92vh;
+    position: relative;
+    background-color: #34626c;
+    flex-wrap: wrap;
+    overflow: auto;
+}

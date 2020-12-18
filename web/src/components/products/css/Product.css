@@ -1,11 +1,12 @@
 .product{
+    max-height: 300px;
     max-width: fit-content;
-    margin: 10px;
+    margin: 20px;
 }
 
 .product img{ 
-    width: 10rem;
-    height: 10rem;
+    max-width: 10rem;
+    max-height: 10rem;
 }
 
 .product h5{
