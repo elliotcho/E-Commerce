@@ -43,3 +43,7 @@
     cursor: pointer;
     color: blue;
 }
+
+.product-details .fa-cart-plus:hover{
+    color: lightgreen;
+}
