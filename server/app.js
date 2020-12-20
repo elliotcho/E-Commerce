@@ -4,15 +4,15 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import { refreshTokens } from './utils/authTokens';
 import Redis from 'ioredis';
+
 import userRouter from './routes/user';
 import productRouter from './routes/product';
-import { refreshTokens } from './utils/authTokens';
 import departmentRouter from './routes/department';
 
 dotenv.config();
 const app = express();
-
 
 export const redis = new Redis();
 

@@ -15,7 +15,6 @@ class Profile extends Component{
             info: null 
         }
 
-        this.removeProduct = this.removeProduct.bind(this);
         this.changeProfilePic = this.changeProfilePic.bind(this);
         this.removeProfilePic = this.removeProfilePic.bind(this);
     }
@@ -30,20 +29,6 @@ class Profile extends Component{
             products, 
             info
         });
-    }
-
-    async removeProduct(id){
-        const { products } = this.state;
-
-        for(let i=0;i<products.length;i++){
-            if(products[i]._id === id){
-                products.splice(i, 1);
-                break;
-            }
-        }
-
-        await deleteProduct(id);
-        this.setState({ products });
     }
 
     async changeProfilePic(e){
@@ -65,49 +50,56 @@ class Profile extends Component{
 
         return(
             <div className='profile'>
-                <div>
-                    <img src = {imgURL? imgURL: loading} alt = 'profile pic'/> 
-                </div>
-                
-                <h3>{info ? info.username:'Loading User...'}</h3>
+                <header className='p-2 text-center'>
+                    <div>
+                        <img src = {imgURL? imgURL: loading} alt = 'profile pic'/> 
+                    </div>
+                    
+                    <h3>{info ? info.username:'Loading User...'}</h3>
 
-                <div>
-                    <input
-                        type = 'file'
-                        onChange = {this.changeProfilePic}
-                        accept = 'jpg png jpeg'
-                    />
-                    <button onClick={this.removeProfilePic}>
-                        Remove
-                    </button>   
-                </div>
+                    <div>
+                       <button className='btn-primary'>
+                            <label htmlFor='profilePic'>
+                                Update
+                            </label>
+                       </button>
 
-                <section className='container-fluid'>
-                    <div className='row'>
-                        <div className='stats col-3'>
+                        <input
+                            id = 'profilePic'
+                            type = 'file'
+                            onChange = {this.changeProfilePic}
+                            accept = 'jpg png jpeg'
+                        />
+                        
+                        <button className='btn-danger' onClick={this.removeProfilePic}>
+                            <label>Delete</label>
+                        </button>   
+                    </div>
+                </header>
+
+           
+                <main className='row mt-5'>
+                    <div className='col-12 col-xl-3'>
+                        <div className = 'stats text-center'>
                             <h2>Personal Stats</h2>
                             <p># of Products Posted: {products.length}</p>
                             <p>Successful Sales: </p>
                             <p>Average Rating: </p>
                         </div>
-                        
-                        <div className='posts col-9'>
-                            {products.map(p => 
-                                <Product
-                                    key = {p._id}
-                                    productId = {p._id}
-                                    description = {p.description}
-                                    deleteProduct = {this.removeProduct}
-                                    image = {p.image}
-                                    name = {p.name}
-                                    price = {p.price}
-                                    userId = {p.userId}
-                                />
-                            )}
-                        </div>
                     </div>
-                </section>
-
+                        
+                    <div className='col-12 col-xl-9 d-flex user-products'>
+                        {products.map(p => 
+                            <Product
+                                key = {p._id}
+                                productId = {p._id}
+                                image = {p.image}
+                                name = {p.name}
+                                price = {p.price}
+                            />
+                        )}
+                    </div>
+                </main>
             </div>
         )
     }

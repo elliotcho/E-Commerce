@@ -3,10 +3,22 @@ import { createTokens } from './authTokens';
 import User from '../models/user';
 
 export const validateRegister = async (req) => {
-    const { username, password, email } = req.body;
+    const { username, password, email, adminCode } = req.body;
 
+    console.log(adminCode)
+
+    let isAdmin = adminCode === process.env.ADMIN_CODE;
     const errors = [];
     let user;
+
+    if(adminCode && !isAdmin){
+        errors.push({
+            field: 'Admin code',
+            msg: 'Invalid admin code'
+        });
+
+        return { user, errors };
+    }
 
     if(username.includes('@')){
         errors.push({
@@ -48,7 +60,13 @@ export const validateRegister = async (req) => {
         const salt = await bcyrpt.genSalt();
         const hashedPassword = await bcyrpt.hash(password, salt);
         
-        const newUser = new User({...req.body, password: hashedPassword, cart: []});
+        const newUser = new User({
+            username,
+            email, 
+            password: hashedPassword, 
+            cart: [],
+            isAdmin
+        });
                 
         user = await newUser.save();
         

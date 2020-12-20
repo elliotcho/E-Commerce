@@ -1,5 +1,6 @@
 .search-bar{
-    margin: 15px auto;
+    max-width: 600px;
+    margin: 20px auto;
     font-family: 'Nunito Sans';
 }
 
@@ -9,7 +10,9 @@
 
 @media screen and (min-width: 991px){
     .search-bar{
-        margin: revert;
-        margin-top: 3px;
+        position: relative;
+        left: 7px;
+        width: 40%;
+        margin: 0;
     }
 }

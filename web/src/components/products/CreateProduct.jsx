@@ -39,6 +39,7 @@ class CreateProduct extends Component {
     async handleSubmit(e){
         e.preventDefault();
         const { name, departmentId, description, image, price } = this.state;
+        const { history } = this.props;
 
         const formData = new FormData();
 
@@ -53,7 +54,7 @@ class CreateProduct extends Component {
 
         await createProduct(formData);
 
-        this.props.history.push('/');
+        history.push(`/products/${departmentId}`);
     }
 
     render(){

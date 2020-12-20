@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { changePassword } from '../../api/auth';
+import { changePassword } from '../../api/auth'; 
+import './css/ChangePassword.css';
 
 class ChangePassword extends Component{
     constructor(){
@@ -34,8 +35,12 @@ class ChangePassword extends Component{
         const { newPassword } = this.state;
 
         return(
-            <div>
-                <form onSubmit={this.handleSubmit}>
+            <div className='change-pwd'>
+                <form className='mx-auto' onSubmit={this.handleSubmit}>
+                    <h1 className = 'mb-4'>
+                        Change Password
+                    </h1>
+                    
                     <input
                         id='newPassword'
                         type='password'
@@ -44,7 +49,7 @@ class ChangePassword extends Component{
                         placeholder='New password here...'
                     />
 
-                    <button className='btn btn-success'>
+                    <button className='btn btn-success mt-3'>
                         Submit
                     </button>
                 </form>

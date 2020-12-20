@@ -4,8 +4,8 @@ import _ from 'lodash';
 
 //create token and refresh token
 export const createTokens = async (user, secret, secret2) => {
-    const token = jwt.sign({ user: _.pick(user, ['_id']) }, secret, { expiresIn: '1h' });
-    const refreshToken = jwt.sign({ user: _.pick(user, ['_id']) }, secret2, { expiresIn: '7d' });
+    const token = jwt.sign({ user: _.pick(user, ['_id', 'isAdmin']) }, secret, { expiresIn: '1h' });
+    const refreshToken = jwt.sign({ user: _.pick(user, ['_id', 'isAdmin']) }, secret2, { expiresIn: '7d' });
 
     return [token, refreshToken];
 }

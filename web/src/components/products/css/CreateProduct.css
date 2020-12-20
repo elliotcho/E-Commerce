@@ -1,17 +1,17 @@
 .create-product {
     position: relative;
-    width: 100%;
     height: 92vh;
     background-color: #9ad3bc;
     overflow: hidden;
 }
 
 .create-product form{
-  width: 600px;
+  max-width: 400px;
   margin: 30px auto;
 }
 
 .create-product input{
+  width: 100%;
   margin-bottom: 20px;
   display: block;
 }
