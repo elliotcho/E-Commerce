@@ -19,9 +19,13 @@ class DepartmentForm extends Component {
 
     async handleSubmit(e) {
         e.preventDefault();
-        const {name} = this.state;
-        
-        await addDepartment({name});
+
+        const { name } = this.state;
+    
+        const newDept = await addDepartment({name});
+
+        this.props.addNewDepartment(newDept);
+        this.setState({ name: '' });
     }
 
     render(){

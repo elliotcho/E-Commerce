@@ -4,10 +4,9 @@ export const createDepartment =  async (req, res) => {
     const {name} = req.body;
 
     const newDepartment = new Department({name});
+    const dept = await newDepartment.save();
 
-    await newDepartment.save();
-
-    res.json({msg:'success'});
+    res.json(dept);
 
 }
 
