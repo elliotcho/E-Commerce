@@ -1,6 +1,14 @@
+.product-details-bg{
+    height: 92vh;
+    position: relative;
+    background-color: #34626c;
+    overflow: auto;
+}
+
 .product-details{
     max-width: 800px;
     font-family: 'Arial';
+    background: white;
     border: 1px solid black;
     margin: 50px auto;
 }

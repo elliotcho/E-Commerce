@@ -11,11 +11,24 @@ class Register extends Component{
             username: '',
             password: '',
             confirmPassword: '',
+            adminCode: '',
+            showAdmin: false,
             errors: []
         }
 
+        this.toggleAdmin = this.toggleAdmin.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    toggleAdmin(){
+        const { showAdmin } = this.state;
+
+        if(showAdmin){
+            this.setState({ showAdmin: false, adminCode: ''})
+        } else{
+            this.setState({ showAdmin: true });
+        }
     }
 
     handleChange(e){
@@ -25,7 +38,7 @@ class Register extends Component{
     async handleSubmit(e){
         e.preventDefault();
 
-        const{ email, username, password, confirmPassword } = this.state;
+        const{ email, username, password, confirmPassword, adminCode } = this.state;
     
         if(password !== confirmPassword){
             this.setState({errors: [{
@@ -37,7 +50,7 @@ class Register extends Component{
             return;
         }
 
-        const userResponse = await register({ email, username, password });
+        const userResponse = await register({ email, username, password, adminCode });
 
         if(userResponse.user){
             window.location.reload();
@@ -49,7 +62,7 @@ class Register extends Component{
     }
 
     render(){
-        const{ email, username, password, confirmPassword, errors }= this.state;
+        const { email, username, password, confirmPassword, adminCode, showAdmin, errors } = this.state;
 
         return(
             <div className="register">
@@ -101,12 +114,30 @@ class Register extends Component{
                         placeholder='Confirm password...'
                         required
                     />
+
+                    {showAdmin && (
+                        <div>
+                            <label htmlFor='adminCode'>Admin Code</label>
+                            <input
+                                id='adminCode'
+                                type='password'
+                                value={adminCode}
+                                onChange={this.handleChange}
+                                placeholder='Admin code'
+                                required
+                            />
+                        </div>
+                    )}
                     
                     <div className = 'text-center'>
                         <button className='btn btn-primary'>
                             Register
                         </button>
                     </div>
+
+                    <p className='text-white mt-3' onClick={this.toggleAdmin}>
+                        {showAdmin? 'Sign up as user?' : 'Sign up as admin?'}
+                    </p>
 
                     <div className='errors mt-3'>
                         {errors.map((err, i) => 
