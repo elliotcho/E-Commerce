@@ -11,3 +11,9 @@ export const createDepartment =  async (req, res) => {
 
 }
 
+export const getAllDepartments = async (req, res) => {
+
+    const departments = await Department.find({});
+
+    res.json(departments);
+}

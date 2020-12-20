@@ -9,3 +9,9 @@ export const addDepartment = async (data) => {
 
     return msg; 
 }
+
+export const getAllDepartments = async () => {
+    const config = {header:{}};
+    const response = await axios.get(`${API}/api/department`, config);
+    return response.data;
+}
