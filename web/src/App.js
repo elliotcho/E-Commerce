@@ -14,6 +14,8 @@ import ProductDetails from './components/products/ProductDetails';
 import Profile from './components/profile/Profile';
 import DeadPage from "./components/layout/DeadPage";
 import Navbar from './components/layout/Navbar';
+// import DepartmentForm from './components/admin/DepartmentForm';
+import Departments from './components/admin/Departments';
 import './App.css';
 
 const isAuthenticated = () => {
@@ -81,7 +83,7 @@ function App() {
           <Route exact path='/products/:dept/:query?' component={ProductList}/>
           <Route exact path='/product/:id' component={ProductDetails}/>
           <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
-          <Route exact path='/departments' component={DepartmentForm}/>
+          <Route exact path='/departments' component={Departments}/>
           <Route path='/' component={DeadPage}/>
         </Switch>
       </BrowserRouter>
