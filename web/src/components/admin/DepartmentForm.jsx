@@ -30,6 +30,7 @@ class DepartmentForm extends Component {
 
     render(){
         const {name} = this.state; 
+        
         return(
             <form className='department' onSubmit={this.handleSubmit}>
                 <label htmlFor='name'></label>
