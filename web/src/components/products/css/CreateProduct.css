@@ -10,6 +10,10 @@
   margin: 30px auto;
 }
 
+.create-product select{
+  margin-bottom: 20px;
+}
+
 .create-product input{
   width: 100%;
   margin-bottom: 20px;

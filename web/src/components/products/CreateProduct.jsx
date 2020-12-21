@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { getAllDepartments } from '../../api/departments';
 import { createProduct } from '../../api/product';
 import './css/CreateProduct.css';
 
@@ -7,6 +8,7 @@ class CreateProduct extends Component {
         super();
 
         this.state = {
+            departments: [],
             name: '',
             departmentId: '',
             description: {},
@@ -18,6 +20,11 @@ class CreateProduct extends Component {
         this.changeDescription = this.changeDescription.bind(this);
         this.changeImage = this.changeImage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    async componentDidMount(){
+        const departments = await getAllDepartments();
+        this.setState({ departments });
     }
     
     changeField(e){
@@ -58,7 +65,7 @@ class CreateProduct extends Component {
     }
 
     render(){
-        const { name, price, departmentId } = this.state;
+        const { name, price, departmentId, departments } = this.state;
 
         return(
             <div className='create-product'>
@@ -71,13 +78,15 @@ class CreateProduct extends Component {
                         value = {name}
                     />
 
-                    <input
-                        type = 'text'
-                        name = 'departmentId'
-                        placeholder ='Department...'
-                        onChange = {this.changeField}
-                        value = {departmentId}
-                    />
+                    <select onChange={this.changeField} value={departmentId} name='departmentId'>
+                        <option value=""></option>
+
+                        {departments.map(dept => 
+                            <option value={dept._id}>
+                                {dept.name}
+                            </option>
+                         )}
+                    </select>
 
                     <input
                         type = 'number'

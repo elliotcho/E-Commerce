@@ -16,6 +16,10 @@ export const createProduct = async (req, res) => {
             }
     
             const { name, price, departmentId } = req.body;
+
+            if(!departmentId){
+                throw new Error('Department ID needed');
+            }
             
             const newDescription = new Description({
                 content: req.body.content,
