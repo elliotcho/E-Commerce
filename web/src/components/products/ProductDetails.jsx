@@ -22,7 +22,7 @@ class ProductDetails extends Component{
 
     render(){
         const { product: { 
-            image, name, price, description, datePosted, userId
+            image, name, price, description, datePosted
         } } = this.state;
 
         return(

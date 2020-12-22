@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getProfilePic, updateProfilePic, deleteProfilePic, getUserInfo } from '../../api/user';
-import { getUserProducts, deleteProduct } from '../../api/product';
+import { getUserProducts } from '../../api/product';
 import Product from '../products/Product';
 import loading from '../../images/loading.jpg';
 import './css/Profile.css';

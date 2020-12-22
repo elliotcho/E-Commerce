@@ -3,7 +3,7 @@ import {Department} from '../models/departments';
 export const createDepartment =  async (req, res) => {
     const {name} = req.body;
 
-    const newDepartment = new Department({name});
+    const newDepartment = new Department({ name, key: name.toLowerCase() });
     const dept = await newDepartment.save();
 
     res.json(dept);
@@ -11,8 +11,6 @@ export const createDepartment =  async (req, res) => {
 }
 
 export const getAllDepartments = async (req, res) => {
-
     const departments = await Department.find({});
-
     res.json(departments);
 }
