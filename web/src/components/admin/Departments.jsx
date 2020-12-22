@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getAllDepartments} from '../../api/departments';
+import {getAllDepartments, removeDepartment} from '../../api/departments';
 import DepartmentForm from './DepartmentForm';
 
 class Departments extends Component{
@@ -11,6 +11,7 @@ class Departments extends Component{
         }
 
         this.addNewDepartment = this.addNewDepartment.bind(this);
+        this.deleteDepartment = this.deleteDepartment.bind(this);
     }
 
     async componentDidMount(){ 
@@ -26,6 +27,18 @@ class Departments extends Component{
         this.setState({ departments });
     }
 
+    async deleteDepartment(id){
+         const { departments } = this.state;
+        for(let i=0; i<departments.length; i++){
+            if(departments[i]._id === id){
+                departments.splice(i, 1);
+                break;
+            }
+        }
+        await removeDepartment(id);
+        this.setState({ departments });
+    }
+
     render(){
         const { departments } = this.state;
 
@@ -33,9 +46,11 @@ class Departments extends Component{
             <div>
                 <div className='p-4'>
                     {departments.map((d, i) =>
-                        <p key ={i}>
+                        <div key ={i}>
                             {d.name}
-                        </p>
+                            <button onClick = {() => this.deleteDepartment(d._id)}> X
+                            </button>
+                        </div>
                     )}
                 </div>
 
