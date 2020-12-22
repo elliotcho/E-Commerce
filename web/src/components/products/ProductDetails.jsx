@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import decode from 'jwt-decode';
-import { getProductById, deleteProduct } from '../../api/product';
+import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
 
@@ -14,6 +14,7 @@ class ProductDetails extends Component{
         }
 
         this.removeProduct = this.removeProduct.bind(this);
+        this.addToCart = this.addToCart.bind(this);
     }
 
     async componentDidMount(){
@@ -29,6 +30,13 @@ class ProductDetails extends Component{
         await deleteProduct(_id);
 
         this.props.history.goBack();
+    }
+
+    async addToCart(){
+        const { product: { _id} } = this.state;
+        await addToUserCart(_id);
+
+        alert("ADDED TO CART");
     }
 
     render(){
@@ -82,7 +90,9 @@ class ProductDetails extends Component{
                                 </p>
 
                                 <div className='mt-5 text-right'>
-                                    <i className='fas fa-cart-plus'/>
+                                    {!isOwner && ( 
+                                        <i className='fas fa-cart-plus' onClick={this.addToCart}/>
+                                    )}
                                 </div>
                             </div>
                         </div>) : null

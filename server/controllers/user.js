@@ -161,15 +161,14 @@ export const addToCart = async (req, res) => {
     if (!req.user) {
         res.json({msg: 'User is not authenticated'});
     } else{
-        const {productId} = req.body;
+        const { productId } = req.body;
 
         const user = await User.findOne({_id: req.user._id});
-
-        const {cart} = user
+        const { cart } = user
         cart.push(productId);
 
-        await User.updateOne({_id: req.user._id}, {cart});
 
+        await User.updateOne({_id: req.user._id}, {cart});
         res.json({msg: 'Cart Updated'});
     }
 }
@@ -203,14 +202,19 @@ export const loadCart = async (req, res) => {
         const user = await User.findOne({_id: req.user._id});
         const { cart } = user; 
 
-        const products = cart.filter(async p_id => {
+        const result = [];
+
+        //filter out deleted products
+        const newCart = cart.filter(async p_id => {
             const product = await Product.findOne({ _id: p_id });
+            result.push(product);
+
             return product !== null;
         });
 
-        await User.updateOne({ _id: req.user._id}, { cart });
+        await User.updateOne({ _id: req.user._id}, { cart: newCart });
       
-        res.json(products);
+        res.json(result);
     }
 }
 
