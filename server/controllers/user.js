@@ -207,7 +207,10 @@ export const loadCart = async (req, res) => {
         //filter out deleted products
         const newCart = cart.filter(async p_id => {
             const product = await Product.findOne({ _id: p_id });
-            result.push(product);
+            
+            if(product){
+                result.push(product);
+            }
 
             return product !== null;
         });
