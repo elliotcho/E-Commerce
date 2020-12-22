@@ -13,3 +13,9 @@ export const getAllDepartments = async () => {
     const response = await axios.get(`${API}/api/department`, config);
     return response.data;
 }
+
+export const removeDepartment = async (id) => {
+    const config = {header:{}};
+    await axios.delete(`${API}/api/department/${id}`, config);
+    
+}
