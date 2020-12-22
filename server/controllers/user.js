@@ -201,16 +201,16 @@ export const loadCart = async (req, res) => {
         res.json({msg: 'User is not authenticated'});
     } else {
         const user = await User.findOne({_id: req.user._id});
-        const {cart} = user; 
+        const { cart } = user; 
 
-        const cartProducts = [];
+        const products = cart.filter(async p_id => {
+            const product = await Product.findOne({ _id: p_id });
+            return product !== null;
+        });
 
-        for (let i = 0; i < cart.length; i++) {
-            const product = await Product.findOne({_id: cart[i]});
-            cartProducts.push(product);
-        }
+        await User.updateOne({ _id: req.user._id}, { cart });
       
-        res.json(cartProducts);
+        res.json(products);
     }
 }
 

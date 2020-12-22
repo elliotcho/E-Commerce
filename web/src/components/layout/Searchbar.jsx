@@ -28,7 +28,7 @@ class Searchbar extends Component{
       const prevPathname = prevProps.location.pathname;
 
       if(pathname !== prevPathname && !pathname.startsWith('/products')){
-          this.setState({ query: '' });
+          this.setState({ query: '', dept: '' });
       }
     }
 
@@ -64,7 +64,7 @@ class Searchbar extends Component{
                             <option value="">all</option>
 
                             {departments.map(dept => 
-                                <option value={dept.name}>
+                                <option value={dept.name} key={dept._id}>
                                     {dept.name}
                                 </option>
                             )}

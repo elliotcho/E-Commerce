@@ -20,13 +20,24 @@
     max-height: 15rem;
 }
 
-.product-details .description{
+.product-details .description{  
     padding: 20px;
 }
 
-.product-details .description .name{
-    padding-bottom: 10px;
-    border-bottom: 1px solid gray;   
+.product-details .description header{
+    border-bottom: 1px solid gray; 
+}
+
+.product-details .fa-trash-alt{
+    position: relative;
+    top: 10px;
+    font-size: 1.5rem;
+    color: lightslategray;
+    cursor: pointer;
+}
+
+.product-details .fa-trash-alt:hover{
+    color: red;
 }
 
 .product-details .description .price{

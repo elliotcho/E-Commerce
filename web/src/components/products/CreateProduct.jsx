@@ -59,9 +59,9 @@ class CreateProduct extends Component {
         formData.append('image', image);
         formData.append('price', price);
 
-        await createProduct(formData);
+        const product = await createProduct(formData);
 
-        history.push(`/products/${departmentId}`);
+        history.push(`/product/${product._id}`);
     }
 
     render(){
