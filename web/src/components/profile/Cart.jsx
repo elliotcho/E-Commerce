@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { loadCart } from '../../api/user';
+import { loadCart, deleteFromCart } from '../../api/user';
 import Product from '../products/Product';
 
 class Cart extends Component{
@@ -8,9 +8,25 @@ class Cart extends Component{
         this.state = {
             cart: []
         }
+
+        this.delProductInCart = this.delProductInCart.bind(this);
     }
     async componentDidMount(){
         const cart = await loadCart();
+        this.setState({ cart });
+    }
+
+    async delProductInCart(id){
+        const { cart } = this.state;
+
+        for(let i=0; i<cart.length; i++){
+            if(cart[i] === id){
+                cart.splice(i, 1);
+                break;
+            }
+        }
+
+        await deleteFromCart(id);
         this.setState({ cart });
     }
 
@@ -36,7 +52,9 @@ class Cart extends Component{
                                 userId = {p.userId}
                             />
 
-                            <i className = 'fas fa-trash-alt' style={{cursor: 'pointer'}}/>
+                            <i  onClick = {()=> this.delProductInCart(p._id)}  
+                                className = 'fas fa-trash-alt' style={{cursor: 'pointer'}}
+                            />
                         </div>
                     )}
                 </div>

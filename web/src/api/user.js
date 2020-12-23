@@ -54,10 +54,10 @@ export const loadCart = async() => {
     return products;
 }
 
-export const deleteFromCart = async () => {
+export const deleteFromCart = async (id) => {
     const config = {headers: {}};
 
-    const response = await axios.delete(`${API}/api/user/deleteFromCart`, authMiddleware(config));
+    const response = await axios.delete(`${API}/api/user/deleteFromCart/${id}`, authMiddleware(config));
     authAfterware(response);
 }
   

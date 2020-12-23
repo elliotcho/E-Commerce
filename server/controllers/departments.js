@@ -18,7 +18,7 @@ export const getAllDepartments = async (req, res) => {
 export const deleteDepartment = async (req, res) => {
     const {deptId} = req.params;
 
-    await Department.deleteOne({_id: deptId});
+    await Department.deleteOne({_id:deptId});
 
     res.json({msg:'succesfully deleted'}); 
 }

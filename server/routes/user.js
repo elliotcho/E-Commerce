@@ -29,8 +29,8 @@ router.get('/profile_pic', loadProfilePic);
 router.post('/profile_pic', changeProfilePic);
 router.delete('/profile_pic', removeProfilePic);
 // router.delete('/', deleteUser);
- router.post('/cart', addToCart);
-// router.post('/cart', deleteFromCart);
+router.post('/cart', addToCart);
+router.delete('/cart', deleteFromCart);
 router.get('/cart', loadCart);
 
 export default router;

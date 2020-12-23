@@ -2,8 +2,8 @@ import express from 'express';
 
 import {
     createDepartment,
-    getAllDepartments,
-    deleteDepartment
+    deleteDepartment,
+    getAllDepartments
 } from '../controllers/departments'; 
 
 const router = express.Router();
