@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getProfilePic, updateProfilePic, deleteProfilePic, getUserInfo } from '../../api/user';
+import decode from 'jwt-decode';
+import { getProfilePic, updateProfilePic, deleteProfilePic, getMe, getUserInfo } from '../../api/user';
 import { getUserProducts } from '../../api/product';
 import Product from '../products/Product';
 import loading from '../../images/loading.jpg';
@@ -20,9 +21,20 @@ class Profile extends Component{
     }
 
     async componentDidMount(){
-        const products = await getUserProducts();
-        const imgURL = await getProfilePic();
-        const info = await getUserInfo();
+        const { uid } = this.props.match.params;
+
+        let info;
+        let products = [];
+        let imgURL = null;
+        
+        if(uid){
+            info = await getUserInfo(uid);
+        } else{
+            info = await getMe();
+
+            products = await getUserProducts();
+            imgURL = await getProfilePic();    
+        }
 
         this.setState({ 
             imgURL,
@@ -48,6 +60,15 @@ class Profile extends Component{
     render(){
         const { imgURL, products, info } = this.state; 
 
+        let isOwner = false;
+
+        try { 
+            const token = localStorage.getItem('token');
+            const { user } = decode(token);
+
+            isOwner = (info) ? user._id === info._id : false;
+        } catch (err) { }
+
         return(
             <div className='profile'>
                 <header className='p-2 text-center'>
@@ -57,24 +78,26 @@ class Profile extends Component{
                     
                     <h3>{info ? info.username:'Loading User...'}</h3>
 
-                    <div>
-                       <button className='btn-primary'>
-                            <label htmlFor='profilePic'>
-                                Update
-                            </label>
-                       </button>
+                    {isOwner && (
+                        <div>
+                            <button className='btn-primary'>
+                                <label htmlFor='profilePic'>
+                                    Update
+                                </label>
+                            </button>
 
-                        <input
-                            id = 'profilePic'
-                            type = 'file'
-                            onChange = {this.changeProfilePic}
-                            accept = 'jpg png jpeg'
-                        />
-                        
-                        <button className='btn-danger' onClick={this.removeProfilePic}>
-                            <label>Delete</label>
-                        </button>   
-                    </div>
+                            <input
+                                id = 'profilePic'
+                                type = 'file'
+                                onChange = {this.changeProfilePic}
+                                accept = 'jpg png jpeg'
+                            />
+                            
+                            <button className='btn-danger' onClick={this.removeProfilePic}>
+                                <label>Delete</label>
+                            </button>   
+                        </div>
+                    )}
                 </header>
 
            

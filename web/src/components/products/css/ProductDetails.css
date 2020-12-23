@@ -20,6 +20,11 @@
     max-height: 15rem;
 }
 
+.product-details span:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .product-details .description{  
     padding: 20px;
 }
