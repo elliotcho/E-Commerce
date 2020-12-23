@@ -22,7 +22,6 @@ export const updateProfilePic = async (data) => {
     const file = response.data;
 
     authAfterware(response);
-
     return URL.createObjectURL(file);
 }
 
@@ -41,6 +40,7 @@ export const loadCart = async() => {
     const config = {headers: {}};
     const response = await axios.get(`${API}/api/user/cart`, authMiddleware(config));
     const products = response.data;
+
     for(let i=0; i <products.length; i++){
         const config = { responseType: 'blob'};
 
@@ -49,8 +49,8 @@ export const loadCart = async() => {
         
         products[i].image = URL.createObjectURL(file);
     }
+
     authAfterware(response);
-    console.log(products);
     return products;
 }
 
@@ -61,12 +61,18 @@ export const deleteFromCart = async () => {
     authAfterware(response);
 }
   
-export const getUserInfo = async () => {
+export const getMe = async () => {
     const config = {headers: {}}
 
-    const response = await axios.get(`${API}/api/user/profile`, authMiddleware(config));
+    const response = await axios.get(`${API}/api/user/me`, authMiddleware(config));
     const info = response.data;
 
     authAfterware(response);
+    return info;
+}
+
+export const getUserInfo = async (uid) => {
+    const response = await axios.get(`${API}/api/user/profile/${uid}`);
+    const info = response.data;
     return info;
 }

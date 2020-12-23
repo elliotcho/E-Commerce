@@ -46,16 +46,16 @@ class Departments extends Component{
         const { departments } = this.state;
 
         return(
-            <div>
-                <div className='departments p-4'>
-                    <DepartmentForm addNewDepartment = {this.addNewDepartment}/>
+            <div className='p-4 departments-bg'>
+                <DepartmentForm addNewDepartment = {this.addNewDepartment}/>
 
+                <div className='departments mt-4'>
                     {departments.map((d, i) =>
-                        <div key ={i}>
+                        <div key ={i} className='dept p-3'>
                             {d.name}
 
                             <i 
-                                className='fas fa-trash-alt' 
+                                className='ml-2 fas fa-trash-alt' 
                                 onClick={() => this.deleteDepartment(d._id)}
                             />
                         </div>

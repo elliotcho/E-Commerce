@@ -65,10 +65,15 @@ export const getProductById = async (id) => {
         return null;
     }
 
+    const userInfo = await axios.get(`${API}/api/user/profile/${product.userId}`);
+    const { username } = userInfo.data;
+
     const result = await axios.get(`${API}/api/product/image/${id}`, {responseType: 'blob'});
     const file = result.data;
     
     product.image = URL.createObjectURL(file);
+    product.username = username;
+
     return product;
 }
 

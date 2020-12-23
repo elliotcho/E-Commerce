@@ -221,7 +221,7 @@ export const loadCart = async (req, res) => {
     }
 }
 
-export const userInfo = async (req, res) => {
+export const meQuery = async (req, res) => {
     if (!req.user) {
         res.json({msg: 'User is not authenticated'});
     } else {
@@ -231,4 +231,12 @@ export const userInfo = async (req, res) => {
 
         res.json(user);
     }
+}
+
+export const userInfo = async (req, res) => {
+    const { uid } = req.params;
+
+    const user = await User.findOne({_id: uid});
+
+    res.json(user);
 }

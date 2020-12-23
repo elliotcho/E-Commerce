@@ -29,7 +29,7 @@ class DepartmentForm extends Component {
     }
 
     render(){
-        const {name} = this.state; 
+        const { name } = this.state; 
         
         return(
             <form className='department' onSubmit={this.handleSubmit}>
@@ -42,7 +42,9 @@ class DepartmentForm extends Component {
                     required
                 />
             
-                <button>Add department</button>
+                <button className='ml-3 btn btn-success'>
+                    Add department
+                </button>
             </form>
         )
     }
