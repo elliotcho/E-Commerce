@@ -45,8 +45,8 @@ class Departments extends Component{
         return(
             <div>
                 <div className='p-4'>
-                    {departments.map((d, i) =>
-                        <div key ={i}>
+                    {departments.map((d) =>
+                        <div key ={d._id}>
                             {d.name}
                             <button onClick = {() => this.deleteDepartment(d._id)}> X
                             </button>

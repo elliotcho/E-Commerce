@@ -16,3 +16,11 @@ export const getAllDepartments = async (req, res) => {
 
     res.json(departments);
 }
+
+export const deleteDepartment = async (req, res) => {
+    const {deptId} = req.params;
+
+    await Department.deleteOne({_id:deptId});
+
+    res.json({msg:'succesfully deleted'}); 
+}
