@@ -24,11 +24,11 @@ class Profile extends Component{
         const { uid } = this.props.match.params;
 
         let info;
-        let products;
-        let imgURL;
+        let products = [];
+        let imgURL = null;
         
         if(uid){
-            info = await getUserInfo();
+            info = await getUserInfo(uid);
         } else{
             info = await getMe();
 
@@ -78,7 +78,7 @@ class Profile extends Component{
                     
                     <h3>{info ? info.username:'Loading User...'}</h3>
 
-                    {!isOwner && (
+                    {isOwner && (
                         <div>
                             <button className='btn-primary'>
                                 <label htmlFor='profilePic'>
