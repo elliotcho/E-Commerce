@@ -184,14 +184,12 @@ export const deleteFromCart = async (req, res) => {
 
         for (let i=0; i < cart.length; i++) {
             if (productId === cart[i]) {
-                cart.slice(i, 1);
+                cart.splice(i, 1);
                 break;
             } 
         }
         
         await User.updateOne({_id: req.user._id}, {cart});
-
-        res.json({msg: 'Cart Updated'});
     }
 }
 
