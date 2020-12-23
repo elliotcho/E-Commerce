@@ -11,6 +11,7 @@
 }
 
 .create-product select{
+  min-width: 200px;
   margin-bottom: 20px;
 }
 

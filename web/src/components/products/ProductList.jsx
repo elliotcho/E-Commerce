@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { getProductsByDepartment, deleteProduct, searchProducts } from '../../api/product';
+import { getProductsByDepartment, searchProducts } from '../../api/product';
 import Product from './Product';
 import './css/ProductList.css';
 
@@ -35,7 +35,7 @@ class ProductList extends Component {
         let products = [];
 
         if(query){
-            products = await searchProducts({dept, query});
+            products = await searchProducts({ dept, query });
         } else{
             products = await getProductsByDepartment(dept);
         }

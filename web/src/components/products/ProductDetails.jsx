@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import { getProductById } from '../../api/product';
+import decode from 'jwt-decode';
+import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
+import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
 
 class ProductDetails extends Component{
@@ -10,14 +12,31 @@ class ProductDetails extends Component{
             product: {},
             fetching: false,
         }
+
+        this.removeProduct = this.removeProduct.bind(this);
+        this.addToCart = this.addToCart.bind(this);
     }
 
     async componentDidMount(){
         const { id } = this.props.match.params;
 
         const product = await getProductById(id);
-        
+    
         this.setState({ product, fetching: true });
+    }
+
+    async removeProduct(){
+        const { product: { _id } } = this.state;
+        await deleteProduct(_id);
+
+        this.props.history.goBack();
+    }
+
+    async addToCart(){
+        const { product: { _id} } = this.state;
+        await addToUserCart(_id);
+
+        alert("ADDED TO CART");
     }
 
     render(){
@@ -25,13 +44,22 @@ class ProductDetails extends Component{
             image, name, price, description, datePosted, userId
         } } = this.state;
 
+        let isOwner = false;
+
+        try { 
+            const token = localStorage.getItem('token');
+            const { user } = decode(token);
+
+            isOwner = user._id === userId;
+        } catch (err) { }
+
         return(
             <div className = 'product-details-bg'>
                 <div className = 'product-details p-4'>
                     {this.state.fetching? 
                         (<div className = 'row'>
                             <div className = 'col-5'>
-                                <img src = {image} alt = 'product pic' />
+                                <img src = {image? image: loading} alt = 'product pic' />
 
                                 <p className = 'mt-3 ml-3'>
                                     { new Date(datePosted).toLocaleString() }
@@ -39,9 +67,19 @@ class ProductDetails extends Component{
                             </div>
 
                             <div className = 'col-7 description'>
-                                <h1 className = 'name'>
-                                    {name}
-                                </h1>
+                                <header className = 'row'>
+                                    <div className ='col-10'>
+                                        <h1>
+                                            {name} 
+                                        </h1>
+                                    </div>
+
+                                    <div className ='col-2 text-right'>
+                                        {isOwner && (
+                                            <i className='fas fa-trash-alt' onClick={this.removeProduct}/>
+                                        )}
+                                    </div>
+                                </header>
 
                                 <div className = 'price my-3'>
                                     {`Price: ${price.toFixed(2)}$`}
@@ -52,7 +90,9 @@ class ProductDetails extends Component{
                                 </p>
 
                                 <div className='mt-5 text-right'>
-                                    <i className='fas fa-cart-plus'/>
+                                    {!isOwner && ( 
+                                        <i className='fas fa-cart-plus' onClick={this.addToCart}/>
+                                    )}
                                 </div>
                             </div>
                         </div>) : null

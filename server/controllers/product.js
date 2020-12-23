@@ -1,5 +1,5 @@
 import { Product, Description } from '../models/product';
-import { Department } from '../models/product';
+import { Department } from '../models/departments';
 import { createUpload } from '../utils/createUpload';
 import path from 'path';
 import fs from 'fs';
@@ -95,8 +95,11 @@ export const getProductsByDepartment = async (req, res) => {
 
     let products = [];
 
-    if(dept === 'all'){
-        products = await Product.find({ departmentId : req.params.dept });
+    if(dept !== 'all'){
+        const department = await Department.findOne({ key: dept });
+        const { _id } = department;
+
+        products = await Product.find({ departmentId : _id });
     } else{
         products = await Product.find({});
     }
@@ -117,8 +120,10 @@ export const searchProducts = async (req, res) => {
     if(dept === 'all'){
         products = await Product.find({name: { $regex: query, $options: 'i'} });
     } else{
+        const department = await Department.findOne({ key: dept });
+
         products = await Product.find({
-            departmentId: dept,
+            departmentId: department._id,
             name: { 
                 $regex: query, 
                 $options: 'i'

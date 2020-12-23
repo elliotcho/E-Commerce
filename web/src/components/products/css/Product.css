@@ -14,8 +14,5 @@
     cursor: pointer;
     overflow-wrap: break-word;
     white-space: pre-wrap;
-}
-
-.product h5:hover{
     text-decoration: underline;
 }

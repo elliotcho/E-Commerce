@@ -7,14 +7,12 @@ import Register from "./components/auth/Register";
 import ForgotPassword from './components/auth/ForgotPassword';
 import changePassword from './components/auth/ChangePassword';
 import Cart from './components/profile/Cart';
-import DepartmentForm from './components/admin/DepartmentForm';
 import ProductList from './components/products/ProductList';
 import CreateProduct from './components/products/CreateProduct';
 import ProductDetails from './components/products/ProductDetails';
 import Profile from './components/profile/Profile';
 import DeadPage from "./components/layout/DeadPage";
 import Navbar from './components/layout/Navbar';
-// import DepartmentForm from './components/admin/DepartmentForm';
 import Departments from './components/admin/Departments';
 import './App.css';
 

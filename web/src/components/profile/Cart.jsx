@@ -24,16 +24,20 @@ class Cart extends Component{
         
                 <div className='items'>
                     {cart.map(p => 
-                        <Product
-                            key = {p._id}
-                            productId = {p._id}
-                            description = {p.description}
-                            deleteProduct = {this.removeProduct}
-                            image = {p.image}
-                            name = {p.name}
-                            price = {p.price}
-                            userId = {p.userId}
-                    />
+                        <div className ='text-center' style={{maxWidth: 'fit-content'}}>
+                            <Product
+                                key = {p._id}
+                                productId = {p._id}
+                                description = {p.description}
+                                deleteProduct = {this.removeProduct}
+                                image = {p.image}
+                                name = {p.name}
+                                price = {p.price}
+                                userId = {p.userId}
+                            />
+
+                            <i className = 'fas fa-trash-alt' style={{cursor: 'pointer'}}/>
+                        </div>
                     )}
                 </div>
             </div>

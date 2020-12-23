@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {getAllDepartments, removeDepartment} from '../../api/departments';
 import DepartmentForm from './DepartmentForm';
+import './css/Departments.css';
 
 class Departments extends Component{
     constructor(){
@@ -28,13 +29,15 @@ class Departments extends Component{
     }
 
     async deleteDepartment(id){
-         const { departments } = this.state;
+        const { departments } = this.state;
+
         for(let i=0; i<departments.length; i++){
             if(departments[i]._id === id){
                 departments.splice(i, 1);
                 break;
             }
         }
+
         await removeDepartment(id);
         this.setState({ departments });
     }
@@ -44,17 +47,20 @@ class Departments extends Component{
 
         return(
             <div>
-                <div className='p-4'>
-                    {departments.map((d) =>
-                        <div key ={d._id}>
+                <div className='departments p-4'>
+                    <DepartmentForm addNewDepartment = {this.addNewDepartment}/>
+
+                    {departments.map((d, i) =>
+                        <div key ={i}>
                             {d.name}
-                            <button onClick = {() => this.deleteDepartment(d._id)}> X
-                            </button>
+
+                            <i 
+                                className='fas fa-trash-alt' 
+                                onClick={() => this.deleteDepartment(d._id)}
+                            />
                         </div>
                     )}
                 </div>
-
-                <DepartmentForm addNewDepartment = {this.addNewDepartment}/>
             </div>
         )
     }
