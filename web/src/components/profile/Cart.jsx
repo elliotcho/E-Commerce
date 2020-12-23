@@ -20,14 +20,17 @@ class Cart extends Component{
         const { cart } = this.state;
 
         for(let i=0; i<cart.length; i++){
-            if(cart[i] === id){
+            console.log(cart[i]);
+
+            if(cart[i]._id === id){
                 cart.splice(i, 1);
                 break;
             }
         }
 
-        await deleteFromCart(id);
-        this.setState({ cart });
+        this.setState({ cart }, async () => {
+            await deleteFromCart(id);
+        }); 
     }
 
     render(){
@@ -40,9 +43,8 @@ class Cart extends Component{
         
                 <div className='items'>
                     {cart.map(p => 
-                        <div className ='text-center' style={{maxWidth: 'fit-content'}}>
+                        <div key={p._id} className ='text-center' style={{maxWidth: 'fit-content'}}>
                             <Product
-                                key = {p._id}
                                 productId = {p._id}
                                 description = {p.description}
                                 deleteProduct = {this.removeProduct}
@@ -52,8 +54,10 @@ class Cart extends Component{
                                 userId = {p.userId}
                             />
 
-                            <i  onClick = {()=> this.delProductInCart(p._id)}  
-                                className = 'fas fa-trash-alt' style={{cursor: 'pointer'}}
+                            <i  
+                                onClick = {() => this.delProductInCart(p._id)}  
+                                className = 'fas fa-trash-alt' 
+                                style={{cursor: 'pointer'}}
                             />
                         </div>
                     )}

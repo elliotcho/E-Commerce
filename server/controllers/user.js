@@ -177,7 +177,7 @@ export const deleteFromCart = async (req, res) => {
     if (!req.user) {
         res.json({msg: 'User is not authenticated'});
     } else {
-        const {productId} = req.body;
+        const { productId } = req.params;
 
         const user = await User.findOne({_id: req.user._id});
         const {cart} = user;

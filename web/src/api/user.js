@@ -3,7 +3,6 @@ import { authMiddleware } from '../utils/authMiddlware';
 import { authAfterware } from '../utils/authAfterware';
 import axios from 'axios';
 
-
 export const getProfilePic = async () => {
     const config = {headers: {}, responseType: 'blob'};
 
@@ -57,7 +56,7 @@ export const loadCart = async() => {
 export const deleteFromCart = async (id) => {
     const config = {headers: {}};
 
-    const response = await axios.delete(`${API}/api/user/deleteFromCart/${id}`, authMiddleware(config));
+    const response = await axios.delete(`${API}/api/user/cart/${id}`, authMiddleware(config));
     authAfterware(response);
 }
   

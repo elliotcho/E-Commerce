@@ -30,7 +30,7 @@ router.post('/profile_pic', changeProfilePic);
 router.delete('/profile_pic', removeProfilePic);
 // router.delete('/', deleteUser);
 router.post('/cart', addToCart);
-router.delete('/cart', deleteFromCart);
+router.delete('/cart/:productId', deleteFromCart);
 router.get('/cart', loadCart);
 
 export default router;
