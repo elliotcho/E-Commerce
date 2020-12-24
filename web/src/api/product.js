@@ -31,10 +31,10 @@ export const getProductsByDepartment = async (dept) => {
     return products;
 }
 
-export const getUserProducts = async () => {
+export const getUserProducts = async (uid = '') => {
     const config = { headers: {} };
 
-    const response = await axios.get(`${API}/api/product/user/profile`, authMiddleware(config));
+    const response = await axios.get(`${API}/api/product/user/profile/${uid}`, authMiddleware(config));
     const products= response.data;
 
     for(let i=0;i<products.length;i++){

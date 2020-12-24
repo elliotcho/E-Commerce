@@ -5,7 +5,6 @@ import {
     changeUsername,
     forgotPassword, 
     changePassword,
-    meQuery,
     userInfo,
     changeProfilePic,
     loadProfilePic,
@@ -23,9 +22,8 @@ router.post('/register', register);
 router.post('/change_username', changeUsername);
 router.post('/forgot_password', forgotPassword);
 router.post('/change_password', changePassword);
-router.get('/me', meQuery);
-router.get('/profile/:uid', userInfo);
-router.get('/profile_pic', loadProfilePic);
+router.get('/profile/:uid?', userInfo);
+router.get('/profile_pic/:uid?', loadProfilePic);
 router.post('/profile_pic', changeProfilePic);
 router.delete('/profile_pic', removeProfilePic);
 // router.delete('/', deleteUser);

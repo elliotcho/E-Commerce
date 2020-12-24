@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import decode from 'jwt-decode';
-import { getProfilePic, updateProfilePic, deleteProfilePic, getMe, getUserInfo } from '../../api/user';
+import { getProfilePic, updateProfilePic, deleteProfilePic, getUserInfo } from '../../api/user';
 import { getUserProducts } from '../../api/product';
 import Product from '../products/Product';
 import loading from '../../images/loading.jpg';
@@ -16,11 +16,24 @@ class Profile extends Component{
             info: null 
         }
 
+        this.fetchProfileData = this.fetchProfileData.bind(this);
         this.changeProfilePic = this.changeProfilePic.bind(this);
         this.removeProfilePic = this.removeProfilePic.bind(this);
     }
 
     async componentDidMount(){
+       await this.fetchProfileData();
+    }
+
+    async componentDidUpdate(prevProps){
+        const { uid } = this.props.match.params;
+
+        if(uid !== prevProps.uid){
+            await this.fetchProfileData();
+        }
+    }
+
+    async fetchProfileData(){
         const { uid } = this.props.match.params;
 
         let info;
@@ -29,9 +42,10 @@ class Profile extends Component{
         
         if(uid){
             info = await getUserInfo(uid);
+            products = await getUserProducts(uid);
+            imgURL = await getProfilePic(uid);
         } else{
-            info = await getMe();
-
+            info = await getUserInfo();
             products = await getUserProducts();
             imgURL = await getProfilePic();    
         }

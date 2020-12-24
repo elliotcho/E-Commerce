@@ -87,8 +87,13 @@ export const changeUsername = async (req, res) => {
 }
 
 export const loadProfilePic = async (req, res) => {
-    const { _id } = req.user;
-    const user = await User.findOne({ _id });
+    let user;
+
+    if(req.params.uid){
+        user = await User.findOne({ _id: req.params.uid });
+    } else{
+        user = await User.findOne({ _id: req.user._id });
+    }
 
     if(user && user.profilePic){
         res.sendFile(path.join(__dirname, '../', `images/profile/${user.profilePic}`));
@@ -219,22 +224,19 @@ export const loadCart = async (req, res) => {
     }
 }
 
-export const meQuery = async (req, res) => {
-    if (!req.user) {
+export const userInfo = async (req, res) => {
+    if (!req.user && !req.params.uid) {
         res.json({msg: 'User is not authenticated'});
     } else {
-        const user = await User.findOne({_id: req.user._id});
+        let user;
+
+        if(req.params.uid){
+            user = await User.findOne({_id: req.params.uid});
+        } else {
+            user = await User.findOne({ _id: req.user._id });
+        }
 
         user.password = '';
-
         res.json(user);
     }
-}
-
-export const userInfo = async (req, res) => {
-    const { uid } = req.params;
-
-    const user = await User.findOne({_id: uid});
-
-    res.json(user);
 }

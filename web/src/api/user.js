@@ -3,10 +3,10 @@ import { authMiddleware } from '../utils/authMiddlware';
 import { authAfterware } from '../utils/authAfterware';
 import axios from 'axios';
 
-export const getProfilePic = async () => {
+export const getProfilePic = async (uid = '') => {
     const config = {headers: {}, responseType: 'blob'};
 
-    const response = await axios.get(`${API}/api/user/profile_pic`, authMiddleware(config));
+    const response = await axios.get(`${API}/api/user/profile_pic/${uid}`, authMiddleware(config));
     const file = response.data;
 
     authAfterware(response);
@@ -59,19 +59,13 @@ export const deleteFromCart = async (id) => {
     const response = await axios.delete(`${API}/api/user/cart/${id}`, authMiddleware(config));
     authAfterware(response);
 }
-  
-export const getMe = async () => {
-    const config = {headers: {}}
 
-    const response = await axios.get(`${API}/api/user/me`, authMiddleware(config));
+export const getUserInfo = async (uid = '') => {
+    const config = {headers: {}};
+    
+    const response = await axios.get(`${API}/api/user/profile/${uid}`, authMiddleware(config));
     const info = response.data;
 
     authAfterware(response);
-    return info;
-}
-
-export const getUserInfo = async (uid) => {
-    const response = await axios.get(`${API}/api/user/profile/${uid}`);
-    const info = response.data;
     return info;
 }
