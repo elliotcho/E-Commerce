@@ -28,7 +28,7 @@ class Profile extends Component{
     async componentDidUpdate(prevProps){
         const { uid } = this.props.match.params;
 
-        if(uid !== prevProps.uid){
+        if(uid !== prevProps.match.params.uid){
             await this.fetchProfileData();
         }
     }
@@ -119,9 +119,9 @@ class Profile extends Component{
                     <div className='col-12 col-xl-3'>
                         <div className = 'stats text-center'>
                             <h2>Personal Stats</h2>
+                            <p>Email: {info? info.email : 'Loading...'}</p>
                             <p># of Products Posted: {products.length}</p>
                             <p>Successful Sales: </p>
-                            <p>Average Rating: </p>
                         </div>
                     </div>
                         

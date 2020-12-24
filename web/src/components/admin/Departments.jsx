@@ -11,7 +11,6 @@ class Departments extends Component{
             departments: []
         }
 
-        this.addNewDepartment = this.addNewDepartment.bind(this);
         this.deleteDepartment = this.deleteDepartment.bind(this);
     }
 
@@ -20,26 +19,9 @@ class Departments extends Component{
         this.setState({ departments });
     }
 
-    addNewDepartment(newDept){ 
-        const { departments } = this.state;
-       
-        departments.push(newDept);
-
-        this.setState({ departments });
-    }
-
     async deleteDepartment(id){
-        const { departments } = this.state;
-
-        for(let i=0; i<departments.length; i++){
-            if(departments[i]._id === id){
-                departments.splice(i, 1);
-                break;
-            }
-        }
-
         await removeDepartment(id);
-        this.setState({ departments });
+        window.location.reload();
     }
 
     render(){
@@ -47,7 +29,7 @@ class Departments extends Component{
 
         return(
             <div className='p-4 departments-bg'>
-                <DepartmentForm addNewDepartment = {this.addNewDepartment}/>
+                <DepartmentForm />
 
                 <div className='departments mt-4'>
                     {departments.map((d, i) =>
