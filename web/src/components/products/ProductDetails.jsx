@@ -41,7 +41,7 @@ class ProductDetails extends Component{
 
     render(){
         const { product: { 
-            image, name, price, description, datePosted, userId
+            image, name, price, description, datePosted, userId, username
         } } = this.state;
 
         let isOwner = false;
@@ -61,9 +61,22 @@ class ProductDetails extends Component{
                             <div className = 'col-5'>
                                 <img src = {image? image: loading} alt = 'product pic' />
 
-                                <p className = 'mt-3 ml-3'>
-                                    { new Date(datePosted).toLocaleString() }
-                                </p>
+                                <div className = 'ml-3'>
+                                    <p className ='mt-3'>
+                                        { new Date(datePosted).toLocaleString() }
+                                    </p>
+                                    
+                                    <p className ='mt-3'>
+                                        Posted by 
+                                        
+                                        <span className='ml-2' onClick={
+                                                () => this.props.history.push(`/profile/${userId}`)
+                                            }
+                                        >
+                                            {username}
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
 
                             <div className = 'col-7 description'>

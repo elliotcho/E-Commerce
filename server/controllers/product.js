@@ -108,7 +108,14 @@ export const getProductsByDepartment = async (req, res) => {
 }
 
 export const getUserProducts = async (req, res) => {
-    const products = await Product.find({ userId : req.user._id });
+    let products = [];
+
+    if(req.params.uid){
+        products = await Product.find({ userId: req.params.uid });
+    } else{
+        products = await Product.find({ userId : req.user._id });
+    }
+
     res.json(products);
 }
 

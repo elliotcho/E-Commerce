@@ -5,14 +5,14 @@ import {
     changeUsername,
     forgotPassword, 
     changePassword,
-    deleteUser,
+    userInfo,
     changeProfilePic,
     loadProfilePic,
+    removeProfilePic,
+    deleteUser,
     addToCart,
     deleteFromCart,
     loadCart,
-    removeProfilePic,
-    userInfo
 } from '../controllers/user';
 
 const router = express.Router();
@@ -22,13 +22,13 @@ router.post('/register', register);
 router.post('/change_username', changeUsername);
 router.post('/forgot_password', forgotPassword);
 router.post('/change_password', changePassword);
-router.get('/profile_pic', loadProfilePic);
+router.get('/profile/:uid?', userInfo);
+router.get('/profile_pic/:uid?', loadProfilePic);
 router.post('/profile_pic', changeProfilePic);
 router.delete('/profile_pic', removeProfilePic);
 // router.delete('/', deleteUser);
 router.post('/cart', addToCart);
-router.delete('/cart', deleteFromCart);
+router.delete('/cart/:productId', deleteFromCart);
 router.get('/cart', loadCart);
-router.get('/profile', userInfo);
 
 export default router;

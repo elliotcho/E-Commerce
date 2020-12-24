@@ -77,7 +77,7 @@ function App() {
           <UnauthenticatedRoute exact path='/register' component={Register}/>
           <UnauthenticatedRoute exact path='/forgot_password' component={ForgotPassword}/>
           <UnauthenticatedRoute exact path='/change_password/:token' component={changePassword}/>
-          <AuthenticatedRoute exact path='/profile' component={Profile}/>
+          <Route exact path='/profile/:uid?' component={Profile}/>
           <AuthenticatedRoute exact path='/cart' component={Cart}/>
           <Route exact path='/products/:dept/:query?' component={ProductList}/>
           <Route exact path='/product/:id' component={ProductDetails}/>

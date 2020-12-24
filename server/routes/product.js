@@ -16,7 +16,7 @@ router.delete('/:id', deleteProduct);
 router.get('/:id', getProduct);
 router.get('/image/:id', getProductImage);
 router.get('/department/:dept', getProductsByDepartment);
-router.get('/user/profile', getUserProducts);
+router.get('/user/profile/:uid?', getUserProducts);
 router.post('/search', searchProducts)
 
 export default router;

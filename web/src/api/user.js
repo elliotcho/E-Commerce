@@ -3,11 +3,10 @@ import { authMiddleware } from '../utils/authMiddlware';
 import { authAfterware } from '../utils/authAfterware';
 import axios from 'axios';
 
-
-export const getProfilePic = async () => {
+export const getProfilePic = async (uid = '') => {
     const config = {headers: {}, responseType: 'blob'};
 
-    const response = await axios.get(`${API}/api/user/profile_pic`, authMiddleware(config));
+    const response = await axios.get(`${API}/api/user/profile_pic/${uid}`, authMiddleware(config));
     const file = response.data;
 
     authAfterware(response);
@@ -22,7 +21,6 @@ export const updateProfilePic = async (data) => {
     const file = response.data;
 
     authAfterware(response);
-
     return URL.createObjectURL(file);
 }
 
@@ -41,6 +39,7 @@ export const loadCart = async() => {
     const config = {headers: {}};
     const response = await axios.get(`${API}/api/user/cart`, authMiddleware(config));
     const products = response.data;
+
     for(let i=0; i <products.length; i++){
         const config = { responseType: 'blob'};
 
@@ -49,6 +48,7 @@ export const loadCart = async() => {
         
         products[i].image = URL.createObjectURL(file);
     }
+
     authAfterware(response);
     return products;
 }
@@ -56,14 +56,14 @@ export const loadCart = async() => {
 export const deleteFromCart = async (id) => {
     const config = {headers: {}};
 
-    const response = await axios.delete(`${API}/api/user/deleteFromCart/${id}`, authMiddleware(config));
+    const response = await axios.delete(`${API}/api/user/cart/${id}`, authMiddleware(config));
     authAfterware(response);
 }
-  
-export const getUserInfo = async () => {
-    const config = {headers: {}}
 
-    const response = await axios.get(`${API}/api/user/profile`, authMiddleware(config));
+export const getUserInfo = async (uid = '') => {
+    const config = {headers: {}};
+    
+    const response = await axios.get(`${API}/api/user/profile/${uid}`, authMiddleware(config));
     const info = response.data;
 
     authAfterware(response);

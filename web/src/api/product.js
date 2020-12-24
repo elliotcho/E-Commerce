@@ -31,10 +31,10 @@ export const getProductsByDepartment = async (dept) => {
     return products;
 }
 
-export const getUserProducts = async () => {
+export const getUserProducts = async (uid = '') => {
     const config = { headers: {} };
 
-    const response = await axios.get(`${API}/api/product/user/profile`, authMiddleware(config));
+    const response = await axios.get(`${API}/api/product/user/profile/${uid}`, authMiddleware(config));
     const products= response.data;
 
     for(let i=0;i<products.length;i++){
@@ -65,10 +65,15 @@ export const getProductById = async (id) => {
         return null;
     }
 
+    const userInfo = await axios.get(`${API}/api/user/profile/${product.userId}`);
+    const { username } = userInfo.data;
+
     const result = await axios.get(`${API}/api/product/image/${id}`, {responseType: 'blob'});
     const file = result.data;
     
     product.image = URL.createObjectURL(file);
+    product.username = username;
+
     return product;
 }
 
