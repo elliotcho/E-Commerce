@@ -14,7 +14,9 @@ import ProductDetails from './components/products/ProductDetails';
 import Profile from './components/profile/Profile';
 import DeadPage from "./components/layout/DeadPage";
 import Navbar from './components/layout/Navbar';
+import Setting from './components/setting/Setting';
 import './App.css';
+
 
 const isAuthenticated = () => {
   const token = localStorage.getItem('token');
@@ -82,7 +84,9 @@ function App() {
           <Route exact path='/product/:id' component={ProductDetails}/>
           <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
           <Route exact path='/departments' component={DepartmentForm}/>
+          <AuthenticatedRoute exact path='/setting' component={Setting}/>
           <Route path='/' component={DeadPage}/>
+         
         </Switch>
       </BrowserRouter>
   );
