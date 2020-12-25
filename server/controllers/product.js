@@ -1,6 +1,7 @@
-import { Product, Description } from '../models/product';
+import { Product, Description, Review } from '../models/product';
 import { Department } from '../models/departments';
 import { createUpload } from '../utils/createUpload';
+
 import path from 'path';
 import fs from 'fs';
 

@@ -82,7 +82,7 @@ class CreateProduct extends Component {
                         <option value=""></option>
 
                         {departments.map(dept => 
-                            <option value={dept._id}>
+                            <option value={dept._id} key={dept._id}>
                                 {dept.name}
                             </option>
                          )}

@@ -81,6 +81,13 @@ function Navbar(){
                                     </Link>
                                 </li>
                             )}
+
+                            <li>
+                                <Link to="/setting" className="nav-link mr-5">
+                                    <i className='fas fa-cog' />
+                                    <span className='ml-3'>Settings</span>
+                                </Link>
+                            </li>
                                 
                             <li>
                                 <Link to="/" className="nav-link" onClick={logout}>
