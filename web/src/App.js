@@ -14,7 +14,7 @@ import Profile from './components/profile/Profile';
 import DeadPage from "./components/layout/DeadPage";
 import Navbar from './components/layout/Navbar';
 import Departments from './components/admin/Departments';
-import MessageHome from './components/messages/MessageHome';
+import MessageCenter from './components/messages/MessageCenter';
 import './App.css';
 
 const isAuthenticated = () => {
@@ -114,7 +114,7 @@ function App() {
           <Route exact path='/product/:id' component={ProductDetails}/>
           <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
           <AdminRoute exact path='/departments' component={Departments}/>
-          <Route exact path='/messages' component={MessageHome}/>
+          <Route exact path='/messages' component={MessageCenter}/>
           <Route path='/' component={DeadPage}/>
         </Switch>
       </BrowserRouter>
