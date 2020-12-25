@@ -1,5 +1,7 @@
-import { Product, Description } from '../models/product';
+import { Product, Description, Review } from '../models/product';
+import { Department } from '../models/departments';
 import { createUpload } from '../utils/createUpload';
+
 import path from 'path';
 import fs from 'fs';
 
@@ -15,6 +17,10 @@ export const createProduct = async (req, res) => {
             }
     
             const { name, price, departmentId } = req.body;
+
+            if(!departmentId){
+                throw new Error('Department ID needed');
+            }
             
             const newDescription = new Description({
                 content: req.body.content,
@@ -90,8 +96,11 @@ export const getProductsByDepartment = async (req, res) => {
 
     let products = [];
 
-    if(dept === 'all'){
-        products = await Product.find({ departmentId : req.params.dept });
+    if(dept !== 'all'){
+        const department = await Department.findOne({ key: dept });
+        const { _id } = department;
+
+        products = await Product.find({ departmentId : _id });
     } else{
         products = await Product.find({});
     }
@@ -100,7 +109,14 @@ export const getProductsByDepartment = async (req, res) => {
 }
 
 export const getUserProducts = async (req, res) => {
-    const products = await Product.find({ userId : req.user._id });
+    let products = [];
+
+    if(req.params.uid){
+        products = await Product.find({ userId: req.params.uid });
+    } else{
+        products = await Product.find({ userId : req.user._id });
+    }
+
     res.json(products);
 }
 
@@ -112,14 +128,27 @@ export const searchProducts = async (req, res) => {
     if(dept === 'all'){
         products = await Product.find({name: { $regex: query, $options: 'i'} });
     } else{
+        const department = await Department.findOne({ key: dept });
+
         products = await Product.find({
-            departmentId: dept,
+            departmentId: department._id,
             name: { 
                 $regex: query, 
                 $options: 'i'
             }
         });
     }
+    export const createReview = async (req, res) => {
+        if(!req.user){
+            res.json({ ok: false });
+        } else{
+            productUpload(req, res, async err => {
+                if(err){
+                    console.log(err);
+                }
+        const
+          }
+
 
     res.json(products);
 }

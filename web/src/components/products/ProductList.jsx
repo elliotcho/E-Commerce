@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { getProductsByDepartment, deleteProduct, searchProducts } from '../../api/product';
+import { getProductsByDepartment, searchProducts } from '../../api/product';
 import Product from './Product';
+import './css/ProductList.css';
 
 class ProductList extends Component {
     constructor(){
@@ -34,7 +35,7 @@ class ProductList extends Component {
         let products = [];
 
         if(query){
-            products = await searchProducts({dept, query});
+            products = await searchProducts({ dept, query });
         } else{
             products = await getProductsByDepartment(dept);
         }
@@ -46,7 +47,7 @@ class ProductList extends Component {
         const { products } = this.state;
 
         return(
-            <div className = 'd-flex justify-content-center'>
+            <div className = 'product-list d-flex justify-content-center'>
                 {products.map(p => 
                     <Product
                         key = {p._id}

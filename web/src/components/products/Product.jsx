@@ -14,7 +14,7 @@ function Product({
     }
 
     return(
-        <div className='card product'>
+        <div className='product card p-2'>
             <img
                 src = {image}
                 className = 'card-img-top'

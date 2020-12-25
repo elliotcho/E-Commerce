@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import decode from 'jwt-decode';
 import { withRouter, Link } from 'react-router-dom';
 import Searchbar from './Searchbar';
 import './css/Navbar.css';
@@ -9,6 +10,15 @@ function Navbar({ signedIn }){
         window.localStorage.clear();
         window.location.href = '/';
     }
+
+    let isAdmin = false;
+
+    try { 
+        const token = localStorage.getItem('token');
+        const { user } = decode(token);
+
+        isAdmin = user.isAdmin;
+    } catch (err) { }
 
     return(
         <nav className="navbar navbar-expand-lg navbar-dark fixed">
@@ -59,6 +69,16 @@ function Navbar({ signedIn }){
                                     <span className='ml-3'>Cart</span>
                                 </Link>
                             </li>
+
+                            
+                            {isAdmin && (
+                                <li>
+                                    <Link to="/departments" className="nav-link mr-5">
+                                        <i className ='fas fa-shield-alt'/>
+                                        <span className='ml-3'>Admin</span>
+                                    </Link>
+                                </li>
+                            )}
                                 
                             <li>
                                 <Link to="/" className="nav-link" onClick={logout}>

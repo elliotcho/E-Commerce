@@ -7,7 +7,6 @@ import Register from "./components/auth/Register";
 import ForgotPassword from './components/auth/ForgotPassword';
 import changePassword from './components/auth/ChangePassword';
 import Cart from './components/profile/Cart';
-import DepartmentForm from './components/admin/DepartmentForm';
 import ProductList from './components/products/ProductList';
 import CreateProduct from './components/products/CreateProduct';
 import ProductDetails from './components/products/ProductDetails';
@@ -15,6 +14,8 @@ import Profile from './components/profile/Profile';
 import DeadPage from "./components/layout/DeadPage";
 import Navbar from './components/layout/Navbar';
 import Setting from './components/setting/Setting';
+import Departments from './components/admin/Departments';
+import MessageCenter from './components/messages/MessageCenter';
 import './App.css';
 
 
@@ -30,6 +31,21 @@ const isAuthenticated = () => {
   }
 
   return true;
+}
+
+const isAdmin = () => {
+  let result = false;
+
+  try { 
+    const token = localStorage.getItem('token');
+    const { user } = decode(token);
+
+    result = user.isAdmin;
+  } catch (err) {
+      return false;     
+  }
+
+  return result;
 }
 
 const UnauthenticatedRoute = ({component: Component, ...rest}) => (
@@ -66,6 +82,22 @@ const AuthenticatedRoute = ({component: Component, ...rest}) => (
   />
 );
 
+const AdminRoute = ({component: Component, ...rest}) => (
+  <Route
+    {...rest}
+    render = {props =>
+      (isAuthenticated() && isAdmin() ? (
+          <Component {...props} />
+        ) : <Redirect
+            to = {{
+               pathname: '/'
+            }}
+        />
+      )
+    }
+   />
+);
+
 function App() {
   const signedIn = isAuthenticated();
 
@@ -78,15 +110,15 @@ function App() {
           <UnauthenticatedRoute exact path='/register' component={Register}/>
           <UnauthenticatedRoute exact path='/forgot_password' component={ForgotPassword}/>
           <UnauthenticatedRoute exact path='/change_password/:token' component={changePassword}/>
-          <AuthenticatedRoute exact path='/profile' component={Profile}/>
+          <Route exact path='/profile/:uid?' component={Profile}/>
           <AuthenticatedRoute exact path='/cart' component={Cart}/>
           <Route exact path='/products/:dept/:query?' component={ProductList}/>
           <Route exact path='/product/:id' component={ProductDetails}/>
           <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
-          <Route exact path='/departments' component={DepartmentForm}/>
           <AuthenticatedRoute exact path='/setting' component={Setting}/>
-          <Route path='/' component={DeadPage}/>
-         
+          <AdminRoute exact path='/departments' component={Departments}/>
+          <Route exact path='/messages' component={MessageCenter}/>
+          <Route path='/' component={DeadPage}/> 
         </Switch>
       </BrowserRouter>
   );

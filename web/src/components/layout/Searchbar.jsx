@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { getAllDepartments } from '../../api/departments';
 import './css/Searchbar.css';
 
 class Searchbar extends Component{
@@ -7,11 +8,18 @@ class Searchbar extends Component{
         super();
 
         this.state = {
-            query: ''
+            departments: [],
+            query: '',
+            dept: ''
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    
+    async componentDidMount(){
+        const departments = await getAllDepartments();
+        this.setState({ departments });
     }
 
     componentDidUpdate(prevProps){
@@ -20,7 +28,7 @@ class Searchbar extends Component{
       const prevPathname = prevProps.location.pathname;
 
       if(pathname !== prevPathname && !pathname.startsWith('/products')){
-          this.setState({ query: '' });
+          this.setState({ query: '', dept: '' });
       }
     }
 
@@ -31,25 +39,49 @@ class Searchbar extends Component{
     async handleSubmit(e){
         e.preventDefault();
 
-        const { query } =this.state;
+        const { query, dept } =this.state;
         const { history } = this.props;
 
-        history.push(`/products/all/${query}`);
+        let route;
+
+        if(dept) {
+            route = `/products/${dept.toLowerCase()}/${query}`;
+        } else{
+            route = `/products/all/${query}`;
+        }
+
+        history.push(route);
     }
 
     render(){
-        const { query } = this.state;
+        const { query, dept, departments } = this.state;
 
         return(
             <form className='search-bar' onSubmit={this.handleSubmit}>
-                <input
-                    className = 'form-control'
-                    type = 'text'
-                    name = 'query'
-                    onChange = {this.handleChange}
-                    placeholder = 'Search'
-                    value ={query}
-                />
+               <div className='row ml-2'>
+                    <div className='col-2 m-0 p-0'>
+                        <select onChange={this.handleChange} value={dept} name='dept'>
+                            <option value="">all</option>
+
+                            {departments.map(dept => 
+                                <option value={dept.name} key={dept._id}>
+                                    {dept.name}
+                                </option>
+                            )}
+                        </select>
+                    </div>
+
+                    <div className='col-10'>
+                        <input
+                            className = 'form-control'
+                            type = 'text'
+                            name = 'query'
+                            onChange = {this.handleChange}
+                            placeholder = 'Search'
+                            value ={query}
+                        />
+                    </div>
+               </div>
             </form>
         )
     }

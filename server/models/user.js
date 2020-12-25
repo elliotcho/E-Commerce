@@ -19,11 +19,12 @@ const UserSchema = new mongoose.Schema({
     profilePic: {
         type: String,
         default: null
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 });
-
-
-
 
 const User = mongoose.model('user', UserSchema);
 export default User;

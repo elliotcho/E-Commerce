@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import { addDepartment } from '../../api/departments';
 
 class DepartmentForm extends Component {
     constructor(){
@@ -15,17 +16,20 @@ class DepartmentForm extends Component {
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value});
     }
-  
-    handleSubmit(e) {
+
+    async handleSubmit(e) {
         e.preventDefault();
-        const {name} = this.state;
-        console.log({name});
+
+        await addDepartment({name: this.state.name});
+
+        window.location.reload();
     }
 
     render(){
-        const {name} = this.state; 
+        const { name } = this.state; 
+        
         return(
-            <form className='department' onSubmit={this.handleSubmit} >
+            <form className='department' onSubmit={this.handleSubmit}>
                 <label htmlFor='name'></label>
                 <input 
                     name= 'name'
@@ -35,7 +39,9 @@ class DepartmentForm extends Component {
                     required
                 />
             
-                <button>Add department</button>
+                <button className='ml-3 btn btn-success'>
+                    Add department
+                </button>
             </form>
         )
     }

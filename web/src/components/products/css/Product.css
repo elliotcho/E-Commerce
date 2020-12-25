@@ -1,19 +1,18 @@
 .product{
+    font-family: 'Nunito Sans';
+    max-height: 300px;
     max-width: fit-content;
-    margin: 10px;
+    margin: 20px;
 }
 
 .product img{ 
-    width: 10rem;
-    height: 10rem;
+    max-width: 10rem;
+    max-height: 10rem;
 }
 
 .product h5{
     cursor: pointer;
     overflow-wrap: break-word;
     white-space: pre-wrap;
-}
-
-.product h5:hover{
     text-decoration: underline;
 }
