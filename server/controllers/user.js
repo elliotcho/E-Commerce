@@ -22,6 +22,32 @@ export const register = async (req, res) => {
     res.json(userResponse);
 }
 
+export const changeUserPassword = async(req, res) => {
+    console.log(req.body);
+    const user = await User.findOne({_id: req.user._id});
+    if(!user){
+        res.json({msg: "User not found"});
+    }
+    const valid = await bcyrpt.compare(req.body.currPassword, user.password);
+    console.log(valid, req.body);
+    if(valid){
+        const salt = await bcyrpt.genSalt();
+        const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt);
+        await User.updateOne({_id: req.user._id}, {password: hashedPassword });
+        res.json({msg: "Success"});
+    }
+    // const salt = await bcyrpt.genSalt();
+    // const hashedPassword = await bcyrpt.hash(req.user.currPassword, salt);
+    // //if current passwords match, then update
+    // if(user.password === hashedPassword){
+    //     const salter = await bcyrpt.genSalt();
+    //     const newHash = await bcyrpt.hash(req.user.newPassword, salt);
+    //     await User.updateOne({_id:req.user._id}, {password: newHash});
+    //     res.json({msg: "Success"});
+
+    // }
+}
+
 export const forgotPassword = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
 
@@ -148,6 +174,7 @@ export const removeProfilePic = async (req, res) => {
 export const deleteUser = async (req, res) => {
     const user = await User.findOne({ _id : req.user._id });
     const { _id, profilePic } = user;
+    console.log(user);
 
     if(profilePic){
         fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
