@@ -1,7 +1,13 @@
 import React from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import decode from 'jwt-decode';
+import {BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import { 
+  AdminRoute, 
+  AuthenticatedRoute, 
+  UnauthenticatedRoute 
+} from './utils/protectRoutes';
+
+import Home from './components/home/Home';
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ForgotPassword from './components/auth/ForgotPassword';
@@ -17,93 +23,15 @@ import Departments from './components/admin/Departments';
 import MessageHome from './components/messages/MessageHome';
 import './App.css';
 
-const isAuthenticated = () => {
-  const token = localStorage.getItem('token');
-  const refreshToken = localStorage.getItem('refreshToken');
 
-  try { 
-    decode(token);
-    decode(refreshToken);
-  } catch (err){
-    return false;
-  }
-
-  return true;
-}
-
-const isAdmin = () => {
-  let result = false;
-
-  try { 
-    const token = localStorage.getItem('token');
-    const { user } = decode(token);
-
-    result = user.isAdmin;
-  } catch (err) {
-      return false;     
-  }
-
-  return result;
-}
-
-const UnauthenticatedRoute = ({component: Component, ...rest}) => (
-  <Route
-    {...rest}
-    render = {props =>
-      (!isAuthenticated() ? (
-          <Component {...props} />
-        ) :
-        <Redirect
-           to = {{
-              pathname: '/'
-           }}
-        />  
-      )
-    }
-  />
-);
-
-const AuthenticatedRoute = ({component: Component, ...rest}) => (
-  <Route
-    {...rest}
-    render = {props =>
-      (isAuthenticated() ? (
-          <Component {...props} />
-        ) :
-        <Redirect
-           to = {{
-              pathname: '/login'
-           }}
-        />  
-      )
-    }
-  />
-);
-
-const AdminRoute = ({component: Component, ...rest}) => (
-  <Route
-    {...rest}
-    render = {props =>
-      (isAuthenticated() && isAdmin() ? (
-          <Component {...props} />
-        ) : <Redirect
-            to = {{
-               pathname: '/'
-            }}
-        />
-      )
-    }
-   />
-);
 
 function App() {
-  const signedIn = isAuthenticated();
-
   return (
       <BrowserRouter>
-        < Navbar signedIn = {signedIn} />
+        < Navbar />
         
         <Switch>
+          <Route exact path ='/' component={Home} />
           <UnauthenticatedRoute exact path='/login' component={Login}/>
           <UnauthenticatedRoute exact path='/register' component={Register}/>
           <UnauthenticatedRoute exact path='/forgot_password' component={ForgotPassword}/>
