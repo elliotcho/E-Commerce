@@ -31,6 +31,21 @@ const isAuthenticated = () => {
   return true;
 }
 
+const isAdmin = () => {
+  let result = false;
+
+  try { 
+    const token = localStorage.getItem('token');
+    const { user } = decode(token);
+
+    result = user.isAdmin;
+  } catch (err) {
+      return false;     
+  }
+
+  return result;
+}
+
 const UnauthenticatedRoute = ({component: Component, ...rest}) => (
   <Route
     {...rest}
@@ -65,6 +80,22 @@ const AuthenticatedRoute = ({component: Component, ...rest}) => (
   />
 );
 
+const AdminRoute = ({component: Component, ...rest}) => (
+  <Route
+    {...rest}
+    render = {props =>
+      (isAuthenticated() && isAdmin() ? (
+          <Component {...props} />
+        ) : <Redirect
+            to = {{
+               pathname: '/'
+            }}
+        />
+      )
+    }
+   />
+);
+
 function App() {
   const signedIn = isAuthenticated();
 
@@ -82,7 +113,7 @@ function App() {
           <Route exact path='/products/:dept/:query?' component={ProductList}/>
           <Route exact path='/product/:id' component={ProductDetails}/>
           <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
-          <Route exact path='/departments' component={Departments}/>
+          <AdminRoute exact path='/departments' component={Departments}/>
           <Route exact path='/messages' component={MessageHome}/>
           <Route path='/' component={DeadPage}/>
         </Switch>
