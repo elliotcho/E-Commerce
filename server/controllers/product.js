@@ -1,6 +1,7 @@
-import { Product, Description } from '../models/product';
+import { Product, Description, Review } from '../models/product';
 import { Department } from '../models/departments';
 import { createUpload } from '../utils/createUpload';
+
 import path from 'path';
 import fs from 'fs';
 
@@ -137,6 +138,17 @@ export const searchProducts = async (req, res) => {
             }
         });
     }
+    export const createReview = async (req, res) => {
+        if(!req.user){
+            res.json({ ok: false });
+        } else{
+            productUpload(req, res, async err => {
+                if(err){
+                    console.log(err);
+                }
+        const
+          }
+
 
     res.json(products);
 }
