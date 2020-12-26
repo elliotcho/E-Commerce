@@ -7,40 +7,66 @@
     position: relative;
 }
 
-.messageCenter h1 {
-    font-size: 60px;
-}
-
-.messageCenter .userBoard{
-    border: 2px solid #222831;
+.messageCenter .userBoardIntro{
+    border: 3px solid #222831;
     border-radius: 30px;
-    margin: 2rem auto;
-    width: 44%;
-}
-.messageCenter .userBoard:hover{
     background-color: #3282b8;
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    margin: 2rem auto;
+    width: 17%;
 }
 
-.messageCenter .userBoard i {
-    font-size: 77px;
+.messageCenter .userBoardIntro i{
+    font-size: 70px;
     margin: 0.5rem auto;
 }
 
-.messageCenter .messageBoard{
-    width: 70%;
-    height: 60%;
-    margin: 10px auto 4%;
-    background-color: antiquewhite;
-    border: 2px solid black;
-    position: relative;
+.messageCenter h1 {
+    font-size: 60px;
+    display: inline-block;
+    margin-top: 7%;
 }
 
-.messageCenter .messageBoard .oldConvos{
-    position: absolute;
-    left: 0px;
-    border-right: 2px solid #222831;
+
+.messageCenter hr{
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
-.messageCenter .messageBoard .activeConvo{
+
+.messageCenter .messageBox .oldConvos{
+    margin: 40px auto;
+    justify-content: space-between;
+}
+.messageCenter .messageBox .oldConvos{
+    border: 2px solid #000000;
+    display: inline-block;
+    padding: 1%;
+    width: 20%;
+    border-radius: 40px;
+}
+.messageCenter .messageBox .activeConvo{
+    border: 2px solid #3282b8;
+    background-color: antiquewhite;
+    display: inline-block;
+    height: 360px;
+    margin-bottom: 100px;
+}
+
+.messageCenter .userBoardEnd{
+    border: 3px solid #222831;
+    border-radius: 30px;
+    background-color: #3282b8;
     position: absolute;
-    right: 0px;
+    right: 6px;
+    bottom: 4px;
+    margin: 2rem auto;
+    width: 17%;
+}
+
+.messageCenter .userBoardEnd i{
+    font-size: 70px;
+    margin: 0.5rem auto;
 }
