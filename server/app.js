@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -12,7 +12,6 @@ import productRouter from './routes/product';
 import departmentRouter from './routes/department';
 import messageRouter from './routes/message';
 
-dotenv.config();
 const app = express();
 
 export const redis = new Redis();
@@ -65,6 +64,7 @@ app.use('/api/product', productRouter);
 app.use('/api/department', departmentRouter);
 app.use('/api/message', messageRouter);
 
-app.listen(process.env.PORT || 5000, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Listening to port 5000');
 });
+

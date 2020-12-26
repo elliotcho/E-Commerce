@@ -1,19 +1,18 @@
-import { trim } from 'lodash';
 import mongoose from 'mongoose';
 
 const messageSchema = new mongoose.Schema({
-    userReceiver:{
-        type: 'String'
+    receiver:{
+        type: String
     },
-    userSender: {
-        type: 'String'
+    sender: {
+        type: String
     },
     read:{
         type: Boolean,
         default: false
     },
-    contents:{
-        type: 'String',
+    content:{
+        type: String,
         trim: true
     }
 });

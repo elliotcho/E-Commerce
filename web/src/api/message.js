@@ -3,10 +3,13 @@ import { authMiddleware } from '../utils/authMiddlware';
 import { authAfterware } from '../utils/authAfterware';
 import axios from 'axios';
 
-export const sendMessage = async(data) => {
+export const sendMessage = async (data) => {
     const config = {headers: {'content-type': 'application/json'}};
-    const res = await axios.post(`${API}/api/message/createMessage`, data, authMiddleware(config));
-    authAfterware(res);
-    const result = res.data;
-    return result;
+    const response = await axios.post(`${API}/api/message`, data, authMiddleware(config));
+    const { ok, msg } = response.data;
+
+    if(ok){
+        authAfterware(response);
+        return msg;
+    }
 }
