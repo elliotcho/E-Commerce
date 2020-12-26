@@ -52,12 +52,12 @@ function MessageBubble({i}){
 }
 
 function ChatContainer(){
-    const arr = [1,2,1,1,1,1,2,1,2,1,1,1,2,1,1,2]
+    const messages = [1,2,1,1,1,1,2,1,2,1,1,1,2,1,1,2]
 
     return(
         <div className='chat-container mt-5'>
             <TypingBubble/>
-           {arr.map(i => <MessageBubble i={i}/>)}
+            {messages.map(i => <MessageBubble i={i}/>)}
         </div>
     )
 }
