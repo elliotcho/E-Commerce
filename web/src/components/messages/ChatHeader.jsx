@@ -7,6 +7,20 @@ function ChatHeader({ userId }){
     const [username, setUsername] = useState('Loading...');
     const [imgURL, setImgURL] = useState(null);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const picturePromise = getProfilePic(userId);
+            const userPromise = getUserInfo(userId);
+    
+            const [imgURL, user] = await Promise.all([picturePromise, userPromise]);
+    
+            setUsername(user.username);
+            setImgURL(imgURL)
+        }
+
+        fetchData();
+    }, [userId])
+
     return(
         <div className='chat-header'>
             <img
