@@ -47,6 +47,8 @@
 
 .product-details .description .price{
     color: darkred;
+    display: inline-block;
+    padding-right: 160px;
 }
 
 .product-details .description .content{
@@ -62,4 +64,9 @@
 
 .product-details .fa-cart-plus:hover{
     color: lightgreen;
+}
+
+.product-details .description .quantity{
+    color: darkred;
+    display: inline-block;
 }
