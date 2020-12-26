@@ -16,3 +16,4 @@ export const createMessage = async(req, res) =>{
         res.json({ok: true, msg});
     }
 }
+
