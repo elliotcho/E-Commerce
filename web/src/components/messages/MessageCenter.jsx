@@ -5,8 +5,12 @@ import './css/MessageCenter.css';
 class MessageCenter extends Component{
     render(){
         return(
-            <div className='messageCenter'>
-                <Sidebar />            
+            <div className='message-center'>
+                <Sidebar />      
+
+                <div>
+                    Container
+                </div>    
             </div>
         )
     }
