@@ -25,6 +25,7 @@ class Profile extends Component{
         this.fetchProfileData = this.fetchProfileData.bind(this);
         this.changeProfilePic = this.changeProfilePic.bind(this);
         this.removeProfilePic = this.removeProfilePic.bind(this);
+        this.messageUser = this.messageUser.bind(this);
     }
 
     async componentDidMount(){
@@ -77,6 +78,15 @@ class Profile extends Component{
         this.setState({ imgURL });
     }
 
+    messageUser(){
+        const { history } = this.props;
+        const { info } = this.state;
+
+        if(info){
+            history.push(`/chat/${info._id}`);
+        }
+    }
+
     render(){
         const { imgURL, products, info } = this.state; 
         const { isDark } = this.context;
@@ -87,7 +97,9 @@ class Profile extends Component{
             const token = localStorage.getItem('token');
             const { user } = decode(token);
 
-            isOwner = (info) ? user._id === info._id : false;
+            if(info){
+                isOwner = user._id === info._id;
+            }
         } catch (err) { }
 
         const style = isDark? darkStyle: lightStyle;
@@ -101,26 +113,35 @@ class Profile extends Component{
                     
                     <h3>{info ? info.username:'Loading User...'}</h3>
 
-                    {isOwner && (
-                        <div>
-                            <button className='btn-primary'>
-                                <label htmlFor='profilePic'>
-                                    Update
-                                </label>
-                            </button>
+                    {isOwner? 
+                            (
+                                <div>
+                                    <button className='btn-primary'>
+                                        <label htmlFor='profilePic'>
+                                            Update
+                                        </label>
+                                    </button>
 
-                            <input
-                                id = 'profilePic'
-                                type = 'file'
-                                onChange = {this.changeProfilePic}
-                                accept = 'jpg png jpeg'
-                            />
-                            
-                            <button className='btn-danger' onClick={this.removeProfilePic}>
-                                <label>Delete</label>
-                            </button>   
-                        </div>
-                    )}
+                                    <input
+                                        id = 'profilePic'
+                                        type = 'file'
+                                        onChange = {this.changeProfilePic}
+                                        accept = 'jpg png jpeg'
+                                    />
+                                    
+                                    <button className='btn-danger' onClick={this.removeProfilePic}>
+                                        <label>Delete</label>
+                                    </button>   
+                                </div>
+                            ) : 
+                            (
+                                <div>
+                                    <button className='btn-primary' onClick={this.messageUser}>
+                                        <label>Message</label>
+                                    </button>
+                                </div>
+                            )
+                        }
                 </header>
 
            
