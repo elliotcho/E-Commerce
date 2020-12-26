@@ -91,3 +91,4 @@ export const changePassword = async(data) => {
 export const deleteAccount = async() => {
     await axios.delete(`${API}/api/user`, authMiddleware({headers: {}}));
 }
+
