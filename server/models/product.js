@@ -37,6 +37,13 @@ const ProductSchema = new mongoose.Schema({
     },
     datePosted: {
         type: Date
+    },
+    quantity: {
+        type: Number
+    },
+    quantitySold: {
+        type: Number,
+        default: 0
     }
 });
 

@@ -13,7 +13,9 @@ class CreateProduct extends Component {
             departmentId: '',
             description: {},
             image: null,
-            price: 0
+            price: '',
+            quantity: ''
+            
         }
 
         this.changeField = this.changeField.bind(this);
@@ -45,7 +47,7 @@ class CreateProduct extends Component {
 
     async handleSubmit(e){
         e.preventDefault();
-        const { name, departmentId, description, image, price } = this.state;
+        const { name, departmentId, description, image, price, quantity, quantitySold } = this.state;
         const { history } = this.props;
 
         const formData = new FormData();
@@ -58,6 +60,8 @@ class CreateProduct extends Component {
         formData.append('departmentId', departmentId);
         formData.append('image', image);
         formData.append('price', price);
+        formData.append('quantity', quantity);
+        
 
         const product = await createProduct(formData);
 
@@ -65,7 +69,7 @@ class CreateProduct extends Component {
     }
 
     render(){
-        const { name, price, departmentId, departments } = this.state;
+        const { name, price, departmentId, departments, quantity } = this.state;
 
         return(
             <div className='create-product'>
@@ -78,8 +82,8 @@ class CreateProduct extends Component {
                         value = {name}
                     />
 
-                    <select onChange={this.changeField} value={departmentId} name='departmentId'>
-                        <option value=""></option>
+                    <select  onChange={this.changeField} value={departmentId} name='departmentId'>
+                        <option value="" disabled selected>Select Department </option>
 
                         {departments.map(dept => 
                             <option value={dept._id} key={dept._id}>
@@ -95,6 +99,7 @@ class CreateProduct extends Component {
                         step = '0.01'
                         onChange = {this.changeField}
                         value = {price}
+                        placeholder='price of a single item...'
                     />
 
                     <input
@@ -131,6 +136,14 @@ class CreateProduct extends Component {
                         onChange = {this.changeDescription}
                     />
 
+                    <input
+                        type = 'number'
+                        name = 'quantity'
+                        value= {quantity}
+                        placeholder='quantity in stock...'
+                        onChange= {this.changeField}
+                        />
+                    
                     <button>Submit Product</button>
                 </form>
             </div>
