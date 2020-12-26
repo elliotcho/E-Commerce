@@ -1,0 +1,14 @@
+.send-message{
+    display: grid;
+    grid-template-columns: 50px auto;
+    padding: 20px;
+}
+
+.send-message input{
+    margin-left: 30px;
+    padding: 6px;
+}
+
+.send-message button{
+    cursor: pointer;
+}

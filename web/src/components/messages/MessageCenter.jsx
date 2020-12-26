@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import Sidebar from './Sidebar';
+import ChatHeader from './ChatHeader';
+import ChatContainer from './ChatContainer';
+import SendMessage from './SendMessage';
 import './css/MessageCenter.css';
 
 class MessageCenter extends Component{
@@ -8,9 +11,13 @@ class MessageCenter extends Component{
             <div className='message-center'>
                 <Sidebar />      
 
-                <div>
-                    Container
-                </div>    
+                <main>
+                    <ChatHeader />
+
+                    <ChatContainer />
+                    
+                    <SendMessage />
+                </main>    
             </div>
         )
     }

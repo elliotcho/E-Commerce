@@ -4,3 +4,14 @@
     font-family: 'Arial';
     color: white;
 }
+
+.side-bar .msg-card{
+    display: grid;
+    grid-template-columns: 6rem auto;
+}
+
+.side-bar img{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}

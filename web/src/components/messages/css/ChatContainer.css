@@ -1,0 +1,43 @@
+.chat-container{
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+}
+
+.message, .typing{
+    display: grid;
+    grid-template-columns: 5rem auto;
+}
+
+.message img, .typing img{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.msg-bubble{
+    padding: 0.5rem 1.4rem;
+    background: white;
+    border-radius: 11px;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.msg-bubble strong, .typing strong{
+    font-family: 'Nunito Sans';
+}
+
+.msg-bubble p, .typing p{
+    font-family: 'Arial';
+}
+
+.msg-bubble .read{
+    width: fit-content;
+    margin-left: auto;
+}
+
+.msg-bubble .read img{
+    width: 1rem;
+    height: 1rem;
+}

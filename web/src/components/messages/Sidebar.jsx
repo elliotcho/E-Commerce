@@ -1,19 +1,21 @@
 import React from 'react';
+import loading from '../../images/loading.jpg';
 import './css/Sidebar.css';
 
 function MessageCard(){
     return(
-        <div className='p-4' style={{border: '1px solid black', cursor: 'pointer'}}>
-            <h3>HELLO</h3>
+        <div className='p-4 msg-card' style={{border: '1px solid black', cursor: 'pointer'}}>
+            <img
+                src = {loading}
+                alt = 'profile pic'
+            />
+            
+            <div>
+                <h3>HELLO</h3>
 
-            <div className='row'>
-                <div className='col-9'>
-                    <p>1234567890123456789012345</p>
-                </div>
-
-                <div className='col-3'>
-                    <span>3y</span>
-                </div>
+                <p>
+                    1234567890123456789012345
+                </p>
             </div>
         </div>
     )

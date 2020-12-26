@@ -1,6 +1,12 @@
 .message-center{
     height: 92vh;
     display: grid;
-    grid-template-columns: 350px 1fr;
-    background: lightblue;
+    grid-template-columns: 400px 1fr;
+    background-color: #8ec6c5;
+}
+
+.message-center main{
+    display: grid;
+    grid-template-rows: 1fr 8.5fr auto;
+    overflow: auto;
 }

@@ -1,0 +1,19 @@
+.chat-header{
+    display: grid;
+    grid-template-columns: 6rem auto;
+    background-color: #34626c;
+    padding: 5px;
+}
+
+.chat-header h3{
+    font-family: 'Arial';
+    position: relative;
+    top: 12px;
+}
+
+.chat-header img{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    margin: 0 auto;
+}
