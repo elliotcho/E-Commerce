@@ -72,10 +72,17 @@ function Navbar(){
                                 </Link>
                             </li>
 
+                            <li>
+                                <Link to='/chat' className='nav-link mr-5'>
+                                    <i class="fas fa-comment"/>
+                                    <span className='ml-3'>Messages</span>
+                                </Link>
+                            </li>
+
                             
                             {isAdmin && (
                                 <li>
-                                    <Link to="/departments" className="nav-link mr-5">
+                                    <Link to="/admin" className="nav-link mr-5">
                                         <i className ='fas fa-shield-alt'/>
                                         <span className='ml-3'>Admin</span>
                                     </Link>

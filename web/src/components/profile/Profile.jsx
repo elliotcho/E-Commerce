@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import decode from 'jwt-decode';
 import { getProfilePic, updateProfilePic, deleteProfilePic, getUserInfo } from '../../api/user';
 import { getUserProducts } from '../../api/product';
@@ -6,7 +7,12 @@ import Product from '../products/Product';
 import loading from '../../images/loading.jpg';
 import './css/Profile.css';
 
+const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
+const darkStyle = { backgroundColor: '#34626c', color: 'white' };
+
 class Profile extends Component{
+    static contextType = ThemeContext;
+
     constructor(){
         super();
 
@@ -73,6 +79,7 @@ class Profile extends Component{
 
     render(){
         const { imgURL, products, info } = this.state; 
+        const { isDark } = this.context;
 
         let isOwner = false;
 
@@ -83,8 +90,10 @@ class Profile extends Component{
             isOwner = (info) ? user._id === info._id : false;
         } catch (err) { }
 
+        const style = isDark? darkStyle: lightStyle;
+
         return(
-            <div className='profile'>
+            <div className='profile' style={style}>
                 <header className='p-2 text-center'>
                     <div>
                         <img src = {imgURL? imgURL: loading} alt = 'profile pic'/> 

@@ -28,7 +28,7 @@ class Departments extends Component{
         const { departments } = this.state;
 
         return(
-            <div className='p-4 departments-bg'>
+            <div className='p-4'>
                 <DepartmentForm />
 
                 <div className='departments mt-4'>

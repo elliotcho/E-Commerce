@@ -1,9 +1,3 @@
-.departments-bg{
-    height: 92vh;
-    background-color: #34626c;
-    position: relative;
-}
-
 .departments { 
     display: flex;
     flex-wrap: wrap;
@@ -12,8 +6,8 @@
 .departments .dept {
     margin-left: 10px;
     background-color: white;
+    color: black;
     max-width: fit-content;
-    border: 1px solid black;
 }
 
 .departments i{

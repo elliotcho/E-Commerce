@@ -20,7 +20,7 @@ import Profile from './components/profile/Profile';
 import DeadPage from "./components/layout/DeadPage";
 import Navbar from './components/layout/Navbar';
 import Settings from './components/settings/Settings';
-import Departments from './components/admin/Departments';
+import AdminHome from './components/admin/AdminHome';
 import MessageCenter from './components/messages/MessageCenter';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -43,8 +43,8 @@ function App() {
           <Route exact path='/product/:id' component={ProductDetails}/>
           <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
           <AuthenticatedRoute exact path='/settings' component={Settings}/>
-          <AdminRoute exact path='/departments' component={Departments}/>
-          <Route exact path='/messages' component={MessageCenter}/>
+          <AdminRoute exact path='/admin' component={AdminHome}/>
+          <AuthenticatedRoute exact path='/chat/:userId?' component={MessageCenter}/>
           <Route path='/' component={DeadPage}/> 
         </Switch>
 
