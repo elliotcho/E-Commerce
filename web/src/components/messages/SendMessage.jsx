@@ -1,5 +1,5 @@
 import React from 'react';
-import {sendMessage} from '../../api/message'
+import { sendMessage } from '../../api/message'
 import './css/SendMessage.css';
 
 const ENTER_KEY = 13;
@@ -7,9 +7,11 @@ const ENTER_KEY = 13;
 class SendMessage extends React.Component{
     constructor(){
         super();
+
         this.state = {
             content: ''
         }
+
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
     }
@@ -20,32 +22,32 @@ class SendMessage extends React.Component{
 
     async handleKeyDown(e){
         if(e.keyCode === ENTER_KEY){
-            const receiverID = this.props.userId;
-            const content = this.state;
-            const data = {
-                receiverID,
-                content
-            }
+            const receiver = this.props.userId;
+            const { content } = this.state;
+
+            const data = { receiver, content };
+
             const response = await sendMessage(data);
             console.log(response);
         }
     }
 
     render(){
-        const content = this.state;
+        const { content } = this.state;
+
         return(
             <div className='send-message'>
                 <button>
-                    +
+                    <label htmlFor="">+</label>
                 </button>
 
                 <input 
+                    id= 'content'
                     type = 'text'
                     placeholder = 'Your Message Here'
                     onKeyDown = {this.handleKeyDown}
                     onChange = {this.handleChange}
                     value = {content}
-                    id= 'content'
                 />
             </div>
         )
