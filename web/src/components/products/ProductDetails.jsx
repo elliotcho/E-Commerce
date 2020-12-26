@@ -99,7 +99,7 @@ class ProductDetails extends Component{
                                 </div>
 
                                 <div className = 'quantity'>
-                                            {`Quantity remaning: ${quantity}`}
+                                    {`Quantity remaning: ${quantity}`}
                                 </div>
 
                                 <p className = 'content'>

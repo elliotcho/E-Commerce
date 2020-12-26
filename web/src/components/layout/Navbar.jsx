@@ -75,7 +75,7 @@ function Navbar(){
                             
                             {isAdmin && (
                                 <li>
-                                    <Link to="/departments" className="nav-link mr-5">
+                                    <Link to="/admin" className="nav-link mr-5">
                                         <i className ='fas fa-shield-alt'/>
                                         <span className='ml-3'>Admin</span>
                                     </Link>
