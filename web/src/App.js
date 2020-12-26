@@ -44,7 +44,7 @@ function App() {
           <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
           <AuthenticatedRoute exact path='/settings' component={Settings}/>
           <AdminRoute exact path='/admin' component={AdminHome}/>
-          <Route exact path='/messages' component={MessageCenter}/>
+          <AuthenticatedRoute exact path='/chat/:userId?' component={MessageCenter}/>
           <Route path='/' component={DeadPage}/> 
         </Switch>
 

@@ -72,6 +72,13 @@ function Navbar(){
                                 </Link>
                             </li>
 
+                            <li>
+                                <Link to='/chat' className='nav-link mr-5'>
+                                    <i class="fas fa-comment"/>
+                                    <span className='ml-3'>Messages</span>
+                                </Link>
+                            </li>
+
                             
                             {isAdmin && (
                                 <li>

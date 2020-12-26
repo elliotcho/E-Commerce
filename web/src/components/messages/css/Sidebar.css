@@ -1,0 +1,6 @@
+.side-bar{
+    grid-column: 3;
+    grid-row: 1/4;
+    background-color: #4e3a4c;
+    color: white;
+}
