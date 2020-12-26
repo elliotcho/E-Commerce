@@ -4,19 +4,21 @@ import { withRouter, Link } from 'react-router-dom';
 import Searchbar from './Searchbar';
 import './css/Navbar.css';
 
-function Navbar({ signedIn }){
+function Navbar(){
     const logout = (e) => {
         e.preventDefault();
         window.localStorage.clear();
         window.location.href = '/';
     }
 
+    let signedIn = false;
     let isAdmin = false;
 
     try { 
         const token = localStorage.getItem('token');
         const { user } = decode(token);
 
+        signedIn = user._id;
         isAdmin = user.isAdmin;
     } catch (err) { }
 
@@ -73,12 +75,19 @@ function Navbar({ signedIn }){
                             
                             {isAdmin && (
                                 <li>
-                                    <Link to="/departments" className="nav-link mr-5">
+                                    <Link to="/admin" className="nav-link mr-5">
                                         <i className ='fas fa-shield-alt'/>
                                         <span className='ml-3'>Admin</span>
                                     </Link>
                                 </li>
                             )}
+
+                            <li>
+                                <Link to="/settings" className="nav-link mr-5">
+                                    <i className='fas fa-cog' />
+                                    <span className='ml-3'>Settings</span>
+                                </Link>
+                            </li>
                                 
                             <li>
                                 <Link to="/" className="nav-link" onClick={logout}>

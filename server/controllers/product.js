@@ -1,6 +1,7 @@
-import { Product, Description } from '../models/product';
+import { Product, Description, Review } from '../models/product';
 import { Department } from '../models/departments';
 import { createUpload } from '../utils/createUpload';
+
 import path from 'path';
 import fs from 'fs';
 
@@ -15,7 +16,7 @@ export const createProduct = async (req, res) => {
                 console.log(err);
             }
     
-            const { name, price, departmentId } = req.body;
+            const { name, price, departmentId, quantity } = req.body;
 
             if(!departmentId){
                 throw new Error('Department ID needed');
@@ -36,7 +37,8 @@ export const createProduct = async (req, res) => {
                     description: newDescription,
                     datePosted: new Date(),
                     name,
-                    price
+                    price,
+                    quantity
                 });
     
                 const product = await newProduct.save();

@@ -1,0 +1,10 @@
+.settings{
+    position: relative;
+    height: 92vh;
+    font-family: 'Nunito Sans';   
+    overflow: auto;
+}
+
+.settings header{
+    max-width: 600px;
+}

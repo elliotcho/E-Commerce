@@ -37,8 +37,34 @@ const ProductSchema = new mongoose.Schema({
     },
     datePosted: {
         type: Date
+    },
+    quantity: {
+        type: Number
+    },
+    quantitySold: {
+        type: Number,
+        default: 0
     }
 });
 
+const ReviewSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+    },
+    productId: {
+        type: String,
+    },
+    content: {
+        type: String
+    },
+    datePosted:{
+        type: Date
+    }
+
+
+
+})
+
 export const Description = mongoose.model('description', DescriptionSchema);
 export const Product = mongoose.model('product', ProductSchema);
+export const Review = mongoose.model('review', ReviewSchema)

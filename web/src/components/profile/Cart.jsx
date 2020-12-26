@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { loadCart, deleteFromCart } from '../../api/user';
 import Product from '../products/Product';
+import './css/Cart.css';
+
+const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
+const darkStyle = { backgroundColor: '#34626c', color: 'white' };
 
 class Cart extends Component{
+    static contextType = ThemeContext;
+
     constructor(){
         super();
+
         this.state = {
             cart: []
         }
 
         this.delProductInCart = this.delProductInCart.bind(this);
     }
+
     async componentDidMount(){
         const cart = await loadCart();
         this.setState({ cart });
@@ -35,9 +44,12 @@ class Cart extends Component{
 
     render(){
         const { cart } = this.state;
+        const { isDark } = this.context;
 
+        const style = isDark? darkStyle: lightStyle;
+   
         return(
-            <div className="cart">
+            <div className="cart" style={style}>
                 <h1 className="title">Your Shopping Cart: </h1>
                 <button className="btn" >Continue To Payment </button>
         

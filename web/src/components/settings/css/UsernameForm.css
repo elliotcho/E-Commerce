@@ -1,0 +1,15 @@
+.change-username{
+    max-width: 600px;
+    border: 4px solid #393e46;
+    border-radius: 30px/20px;
+    padding: 25px 80px;
+}
+
+.change-username input{
+    display: block;
+    margin-bottom: 20px;
+}
+
+.change-username span{
+    color: red;
+}

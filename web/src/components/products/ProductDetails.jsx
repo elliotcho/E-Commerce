@@ -41,7 +41,7 @@ class ProductDetails extends Component{
 
     render(){
         const { product: { 
-            image, name, price, description, datePosted, userId, username
+            image, name, price, description, datePosted, userId, username, quantity
         } } = this.state;
 
         let isOwner = false;
@@ -96,6 +96,10 @@ class ProductDetails extends Component{
 
                                 <div className = 'price my-3'>
                                     {`Price: ${price.toFixed(2)}$`}
+                                </div>
+
+                                <div className = 'quantity'>
+                                    {`Quantity remaning: ${quantity}`}
                                 </div>
 
                                 <p className = 'content'>

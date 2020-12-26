@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { getAllDepartments } from '../../api/departments';
 import { createProduct } from '../../api/product';
 import './css/CreateProduct.css';
 
+const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
+const darkStyle = { backgroundColor: '#34626c', color: 'white' };
+
 class CreateProduct extends Component {
+    static contextType = ThemeContext;
+
     constructor(){
         super();
 
@@ -13,7 +19,9 @@ class CreateProduct extends Component {
             departmentId: '',
             description: {},
             image: null,
-            price: 0
+            price: '',
+            quantity: ''
+            
         }
 
         this.changeField = this.changeField.bind(this);
@@ -45,7 +53,7 @@ class CreateProduct extends Component {
 
     async handleSubmit(e){
         e.preventDefault();
-        const { name, departmentId, description, image, price } = this.state;
+        const { name, departmentId, description, image, price, quantity } = this.state;
         const { history } = this.props;
 
         const formData = new FormData();
@@ -58,6 +66,8 @@ class CreateProduct extends Component {
         formData.append('departmentId', departmentId);
         formData.append('image', image);
         formData.append('price', price);
+        formData.append('quantity', quantity);
+        
 
         const product = await createProduct(formData);
 
@@ -65,10 +75,13 @@ class CreateProduct extends Component {
     }
 
     render(){
-        const { name, price, departmentId, departments } = this.state;
+        const { name, price, departmentId, departments, quantity } = this.state;
+        const { isDark } = this.context;
+
+        const style = isDark? darkStyle: lightStyle;
 
         return(
-            <div className='create-product'>
+            <div className='create-product' style={style}>
                 <form onSubmit = {this.handleSubmit}>
                     <input
                         type = 'text'
@@ -78,11 +91,11 @@ class CreateProduct extends Component {
                         value = {name}
                     />
 
-                    <select onChange={this.changeField} value={departmentId} name='departmentId'>
-                        <option value=""></option>
+                    <select  onChange={this.changeField} value={departmentId} name='departmentId'>
+                        <option value="" disabled selected>Select Department </option>
 
                         {departments.map(dept => 
-                            <option value={dept._id}>
+                            <option value={dept._id} key={dept._id}>
                                 {dept.name}
                             </option>
                          )}
@@ -95,6 +108,7 @@ class CreateProduct extends Component {
                         step = '0.01'
                         onChange = {this.changeField}
                         value = {price}
+                        placeholder='price of a single item...'
                     />
 
                     <input
@@ -131,6 +145,16 @@ class CreateProduct extends Component {
                         onChange = {this.changeDescription}
                     />
 
+                    <input
+                        type = 'number'
+                        name = 'quantity'
+                        value= {quantity}
+                        min = '0'
+                        step = '0.01'
+                        placeholder='quantity in stock...'
+                        onChange= {this.changeField}
+                    />
+                    
                     <button>Submit Product</button>
                 </form>
             </div>

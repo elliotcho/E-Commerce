@@ -1,0 +1,5 @@
+.cart{
+    height: 92vh;
+    position: relative;
+    overflow: auto;
+}

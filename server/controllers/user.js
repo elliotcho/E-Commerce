@@ -22,6 +22,28 @@ export const register = async (req, res) => {
     res.json(userResponse);
 }
 
+export const changeUserPassword = async(req, res) => {
+    const user = await User.findOne({_id: req.user._id});
+    
+    if(!user){
+        res.json({msg: "User not found"});
+    }
+    
+    const valid = await bcyrpt.compare(req.body.currPassword, user.password);
+ 
+    if(valid){
+        const salt = await bcyrpt.genSalt();
+        const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt);
+        
+        await User.updateOne({_id: req.user._id}, {password: hashedPassword });
+        res.json({msg: "Success"});
+    }
+    
+    else{
+        res.json({msg: "Invalid current password"});
+    }
+}
+
 export const forgotPassword = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
 
@@ -148,7 +170,7 @@ export const removeProfilePic = async (req, res) => {
 export const deleteUser = async (req, res) => {
     const user = await User.findOne({ _id : req.user._id });
     const { _id, profilePic } = user;
-
+  
     if(profilePic){
         fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
             if(err){

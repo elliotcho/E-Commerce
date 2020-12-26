@@ -1,12 +1,13 @@
 .product-details-bg{
     height: 92vh;
     position: relative;
-    background-color: #34626c;
+    background-color: lightblue;
     overflow: auto;
 }
 
 .product-details{
     max-width: 800px;
+    height: 400px;
     font-family: 'Arial';
     background: white;
     border: 1px solid black;
@@ -47,6 +48,8 @@
 
 .product-details .description .price{
     color: darkred;
+    display: inline-block;
+    padding-right: 160px;
 }
 
 .product-details .description .content{
@@ -61,5 +64,10 @@
 }
 
 .product-details .fa-cart-plus:hover{
-    color: lightgreen;
+    color: #90ee90;
+}
+
+.product-details .description .quantity{
+    color: darkred;
+    display: inline-block;
 }
