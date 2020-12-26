@@ -22,11 +22,22 @@ function MessageCard(){
 }
 
 function Sidebar(){
-    const arr = [];
+    const chats = [];
 
     return(
         <div className='side-bar'>
-           {arr.map(i => <MessageCard />)}
+           {chats.length? 
+                (
+                    chats.map(c => 
+                        <MessageCard />    
+                    ) 
+                ):
+                (
+                    <h2 className='text-white p-4'>
+                        You have no messages
+                    </h2>
+                )
+           }
         </div>
     )
 }
