@@ -2,10 +2,10 @@ import { trim } from 'lodash';
 import mongoose from 'mongoose';
 
 const messageSchema = new mongoose.Schema({
-    userSent:{
+    userReceiver:{
         type: 'String'
     },
-    userReceived: {
+    userSender: {
         type: 'String'
     },
     read:{
