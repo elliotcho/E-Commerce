@@ -1,7 +1,10 @@
 .settings{
     position: relative;
     height: 92vh;
-    background-color: #34626c;    
+    background-color: #34626c;
+    color: white; 
+    font-family: 'Nunito Sans';   
+    overflow: auto;
 }
 
 

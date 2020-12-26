@@ -1,7 +1,10 @@
-.deleteUser{
-    border: 8px solid #393e46;
+.delete-user{
+    max-width: 600px;
+    border: 4px solid #393e46;
     border-radius: 30px/20px;
     padding: 25px 80px;
-    font-family: 'Chakra Petch', sans-serif;
-    text-align: center;
+}
+
+.delete-user button{
+    font-size: 1.3rem;
 }

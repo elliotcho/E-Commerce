@@ -7,10 +7,13 @@ import './css/Setting.css'
 function Settings(){
     return(
         <div className='settings'>
-            <h1>Settings </h1>
-            <DeleteUser />
+            <h1 className='text-center my-3'>
+                Settings 
+            </h1>
+        
             <UsernameForm/>
             <ChangePasswordForm/>
+            <DeleteUser />
         </div>
     )
 };

@@ -24,8 +24,7 @@ class ChangePasswordForm extends Component{
         const data = { currPassword, newPassword, confirmPassword };
        
         if(newPassword === confirmPassword){
-            const msg = await changePassword(data);
-            console.log(msg);
+            await changePassword(data);
         } else{
             alert("Passwords do not match!");
         }
@@ -40,12 +39,15 @@ class ChangePasswordForm extends Component{
         const {currPassword, newPassword, confirmPassword} = this.state;
         
         return(
-            <form className='change-password' onSubmit={this.handleSubmit}>
-                    <h3>Change My Password</h3>
+            <form className='change-password my-3 mx-auto' onSubmit={this.handleSubmit}>
+                    <h3 className='mb-3 text-center'>
+                        Change My Password
+                    </h3>
 
-                    <label htmlFor='current-password'>Current Password<span>*</span></label>
+                    <label htmlFor='current-password'>Current Password<span> *</span></label>
                     <input 
                         id='currPassword'
+                        className='form-control'
                         type='password'
                         minLength='6'
                         maxLength='49'
@@ -54,9 +56,10 @@ class ChangePasswordForm extends Component{
                         required
                     />
 
-                    <label htmlFor='newPassword'>New Password<span>*</span></label>
+                    <label htmlFor='newPassword'>New Password<span> *</span></label>
                     <input 
                         id='newPassword'
+                        className='form-control'
                         type="password"
                         minLength='6'
                         maxLength='49'
@@ -65,19 +68,21 @@ class ChangePasswordForm extends Component{
                         required
                     />
 
-                    <label htmlFor="confirm-password">Confirm New Password<span>*</span></label>
+                    <label htmlFor="confirm-password">Confirm New Password<span> *</span></label>
                     <input 
                         id='confirmPassword'
+                        className='form-control'
                         type="password"
                         onChange={this.handleChange}
                         value={confirmPassword}
                         required
                     />
 
-                    <br></br>
-                    <button className='btn btn-danger'>
-                        CHANGE
-                    </button>
+                    <div className='text-center'>
+                        <button className='btn btn-success'>
+                            CHANGE
+                        </button>
+                    </div>
                 </form>
         )
     }

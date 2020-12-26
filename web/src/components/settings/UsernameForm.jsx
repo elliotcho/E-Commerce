@@ -5,9 +5,11 @@ import './css/UsernameForm.css';
 class UsernameForm extends Component{
     constructor(){
         super();
+        
         this.state = {
             newName: ''
         };
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -18,19 +20,25 @@ class UsernameForm extends Component{
 
     async handleSubmit(e){
         e.preventDefault();
-        const {newName} = this.state;
-        const msg = await changeUsername(newName);
-        console.log(msg);        
+
+        const { newName } = this.state;
+        
+        await changeUsername(newName);       
     }
 
     render(){
-        const{newName} = this.state;
+        const{ newName } = this.state;
+        
         return(
-            <form className="change-username" onSubmit={this.handleSubmit}>
-                <h3>Change Username </h3>
-                <label htmlFor="newName">New Username<span>*</span></label>
+            <form className="change-username my-3 mx-auto" onSubmit={this.handleSubmit}>
+                <h3 className='mb-3 text-center'>
+                    Change Username 
+                </h3>
+                
+                <label htmlFor="newName">New Username<span> *</span></label>
                 <input 
                     id='newName'
+                    className='form-control'
                     type="text"
                     minLength='4'
                     maxLength='30'
@@ -38,10 +46,12 @@ class UsernameForm extends Component{
                     value={newName}
                     required
                 />
-                <br></br>
-                <button className='btn btn-danger'>
-                    CHANGE
-                </button>
+    
+                <div className = 'text-center'>
+                    <button className='btn btn-success'>
+                        CHANGE
+                    </button>
+                </div>
             </form>
         )
     }

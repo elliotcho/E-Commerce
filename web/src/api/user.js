@@ -72,28 +72,22 @@ export const getUserInfo = async (uid = '') => {
 
 export const changeUsername = async (username) => {
     const config = {headers: {}};
+
     const response = await axios.post(`${API}/api/user/change_username`, {username}, authMiddleware(config));
-    console.log(username);
-    const msg = response.data;
     authAfterware(response);
-    return msg;
+
+    return response.data.msg;
 }
 
 export const changePassword = async(data) => {
     const config = {headers: {'content-type': 'application/json'}};
     
     const response = await axios.post(`${API}/api/user/change_user_password`, data, authMiddleware(config));
-    const { msg } = response.data;
-
     authAfterware(response);
-    return msg;
+
+    return response.data.msg;
 }
 
 export const deleteAccount = async() => {
-    
-    const config = {headers: {}};
-    const res = await axios.delete(`${API}/api/user`, authMiddleware(config));
-    authAfterware(res);
-    const msg = res.data;
-    return msg;
+    await axios.delete(`${API}/api/user`, authMiddleware({headers: {}}));
 }

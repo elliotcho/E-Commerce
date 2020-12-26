@@ -23,13 +23,14 @@ export const register = async (req, res) => {
 }
 
 export const changeUserPassword = async(req, res) => {
-    console.log(req.body);
     const user = await User.findOne({_id: req.user._id});
+    
     if(!user){
         res.json({msg: "User not found"});
     }
+    
     const valid = await bcyrpt.compare(req.body.currPassword, user.password);
-    console.log(valid, req.body);
+ 
     if(valid){
         const salt = await bcyrpt.genSalt();
         const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt);
@@ -39,7 +40,7 @@ export const changeUserPassword = async(req, res) => {
     }
     
     else{
-        res.json({msg: "Failure"});
+        res.json({msg: "Invalid current password"});
     }
 }
 
@@ -169,8 +170,7 @@ export const removeProfilePic = async (req, res) => {
 export const deleteUser = async (req, res) => {
     const user = await User.findOne({ _id : req.user._id });
     const { _id, profilePic } = user;
-    console.log(user);
-
+  
     if(profilePic){
         fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
             if(err){

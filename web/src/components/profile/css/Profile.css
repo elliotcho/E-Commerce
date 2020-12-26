@@ -83,7 +83,7 @@
     }
 }
 
-@media screen and (max-width: 1240px){
+@media screen and (max-width: 991px){
     .profile .user-products{
         justify-content: center;
     }

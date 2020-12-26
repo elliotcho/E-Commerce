@@ -1,16 +1,19 @@
 import React from 'react';
+import { deleteAccount } from '../../api/user';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import {deleteAccount} from '../../api/user';
 import './css/DeleteUser.css';
 
 function DeleteUser(){
     const handleClick = async() => {
 
         const confirmDelete = async() => {
-            const msg = await deleteAccount();
-            console.log(msg);
+            await deleteAccount();
+            
+            window.localStorage.clear();
+            window.location.href ='/';
         }
+
         confirmAlert({
             title: 'E-Commerce',
             message: 'Are you sure you want to delete this account',
@@ -22,13 +25,11 @@ function DeleteUser(){
     }
 
     return(
-        <div className="deleteUser">
-            <h3>Delete Account</h3>
-
+        <div className="delete-user my-3 mx-auto text-center">
             <button onClick= {handleClick} className="btn btn-danger">
-                DELETE
+                DELETE ACCOUNT
             </button>
-            </div>
+        </div>
     )
 }
 

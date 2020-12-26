@@ -22,6 +22,8 @@ import Navbar from './components/layout/Navbar';
 import Settings from './components/settings/Settings';
 import Departments from './components/admin/Departments';
 import MessageCenter from './components/messages/MessageCenter';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 function App() {
@@ -45,6 +47,8 @@ function App() {
           <Route exact path='/messages' component={MessageCenter}/>
           <Route path='/' component={DeadPage}/> 
         </Switch>
+
+        <ToastContainer style={{fontFamily: 'Trebuchet MS'}}/>
       </BrowserRouter>
   );
 }
