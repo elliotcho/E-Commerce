@@ -16,8 +16,8 @@ function MessageCenter({
                 {userId && (
                     <>
                         <ChatHeader userId = {userId}/>
-                        <ChatContainer />
-                        <SendMessage />
+                        <ChatContainer userId = {userId} />
+                        <SendMessage userId={userId}/>
                     </>
                 )}
             </main>    
