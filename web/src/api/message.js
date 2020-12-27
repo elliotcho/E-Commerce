@@ -13,3 +13,14 @@ export const sendMessage = async (data) => {
         return msg;
     }
 }
+
+export const getSidebarChats = async () => {
+    const config = { headers: {} };
+    const response = await axios.get(`${API}/api/message`, authMiddleware(config));
+    const { ok, chats } = response.data;
+    
+    if(ok){
+        authAfterware(response);
+        return chats;
+    }
+}
