@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getSidebarChats } from '../../api/message';
 import loading from '../../images/loading.jpg';
 import './css/Sidebar.css';
 
-function MessageCard(){
+function MessageCard({content}){
     return(
-        <div className='p-4 msg-card' style={{border: '1px solid black', cursor: 'pointer'}}>
+        <div className='p-4 text-white msg-card'>
             <img
                 src = {loading}
                 alt = 'profile pic'
@@ -14,7 +15,7 @@ function MessageCard(){
                 <h3>HELLO</h3>
 
                 <p>
-                    1234567890123456789012345
+                    {content}
                 </p>
             </div>
         </div>
@@ -22,14 +23,24 @@ function MessageCard(){
 }
 
 function Sidebar(){
-    const chats = [];
+    const [chats, setChats] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setChats(await getSidebarChats());
+        }
+
+        fetchData();
+    }, [])
 
     return(
         <div className='side-bar'>
            {chats.length? 
                 (
-                    chats.map(c => 
-                        <MessageCard />    
+                    chats.map(m => 
+                        <MessageCard 
+                            content = {m.content}
+                        />    
                     ) 
                 ):
                 (

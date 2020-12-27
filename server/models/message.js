@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const messageSchema = new mongoose.Schema({
+const MessageSchema = new mongoose.Schema({
     receiver:{
         type: String
     },
@@ -14,8 +14,11 @@ const messageSchema = new mongoose.Schema({
     content:{
         type: String,
         trim: true
+    },
+    dateSent: {
+        type: Date
     }
 });
 
-const Message = mongoose.model('message', messageSchema);
+const Message = mongoose.model('message', MessageSchema);
 export default Message;
