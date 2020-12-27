@@ -1,46 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import decode from 'jwt-decode';
-import { getUserInfo, getProfilePic } from '../../api/user';
+import { fetchUser } from '../../utils/fetchUser';
+import { decodeUser } from '../../utils/decodeUser';
 import { getSidebarChats } from '../../api/message';
 import loading from '../../images/loading.jpg';
 import './css/Sidebar.css';
 
-function MessageCard({ history, userId, activeId, content, dateSent }){
+function MessageCard({ toChat, userId, activeId, content, dateSent }){    
+    const isActive = (userId === activeId) ? 'active' : '';
+
     const [username, setUsername] = useState('Loading...');
     const [imgURL, setImgURL] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const picturePromise = getProfilePic(userId);
-            const userPromise = getUserInfo(userId);
-    
-            const [imgURL, user] = await Promise.all([picturePromise, userPromise]);
-    
+            const { imgURL, user } = await fetchUser(userId);
+ 
             setUsername(user.username);
-            setImgURL(imgURL)
-        }
+            setImgURL(imgURL);
+         }
 
         fetchData();
     }, [userId]);
 
-    const toChat = () => history.push(`/chat/${userId}`);
-
-    const isActive = (userId === activeId) ? 'active' : '';
-
     return(
         <div className={`p-4 text-white msg-card ${isActive}`} onClick={toChat}>
-            <img
-                src = {imgURL? imgURL: loading}
-                alt = 'profile pic'
-            />
+            <img src = {imgURL? imgURL: loading} alt = 'profile pic' />
             
             <div>
                 <h3>{username}</h3>
 
-                <p>
-                    {content}
-                </p>
+                <p>{content}</p>
 
                 <div>
                     {new Date(dateSent).toLocaleString()}
@@ -61,15 +51,7 @@ function Sidebar({ history, match: { params } }){
         fetchData();
     }, []);
 
-    let uid;
-
-    try { 
-        const token = localStorage.getItem('token');
-        const { user } = decode(token);
-
-        uid = user._id;
-        
-    } catch (err) { }
+    const { _id: uid } = decodeUser();
 
     return(
         <div className='side-bar'>
@@ -86,7 +68,7 @@ function Sidebar({ history, match: { params } }){
 
                         return (
                             <MessageCard 
-                                history = {history}
+                                toChat = {() => history.push(`/chat/${userId}`)}
                                 content = {m.content}
                                 userId = {userId}
                                 activeId = {params.userId}
