@@ -1,4 +1,5 @@
 import Message from '../models/message';
+import _ from 'lodash';
 
 export const createMessage = async (req, res) =>{
     if(!req.user){
@@ -17,6 +18,23 @@ export const createMessage = async (req, res) =>{
         const msg = await newMsg.save();
 
         res.json({ ok: true, msg });
+    }
+}
+
+export const getMessages = async (req, res) => {
+    if(!req.user) {
+        res.json({ ok: false });
+    } else{
+        const { otherUser } = req.body;
+        const me = req.user._id;
+
+        const receivedMsgs = await Message.find({ receiver: me, sender: otherUser });
+        const sentMsgs = await Message.find({ receiver: otherUser, sender: me });
+
+        const result = [...receivedMsgs, ...sentMsgs];
+
+        result.sort((a, b) => b.dateSent - a.dateSent);
+        res.json({ok: true, messages: result});
     }
 }
 

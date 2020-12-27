@@ -49,4 +49,3 @@ const ProductSchema = new mongoose.Schema({
 
 export const Description = mongoose.model('description', DescriptionSchema);
 export const Product = mongoose.model('product', ProductSchema);
-

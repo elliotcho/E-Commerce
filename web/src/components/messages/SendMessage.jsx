@@ -27,8 +27,9 @@ class SendMessage extends React.Component{
 
             const data = { receiver, content };
 
-            const response = await sendMessage(data);
-            console.log(response);
+            await sendMessage(data);
+            
+            this.setState({ content: '' });
         }
     }
 

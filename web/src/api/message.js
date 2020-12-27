@@ -24,3 +24,15 @@ export const getSidebarChats = async () => {
         return chats;
     }
 }
+
+export const loadMessages = async (otherUser) => {
+    const config = {headers: {'content-type': 'application/json'}};
+
+    const response = await axios.post(`${API}/api/message/messages`, { otherUser }, authMiddleware(config));
+    const { ok, messages } = response.data;
+
+    if(ok){
+        authAfterware(response);
+        return messages;
+    }
+}
