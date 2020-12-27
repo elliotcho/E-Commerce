@@ -1,4 +1,6 @@
 import 'dotenv/config';
+
+import socket from 'socket.io';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -11,6 +13,8 @@ import userRouter from './routes/user';
 import productRouter from './routes/product';
 import departmentRouter from './routes/department';
 import messageRouter from './routes/message';
+
+import SubscriptionServer from './socket/index';
 
 const app = express();
 
@@ -68,3 +72,4 @@ const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Listening to port 5000');
 });
 
+SubscriptionServer(socket(server));
