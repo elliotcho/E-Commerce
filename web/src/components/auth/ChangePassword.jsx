@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { changePassword } from '../../api/auth'; 
 import './css/ChangePassword.css';
 
+
 class ChangePassword extends Component{
     constructor(){
         super();

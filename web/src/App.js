@@ -25,6 +25,7 @@ import MessageCenter from './components/messages/MessageCenter';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import PaymentForm from './components/payments/PaymentForm';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <AuthenticatedRoute exact path='/settings' component={Settings}/>
           <AdminRoute exact path='/admin' component={AdminHome}/>
           <AuthenticatedRoute exact path='/chat/:userId?' component={MessageCenter}/>
+          <AuthenticatedRoute exact path='/payment' component={PaymentForm}/>
           <Route path='/' component={DeadPage}/> 
         </Switch>
 
