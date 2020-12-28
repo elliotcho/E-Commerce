@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getUserInfo, getProfilePic } from '../../api/user';
+import { fetchUser } from '../../utils/fetchUser';
 import loading from '../../images/loading.jpg';
 import './css/ChatHeader.css';
 
@@ -9,24 +9,18 @@ function ChatHeader({ userId }){
 
     useEffect(() => {
         const fetchData = async () => {
-            const picturePromise = getProfilePic(userId);
-            const userPromise = getUserInfo(userId);
-    
-            const [imgURL, user] = await Promise.all([picturePromise, userPromise]);
-    
-            setUsername(user.username);
-            setImgURL(imgURL)
+           const { imgURL, user } = await fetchUser(userId);
+
+           setUsername(user.username);
+           setImgURL(imgURL);
         }
 
         fetchData();
-    }, [userId])
+    }, [userId]);
 
     return(
         <div className='chat-header'>
-            <img
-                src = {imgURL? imgURL: loading}
-                alt = 'Profile Pic'
-            />
+            <img src = {imgURL? imgURL: loading} alt = 'Profile Pic' />
 
             <h3 className ='text-white'>
                 {username}

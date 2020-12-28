@@ -4,8 +4,8 @@ import { Product }  from '../models/product';
 import { redis } from '../app'; 
 import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
-import { validateLogin } from '../utils/validateLogin';
-import { validateRegister } from '../utils/validateRegister';
+import { tryLogin } from '../utils/tryLogin';
+import { tryRegister } from '../utils/tryRegister';
 import { createUpload } from '../utils/createUpload';
 import path from 'path';
 import fs from 'fs';
@@ -13,12 +13,12 @@ import fs from 'fs';
 const profileUpload = createUpload('profile');
 
 export const login = async (req, res) => { 
-    const userResponse = await validateLogin(req);
+    const userResponse = await tryLogin(req);
     res.json(userResponse);
 }
 
 export const register = async (req, res) => {
-    const userResponse = await validateRegister(req);    
+    const userResponse = await tryRegister(req);    
     res.json(userResponse);
 }
 
