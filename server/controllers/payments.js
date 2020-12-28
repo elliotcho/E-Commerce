@@ -9,6 +9,8 @@ const client = new Client({
 
 export const createPayment = async(req, res) =>{
     const paymentsApi = client.paymentsApi;
+    console.log(req.body.uuid);
+    console.log(req.body.nonce);
     let payload = {
         "source_id": req.body.nonce,
         "amount_money": { // amount_money = $1.00
@@ -18,6 +20,7 @@ export const createPayment = async(req, res) =>{
         "location_id": SANDBOX_LOCATION_ID,
         "idempotency_key": req.body.uuid
       }
+      
       
       try {
           const response = await paymentsApi.createPayment(payload);
