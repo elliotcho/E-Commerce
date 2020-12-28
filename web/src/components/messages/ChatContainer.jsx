@@ -1,63 +1,83 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
+import { decodeUser } from '../../utils/decodeUser';
+import { fetchUser } from '../../utils/fetchUser';
+import { loadMessages } from '../../api/message';
 import loading from '../../images/loading.jpg';
 import './css/ChatContainer.css';
+
+function ChatContainer({ userId }){
+    const [messages, setMessages] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setMessages(await loadMessages(userId));
+        }
+
+        fetchData();
+    }, [userId]);
+
+    const { _id: uid } = decodeUser();
+
+    return(
+        <div className='chat-container mt-5'>
+            {messages.map(m => 
+                <MessageBubble 
+                    userId = {m.sender}
+                    isOwner = {m.sender === uid}
+                    content = {m.content}
+                    read = {m.read}
+                />
+            )}
+        </div>
+    )
+}
 
 function TypingBubble(){
     return(
         <div className='typing mr-auto ml-5 mb-5'>
-            <img
-                src = {loading}
-                alt = 'profile pic'
-            />
+            <img src = {loading} alt = 'profile pic' />
 
             <div>
                 <p className='mt-3'>
-                    <strong>Gugsa Challa</strong>
-                    &nbsp; is typing...
+                    <strong>Gugsa Challa </strong> is typing...
                 </p>
             </div>
         </div>
     )
 }
 
-function MessageBubble({i}){
-    const margin = (i === 1) ? 'ml-auto mr-5': 'mr-auto ml-5';
+function MessageBubble({ isOwner, userId, content, read }){
+    const margin = (isOwner) ? 'ml-auto mr-5': 'mr-auto ml-5';
+
+    const [username, setUsername] = useState('Loading...');
+    const [imgURL, setImgURL] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+           const { imgURL, user } = await fetchUser(userId);
+
+           setUsername(user.username);
+           setImgURL(imgURL);
+        }
+
+        fetchData();
+    }, [userId]);
 
     return(
         <div className={`message ${margin} mb-5`}>
-            {i === 2? 
-                <img
-                    src = {loading}
-                    alt = 'profile pic'
-                /> :
-                <div></div>
+            {!isOwner? 
+                <img src = {imgURL? imgURL: loading} alt = 'profile pic' /> : <div />
             }
 
             <div className='msg-bubble'>
-                <p>
-                    <strong>Gugsa Challa</strong>
-                </p>
+                <p><strong>{username}</strong></p>
 
-                <p>HELLO</p>
+                <p>{content}</p>
 
                 <div className='read'>
-                    <img 
-                        src = {loading}
-                        alt = 'proflie pic'
-                    />
+                    {read && <img src = {loading} alt = 'proflie pic' />}
                 </div>
             </div>
-        </div>
-    )
-}
-
-function ChatContainer(){
-    const messages = [1,2,1,1,1,1,2,1,2,1,1,1,2,1,1,2]
-
-    return(
-        <div className='chat-container mt-5'>
-            <TypingBubble/>
-            {messages.map(i => <MessageBubble i={i}/>)}
         </div>
     )
 }

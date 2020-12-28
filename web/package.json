@@ -16,6 +16,7 @@
     "react-square-payment-form": "^0.7.2",
     "react-toastify": "^6.2.0",
     "uuid": "^8.3.2",
+    "socket.io-client": "^3.0.4",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

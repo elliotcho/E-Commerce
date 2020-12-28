@@ -2,7 +2,7 @@ import bcyrpt from 'bcrypt';
 import { createTokens } from './authTokens';
 import User from '../models/user';
 
-export const validateLogin = async (req) => {
+export const tryLogin = async (req) => {
     const {username, password} = req.body;
 
     let user;

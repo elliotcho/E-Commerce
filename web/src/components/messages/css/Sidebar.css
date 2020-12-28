@@ -15,6 +15,14 @@
     grid-template-columns: 6rem auto;
 }
 
+.sidebar .msg-card:hover{
+    background: #3e313c;
+}
+
+.side-bar .msg-card.active{
+    background: #3e313c;
+}
+
 .side-bar img{
     width: 4rem;
     height: 4rem;
