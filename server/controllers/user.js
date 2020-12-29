@@ -84,8 +84,8 @@ export const changePassword = async (req, res) => {
         const salt = await bcyrpt.genSalt();
         const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt)
 
-        await User.updateOne({_id: uid}, {password: hashedPassword});
-        req.user._id = user._id;
+        await User.updateOne({ _id: uid }, { password: hashedPassword });
+        await redis.del(key);
         
         res.json({ user, errors });
     } 

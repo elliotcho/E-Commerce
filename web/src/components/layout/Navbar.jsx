@@ -1,5 +1,5 @@
 import React from 'react';
-import decode from 'jwt-decode';
+import { decodeUser } from '../../utils/decodeUser';
 import { withRouter, Link } from 'react-router-dom';
 import Searchbar from './Searchbar';
 import './css/Navbar.css';
@@ -11,16 +11,10 @@ function Navbar(){
         window.location.href = '/';
     }
 
-    let signedIn = false;
-    let isAdmin = false;
+    const user  = decodeUser();
 
-    try { 
-        const token = localStorage.getItem('token');
-        const { user } = decode(token);
-
-        signedIn = user._id;
-        isAdmin = user.isAdmin;
-    } catch (err) { }
+    const signedIn = user && user._id;
+    const isAdmin = user && user.isAdmin;
 
     return(
         <nav className="navbar navbar-expand-lg navbar-dark fixed">
@@ -74,7 +68,7 @@ function Navbar(){
 
                             <li>
                                 <Link to='/chat' className='nav-link mr-5'>
-                                    <i class="fas fa-comment"/>
+                                    <i className = "fas fa-comment"/>
                                     <span className='ml-3'>Messages</span>
                                 </Link>
                             </li>

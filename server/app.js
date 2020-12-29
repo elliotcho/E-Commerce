@@ -21,10 +21,14 @@ const app = express();
 
 export const redis = new Redis();
 
-app.use(cors('*'));
+app.use(cors());
 app.use(bodyParser.json());
 
 const addUser = async (req, res, next) => {
+    if(req.body.token){
+        console.log("HELLO")
+    }
+
     const token = req.headers['x-token'];
     if(token){
         try{
@@ -70,9 +74,15 @@ app.use('/api/department', departmentRouter);
 app.use('/api/message', messageRouter);
 app.use('/api/payments', paymentRouter);
 
+const port = process.env.PORT || 5000
 
-const server = app.listen(process.env.PORT || 5000, () => {
-    console.log('Listening to port 5000');
+const server = app.listen(port, () => {
+    console.log(`Listening to port ${port}`);
 });
 
-SubscriptionServer(socket(server));
+SubscriptionServer(socket(server, {
+        cors: {
+            origin: '*'
+        }
+    })
+);
