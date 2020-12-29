@@ -26,14 +26,14 @@ function MessageCenter({
 
     return(
         <div className='message-center'>
-            <Sidebar />      
+            <Sidebar socket = {socket}/>      
 
             <main>
                 {userId && (
                     <>
-                        <ChatHeader userId = {userId}/>
-                        <ChatContainer userId = {userId} />
-                        <SendMessage userId={userId}/>
+                        <ChatHeader userId={userId}/>
+                        <ChatContainer userId={userId} socket={socket}/>
+                        <SendMessage userId={userId} socket={socket}/>
                     </>
                 )}
             </main>    
@@ -41,4 +41,5 @@ function MessageCenter({
     )
 }
 
+export { socket };
 export default MessageCenter;

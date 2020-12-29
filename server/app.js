@@ -81,8 +81,6 @@ const server = app.listen(port, () => {
 });
 
 SubscriptionServer(socket(server, {
-        cors: {
-            origin: '*'
-        }
+        cors: { origin: '*' }
     })
 );

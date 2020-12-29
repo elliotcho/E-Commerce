@@ -5,7 +5,7 @@ import { loadMessages } from '../../api/message';
 import loading from '../../images/loading.jpg';
 import './css/ChatContainer.css';
 
-function ChatContainer({ userId }){
+function ChatContainer({ userId, socket }){
     const [messages, setMessages] = useState([]);
     
 
@@ -14,8 +14,14 @@ function ChatContainer({ userId }){
             setMessages(await loadMessages(userId));
         }
 
+        if(socket){
+            socket.on('NEW_MESSAGE', () => {
+                fetchData();
+            });
+        }
+
         fetchData();
-    }, [userId]);
+    }, [userId, socket]);
 
     const { _id: uid } = decodeUser();
 
