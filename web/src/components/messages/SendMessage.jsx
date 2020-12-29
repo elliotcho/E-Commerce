@@ -1,4 +1,5 @@
 import React from 'react';
+import { socket } from './MessageCenter';
 import { sendMessage } from '../../api/message';
 import './css/SendMessage.css';
 
@@ -27,7 +28,7 @@ class SendMessage extends React.Component{
 
             const payload = await sendMessage({ receiver, content });
 
-            this.props.socket.emit('NEW_MESSAGE', payload);
+            socket.emit('NEW_MESSAGE', payload);
             this.setState({ content: '' });
         }
     }

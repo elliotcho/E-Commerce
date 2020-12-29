@@ -1,11 +1,12 @@
 import React, { useState, useEffect} from 'react';
+import { socket } from './MessageCenter';
 import { decodeUser } from '../../utils/decodeUser';
 import { fetchUser } from '../../utils/fetchUser';
 import { loadMessages } from '../../api/message';
 import loading from '../../images/loading.jpg';
 import './css/ChatContainer.css';
 
-function ChatContainer({ userId, socket }){
+function ChatContainer({ userId }){
     const [messages, setMessages] = useState([]);
     
 
@@ -14,14 +15,10 @@ function ChatContainer({ userId, socket }){
             setMessages(await loadMessages(userId));
         }
 
-        if(socket){
-            socket.on('NEW_MESSAGE', () => {
-                fetchData();
-            });
-        }
+        socket.on('NEW_MESSAGE', () => fetchData());
 
         fetchData();
-    }, [userId, socket]);
+    }, [userId]);
 
     const { _id: uid } = decodeUser();
 
