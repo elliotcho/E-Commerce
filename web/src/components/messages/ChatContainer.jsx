@@ -7,6 +7,7 @@ import './css/ChatContainer.css';
 
 function ChatContainer({ userId }){
     const [messages, setMessages] = useState([]);
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,6 +23,7 @@ function ChatContainer({ userId }){
         <div className='chat-container mt-5'>
             {messages.map(m => 
                 <MessageBubble 
+                    key = {m._id}
                     userId = {m.sender}
                     isOwner = {m.sender === uid}
                     content = {m.content}
