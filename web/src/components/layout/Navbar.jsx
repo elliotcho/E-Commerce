@@ -13,8 +13,8 @@ function Navbar(){
 
     const user  = decodeUser();
 
-    const signedIn = user._id;
-    const isAdmin = user.isAdmin;
+    const signedIn = user && user._id;
+    const isAdmin = user && user.isAdmin;
 
     return(
         <nav className="navbar navbar-expand-lg navbar-dark fixed">

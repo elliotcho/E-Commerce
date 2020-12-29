@@ -68,6 +68,7 @@ function Sidebar({ history, match: { params } }){
 
                         return (
                             <MessageCard 
+                                key = {m._id}
                                 toChat = {() => history.push(`/chat/${userId}`)}
                                 content = {m.content}
                                 userId = {userId}
