@@ -36,6 +36,8 @@ function Sidebar({ history, userId: activeId }){
                             userId = m.receiver;
                         }
 
+                        console.log(activeId)
+
                         return (
                             <MessageCard 
                                 key = {m._id}

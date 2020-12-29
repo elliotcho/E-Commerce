@@ -35,7 +35,7 @@ class MessageCenter extends React.Component{
 
         return(
             <div className='message-center'>
-                <Sidebar />      
+                <Sidebar userId={userId} />      
     
                 <main>
                     {userId && (
