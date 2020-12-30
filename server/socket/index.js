@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 const socketEvents = (io) => {
     io.on('connection', socket => {
+
         socket.on('JOIN', async payload => {
             const { token } = payload;
 
@@ -32,7 +33,8 @@ const socketEvents = (io) => {
             const { user: { _id } } = jwt.decode(token);
 
             await redis.del(_id);
-        })
+        });
+
     });
 }
 
