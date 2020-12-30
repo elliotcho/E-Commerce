@@ -115,6 +115,8 @@ class ProductDetails extends Component{
                         </div>) : null
                     }
                 </div>
+
+
             </div>
         )
     }

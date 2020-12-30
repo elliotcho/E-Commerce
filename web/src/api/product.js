@@ -13,7 +13,7 @@ export const createProduct = async (data) => {
         authAfterware(response);
         return product;
     }
-}
+} 
 
 export const getProductsByDepartment = async (dept) => {
     const response = await axios.get(`${API}/api/product/department/${dept}`);
