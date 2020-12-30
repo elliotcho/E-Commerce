@@ -10,5 +10,17 @@
 }
 
 .send-message button{
+    border-radius: 50%;
+    cursor: pointer;   
+}
+
+.send-message button:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.send-message label{
+    font-weight: bold;
+    font-size: 1.2rem;
     cursor: pointer;
 }

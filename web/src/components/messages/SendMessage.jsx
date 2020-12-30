@@ -4,6 +4,7 @@ import { sendMessage } from '../../api/message';
 import './css/SendMessage.css';
 
 const ENTER_KEY = 13;
+let tO;
 
 class SendMessage extends React.Component{
     constructor(){
@@ -15,9 +16,26 @@ class SendMessage extends React.Component{
 
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.sendPhoto = this.sendPhoto.bind(this);
     }
 
     handleChange(e){
+        const payload={ receiverId: this.props.userId };
+
+        if(e.target.value === ''){
+            socket.emit('STOP_TYPING', payload);
+        } else {
+            socket.emit('IS_TYPING', payload);
+
+            if(tO){
+                clearTimeout(tO);
+            }
+            
+            tO = setTimeout(() => {
+                socket.emit('STOP_TYPING', payload)
+            }, 5000);
+        }
+        
         this.setState({[e.target.id]: e.target.value});
     }
 
@@ -33,14 +51,26 @@ class SendMessage extends React.Component{
         }
     }
 
+    sendPhoto(){
+
+    }
+
     render(){
         const { content } = this.state;
 
         return(
             <div className='send-message'>
-                <button>
-                    <label htmlFor="">+</label>
+                <button className='btn btn-primary'>
+                    <label htmlFor="photo">+</label>
                 </button>
+
+                <input
+                    id = 'photo'
+                    type = 'file'
+                    onChange = {this.sendPhoto}
+                    style = {{display: 'none'}}
+                    accept = 'jpg jpeg png'
+                />
 
                 <input 
                     id= 'content'
