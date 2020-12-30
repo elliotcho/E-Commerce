@@ -69,7 +69,7 @@ function TypingBubble({ userId }){
     )
 }
 
-function MessageBubble({ isOwner, userId, content, read }){
+function MessageBubble({ userId, isOwner, content, read,  }){
     const margin = (isOwner) ? 'ml-auto mr-5': 'mr-auto ml-5';
 
     const [username, setUsername] = useState('Loading...');
@@ -89,7 +89,7 @@ function MessageBubble({ isOwner, userId, content, read }){
     return(
         <div className={`message ${margin} mb-5`}>
             {!isOwner? 
-                <img src = {imgURL? imgURL: loading} alt = 'profile pic' /> : <div />
+                <img src={imgURL? imgURL: loading} alt='profile pic'/> : <div/>
             }
 
             <div className='msg-bubble'>

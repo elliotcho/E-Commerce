@@ -15,6 +15,9 @@ const MessageSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    image: {
+        type: String
+    },
     dateSent: {
         type: Date
     }

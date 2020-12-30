@@ -1,23 +1,33 @@
 import Message from '../models/message';
 import { filterChats } from '../utils/filterChats';
+import { createUpload } from '../utils/createUpload';
+
+const messagesUpload = createUpload('messages');
 
 export const createMessage = async (req, res) =>{
     if(!req.user){
         res.json({ ok: false });
     } else{
-        const{ content, receiver } = req.body;
-        const sender = req.user._id;
+        messagesUpload(req, res, async err => {
+            if(err) {
+                console.log(err);
+            }
 
-        const newMsg = new Message({
-            dateSent: new Date(),
-            content,
-            sender,
-            receiver
+            const newMsg = new Message({
+                dateSent: new Date(),
+                sender,
+                receiver
+            });
+
+            if(req.file){
+                newMsg._doc.image = req.file.filename;
+            } else{
+                newMsg._doc.content = req.body.content;
+            }
+
+            const msg = await newMsg.save();
+            res.json({ ok: true, msg });
         });
-
-        const msg = await newMsg.save();
-
-        res.json({ ok: true, msg });
     }
 }
 

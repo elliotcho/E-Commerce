@@ -46,13 +46,15 @@ class SendMessage extends React.Component{
 
             const payload = await sendMessage({ receiver, content });
 
+            socket.emit('STOP_TYPING', { receiverId: receiver });
             socket.emit('NEW_MESSAGE', payload);
+
             this.setState({ content: '' });
         }
     }
 
     sendPhoto(){
-
+        
     }
 
     render(){
