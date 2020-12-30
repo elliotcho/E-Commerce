@@ -19,8 +19,9 @@ class PaymentForm extends Component{
 
         this.state = {
             errorMessages: [],
+            total: 0
         }
-
+        //this.setState({total: this.props.match.params.total});
         this.createPayment = this.createPayment.bind(this);
         this.cardNonceResponseReceived = this.cardNonceResponseReceived.bind(this);
     }
@@ -69,9 +70,14 @@ class PaymentForm extends Component{
 
 
     render(){
+      const total = this.props.match.params.total;
+      
         return(
             <div>
             <h1>Payment Page</h1>
+            <h2>Total Amount: $ </h2>
+            <h2>{total}</h2>
+
     
             <SquarePaymentForm
               sandbox={true}
@@ -96,7 +102,7 @@ class PaymentForm extends Component{
                 </fieldset>
 
                 <CreditCardSubmitButton>
-                    Pay $1.00
+                    Pay $ {total}
                 </CreditCardSubmitButton>
             </SquarePaymentForm>
     
