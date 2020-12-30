@@ -1,7 +1,6 @@
 import {Component, React} from 'react';
 import 'react-square-payment-form/lib/default.css'
 import {v4 as uuidv4} from 'uuid';
-
 import {
     SquarePaymentForm,
     CreditCardNumberInput,
@@ -27,6 +26,7 @@ class PaymentForm extends Component{
 
     createPayment = async(n, b) =>{
         const data = {
+          
             nonce: n,
             buyerVerificationToken: b,
             uuid: uuidv4()
