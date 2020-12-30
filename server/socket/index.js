@@ -27,19 +27,22 @@ const socketEvents = (io) => {
             }
         });
 
-        socket.on('TYPING', async payload => {
-            const {senderId, receiverId} = payload;
+        socket.on('IS_TYPING', async payload => {
+            const {  senderId, receiverId } = payload;
 
             const receiverSocketId = await redis.get(receiverId);
             const senderSocketId = await redis.get(senderId);
 
             if(receiverSocketId){
-                io.sockets.to(receiverSocketId).emit('TYPING');
+                io.sockets.to(receiverSocketId).emit('IS_TYPING', {
+                   
+                });
             }
             if(senderSocketId){
-                io.sockets.to(senderSocketId).emit('TYPING');
-            }
-             
+                io.sockets.to(senderSocketId).emit('IS_TYPING', {
+
+                });
+            } 
         });
 
         socket.on('DISCONNECT', async payload => {

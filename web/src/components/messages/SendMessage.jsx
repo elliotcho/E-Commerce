@@ -20,13 +20,13 @@ class SendMessage extends React.Component{
     }
 
     handleChange(e){
-        this.setState({[e.target.id]: e.target.value});
         const { _id: me } = decodeUser();
-        const payload={
-            senderId: me,
-            receiverId: this.props.userId
-        };
-        socket.emit('TYPING', payload);
+
+        const payload={ senderId: me, receiverId: this.props.userId };
+
+        socket.emit('IS_TYPING', payload);
+        
+        this.setState({[e.target.id]: e.target.value});
     }
 
     async handleKeyDown(e){

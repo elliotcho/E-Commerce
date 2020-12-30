@@ -8,6 +8,7 @@ import './css/ChatContainer.css';
 
 function ChatContainer({ userId }){
     const [messages, setMessages] = useState([]);
+    const [typing, setTyping] = useState(false);
     
 
     useEffect(() => {
@@ -16,6 +17,7 @@ function ChatContainer({ userId }){
         }
 
         socket.on('NEW_MESSAGE', () => fetchData());
+        socket.on('TYPING', () => setTyping(true));
 
         fetchData();
     }, [userId]);
@@ -24,6 +26,8 @@ function ChatContainer({ userId }){
 
     return(
         <div className='chat-container mt-5'>
+            {typing && <TypingBubble />}
+    
             {messages.map(m => 
                 <MessageBubble 
                     key = {m._id}
