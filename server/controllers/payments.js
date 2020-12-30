@@ -19,6 +19,7 @@ export const createPayment = async(req, res) =>{
         "idempotencyKey": req.body.uuid
     }
       
+      console.log("Calling Square Servers...");
       try {
           const response = await paymentsApi.createPayment(payload);
 
