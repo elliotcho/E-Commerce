@@ -45,15 +45,15 @@ export const getUserChats = async (req, res) => {
     } else{
         const me = req.user._id;
 
-        const sentMsgs = filterChats(
-            await Message.find({ sender: me }), 'receiver'
-        );
+        let result = [];
+        const map ={};
 
-        const receivedMsgs = filterChats(
-            await Message.find({ receiver: me }), 'sender'
-        );
-    
-        const result = [...sentMsgs, ...receivedMsgs];
+        const sent = await Message.find({ sender: me });
+        const received = await Message.find({ receiver: me });
+        
+        //filter chats with different users and the latest times
+        result = filterChats(result, map, sent, 'receiver');
+        result = filterChats(result, map, received, 'sender');
 
         result.sort((a, b) => b.dateSent - a.dateSent);
         res.json({ok: true, chats: result});

@@ -1,10 +1,6 @@
 import _ from 'lodash';
 
-export const filterChats = (messages, userType) => {
-    const result = [];
-
-    const map = {};
-
+export const filterChats = (result, map, messages, userType) => {
     messages.forEach(msg => {
         if(!map[msg[userType]]){
             map[msg[userType]] = msg.dateSent;

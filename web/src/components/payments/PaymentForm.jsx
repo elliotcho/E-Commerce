@@ -1,6 +1,9 @@
-import {Component, React} from 'react';
-import 'react-square-payment-form/lib/default.css'
+import React, { Component } from 'react';
+import env from 'react-dotenv';
 import {v4 as uuidv4} from 'uuid';
+import {sendNonce} from '../../api/payments';
+import 'react-square-payment-form/lib/default.css';
+
 import {
     SquarePaymentForm,
     CreditCardNumberInput,
@@ -8,32 +11,31 @@ import {
     CreditCardPostalCodeInput,
     CreditCardCVVInput,
     CreditCardSubmitButton
-  } from 'react-square-payment-form';
-  import {sendNonce} from '../../api/payments';
-const SANDBOX_APPLICATION_ID = 'sandbox-sq0idb-xKEG_DFV8O6gmAwGa0Gz6g';
-const SANDBOX_LOCATION_ID = 'L78Q8327J64EM';
+} from 'react-square-payment-form';
 
 class PaymentForm extends Component{
-    
     constructor(){
         super();
+
         this.state = {
             errorMessages: [],
         }
+
         this.createPayment = this.createPayment.bind(this);
         this.cardNonceResponseReceived = this.cardNonceResponseReceived.bind(this);
     }
 
     createPayment = async(n, b) =>{
-        const data = {
-          
-            nonce: n,
-            buyerVerificationToken: b,
-            uuid: uuidv4()
-        };
-        console.log(data.uuid);
-       const response = await sendNonce(data);
-       console.log(response);
+      const data = {
+          nonce: n,
+          buyerVerificationToken: b,
+          uuid: uuidv4()
+      };
+
+      const response = await sendNonce(data);
+
+      console.log(response);
+      console.log(response.result.payment.receiptUrl);
     }
 
     cardNonceResponseReceived(errors, nonce, cardData, buyerVerificationToken)  {
@@ -73,8 +75,8 @@ class PaymentForm extends Component{
     
             <SquarePaymentForm
               sandbox={true}
-              applicationId={SANDBOX_APPLICATION_ID}
-              locationId={SANDBOX_LOCATION_ID}
+              applicationId={env.SANDBOX_APPLICATION_ID}
+              locationId={env.SANDBOX_LOCATION_ID}
               cardNonceResponseReceived={this.cardNonceResponseReceived}
               createVerificationDetails={this.createVerificationDetails}
             >
@@ -103,9 +105,7 @@ class PaymentForm extends Component{
                 <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
               )}
             </div>
-    
           </div>
-
         )
     }
 }

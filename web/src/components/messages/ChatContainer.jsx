@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+import { socket } from './MessageCenter';
 import { decodeUser } from '../../utils/decodeUser';
 import { fetchUser } from '../../utils/fetchUser';
 import { loadMessages } from '../../api/message';
@@ -13,6 +14,8 @@ function ChatContainer({ userId }){
         const fetchData = async () => {
             setMessages(await loadMessages(userId));
         }
+
+        socket.on('NEW_MESSAGE', () => fetchData());
 
         fetchData();
     }, [userId]);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import socketIOClient from 'socket.io-client';
 import { API } from '../../constants';
 import Sidebar from './Sidebar';
@@ -10,35 +10,46 @@ import './css/MessageCenter.css';
 const wsEndpoint = `${API}`;
 let socket;
 
-function MessageCenter({ 
-    match: { params: { userId } }
-}){
-    const token = localStorage.getItem('token');
-
-    useEffect(() => {
+class MessageCenter extends React.Component{
+    constructor(){
+        super();
         socket = socketIOClient(wsEndpoint);
-        socket.emit('JOIN', { token });
-      
-        return () => {
-            socket.emit('DISCONNECT', { token });
-        }
-    }, [token]);
+    }
 
-    return(
-        <div className='message-center'>
-            <Sidebar />      
+    componentDidMount(){
+        socket.emit('JOIN', {
+            token: localStorage.getItem('token')
+        });
+    }
 
-            <main>
-                {userId && (
-                    <>
-                        <ChatHeader userId = {userId}/>
-                        <ChatContainer userId = {userId} />
-                        <SendMessage userId={userId}/>
-                    </>
-                )}
-            </main>    
-        </div>
-    )
+    componentWillUnmount(){
+        socket.emit('DISCONNECT', {
+            token: localStorage.getItem('token')
+        });
+
+        socket.disconnect();
+    }
+
+    render(){
+        const { match: { params: { userId } } } = this.props
+
+        return(
+            <div className='message-center'>
+                <Sidebar userId={userId} />      
+    
+                <main>
+                    {userId && (
+                        <>
+                            <ChatHeader userId = {userId}/>
+                            <ChatContainer userId = {userId} />
+                            <SendMessage userId={userId}/>
+                        </>
+                    )}
+                </main>    
+            </div>
+        )
+    }
 }
 
+export { socket };
 export default MessageCenter;

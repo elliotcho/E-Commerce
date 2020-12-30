@@ -1,5 +1,7 @@
 import React from 'react';
-import { sendMessage } from '../../api/message'
+import { socket } from './MessageCenter';
+import { sendMessage } from '../../api/message';
+import { decodeUser } from '../../utils/decodeUser';
 import './css/SendMessage.css';
 
 const ENTER_KEY = 13;
@@ -18,6 +20,12 @@ class SendMessage extends React.Component{
 
     handleChange(e){
         this.setState({[e.target.id]: e.target.value});
+        const { _id: me } = decodeUser();
+        const payload={
+            senderId: me,
+            receiverId: this.props.userId
+        };
+        socket.emit('TYPING', payload);
     }
 
     async handleKeyDown(e){
@@ -25,10 +33,9 @@ class SendMessage extends React.Component{
             const receiver = this.props.userId;
             const { content } = this.state;
 
-            const data = { receiver, content };
+            const payload = await sendMessage({ receiver, content });
 
-            await sendMessage(data);
-            
+            socket.emit('NEW_MESSAGE', payload);
             this.setState({ content: '' });
         }
     }
