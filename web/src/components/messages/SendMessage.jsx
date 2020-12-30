@@ -1,10 +1,10 @@
 import React from 'react';
 import { socket } from './MessageCenter';
 import { sendMessage } from '../../api/message';
-import { decodeUser } from '../../utils/decodeUser';
 import './css/SendMessage.css';
 
 const ENTER_KEY = 13;
+let tO;
 
 class SendMessage extends React.Component{
     constructor(){
@@ -20,11 +20,21 @@ class SendMessage extends React.Component{
     }
 
     handleChange(e){
-        const { _id: me } = decodeUser();
+        const payload={ receiverId: this.props.userId };
 
-        const payload={ senderId: me, receiverId: this.props.userId };
+        if(e.target.value === ''){
+            socket.emit('STOP_TYPING', payload);
+        } else {
+            socket.emit('IS_TYPING', payload);
 
-        socket.emit('IS_TYPING', payload);
+            if(tO){
+                clearTimeout(tO);
+            }
+            
+            tO = setTimeout(() => {
+                socket.emit('STOP_TYPING', payload)
+            }, 5000);
+        }
         
         this.setState({[e.target.id]: e.target.value});
     }

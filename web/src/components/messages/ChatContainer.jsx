@@ -9,7 +9,6 @@ import './css/ChatContainer.css';
 function ChatContainer({ userId }){
     const [messages, setMessages] = useState([]);
     const [typing, setTyping] = useState(false);
-    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,7 +16,8 @@ function ChatContainer({ userId }){
         }
 
         socket.on('NEW_MESSAGE', () => fetchData());
-        socket.on('TYPING', () => setTyping(true));
+        socket.on('IS_TYPING', () => setTyping(true));
+        socket.on('STOP_TYPING', () => setTyping(false));
 
         fetchData();
     }, [userId]);
@@ -26,7 +26,7 @@ function ChatContainer({ userId }){
 
     return(
         <div className='chat-container mt-5'>
-            {typing && <TypingBubble />}
+            {typing && <TypingBubble userId={userId}/>}
     
             {messages.map(m => 
                 <MessageBubble 
@@ -41,14 +41,28 @@ function ChatContainer({ userId }){
     )
 }
 
-function TypingBubble(){
+function TypingBubble({ userId }){
+    const [username, setUsername] = useState('Loading...');
+    const [imgURL, setImgURL] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+           const { imgURL, user } = await fetchUser(userId);
+
+           setUsername(user.username);
+           setImgURL(imgURL);
+        }
+
+        fetchData();
+    }, [userId]);
+
     return(
         <div className='typing mr-auto ml-5 mb-5'>
-            <img src = {loading} alt = 'profile pic' />
+            <img src={imgURL? imgURL: loading} alt='profile pic' />
 
             <div>
                 <p className='mt-3'>
-                    <strong>Gugsa Challa </strong> is typing...
+                    <strong>{username} </strong> is typing...
                 </p>
             </div>
         </div>
