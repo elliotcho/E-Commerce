@@ -16,6 +16,7 @@ class SendMessage extends React.Component{
 
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.sendPhoto = this.sendPhoto.bind(this);
     }
 
     handleChange(e){
@@ -40,14 +41,26 @@ class SendMessage extends React.Component{
         }
     }
 
+    sendPhoto(){
+
+    }
+
     render(){
         const { content } = this.state;
 
         return(
             <div className='send-message'>
-                <button>
-                    <label htmlFor="">+</label>
+                <button className='btn btn-primary'>
+                    <label htmlFor="photo">+</label>
                 </button>
+
+                <input
+                    id = 'photo'
+                    type = 'file'
+                    onChange = {this.sendPhoto}
+                    style = {{display: 'none'}}
+                    accept = 'jpg jpeg png'
+                />
 
                 <input 
                     id= 'content'
