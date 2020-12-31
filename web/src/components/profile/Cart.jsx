@@ -101,6 +101,7 @@ class Cart extends Component{
                     <h2 >{this.calculateTotalAmount}</h2>
                 </div>
                 <h3>DELETE THIS ASAP</h3>
+                <h2>DELETE THIS TOO</h2>
                 
             </div>
         )
