@@ -10,18 +10,29 @@ class Review extends Component{
     }
 
     handleChange(e){
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        const productId = this.props.productId;
+
+        }
 
     }
 
     render(){
         return(
             <div>
-                <form>
-                    <label name='content'>Leave a Review</label>
+                <form onSubmit={ this.handleSubmit }>
+                    <label htmlFor='content'>Leave a Review</label>
                     <input
                         name='content'
                         type='text'
-                        onChange={this.handleChange}
+                        onChange={ this.handleChange }
+                        value={ this.state.content }
                     />
                 </form>
             </div>

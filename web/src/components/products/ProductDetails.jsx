@@ -3,6 +3,7 @@ import decode from 'jwt-decode';
 import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
+import { Review } from '/Review'
 
 class ProductDetails extends Component{
     constructor(){
@@ -41,7 +42,7 @@ class ProductDetails extends Component{
 
     render(){
         const { product: { 
-            image, name, price, description, datePosted, userId, username, quantity
+            image, name, price, description, datePosted, userId, username, quantity, _id
         } } = this.state;
 
         let isOwner = false;
@@ -115,7 +116,8 @@ class ProductDetails extends Component{
                         </div>) : null
                     }
                 </div>
-
+                
+                <Review productId={product._id}/>
 
             </div>
         )
