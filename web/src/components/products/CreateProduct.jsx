@@ -21,7 +21,6 @@ class CreateProduct extends Component {
             image: null,
             price: '',
             quantity: ''
-            
         }
 
         this.changeField = this.changeField.bind(this);
