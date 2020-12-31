@@ -1,7 +1,6 @@
 .chat-header{
     display: grid;
     grid-template-columns: 6rem auto;
-    background-color: #34626c;
     padding: 5px;
 }
 
