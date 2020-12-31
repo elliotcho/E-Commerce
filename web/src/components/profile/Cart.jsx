@@ -14,12 +14,11 @@ class Cart extends Component{
         super();
 
         this.state = {
-            cart: [],
-            total: 0
+            cart: []
         }
 
         this.delProductInCart = this.delProductInCart.bind(this);
-        this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.toPayment = this.toPayment.bind(this);
         this.calculateTotalAmount = this.calculateTotalAmount.bind(this);
 
     }
@@ -48,32 +47,37 @@ class Cart extends Component{
 
      calculateTotalAmount(){
         let amount = 0;
-        const{cart} = this.state;
+        const{ cart } = this.state;
+
         for(let i =0 ; i < cart.length ; i++){
             amount = amount + cart[i].price;
         }
-        this.setState({ total: amount}, () =>console.log(this.state.total));
-        console.log(amount);
-        console.log("calculating...")
+
         return amount;
     }
 
-   handleButtonClick(){
-       const{total} =this.state;
-        this.props.history.push(`/payment/${total}`);
+    toPayment(){
+        const { history } = this.props;
+
+        const total = this.calculateTotalAmount();
+       
+        history.push(`/payment/${total}`);
     }
 
     render(){
         const { cart } = this.state;
         const { isDark } = this.context;
         
-
         const style = isDark? darkStyle: lightStyle;
         
         return(
             <div className="cart" style={style}>
                 <h1 className="title">Your Shopping Cart: </h1>
-                <button className="btn" onClick={this.handleButtonClick} >Continue To Payment </button>
+
+                <button className="btn" onClick={this.toPayment} >
+                    Continue To Payment 
+                </button>
+                
                 <div className='items'>
                     {cart.map(p => 
                         <div key={p._id} className ='text-center' style={{maxWidth: 'fit-content'}}>
@@ -98,11 +102,8 @@ class Cart extends Component{
 
                 <div className='amount'>
                     <h2 >Total Amount: $ </h2>
-                    <h2 >{this.calculateTotalAmount}</h2>
+                    <h2 >{this.calculateTotalAmount()}</h2>
                 </div>
-                <h3>DELETE THIS ASAP</h3>
-                <h2>DELETE THIS TOO</h2>
-                
             </div>
         )
         
