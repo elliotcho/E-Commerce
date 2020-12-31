@@ -44,7 +44,7 @@ class SendMessage extends React.Component{
             const receiver = this.props.userId;
             const { content } = this.state;
 
-            const payload = await sendMessage({ receiver, content });
+            const payload = await sendMessage({ receiver, content }, false);
 
             socket.emit('STOP_TYPING', { receiverId: receiver });
             socket.emit('NEW_MESSAGE', payload);
@@ -53,8 +53,17 @@ class SendMessage extends React.Component{
         }
     }
 
-    sendPhoto(){
-        
+    async sendPhoto(e){
+        const receiver = this.props.userId;
+
+        const formData = new FormData();
+        formData.append('image', e.target.files[0]);
+        formData.append('receiver', receiver);
+
+        const payload = await sendMessage(formData, true);
+
+        socket.emit('STOP_TYPING', { receiverId: receiver });
+        socket.emit('NEW_MESSAGE', payload);
     }
 
     render(){

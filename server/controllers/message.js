@@ -1,6 +1,7 @@
 import Message from '../models/message';
 import { filterChats } from '../utils/filterChats';
 import { createUpload } from '../utils/createUpload';
+import path from 'path';
 
 const messagesUpload = createUpload('messages');
 
@@ -13,6 +14,9 @@ export const createMessage = async (req, res) =>{
                 console.log(err);
             }
 
+            const { receiver, content } = req.body;
+            const sender = req.user._id;
+        
             const newMsg = new Message({
                 dateSent: new Date(),
                 sender,
@@ -22,7 +26,7 @@ export const createMessage = async (req, res) =>{
             if(req.file){
                 newMsg._doc.image = req.file.filename;
             } else{
-                newMsg._doc.content = req.body.content;
+                newMsg._doc.content = content;
             }
 
             const msg = await newMsg.save();
@@ -67,5 +71,13 @@ export const getUserChats = async (req, res) => {
 
         result.sort((a, b) => b.dateSent - a.dateSent);
         res.json({ok: true, chats: result});
+    }
+}
+
+export const loadMessagePic = async (req, res) => {
+    const message = await Message.findOne({ _id: req.params.messageId });
+
+    if(message && message.image){
+        res.sendFile(path.join(__dirname, '../', `images/messages/${message.image}`));
     }
 }

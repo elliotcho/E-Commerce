@@ -91,7 +91,7 @@ function MessageCard({
                 <h3>{username}</h3>
 
                 <p>
-                    {!isRead? <strong>{content}</strong> : content}
+                    {content? content: 'IMAGE'}
                 </p>
 
                 <div>

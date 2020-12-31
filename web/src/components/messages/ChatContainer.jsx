@@ -34,6 +34,7 @@ function ChatContainer({ userId }){
                     userId = {m.sender}
                     isOwner = {m.sender === uid}
                     content = {m.content}
+                    image = {m.image}
                     read = {m.read}
                 />
             )}
@@ -69,7 +70,7 @@ function TypingBubble({ userId }){
     )
 }
 
-function MessageBubble({ userId, isOwner, content, read,  }){
+function MessageBubble({ userId, isOwner, content, image, read,  }){
     const margin = (isOwner) ? 'ml-auto mr-5': 'mr-auto ml-5';
 
     const [username, setUsername] = useState('Loading...');
@@ -95,7 +96,8 @@ function MessageBubble({ userId, isOwner, content, read,  }){
             <div className='msg-bubble'>
                 <p><strong>{username}</strong></p>
 
-                <p>{content}</p>
+                {content && <p>{content}</p> }
+                {image && <img src={image} alt='message pic' /> }
 
                 <div className='read'>
                     {read && <img src = {loading} alt = 'proflie pic' />}
