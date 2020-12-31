@@ -100,6 +100,7 @@ class Cart extends Component{
                     <h2 >Total Amount: $ </h2>
                     <h2 >{this.calculateTotalAmount}</h2>
                 </div>
+                <h3>DELETE THIS ASAP</h3>
                 
             </div>
         )
