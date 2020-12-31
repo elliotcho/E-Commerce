@@ -7,7 +7,6 @@ import{
 
 const router = express.Router();
 
-router.post('/', 'createReview');
-
+router.post('/', createReview);
 
 export default router;

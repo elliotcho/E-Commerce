@@ -2,7 +2,7 @@ import Review from '../models/review';
 
 export const createReview = async (req, res) => {
     if (!req.user){
-        res.json({ ok:false })
+        res.json({ ok: false });
     } else{
         const { productId, content } = req.body;
 
@@ -15,6 +15,6 @@ export const createReview = async (req, res) => {
 
         const review = await newReview.save();
 
-        res.json({ ok:true, review });
+        res.json({ ok: true, review });
     }
 }

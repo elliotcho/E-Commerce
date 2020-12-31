@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import decode from 'jwt-decode';
 import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
+import ReviewForm  from './ReviewForm';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
-import { Review } from '/Review'
 
 class ProductDetails extends Component{
     constructor(){
@@ -117,8 +117,7 @@ class ProductDetails extends Component{
                     }
                 </div>
                 
-                <Review productId={product._id}/>
-
+                <ReviewForm productId={_id} />
             </div>
         )
     }
