@@ -47,6 +47,21 @@ const socketEvents = (io) => {
             }
         });
 
+        socket.on('READ_MESSAGE', async payload => {
+            const { me, otherUser } = payload;
+
+            const otherSocketId = await redis.get(otherUser);
+            const mySocketId = await redis.get(me);
+
+            if(otherSocketId) {
+                io.sockets.to(otherSocketId).emit('READ_MESSAGE');
+            }
+        
+            if(mySocketId){
+                io.sockets.to(mySocketId).emit('READ_MESSAGE');
+            }
+        });
+
         socket.on('DISCONNECT', async payload => {
             const { token } = payload;
 

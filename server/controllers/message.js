@@ -91,11 +91,15 @@ export const readMessages = async (req, res) => {
         const { otherUser } = req.body;
         const me = req.user._id;
     
-        await Message.update(
+        await Message.updateMany(
             { receiver: me, sender: otherUser },
             { read: new Date() }
         );
     
-        res.json({ ok: true });
+        res.json({ 
+            ok: true,
+            otherUser,
+            me
+        });
     }
 }

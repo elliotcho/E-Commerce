@@ -16,6 +16,8 @@ function ChatContainer({ userId }){
         }
 
         socket.on('NEW_MESSAGE', () => fetchData());
+        socket.on('READ_MESSAGE', () => fetchData());
+
         socket.on('IS_TYPING', () => setTyping(true));
         socket.on('STOP_TYPING', () => setTyping(false));
 
@@ -32,6 +34,7 @@ function ChatContainer({ userId }){
                 <MessageBubble 
                     key = {m._id}
                     userId = {m.sender}
+                    reader = {m.receiver}
                     isOwner = {m.sender === uid}
                     content = {m.content}
                     image = {m.image}
@@ -70,37 +73,49 @@ function TypingBubble({ userId }){
     )
 }
 
-function MessageBubble({ userId, isOwner, content, image, read,  }){
+function MessageBubble({ userId, reader, isOwner, content, image, read }){
     const margin = (isOwner) ? 'ml-auto mr-5': 'mr-auto ml-5';
 
     const [username, setUsername] = useState('Loading...');
+    const [readerURL, setReaderURL] = useState(null);
     const [imgURL, setImgURL] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
            const { imgURL, user } = await fetchUser(userId);
+           const  { imgURL: readerURL } = await fetchUser(reader);
 
+           setReaderURL(readerURL);
            setUsername(user.username);
            setImgURL(imgURL);
         }
 
         fetchData();
-    }, [userId]);
+    }, [userId, reader]);
+
+    const isRead = read && isOwner;
 
     return(
         <div className={`message ${margin} mb-5`}>
             {!isOwner? 
-                <img src={imgURL? imgURL: loading} alt='profile pic'/> : <div/>
+                <img src={imgURL? imgURL: loading} alt='owner profile pic'/> : <div/>
             }
 
             <div className='msg-bubble'>
                 <p><strong>{username}</strong></p>
 
-                {content && <p>{content}</p> }
-                {image && <img src={image} alt='message pic' /> }
+                {image && <img src={image} alt='message pic'/>}
+                {content && <p>{content}</p>}
 
                 <div className='read'>
-                    {read && <img src = {loading} alt = 'proflie pic' />}
+                    {isRead && (
+                        <img 
+                            src={readerURL? readerURL: loading} 
+                            data-toggle='tooltip'
+                            title={new Date(read).toLocaleString()}
+                            alt = 'reader proflie pic' 
+                        />
+                    )}
                 </div>
             </div>
         </div>

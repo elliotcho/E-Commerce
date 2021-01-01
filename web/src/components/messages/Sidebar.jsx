@@ -17,6 +17,7 @@ function Sidebar({ history, userId: activeId }){
         }
         
         socket.on('NEW_MESSAGE', () => fetchData());
+        socket.on('READ_MESSAGE', () => fetchData());
 
         fetchData();
     }, [activeId]);

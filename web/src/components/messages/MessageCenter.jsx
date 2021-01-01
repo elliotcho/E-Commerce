@@ -2,6 +2,7 @@ import React from 'react';
 import socketIOClient from 'socket.io-client';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { API } from '../../constants';
+import { readMessages } from '../../api/message';
 import Sidebar from './Sidebar';
 import ChatHeader from './ChatHeader';
 import ChatContainer from './ChatContainer';
@@ -22,26 +23,32 @@ class MessageCenter extends React.Component{
         socket = socketIOClient(wsEndpoint);
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         socket.emit('JOIN', {
             token: localStorage.getItem('token')
         });
 
-        if(this.props.match.params.userId){
+        const { userId } = this.props.match.params;
 
+        if(userId){
+            await this.markMessagesAsRead(userId);
         }
     }
 
-    componentDidUpdate(prevProps){
+    async componentDidUpdate(prevProps){
         const { userId } = this.props.match.params;
 
         if(userId && userId !== prevProps.match.params.userId){
-
+            await this.markMessagesAsRead(userId);
         }
     }
 
-    async readMessages(userId){
+    async markMessagesAsRead(userId){
+        const payload = await readMessages(userId);
 
+        if(payload.ok){
+            socket.emit('READ_MESSAGES', payload);
+        }
     }
 
     componentWillUnmount(){
