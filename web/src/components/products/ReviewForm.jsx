@@ -27,7 +27,6 @@ class ReviewForm extends Component {
 
         const { ok, review }  = await createReview({ content, productId });
         
-
         if(ok) {
             console.log(review);
             this.setState({ content: '' });
