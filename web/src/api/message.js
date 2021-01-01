@@ -3,8 +3,15 @@ import { authMiddleware } from '../utils/authMiddlware';
 import { authAfterware } from '../utils/authAfterware';
 import axios from 'axios';
 
-export const sendMessage = async (data) => {
-    const config = {headers: {'content-type': 'application/json'}};
+export const sendMessage = async (data, isImage) => {
+    let config;
+
+    if(isImage){
+        config = { headers: {'content-type': 'multipart/form-data'} };
+    } else{
+        config = { headers: {'content-type': 'application/json'} };
+    }
+
     const response = await axios.post(`${API}/api/message`, data, authMiddleware(config));
     const { ok, msg } = response.data;
 
@@ -30,6 +37,17 @@ export const loadMessages = async (otherUser) => {
 
     const response = await axios.post(`${API}/api/message/messages`, { otherUser }, authMiddleware(config));
     const { ok, messages } = response.data;
+
+    for(let i=0;i<messages.length;i++){
+        const config = { responseType: 'blob'};
+
+        if(messages[i].image) {
+            const result = await axios.get(`${API}/api/message/image/${messages[i]._id}`, config);
+            const file = result.data;
+        
+            messages[i].image = URL.createObjectURL(file);
+        }
+    }
 
     if(ok){
         authAfterware(response);

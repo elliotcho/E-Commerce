@@ -8,7 +8,7 @@ import './css/ChatContainer.css';
 
 function ChatContainer({ userId }){
     const [messages, setMessages] = useState([]);
-    
+    const [typing, setTyping] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -16,6 +16,8 @@ function ChatContainer({ userId }){
         }
 
         socket.on('NEW_MESSAGE', () => fetchData());
+        socket.on('IS_TYPING', () => setTyping(true));
+        socket.on('STOP_TYPING', () => setTyping(false));
 
         fetchData();
     }, [userId]);
@@ -24,12 +26,15 @@ function ChatContainer({ userId }){
 
     return(
         <div className='chat-container mt-5'>
+            {typing && <TypingBubble userId={userId}/>}
+    
             {messages.map(m => 
                 <MessageBubble 
                     key = {m._id}
                     userId = {m.sender}
                     isOwner = {m.sender === uid}
                     content = {m.content}
+                    image = {m.image}
                     read = {m.read}
                 />
             )}
@@ -37,21 +42,35 @@ function ChatContainer({ userId }){
     )
 }
 
-function TypingBubble(){
+function TypingBubble({ userId }){
+    const [username, setUsername] = useState('Loading...');
+    const [imgURL, setImgURL] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+           const { imgURL, user } = await fetchUser(userId);
+
+           setUsername(user.username);
+           setImgURL(imgURL);
+        }
+
+        fetchData();
+    }, [userId]);
+
     return(
         <div className='typing mr-auto ml-5 mb-5'>
-            <img src = {loading} alt = 'profile pic' />
+            <img src={imgURL? imgURL: loading} alt='profile pic' />
 
             <div>
                 <p className='mt-3'>
-                    <strong>Gugsa Challa </strong> is typing...
+                    <strong>{username} </strong> is typing...
                 </p>
             </div>
         </div>
     )
 }
 
-function MessageBubble({ isOwner, userId, content, read }){
+function MessageBubble({ userId, isOwner, content, image, read,  }){
     const margin = (isOwner) ? 'ml-auto mr-5': 'mr-auto ml-5';
 
     const [username, setUsername] = useState('Loading...');
@@ -71,13 +90,14 @@ function MessageBubble({ isOwner, userId, content, read }){
     return(
         <div className={`message ${margin} mb-5`}>
             {!isOwner? 
-                <img src = {imgURL? imgURL: loading} alt = 'profile pic' /> : <div />
+                <img src={imgURL? imgURL: loading} alt='profile pic'/> : <div/>
             }
 
             <div className='msg-bubble'>
                 <p><strong>{username}</strong></p>
 
-                <p>{content}</p>
+                {content && <p>{content}</p> }
+                {image && <img src={image} alt='message pic' /> }
 
                 <div className='read'>
                     {read && <img src = {loading} alt = 'proflie pic' />}

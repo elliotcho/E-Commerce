@@ -14,6 +14,7 @@ import productRouter from './routes/product';
 import departmentRouter from './routes/department';
 import messageRouter from './routes/message';
 import paymentRouter from './routes/payment';
+import reviewRouter from './routes/review';
 
 import SubscriptionServer from './socket/index';
 
@@ -72,7 +73,8 @@ app.use('/api/user', userRouter);
 app.use('/api/product', productRouter);
 app.use('/api/department', departmentRouter);
 app.use('/api/message', messageRouter);
-app.use('/api/payments', paymentRouter);
+app.use('/api/payment', paymentRouter);
+app.use('/api/review', reviewRouter);
 
 const port = process.env.PORT || 5000
 

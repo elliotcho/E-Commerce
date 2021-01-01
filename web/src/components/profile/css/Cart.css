@@ -3,3 +3,7 @@
     position: relative;
     overflow: auto;
 }
+
+.h2{
+    display: inline-block;
+}

@@ -18,6 +18,9 @@ class Cart extends Component{
         }
 
         this.delProductInCart = this.delProductInCart.bind(this);
+        this.toPayment = this.toPayment.bind(this);
+        this.calculateTotalAmount = this.calculateTotalAmount.bind(this);
+
     }
 
     async componentDidMount(){
@@ -42,17 +45,39 @@ class Cart extends Component{
         }); 
     }
 
+     calculateTotalAmount(){
+        let amount = 0;
+        const{ cart } = this.state;
+
+        for(let i =0 ; i < cart.length ; i++){
+            amount = amount + cart[i].price;
+        }
+
+        return amount;
+    }
+
+    toPayment(){
+        const { history } = this.props;
+
+        const total = this.calculateTotalAmount();
+       
+        history.push(`/payment/${total}`);
+    }
+
     render(){
         const { cart } = this.state;
         const { isDark } = this.context;
-
+        
         const style = isDark? darkStyle: lightStyle;
-   
+        
         return(
             <div className="cart" style={style}>
                 <h1 className="title">Your Shopping Cart: </h1>
-                <button className="btn" >Continue To Payment </button>
-        
+
+                <button className="btn" onClick={this.toPayment} >
+                    Continue To Payment 
+                </button>
+                
                 <div className='items'>
                     {cart.map(p => 
                         <div key={p._id} className ='text-center' style={{maxWidth: 'fit-content'}}>
@@ -73,6 +98,11 @@ class Cart extends Component{
                             />
                         </div>
                     )}
+                </div>
+
+                <div className='amount'>
+                    <h2 >Total Amount: $ </h2>
+                    <h2 >{this.calculateTotalAmount()}</h2>
                 </div>
             </div>
         )

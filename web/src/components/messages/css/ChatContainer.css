@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column-reverse;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .message, .typing{
@@ -26,6 +27,12 @@
 
 .msg-bubble strong, .typing strong{
     font-family: 'Nunito Sans';
+}
+
+.msg-bubble img{
+    width: 20rem;
+    height: 20rem;
+    border-radius: 0;
 }
 
 .msg-bubble p, .typing p{

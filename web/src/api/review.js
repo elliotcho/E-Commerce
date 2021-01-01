@@ -5,11 +5,21 @@ import axios from 'axios';
 
 export const createReview = async (data) => {
     const config = {headers: {'content-type': 'application/json'}};
+    
     const response = await axios.post(`${API}/api/review`, data, authMiddleware(config));
-    const { ok, review } = response.body;
+    const { ok } = response.data;
 
     if(ok){
         authAfterware(response);
-        return review;
     }
+
+    return response.data;
+}
+
+export const getReviews = async (productId) => {
+    const config = {headers: {}};
+    const response = await axios.get(`${API}/api/review/${productId}`, authMiddleware(config));
+
+    authAfterware(response);
+    return response.data;
 }

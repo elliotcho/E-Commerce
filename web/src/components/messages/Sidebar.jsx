@@ -36,8 +36,6 @@ function Sidebar({ history, userId: activeId }){
                             userId = m.receiver;
                         }
 
-                        console.log(activeId)
-
                         return (
                             <MessageCard 
                                 key = {m._id}
@@ -93,7 +91,7 @@ function MessageCard({
                 <h3>{username}</h3>
 
                 <p>
-                    {!isRead? <strong>{content}</strong> : content}
+                    {content? content: 'IMAGE'}
                 </p>
 
                 <div>
