@@ -36,15 +36,17 @@ function Sidebar({ history, userId: activeId }){
                             userId = m.receiver;
                         }
 
+                        const isRead = (me === m.sender || m.read);
+
                         return (
                             <MessageCard 
                                 key = {m._id}
                                 toChat = {() => history.push(`/chat/${userId}`)}
+                                isActive = {userId === activeId}
                                 dateSent = {m.dateSent}
                                 content = {m.content}
                                 userId = {userId}
-                                isActive = {userId === activeId}
-                                isRead = {m.read}
+                                isRead = {isRead}
                             /> 
                         )
                     }) 
@@ -90,8 +92,14 @@ function MessageCard({
             <div>
                 <h3>{username}</h3>
 
-                <p>
-                    {content? content: 'IMAGE'}
+                <p style = { !isRead? {fontWeight: 'bold'}: {} }> 
+
+                    {content? content: (
+                        <span>
+                            <i className = 'fas fa-image'/> IMAGE
+                        </span>
+                    )}
+
                 </p>
 
                 <div>

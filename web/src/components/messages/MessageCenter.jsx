@@ -26,6 +26,22 @@ class MessageCenter extends React.Component{
         socket.emit('JOIN', {
             token: localStorage.getItem('token')
         });
+
+        if(this.props.match.params.userId){
+
+        }
+    }
+
+    componentDidUpdate(prevProps){
+        const { userId } = this.props.match.params;
+
+        if(userId && userId !== prevProps.match.params.userId){
+
+        }
+    }
+
+    async readMessages(userId){
+
     }
 
     componentWillUnmount(){

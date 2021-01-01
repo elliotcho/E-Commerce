@@ -42,13 +42,15 @@ export const getMessages = async (req, res) => {
         const { otherUser } = req.body;
         const me = req.user._id;
 
-        const receivedMsgs = await Message.find({ receiver: me, sender: otherUser });
-        const sentMsgs = await Message.find({ receiver: otherUser, sender: me });
+        const messages = await Message.find({
+            $or: [
+                { receiver: me, sender: otherUser },
+                { receiver: otherUser, sender: me }
+            ]
+        });
 
-        const result = [...receivedMsgs, ...sentMsgs];
-
-        result.sort((a, b) => b.dateSent - a.dateSent);
-        res.json({ok: true, messages: result});
+        messages.sort((a, b) => b.dateSent - a.dateSent);
+        res.json({ ok: true, messages });
     }
 }
 
@@ -79,5 +81,21 @@ export const loadMessagePic = async (req, res) => {
 
     if(message && message.image){
         res.sendFile(path.join(__dirname, '../', `images/messages/${message.image}`));
+    }
+}
+
+export const readMessages = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        const { otherUser } = req.body;
+        const me = req.user._id;
+    
+        await Message.update(
+            { receiver: me, sender: otherUser },
+            { read: new Date() }
+        );
+    
+        res.json({ ok: true });
     }
 }
