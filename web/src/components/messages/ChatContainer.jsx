@@ -77,15 +77,15 @@ function MessageBubble({ userId, reader, isOwner, content, image, read }){
     const margin = (isOwner) ? 'ml-auto mr-5': 'mr-auto ml-5';
 
     const [username, setUsername] = useState('Loading...');
-    const [readerURL, setReaderURL] = useState(null);
+    const [readerPic, setReaderPic] = useState(null);
     const [imgURL, setImgURL] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
            const { imgURL, user } = await fetchUser(userId);
-           const  { imgURL: readerURL } = await fetchUser(reader);
+           const  { imgURL: readerPic } = await fetchUser(reader);
 
-           setReaderURL(readerURL);
+           setReaderPic(readerPic);
            setUsername(user.username);
            setImgURL(imgURL);
         }
@@ -110,7 +110,7 @@ function MessageBubble({ userId, reader, isOwner, content, image, read }){
                 <div className='read'>
                     {isRead && (
                         <img 
-                            src={readerURL? readerURL: loading} 
+                            src={readerPic? readerPic: loading} 
                             data-toggle='tooltip'
                             title={new Date(read).toLocaleString()}
                             alt = 'reader proflie pic' 
