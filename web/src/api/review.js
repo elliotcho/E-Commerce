@@ -15,3 +15,11 @@ export const createReview = async (data) => {
 
     return response.data;
 }
+
+export const getReviews = async (productId) => {
+    const config = {headers: {}};
+    const response = await axios.get(`${API}/api/review/${productId}`, authMiddleware(config));
+
+    authAfterware(response);
+    return response.data;
+}

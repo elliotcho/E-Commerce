@@ -18,3 +18,11 @@ export const createReview = async (req, res) => {
         res.json({ ok: true, review });
     }
 }
+
+export const getReviews = async (req, res) => {
+    const { productId } = req.params;
+
+    const reviews = await Review.find({productId});
+
+    res.json(reviews);
+}

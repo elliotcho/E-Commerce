@@ -26,6 +26,7 @@ class ReviewForm extends Component {
         const { content } = this.state;
 
         const { ok, review }  = await createReview({ content, productId });
+        
 
         if(ok) {
             console.log(review);
@@ -47,6 +48,7 @@ class ReviewForm extends Component {
                         onChange={ this.handleChange }
                         value={ this.state.content }
                     />
+                    <button type='submit'>Submit</button>
                 </form>
             </div>
         )
