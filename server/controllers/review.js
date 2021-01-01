@@ -18,3 +18,11 @@ export const createReview = async (req, res) => {
         res.json({ ok:true, review });
     }
 }
+
+export const getReview = async (req, res) => {
+    const { productId } = req.body;
+
+    const review = await Review.find({productId});
+
+    res.json(review);
+}
