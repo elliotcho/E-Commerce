@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getReviews } from '../../api/review';
+import { deleteReview, getReviews } from '../../api/review';
 import './css/Reviews.css';
 
 class Reviews extends Component{
@@ -14,13 +14,21 @@ class Reviews extends Component{
     async componentDidMount(){
         const { productId } = this.props;
         
-        if(productId) {
+        if(productId){
             const reviews = await getReviews(productId);
             this.setState({ reviews });
         }
     }
 
-    
+    async componentDidUpdate(prevProps){
+        const { productId } = this.props;
+
+        if(productId && productId !== prevProps.productId){
+            const reviews = await getReviews(productId);
+            this.setState({ reviews });
+        }
+    }
+
 
     render(){
         const { reviews } = this.state;
@@ -28,14 +36,29 @@ class Reviews extends Component{
         return (
             <div className='reviews my-3'>
                 {reviews.map(r => 
-                    <div key={r._id}>
-                        <p>
-                            {r.content}
-                        </p>
+                    <div key={r._id} className='review'>
+                        <div>
+                            <div>
+                                <img src={r.userPic} alt='profile pic' />
+                            </div>
 
-                        <p>
-                            {new Date(r.datePosted).toLocaleString()}
-                        </p>
+                            <h4 className='mt-3'>
+                                Posted By
+                            </h4>
+                            
+                            <p className='ml-4'>
+                                {r.username}
+                            </p>
+                        </div>
+
+                        <main>
+                            {r.content}
+
+                            <i 
+                                className = 'fas fa-trash-alt ml-3'
+                                onClick = {() => deleteReview(r._id)}
+                            />
+                        </main>
                     </div>
                 )}
             </div>

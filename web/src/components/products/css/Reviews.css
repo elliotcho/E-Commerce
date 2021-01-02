@@ -2,3 +2,24 @@
     max-width: 800px;
     margin: auto;
 }
+
+.review{
+    display: grid;
+    grid-template-columns: 200px auto;
+    background: white;
+    margin-bottom: 50px;
+    padding: 30px;
+}
+
+.review img{
+    width: 8rem;
+    height: 8rem;
+}
+
+.review p{
+    font-size: 1.3rem;
+}
+
+.review main{
+    font-size: 2rem;
+}

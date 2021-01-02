@@ -22,8 +22,9 @@ export const createReview = async (req, res) => {
 export const getReviews = async (req, res) => {
     const { productId } = req.params;
 
-    const reviews = await Review.find({productId});
+    const reviews = await Review.find({ productId });
 
+    reviews.sort((a, b) => b.datePosted - a.datePosted);
     res.json(reviews);
 }
 
@@ -32,6 +33,6 @@ export const deleteReview = async (req, res) => {
 
     const reviews = Review.deleteOne({productId});
 
-    res.json(reviews);
+    res.json({msg: 'Successfully Deleted'});
 }
 

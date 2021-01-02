@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { socket } from './MessageCenter';
 import { fetchUser } from '../../utils/fetchUser';
 import { decodeUser } from '../../utils/decodeUser';
-import { getSidebarChats } from '../../api/message';
+import { readMessages, getSidebarChats } from '../../api/message';
 import loading from '../../images/loading.jpg';
 import './css/Sidebar.css';
 
@@ -16,8 +16,17 @@ function Sidebar({ history, userId: activeId }){
             setChats(await getSidebarChats());
         }
         
-        socket.on('NEW_MESSAGE', () => fetchData());
-        socket.on('READ_MESSAGE', () => fetchData());
+        socket.on('NEW_MESSAGE', async () => {
+            const payload = await readMessages(activeId);
+            
+            if(payload.ok){
+                socket.emit('READ_MESSAGES', payload);
+            }
+
+            fetchData();
+        });
+
+        socket.on('READ_MESSAGES', () => fetchData());
 
         fetchData();
     }, [activeId]);
