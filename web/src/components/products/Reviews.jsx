@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getReviews } from '../../api/review';
+import { deleteReview, getReviews } from '../../api/review';
 import './css/Reviews.css';
 
 class Reviews extends Component{
@@ -14,7 +14,7 @@ class Reviews extends Component{
     async componentDidMount(){
         const { productId } = this.props;
         
-        if(productId) {
+        if(productId){
             const reviews = await getReviews(productId);
             this.setState({ reviews });
         }
@@ -28,6 +28,7 @@ class Reviews extends Component{
             this.setState({ reviews });
         }
     }
+
 
     render(){
         const { reviews } = this.state;
@@ -55,7 +56,7 @@ class Reviews extends Component{
 
                             <i 
                                 className = 'fas fa-trash-alt ml-3'
-                                onClick = {() => console.log("HI")}
+                                onClick = {() => deleteReview(r._id)}
                             />
                         </main>
                     </div>

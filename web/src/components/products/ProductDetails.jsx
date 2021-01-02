@@ -41,6 +41,7 @@ class ProductDetails extends Component{
         alert("ADDED TO CART");
     }
 
+
     render(){
         const { product: { 
             image, name, price, description, datePosted, userId, username, quantity, _id
@@ -119,7 +120,7 @@ class ProductDetails extends Component{
                 </div>
                 
                 <ReviewForm productId={_id}/>
-                <Reviews productId={_id}/>
+                <Reviews productId={_id} deleteReview={this.deleteReview}/>
             </div>
         )
     }

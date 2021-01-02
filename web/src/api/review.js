@@ -32,3 +32,11 @@ export const getReviews = async (productId) => {
 
     return reviews;
 }
+
+export const deleteReview = async (productId) => {
+    const config = {headers: {}}
+
+    const response = await axios.delete(`${API}/api/review/${productId}`, authMiddleware(config));
+
+    authAfterware(response);
+}
