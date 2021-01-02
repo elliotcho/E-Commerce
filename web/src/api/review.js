@@ -1,6 +1,7 @@
 import { API } from '../constants';
 import { authMiddleware } from '../utils/authMiddlware';
 import { authAfterware } from '../utils/authAfterware';
+import { fetchUser } from '../utils/fetchUser';
 import axios from 'axios';
 
 export const createReview = async (data) => {
@@ -17,9 +18,17 @@ export const createReview = async (data) => {
 }
 
 export const getReviews = async (productId) => {
-    const config = {headers: {}};
-    const response = await axios.get(`${API}/api/review/${productId}`, authMiddleware(config));
+    const response = await axios.get(`${API}/api/review/${productId}`);
+    const reviews = response.data;
 
-    authAfterware(response);
-    return response.data;
+    for(let i=0;i<reviews.length;i++){
+        const { userId } = reviews[i];
+
+        const { user, imgURL } = await fetchUser(userId);
+
+        reviews[i].username = user.username;
+        reviews[i].userPic = imgURL;
+    }
+
+    return reviews;
 }

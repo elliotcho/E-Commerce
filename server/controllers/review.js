@@ -22,7 +22,7 @@ export const createReview = async (req, res) => {
 export const getReviews = async (req, res) => {
     const { productId } = req.params;
 
-    const reviews = await Review.find({productId});
+    const reviews = await Review.find({ productId });
 
     res.json(reviews);
 }
