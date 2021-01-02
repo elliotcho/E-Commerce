@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { socket } from './MessageCenter';
 import { decodeUser } from '../../utils/decodeUser';
 import { fetchUser } from '../../utils/fetchUser';
-import { loadMessages } from '../../api/message';
+import { loadMessages, readMessages } from '../../api/message';
 import loading from '../../images/loading.jpg';
 import './css/ChatContainer.css';
 
@@ -10,21 +10,30 @@ function ChatContainer({ userId }){
     const [messages, setMessages] = useState([]);
     const [typing, setTyping] = useState(false);
 
+    const { _id: me } = decodeUser();
+
     useEffect(() => {
         const fetchData = async () => {
             setMessages(await loadMessages(userId));
         }
 
-        socket.on('NEW_MESSAGE', () => fetchData());
-        socket.on('READ_MESSAGE', () => fetchData());
+        socket.on('NEW_MESSAGE', async () => {
+            const payload = await readMessages(userId);
+            
+            if(payload.ok){
+                socket.emit('READ_MESSAGES', payload);
+            }
 
+            fetchData();
+        });
+
+        socket.on('READ_MESSAGES', () => fetchData());
+        
         socket.on('IS_TYPING', () => setTyping(true));
         socket.on('STOP_TYPING', () => setTyping(false));
 
         fetchData();
-    }, [userId]);
-
-    const { _id: uid } = decodeUser();
+    }, [userId, me]);
 
     return(
         <div className='chat-container mt-5'>
@@ -35,7 +44,7 @@ function ChatContainer({ userId }){
                     key = {m._id}
                     userId = {m.sender}
                     reader = {m.receiver}
-                    isOwner = {m.sender === uid}
+                    isOwner = {m.sender === me}
                     content = {m.content}
                     image = {m.image}
                     read = {m.read}

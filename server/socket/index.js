@@ -47,18 +47,18 @@ const socketEvents = (io) => {
             }
         });
 
-        socket.on('READ_MESSAGE', async payload => {
+        socket.on('READ_MESSAGES', async payload => {
             const { me, otherUser } = payload;
 
             const otherSocketId = await redis.get(otherUser);
             const mySocketId = await redis.get(me);
-
+     
             if(otherSocketId) {
-                io.sockets.to(otherSocketId).emit('READ_MESSAGE');
+                io.sockets.to(otherSocketId).emit('READ_MESSAGES');
             }
         
             if(mySocketId){
-                io.sockets.to(mySocketId).emit('READ_MESSAGE');
+                io.sockets.to(mySocketId).emit('READ_MESSAGES');
             }
         });
 
