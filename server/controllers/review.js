@@ -26,3 +26,12 @@ export const getReviews = async (req, res) => {
 
     res.json(reviews);
 }
+
+export const deleteReview = async (req, res) => {
+    const { productId } = req.params;
+
+    const reviews = Review.deleteOne({productId});
+
+    res.json(reviews);
+}
+

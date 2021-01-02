@@ -23,3 +23,11 @@ export const getReviews = async (productId) => {
     authAfterware(response);
     return response.data;
 }
+
+export const deleteReview = async (productId) => {
+    const config = {headers: {}};
+    const response = axios.get(`${API}/api/review/${productId}`, authMiddleware(config));
+
+    authAfterware(response);
+    return response.data;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { createReview } from '../../api/review';
+import { createReview} from '../../api/review';
 import './css/ReviewForm.css';
 
 class ReviewForm extends Component {
@@ -26,7 +26,7 @@ class ReviewForm extends Component {
         const { content } = this.state;
 
         const { ok, review }  = await createReview({ content, productId });
-        
+
         if(ok) {
             console.log(review);
             this.setState({ content: '' });
