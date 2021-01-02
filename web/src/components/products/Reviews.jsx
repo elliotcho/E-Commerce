@@ -9,6 +9,8 @@ class Reviews extends Component{
         this.state = {
             reviews: []
         }
+
+        this.removeReview = this.removeReview.bind(this);
     }
 
     async componentDidMount(){
@@ -29,6 +31,20 @@ class Reviews extends Component{
         }
     }
 
+
+    async removeReview(id){
+        const { reviews } = this.state;
+
+        for(let i=0;i<reviews.length;i++){
+            if(reviews[i]._id === id){
+                reviews.splice(i, 1);
+                break;
+            }
+        }
+
+        this.setState({ reviews });
+        await deleteReview(id);
+    }
 
     render(){
         const { reviews } = this.state;
@@ -56,7 +72,7 @@ class Reviews extends Component{
 
                             <i 
                                 className = 'fas fa-trash-alt ml-3'
-                                onClick = {() => deleteReview(r._id)}
+                                onClick = {() => this.removeReview(r._id)}
                             />
                         </main>
                     </div>
