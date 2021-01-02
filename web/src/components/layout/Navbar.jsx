@@ -44,14 +44,7 @@ function Navbar(){
                                 </Link>
                             </li>
                         </ul>) : 
-                        (<ul className="navbar-nav ml-auto">
-                            <li>
-                                <Link to="/profile" className="nav-link mr-5">
-                                    <i className ='fas fa-address-card' />
-                                    <span className='ml-3'>Profile</span>
-                                </Link>
-                            </li>
-                            
+                        (<ul className="navbar-nav ml-auto"> 
                             <li>
                                 <Link to="/create_product" className="nav-link mr-5">
                                     <i className='fa fa-upload'/>
@@ -72,29 +65,45 @@ function Navbar(){
                                     <span className='ml-3'>Messages</span>
                                 </Link>
                             </li>
-
-                            
-                            {isAdmin && (
-                                <li>
-                                    <Link to="/admin" className="nav-link mr-5">
-                                        <i className ='fas fa-shield-alt'/>
-                                        <span className='ml-3'>Admin</span>
-                                    </Link>
-                                </li>
-                            )}
-
-                            <li>
-                                <Link to="/settings" className="nav-link mr-5">
-                                    <i className='fas fa-cog' />
-                                    <span className='ml-3'>Settings</span>
-                                </Link>
-                            </li>
                                 
-                            <li>
-                                <Link to="/" className="nav-link" onClick={logout}>
-                                    <i className ='fas fa-sign-out-alt'/>
-                                    <span className='ml-3'>Sign Out</span>
-                                </Link>
+                            <li className = 'expand'>
+                                <div className='nav-link'>
+                                    <i className = 'fas fa-plus' />
+                                </div>
+
+                                <div className='dropdown-content'>
+                                    <section>
+                                        <div className='option'>
+                                            <Link to="/profile" className="nav-link mr-5">
+                                                <i className ='fas fa-address-card' />
+                                                <span className='ml-3'>Profile</span>
+                                            </Link>
+                                        </div>
+
+                                        {isAdmin && (
+                                            <div className='option'>
+                                                <Link to="/admin" className="nav-link mr-5">
+                                                    <i className ='fas fa-shield-alt'/>
+                                                    <span className='ml-3'>Admin</span>
+                                                </Link>
+                                            </div>
+                                        )}
+
+                                        <div className='option'>
+                                            <Link to="/settings" className="nav-link mr-5">
+                                                <i className='fas fa-cog' />
+                                                <span className='ml-3'>Settings</span>
+                                            </Link>
+                                        </div>
+
+                                        <div className='option'>
+                                            <Link to="/" className="nav-link" onClick={logout}>
+                                                <i className ='fas fa-sign-out-alt'/>
+                                                <span className='ml-3'>Sign Out</span>
+                                            </Link>
+                                        </div>
+                                    </section>
+                                </div>
                             </li>
                         </ul>)
                     }
