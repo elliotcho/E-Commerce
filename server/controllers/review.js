@@ -24,5 +24,6 @@ export const getReviews = async (req, res) => {
 
     const reviews = await Review.find({ productId });
 
+    reviews.sort((a, b) => b.datePosted - a.datePosted);
     res.json(reviews);
 }

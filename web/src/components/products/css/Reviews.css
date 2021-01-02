@@ -8,7 +8,7 @@
     grid-template-columns: 200px auto;
     background: white;
     margin-bottom: 50px;
-    padding: 20px;
+    padding: 30px;
 }
 
 .review img{
@@ -18,5 +18,8 @@
 
 .review p{
     font-size: 1.3rem;
-    padding-left: 20px;
+}
+
+.review main{
+    font-size: 2rem;
 }

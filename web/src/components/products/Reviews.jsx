@@ -45,14 +45,19 @@ class Reviews extends Component{
                                 Posted By
                             </h4>
                             
-                            <p>
+                            <p className='ml-4'>
                                 {r.username}
                             </p>
                         </div>
 
-                        <div>
+                        <main>
                             {r.content}
-                        </div>
+
+                            <i 
+                                className = 'fas fa-trash-alt ml-3'
+                                onClick = {() => console.log("HI")}
+                            />
+                        </main>
                     </div>
                 )}
             </div>
