@@ -29,12 +29,14 @@ export const getReviews = async (req, res) => {
 }
 
 export const deleteReview = async (req, res) => {
-    const { productId } = req.params;
+    const { id } = req.params;
 
-    const reviews = Review.deleteOne({productId});
+    await Review.deleteOne({_id: id});
 
     res.json({msg: 'Successfully Deleted'});
 }
 
-
+export const likes = async (req, res) => {
+    
+}
 
