@@ -1,0 +1,11 @@
+.payment{
+    color:blue;
+}
+
+.payment .h2 {
+    align-items: center !important;
+}
+
+.payment .form{
+    align-items: center;
+}

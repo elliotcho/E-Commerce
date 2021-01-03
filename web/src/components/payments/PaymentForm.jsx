@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import env from 'react-dotenv';
 import {v4 as uuidv4} from 'uuid';
 import {sendNonce} from '../../api/payments';
+import './css/PaymentForm.css';
 import 'react-square-payment-form/lib/default.css';
 
 import {
@@ -50,10 +51,10 @@ class PaymentForm extends Component{
         this.createPayment(nonce, buyerVerificationToken);
       }
 
-      createVerificationDetails() {
+      createVerificationDetails(total) {
         return {
-          amount: '100.00',
-          currencyCode: "USD",
+          amount: total,
+          currencyCode: "CAD",
           intent: "CHARGE",
           billingContact: {
             familyName: "Smith",
@@ -73,7 +74,7 @@ class PaymentForm extends Component{
       const total = this.props.match.params.total;
       
         return(
-            <div>
+            <div className='payment'>
             <h1>Payment Page</h1>
             <h2>Total Amount: $ </h2>
             <h2>{total}</h2>
@@ -84,7 +85,8 @@ class PaymentForm extends Component{
               applicationId={env.SANDBOX_APPLICATION_ID}
               locationId={env.SANDBOX_LOCATION_ID}
               cardNonceResponseReceived={this.cardNonceResponseReceived}
-              createVerificationDetails={this.createVerificationDetails}
+              createVerificationDetails={this.createVerificationDetails(total)}
+              className='form'
             >
                 <fieldset className="sq-fieldset">
                     <CreditCardNumberInput />
