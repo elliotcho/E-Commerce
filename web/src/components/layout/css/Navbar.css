@@ -30,37 +30,6 @@
     box-shadow: none;
 }
 
-.navbar .dropdown-content{
-    display: none;
-    position: absolute;
-    right: 5px;
-    top: 8vh;
-    background: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0 0 5px black;
-    cursor: pointer;
-    z-index: 1;
-}
-
-.navbar .expand{
-    cursor: pointer;
-}
-
-.navbar .expand:hover .dropdown-content{
-    display: block;
-}
-
-.navbar .option{
-    position: relative;
-    padding: 10px 20px;
-}
-
-.navbar .option span,
-.navbar .option i {
-    font-size: 1.3rem;
-    color: black;
-}
-
 @media screen and (min-width: 991px){
     .navbar ul, .navbar li {
         border-bottom: none;
