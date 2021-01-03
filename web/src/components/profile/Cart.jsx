@@ -72,11 +72,16 @@ class Cart extends Component{
         
         return(
             <div className="cart" style={style}>
-                <h1 className="title">Your Shopping Cart: </h1>
+                <h1 className="title">Your Shopping Cart </h1>
+
+                <div className='amount'>
+                    <h2 >Total Amount: ${this.calculateTotalAmount()} </h2>
+                </div>
 
                 <button className="btn" onClick={this.toPayment} >
                     Continue To Payment 
                 </button>
+                
                 
                 <div className='items'>
                     {cart.map(p => 
@@ -100,10 +105,7 @@ class Cart extends Component{
                     )}
                 </div>
 
-                <div className='amount'>
-                    <h2 >Total Amount: $ </h2>
-                    <h2 >{this.calculateTotalAmount()}</h2>
-                </div>
+                
             </div>
         )
         

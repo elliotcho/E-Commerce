@@ -9,6 +9,8 @@ class Reviews extends Component{
         this.state = {
             reviews: []
         }
+
+        this.removeReview = this.removeReview.bind(this);
     }
 
     async componentDidMount(){
@@ -27,6 +29,20 @@ class Reviews extends Component{
             const reviews = await getReviews(productId);
             this.setState({ reviews });
         }
+    }
+
+    async removeReview(id){
+        const { reviews } = this.state;
+
+        for(let i=0;i<reviews.length;i++){
+            if(reviews[i]._id === id){
+                reviews.splice(i, 1);
+                break;
+            }
+        }
+
+        this.setState({ reviews });
+        await deleteReview(id);
     }
 
     async removeReview(id){
@@ -77,7 +93,6 @@ class Reviews extends Component{
                             />
                             <i 
                                 className="fas rating fa-thumbs-down"
-                                
                             />
                         </main>
                     </div>

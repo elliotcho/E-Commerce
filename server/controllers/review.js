@@ -31,7 +31,7 @@ export const getReviews = async (req, res) => {
 export const deleteReview = async (req, res) => {
     const { id } = req.params;
 
-    await Review.deleteOne({_id: id});
+    await Review.deleteOne({ _id: id });
 
     res.json({msg: 'Successfully Deleted'});
 }

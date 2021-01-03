@@ -2,15 +2,11 @@ import React from 'react';
 import { decodeUser } from '../../utils/decodeUser';
 import { withRouter, Link } from 'react-router-dom';
 import Searchbar from './Searchbar';
+import SignedInLinks from './SignedInLinks';
+import SignedOutLinks from './SignedOutLinks';
 import './css/Navbar.css';
 
 function Navbar(){
-    const logout = (e) => {
-        e.preventDefault();
-        window.localStorage.clear();
-        window.location.href = '/';
-    }
-
     const user  = decodeUser();
 
     const signedIn = user && user._id;
@@ -31,72 +27,7 @@ function Navbar(){
                     <Searchbar />
 
                     {!signedIn?
-                         (<ul className="navbar-nav ml-auto">
-                            <li>
-                                <Link to="/login" className="nav-link mr-5">
-                                    Login
-                                </Link>
-                            </li>
-                                
-                            <li>
-                                <Link to="/register" className="nav-link">
-                                    Signup
-                                </Link>
-                            </li>
-                        </ul>) : 
-                        (<ul className="navbar-nav ml-auto">
-                            <li>
-                                <Link to="/profile" className="nav-link mr-5">
-                                    <i className ='fas fa-address-card' />
-                                    <span className='ml-3'>Profile</span>
-                                </Link>
-                            </li>
-                            
-                            <li>
-                                <Link to="/create_product" className="nav-link mr-5">
-                                    <i className='fa fa-upload'/>
-                                    <span className='ml-3'>Upload Product</span>
-                                </Link>
-                            </li>
-
-                            <li>
-                                <Link to="/cart" className="nav-link mr-5">
-                                    <i className='fas fa-shopping-cart'/>
-                                    <span className='ml-3'>Cart</span>
-                                </Link>
-                            </li>
-
-                            <li>
-                                <Link to='/chat' className='nav-link mr-5'>
-                                    <i className = "fas fa-comment"/>
-                                    <span className='ml-3'>Messages</span>
-                                </Link>
-                            </li>
-
-                            
-                            {isAdmin && (
-                                <li>
-                                    <Link to="/admin" className="nav-link mr-5">
-                                        <i className ='fas fa-shield-alt'/>
-                                        <span className='ml-3'>Admin</span>
-                                    </Link>
-                                </li>
-                            )}
-
-                            <li>
-                                <Link to="/settings" className="nav-link mr-5">
-                                    <i className='fas fa-cog' />
-                                    <span className='ml-3'>Settings</span>
-                                </Link>
-                            </li>
-                                
-                            <li>
-                                <Link to="/" className="nav-link" onClick={logout}>
-                                    <i className ='fas fa-sign-out-alt'/>
-                                    <span className='ml-3'>Sign Out</span>
-                                </Link>
-                            </li>
-                        </ul>)
+                        <SignedOutLinks /> : <SignedInLinks isAdmin={isAdmin} />
                     }
                 </div>
             </div>
