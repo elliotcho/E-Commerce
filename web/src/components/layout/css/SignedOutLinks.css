@@ -1,0 +1,33 @@
+
+.navbar li{
+    border-bottom: solid silver 1px;
+    padding: 10px;
+}
+
+.navbar li:last-child{
+    border: none;
+}
+
+.navbar-nav .nav-link{
+    font-size: 1.2rem;
+}
+
+.navbar-nav button:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+@media screen and (min-width: 991px){
+    .navbar-nav ul, .navbar-nav li {
+        border-bottom: none;
+        padding: 0;
+    }
+
+    .navbar-nav span{
+        display: none;
+    }
+
+    .navbar-nav i{
+        font-size: 1.4rem;
+    }
+}

@@ -8,10 +8,6 @@
     font-size: 1.6rem;
 }
 
-.navbar ul{
-    margin-left: auto;
-}
-
 .navbar li{
     border-bottom: solid silver 1px;
     padding: 10px;
@@ -35,11 +31,7 @@
         border-bottom: none;
         padding: 0;
     }
-
-    .navbar .option span{
-        display: inline-block;
-    }
-
+    
     .navbar span{
         display: none;
     }
