@@ -74,39 +74,40 @@ class PaymentForm extends Component{
       const total = this.props.match.params.total;
       
         return(
-            <div className='payment'>
-            <h1>Payment Page</h1>
-            <h2>Total Amount: $ </h2>
-            <h2>{total}</h2>
+          <div className='payment'>
+            <div className='text-center'>
+              <h1>Payment Page</h1>
+              <h2>Total Amount: ${total}</h2>
+            </div>
 
-    
-            <SquarePaymentForm
-              sandbox={true}
-              applicationId={env.SANDBOX_APPLICATION_ID}
-              locationId={env.SANDBOX_LOCATION_ID}
-              cardNonceResponseReceived={this.cardNonceResponseReceived}
-              createVerificationDetails={this.createVerificationDetails(total)}
-              className='form'
-            >
-                <fieldset className="sq-fieldset">
-                    <CreditCardNumberInput />
-                    <div className="sq-form-third">
-                    <CreditCardExpirationDateInput />
-                    </div>
+            <div className='payment-form'>
+              <SquarePaymentForm
+                  sandbox={true}
+                  applicationId={env.SANDBOX_APPLICATION_ID}
+                  locationId={env.SANDBOX_LOCATION_ID}
+                  cardNonceResponseReceived={this.cardNonceResponseReceived}
+                  createVerificationDetails={this.createVerificationDetails(total)}
+                >
+                    <fieldset className="sq-fieldset">
+                        <CreditCardNumberInput />
+                        <div className="sq-form-third">
+                        <CreditCardExpirationDateInput />
+                        </div>
 
-                    <div className="sq-form-third">
-                    <CreditCardPostalCodeInput />
-                    </div>
+                        <div className="sq-form-third">
+                        <CreditCardPostalCodeInput />
+                        </div>
 
-                    <div className="sq-form-third">
-                    <CreditCardCVVInput />
-                    </div>
-                </fieldset>
+                        <div className="sq-form-third">
+                        <CreditCardCVVInput />
+                        </div>
+                    </fieldset>
 
-                <CreditCardSubmitButton>
-                    Pay $ {total}
-                </CreditCardSubmitButton>
-            </SquarePaymentForm>
+                    <CreditCardSubmitButton>
+                        Pay $ {total}
+                    </CreditCardSubmitButton>
+                </SquarePaymentForm>
+            </div>
     
             <div className="sq-error-message">
               {this.state.errorMessages.map(errorMessage =>

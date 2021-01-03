@@ -2,10 +2,10 @@
     color:blue;
 }
 
-.payment .h2 {
-    align-items: center !important;
-}
 
-.payment .form{
-    align-items: center;
+.payment .payment-form{
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    left: 110px;
 }
