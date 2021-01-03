@@ -74,6 +74,7 @@ class PaymentForm extends Component{
       const total = this.props.match.params.total;
       
         return(
+          <div className='background'> 
           <div className='payment'>
             <div className='text-center'>
               <h1>Payment Page</h1>
@@ -114,6 +115,7 @@ class PaymentForm extends Component{
                 <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
               )}
             </div>
+          </div>
           </div>
         )
     }
