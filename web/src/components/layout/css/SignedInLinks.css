@@ -1,4 +1,4 @@
-.navbar .dropdown-content{
+.navbar-nav .dropdown-content{
     position: absolute;
     right: 5px;
     top: 8vh;
@@ -9,21 +9,31 @@
     z-index: 1;
 }
 
-.navbar #expand{
+.navbar-nav #expand{
     cursor: pointer;
 }
 
-.navbar .option{
+.navbar-nav .option{
     position: relative;
     padding: 10px 20px;
 }
 
 .navbar .option:hover{
-    background: #7c7ccf;
+    background: lightblue;
 }
 
-.navbar .option span,
-.navbar .option i {
+.navbar-nav .option span,
+.navbar-nav .option i {
     font-size: 1.3rem;
     color: black;
+}
+
+@media screen and (min-width: 991px){
+    .navbar-nav i{
+        font-size: 1.4rem;
+    }
+
+    .navbar-nav .option span{
+        display: inline-block;
+    }
 }
