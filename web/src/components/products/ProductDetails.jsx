@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import decode from 'jwt-decode';
 import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
 import ReviewForm  from './ReviewForm';
+import Reviews from './Reviews';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
 
@@ -39,6 +40,7 @@ class ProductDetails extends Component{
 
         alert("ADDED TO CART");
     }
+
 
     render(){
         const { product: { 
@@ -117,7 +119,8 @@ class ProductDetails extends Component{
                     }
                 </div>
                 
-                <ReviewForm productId={_id} />
+                <ReviewForm productId={_id}/>
+                <Reviews productId={_id} deleteReview={this.deleteReview}/>
             </div>
         )
     }

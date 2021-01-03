@@ -36,6 +36,10 @@
         padding: 0;
     }
 
+    .navbar .option span{
+        display: inline-block;
+    }
+
     .navbar span{
         display: none;
     }

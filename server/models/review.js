@@ -10,8 +10,19 @@ const ReviewSchema = new mongoose.Schema({
     content: {
         type: String
     },
-    datePosted:{
+    datePosted: {
         type: Date
+    },
+    rating: {
+        type: Number
+    },
+    likes: {
+        type: [String],
+        default: []
+    },
+    dislikes: {
+        type: [String],
+        default: []
     }
 })
 

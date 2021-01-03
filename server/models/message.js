@@ -8,8 +8,8 @@ const MessageSchema = new mongoose.Schema({
         type: String
     },
     read:{
-        type: Boolean,
-        default: false
+        type: Date,
+        default: null
     },
     content:{
         type: String,

@@ -18,3 +18,21 @@ export const createReview = async (req, res) => {
         res.json({ ok: true, review });
     }
 }
+
+export const getReviews = async (req, res) => {
+    const { productId } = req.params;
+
+    const reviews = await Review.find({ productId });
+
+    reviews.sort((a, b) => b.datePosted - a.datePosted);
+    res.json(reviews);
+}
+
+export const deleteReview = async (req, res) => {
+    const { id } = req.params;
+
+    await Review.deleteOne({ _id: id });
+
+    res.json({msg: 'Successfully Deleted'});
+}
+

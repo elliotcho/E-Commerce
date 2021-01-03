@@ -54,3 +54,15 @@ export const loadMessages = async (otherUser) => {
         return messages;
     }
 }
+
+export const readMessages = async (otherUser) => {
+    const config = { headers: {} };
+
+    const response = await axios.put(`${API}/api/message`, { otherUser }, authMiddleware(config));
+    
+    if(response.data.ok){
+        authAfterware(response);
+    }
+
+    return response.data;
+}

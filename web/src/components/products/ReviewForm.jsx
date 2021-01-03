@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { createReview } from '../../api/review';
+import { createReview} from '../../api/review';
 import './css/ReviewForm.css';
 
 class ReviewForm extends Component {
@@ -47,6 +47,7 @@ class ReviewForm extends Component {
                         onChange={ this.handleChange }
                         value={ this.state.content }
                     />
+                    <button type='submit'>Submit</button>
                 </form>
             </div>
         )
