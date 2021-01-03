@@ -36,3 +36,7 @@ export const deleteReview = async (req, res) => {
     res.json({msg: 'Successfully Deleted'});
 }
 
+export const likes = async (req, res) => {
+    
+}
+

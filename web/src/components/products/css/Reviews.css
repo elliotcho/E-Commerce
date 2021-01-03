@@ -23,3 +23,15 @@
 .review main{
     font-size: 2rem;
 }
+
+.review .rating{
+    color: #5f5f9b;
+    font-size: 40px;
+    
+}
+.review .fa-thumbs-up:hover{
+    color: green;
+}
+.review .fa-thumbs-down:hover{
+    color: red;
+}
