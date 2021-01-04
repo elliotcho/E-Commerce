@@ -44,6 +44,7 @@ function ChatContainer({ userId }){
                     key = {m._id}
                     userId = {m.sender}
                     reader = {m.receiver}
+                    dateSent = {m.dateSent}
                     isOwner = {m.sender === me}
                     content = {m.content}
                     image = {m.image}
@@ -82,7 +83,7 @@ function TypingBubble({ userId }){
     )
 }
 
-function MessageBubble({ userId, reader, isOwner, content, image, read }){
+function MessageBubble({ userId, reader, dateSent, isOwner, content, image, read }){
     const margin = (isOwner) ? 'ml-auto mr-5': 'mr-auto ml-5';
 
     const [username, setUsername] = useState('Loading...');
@@ -104,8 +105,15 @@ function MessageBubble({ userId, reader, isOwner, content, image, read }){
 
     const isRead = read && isOwner;
 
+    const dateSentTitle = `Sent ${new Date(dateSent).toLocaleString()}`;
+    const dateReadTitle =  `Read ${new Date(read).toLocaleString()}`;
+
     return(
-        <div className={`message ${margin} mb-5`}>
+        <div 
+            className={`message ${margin} mb-5`}
+            data-toggle='tooltip'
+            title={dateSentTitle}
+        >
             {!isOwner? 
                 <img src={imgURL? imgURL: loading} alt='owner profile pic'/> : <div/>
             }
@@ -121,7 +129,7 @@ function MessageBubble({ userId, reader, isOwner, content, image, read }){
                         <img 
                             src={readerPic? readerPic: loading} 
                             data-toggle='tooltip'
-                            title={new Date(read).toLocaleString()}
+                            title={dateReadTitle}
                             alt = 'reader proflie pic' 
                         />
                     )}

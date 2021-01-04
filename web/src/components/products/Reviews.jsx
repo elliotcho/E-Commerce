@@ -45,20 +45,6 @@ class Reviews extends Component{
         await deleteReview(id);
     }
 
-    async removeReview(id){
-        const { reviews } = this.state;
-
-        for(let i=0;i<reviews.length;i++){
-            if(reviews[i]._id === id){
-                reviews.splice(i, 1);
-                break;
-            }
-        }
-
-        this.setState({ reviews });
-        await deleteReview(id);
-    }
-
     render(){
         const { reviews } = this.state;
 
