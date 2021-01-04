@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { decodeUser } from '../../utils/decodeUser';
-import { likeReview, checkIfUserLiked } from '../../api/review';
+import { likeReview, checkIfUserLiked, dislikeReview, checkIfUserDisliked } from '../../api/review';
 import './css/Review.css';
 
 class Review extends Component{
@@ -16,6 +16,8 @@ class Review extends Component{
 
         this.verifyUserLike = this.verifyUserLike.bind(this);
         this.handleLike = this.handleLike.bind(this);
+        this.handleDislike = this.handleDislike.bind(this);
+        this.verifyUserDislike = this.verifyUserDislike.bind(this);
     }
 
     async componentDidMount(){
@@ -63,8 +65,35 @@ class Review extends Component{
         }
     }    
 
+    async verifyUserDislike(){
+        const { reviewId } = this.props;
+
+        const { disliked } = await checkIfUserDisliked(reviewId);
+
+        this.setState({ userDisliked: disliked });
+    }
+
+    async handleDislike(){
+        const user = decodeUser();
+
+        if(!user){
+            alert('User not logged in');
+            return;
+        } 
+
+        const { dislikes, userDisliked } = this.state;
+        const { reviewId } = this.props;
+
+        if(!userDisliked){
+            await dislikeReview(reviewId);
+            dislikes.push(user._id);
+
+            this.setState({ dislikes, userDisliked:true });
+        }
+    }
+
     render(){
-        const { likes } = this.state;
+        const { likes, dislikes  } = this.state;
         const { reviewId, userPic, username, content, removeReview } = this.props;
 
         return (
@@ -104,7 +133,10 @@ class Review extends Component{
                         <div>
                             <i 
                                 className="fas rating fa-thumbs-down mr-3"
+                                onClick = {this.handleDislike}
                             />
+
+                                {dislikes.length}
                         </div>
                     </div>
                 </main>

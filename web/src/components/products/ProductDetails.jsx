@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import decode from 'jwt-decode';
 import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
 import ReviewForm  from './ReviewForm';
-import ReviewList from './Reviewlist';
+import ReviewList from './ReviewList';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
 

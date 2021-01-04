@@ -61,3 +61,24 @@ export const checkIfUserLiked = async (reviewId) => {
 
     return response.data;
 }
+
+export const dislikeReview = async (reviewId) => {
+    const config = {headers: {'content-type': 'application/json'}};
+
+    const response = await axios.put(`${API}/api/review/dislike`, { reviewId }, authMiddleware(config));
+
+    if(response.data.ok){
+        authAfterware(response);
+    }
+
+    return response.data;
+}
+
+export const checkIfUserDisliked = async (reviewId) => {
+    const config = {header: {}};
+
+    const response = await axios.get(`${API}/api/review/dislike/${reviewId}`, authMiddleware(config));
+    authAfterware(response);
+
+    return response.data;
+}
