@@ -36,7 +36,34 @@ export const deleteReview = async (req, res) => {
     res.json({msg: 'Successfully Deleted'});
 }
 
-export const likes = async (req, res) => {
+export const likeReview = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        const { reviewId } = req.body;
+        const { _id } = req.user;
     
+        const review = await Review.findOne({ _id: reviewId });
+        const { likes } = review;
+    
+        likes.push(_id);
+    
+        await Review.updateOne({ _id: reviewId }, { likes });
+    
+        res.json({ ok: true });
+    }
 }
 
+export const checkIfUserLiked = async (req, res) => {
+    if(!req.user){
+        res.json({ liked: false });
+    } else{
+        const { reviewId } = req.params;
+        const { _id } = req.user;
+
+        const review = await Review.findOne({ _id: reviewId });
+        const { likes } = review;
+
+        res.json({ liked: likes.includes(_id) });
+    }
+}

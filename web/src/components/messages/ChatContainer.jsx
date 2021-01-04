@@ -83,7 +83,15 @@ function TypingBubble({ userId }){
     )
 }
 
-function MessageBubble({ userId, reader, dateSent, isOwner, content, image, read }){
+function MessageBubble({ 
+    userId, 
+    reader, 
+    dateSent, 
+    isOwner, 
+    content, 
+    image, 
+    read 
+}){
     const margin = (isOwner) ? 'ml-auto mr-5': 'mr-auto ml-5';
 
     const [username, setUsername] = useState('Loading...');

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import decode from 'jwt-decode';
 import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
 import ReviewForm  from './ReviewForm';
-import Reviews from './Reviews';
+import ReviewList from './Reviewlist';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
 
@@ -120,7 +120,7 @@ class ProductDetails extends Component{
                 </div>
                 
                 <ReviewForm productId={_id}/>
-                <Reviews productId={_id} deleteReview={this.deleteReview}/>
+                <ReviewList productId={_id} deleteReview={this.deleteReview}/>
             </div>
         )
     }
