@@ -37,6 +37,6 @@ export const deleteReview = async (req, res) => {
 }
 
 export const likes = async (req, res) => {
-    
+
 }
 
