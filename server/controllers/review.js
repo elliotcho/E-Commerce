@@ -31,12 +31,67 @@ export const getReviews = async (req, res) => {
 export const deleteReview = async (req, res) => {
     const { id } = req.params;
 
-    await Review.deleteOne({_id: id});
+    await Review.deleteOne({ _id: id });
 
     res.json({msg: 'Successfully Deleted'});
 }
 
-export const likes = async (req, res) => {
-
+export const likeReview = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        const { reviewId } = req.body;
+        const { _id } = req.user;
+    
+        const review = await Review.findOne({ _id: reviewId });
+        const { likes } = review;
+    
+        likes.push(_id);
+    
+        await Review.updateOne({ _id: reviewId }, { likes });
+    
+        res.json({ ok: true });
+    }
 }
 
+export const checkIfUserLiked = async (req, res) => {
+    if(!req.user){
+        res.json({ liked: false });
+    } else{
+        const { reviewId } = req.params;
+        const { _id } = req.user;
+
+        const review = await Review.findOne({ _id: reviewId });
+        const { likes } = review;
+
+        res.json({ liked: likes.includes(_id) });
+    }
+}
+
+export const dislikeReview = async (req, res) => {
+    if(!req.user){
+        res.json({ ok:false });
+    } else{
+        const { reviewId } = req.body;
+        const { _id } = req.user;
+
+        const review = await Review.findOne({ _id: reviewId });
+        const { dislikes } = review;
+
+        dislikes.push(_id);
+
+        await Review.updateOne({ _id:reviewId }, { dislikes })
+
+        res.json({ ok: true });
+    }
+}
+
+export const checkIfUserDisliked = async (req, res) => {
+    const { reviewId } = req.params;
+    const { _id } = req.user;
+
+    const review = await Review.findOne({ _id: reviewId});
+    const { dislike } = review;
+    
+    res.json({ disliked: dislikes.includes(_id) });
+}

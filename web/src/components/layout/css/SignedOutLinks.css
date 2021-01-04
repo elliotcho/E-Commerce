@@ -1,0 +1,19 @@
+.signed-out.navbar-nav li{
+    border-bottom: solid silver 1px;
+    padding: 10px;
+}
+
+.signed-out.navbar-nav li:last-child{
+    border: none;
+}
+
+.signed-out.navbar-nav .nav-link{
+    font-size: 1.2rem;
+}
+
+@media screen and (min-width: 991px){
+    .signed-out.navbar-nav li {
+        border-bottom: none;
+        padding: 0;
+    }
+}

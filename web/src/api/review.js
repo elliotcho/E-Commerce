@@ -34,9 +34,51 @@ export const getReviews = async (productId) => {
 }
 
 export const deleteReview = async (id) => {
-    const config = {headers: {}}
+    const config = { headers: {} };
 
     const response = await axios.delete(`${API}/api/review/${id}`, authMiddleware(config));
 
     authAfterware(response);
+}
+
+export const likeReview = async (reviewId) => {
+    const config = { headers: {'content-type': 'application/json'} };
+
+    const response = await axios.put(`${API}/api/review/like`, { reviewId }, authMiddleware(config));
+    
+    if(response.data.ok){
+        authAfterware(response);
+    }
+
+    return response.data;
+}
+
+export const checkIfUserLiked = async (reviewId) => {
+    const config = { headers: {} };
+
+    const response = await axios.get(`${API}/api/review/like/${reviewId}`, authMiddleware(config));
+    authAfterware(response);
+
+    return response.data;
+}
+
+export const dislikeReview = async (reviewId) => {
+    const config = {headers: {'content-type': 'application/json'}};
+
+    const response = await axios.put(`${API}/api/review/dislike`, { reviewId }, authMiddleware(config));
+
+    if(response.data.ok){
+        authAfterware(response);
+    }
+
+    return response.data;
+}
+
+export const checkIfUserDisliked = async (reviewId) => {
+    const config = {header: {}};
+
+    const response = await axios.get(`${API}/api/review/dislike/${reviewId}`, authMiddleware(config));
+    authAfterware(response);
+
+    return response.data;
 }

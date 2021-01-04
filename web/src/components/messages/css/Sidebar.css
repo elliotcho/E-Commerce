@@ -6,6 +6,10 @@
     cursor: pointer;
 }
 
+.side-bar h2{
+    font-family: 'Nunito Sans';
+}
+
 .side-bar .msg-card{
     display: grid;
     grid-template-columns: 6rem auto;
