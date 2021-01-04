@@ -46,6 +46,12 @@
     color: black;
 }
 
+/* .signed-in.navbar-nav .count-box{
+    font-family: 'Arial';
+    background: orangered;
+    color: white;
+} */
+
 @media screen and (min-width: 991px){
     .signed-in.navbar-nav li {
         border-bottom: none;

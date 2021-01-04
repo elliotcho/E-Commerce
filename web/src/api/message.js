@@ -66,3 +66,16 @@ export const readMessages = async (otherUser) => {
 
     return response.data;
 }
+
+export const getUnreadChats = async () => {
+    const config = { headers: {} };
+
+    const response = await axios.get(`${API}/api/message/unread`, authMiddleware(config));
+    const { ok, unread } = response.data;
+
+    if(ok){
+        authAfterware(response);
+    }
+
+    return  ok? unread : 0;
+}

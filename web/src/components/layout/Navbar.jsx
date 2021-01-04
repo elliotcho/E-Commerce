@@ -1,6 +1,6 @@
 import React from 'react';
-import { decodeUser } from '../../utils/decodeUser';
 import { withRouter, Link } from 'react-router-dom';
+import { decodeUser } from '../../utils/decodeUser';
 import Searchbar from './Searchbar';
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';

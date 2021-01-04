@@ -20,5 +20,5 @@ export const formatCount = (num) => {
         return `${thousands}.${hundreds}K`;
     }
 
-    return num;
+    return num === 0? null: num;
 }

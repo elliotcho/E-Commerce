@@ -103,3 +103,25 @@ export const readMessages = async (req, res) => {
         });
     }
 }
+
+export const getUnreadChats = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else {
+        const me = req.user._id;
+
+        let result = [];
+        const map ={};
+    
+        const sent = await Message.find({ sender: me });
+        const received = await Message.find({ receiver: me });
+        
+        //filter chats with different users and the latest times
+        result = filterChats(result, map, sent, 'receiver');
+        result = filterChats(result, map, received, 'sender');
+    
+        result = result.filter(c => c.read !== null);
+    
+        res.json({ ok: true, unread: result.length });
+    }
+}

@@ -2,6 +2,7 @@ import express from 'express';
 import{
     createMessage,
     getMessages,
+    getUnreadChats,
     getUserChats,
     loadMessagePic,
     readMessages
@@ -14,5 +15,6 @@ router.post('/', createMessage);
 router.post('/messages', getMessages);
 router.get('/image/:messageId', loadMessagePic);
 router.put('/', readMessages);
+router.get('/unread', getUnreadChats);
 
 export default router;

@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { formatCount } from '../../utils/formatCount';
+import { getUnreadChats } from '../../api/message';
 import './css/SignedInLinks.css';
 
 function SignedInLinks({ isAdmin }){
+    const [unread, setUnread] = useState(0);
+
     const logout = (e) => {
         e.preventDefault();
         window.localStorage.clear();
         window.location.href = '/';
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setUnread(await getUnreadChats());
+        }
+
+        fetchData();
+    }, []);
+
+    const msgIcon = formatCount(unread) ? 'text-white' : '';
 
     return(
         <ul className="signed-in navbar-nav ml-auto">
@@ -26,7 +40,8 @@ function SignedInLinks({ isAdmin }){
             </li>
 
             <li>
-                <Link to='/chat' className='nav-link mr-5'>
+                <Link to='/chat' className={`nav-link mr-5 ${msgIcon}`}>
+
                     <i className = "fas fa-comment"/>
                     <span className='ml-3'>Messages</span>
                 </Link>
