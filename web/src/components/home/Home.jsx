@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatCount } from '../../utils/formatCount';
 import './css/Home.css';
 
 function Home(){
