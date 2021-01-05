@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { decodeUser } from '../../utils/decodeUser';
-import { likeReview, checkIfUserLiked, dislikeReview, checkIfUserDisliked } from '../../api/review';
+import { formatCount } from '../../utils/formatCount';
+import * as reviewAPI from '../../api/review';
 import ReviewSettings from './ReviewSettings';
 import './css/Review.css';
 
@@ -25,26 +26,20 @@ class Review extends Component{
         const { likes, dislikes } = this.props;
 
         await this.verifyUserLike();
+        await this.verifyUserDislike();
 
         this.setState({ likes, dislikes });
     }
 
     async componentDidUpdate(prevProps){
-        if(this.props.reviewId !== prevProps.reviewId){
-            const { likes, dislikes } = this.props;
+        const { reviewId, likes, dislikes } = this.props;
 
+        if(reviewId !== prevProps.reviewId){
             await this.verifyUserLike();
+            await this.verifyUserDislike();
 
             this.setState({ likes, dislikes });
         }
-    }
-
-    async verifyUserLike(){
-        const { reviewId } = this.props;
-
-        const { liked } = await checkIfUserLiked(reviewId);
-
-        this.setState({ userLiked: liked });
     }
 
     async handleLike(){
@@ -55,25 +50,31 @@ class Review extends Component{
             return;
         }
 
-        const { likes, userLiked } = this.state;
+        const { likes, dislikes, userLiked, userDisliked } = this.state;
         const { reviewId } = this.props;
 
-        if(!userLiked){
-            await likeReview(reviewId);
-            likes.push(user._id);
-    
-            this.setState({ likes, userLiked: true });
+        //remove dislike if user disliked
+        if(userDisliked){
+            await reviewAPI.removeDislike(reviewId);
+            dislikes.splice(dislikes.indexOf(user._id), 1);
+            this.setState({ userDisliked: false, dislikes });
         }
-    }    
 
-    async verifyUserDislike(){
-        const { reviewId } = this.props;
-
-        const { disliked } = await checkIfUserDisliked(reviewId);
-
-        this.setState({ userDisliked: disliked });
-    }
-
+        //like the review
+        if(!userLiked){
+            await reviewAPI.likeReview(reviewId);
+            likes.push(user._id);
+            this.setState({ userLiked: true, likes });
+        } 
+        
+        //unlike the review
+        else{
+            await reviewAPI.removeLike(reviewId);
+            likes.splice(likes.indexOf(user._id), 1);
+            this.setState({ userLiked: false, likes });
+        }
+    }   
+    
     async handleDislike(){
         const user = decodeUser();
 
@@ -82,15 +83,47 @@ class Review extends Component{
             return;
         } 
 
-        const { dislikes, userDisliked } = this.state;
+        const { likes, dislikes, userLiked, userDisliked } = this.state;
         const { reviewId } = this.props;
 
-        if(!userDisliked){
-            await dislikeReview(reviewId);
-            dislikes.push(user._id);
+       //remove like if user liked
+       if(userLiked){
+            await reviewAPI.removeLike(reviewId);
+            likes.splice(likes.indexOf(user._id), 1);
+            this.setState({ userLiked: false, likes });
+       }
 
-            this.setState({ dislikes, userDisliked:true });
+        //dislike the review
+        if(!userDisliked){
+            await reviewAPI.dislikeReview(reviewId);
+            dislikes.push(user._id);
+            this.setState({ userDisliked: true, dislikes });
+        } 
+        
+        //remove dislike
+        else{
+            await reviewAPI.removeDislike(reviewId);
+            dislikes.splice(dislikes.indexOf(user._id), 1);
+            this.setState({ userDisliked: false, dislikes });
         }
+    }
+
+    async verifyUserLike(){
+        const { reviewId } = this.props;
+        const { checkIfUserLiked } = reviewAPI;
+
+        const { liked } = await checkIfUserLiked(reviewId);
+
+        this.setState({ userLiked: liked });
+    }
+
+    async verifyUserDislike(){
+        const { reviewId } = this.props;
+        const { checkIfUserDisliked } = reviewAPI;
+
+        const { disliked } = await checkIfUserDisliked(reviewId);
+
+        this.setState({ userDisliked: disliked });
     }
 
     render(){
@@ -114,7 +147,6 @@ class Review extends Component{
                     <img src={userPic} alt='profile pic' />
                   
                     <h4>Posted By</h4>
-                    
                     <p>{username}</p>
                 </div>
 
@@ -130,9 +162,7 @@ class Review extends Component{
                         </div>  
                     </div>
 
-                    <div>
-                        {content}
-                    </div>
+                    <div>{content}</div>
 
                     <section className='likes-section'>
                         <div className='row'>
@@ -151,11 +181,11 @@ class Review extends Component{
                             <div className='col-8' />  
 
                             <div className='col-2'>
-                                <p>{likes.length}</p>
+                                <p>{formatCount(likes.length) || 0}</p>
                             </div>
 
                             <div className='col-2'>
-                                <p>{dislikes.length}</p>
+                                <p>{formatCount(dislikes.length) || 0}</p>
                             </div>
                         </div>
                     </section>

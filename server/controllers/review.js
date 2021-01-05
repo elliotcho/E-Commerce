@@ -54,6 +54,24 @@ export const likeReview = async (req, res) => {
     }
 }
 
+export const removeLike = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        const { reviewId } = req.params;
+        const { _id } = req.user;
+
+        const review = await Review.findOne({ _id: reviewId });
+        const { likes } = review;
+
+        likes.splice(likes.indexOf(_id), 1);
+
+        await Review.updateOne({ _id: reviewId }, { likes });
+
+        res.json({ ok: true });
+    }
+}
+
 export const checkIfUserLiked = async (req, res) => {
     if(!req.user){
         res.json({ liked: false });
@@ -80,18 +98,40 @@ export const dislikeReview = async (req, res) => {
 
         dislikes.push(_id);
 
-        await Review.updateOne({ _id:reviewId }, { dislikes })
+        await Review.updateOne({ _id: reviewId }, { dislikes })
+
+        res.json({ ok: true });
+    }
+}
+
+export const removeDislike = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        const { reviewId } = req.params;
+        const { _id } = req.user;
+
+        const review = await Review.findOne({ _id: reviewId });
+        const { dislikes } = review;
+
+        dislikes.splice(dislikes.indexOf(_id), 1);
+
+        await Review.updateOne({ _id: reviewId }, { dislikes });
 
         res.json({ ok: true });
     }
 }
 
 export const checkIfUserDisliked = async (req, res) => {
-    const { reviewId } = req.params;
-    const { _id } = req.user;
+    if(!req.user){
+        res.json({ disliked: false });
+    } else{
+        const { reviewId } = req.params;
+        const { _id } = req.user;
 
-    const review = await Review.findOne({ _id: reviewId});
-    const { dislikes } = review;
-    
-    res.json({ disliked: dislikes.includes(_id) });
+        const review = await Review.findOne({ _id: reviewId });
+        const { dislikes } = review;
+
+        res.json({ disliked: dislikes.includes(_id) });
+    }
 }

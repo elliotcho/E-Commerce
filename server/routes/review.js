@@ -7,7 +7,9 @@ import{
     likeReview,
     checkIfUserLiked,
     dislikeReview,
-    checkIfUserDisliked
+    checkIfUserDisliked,
+    removeLike,
+    removeDislike
 } from '../controllers/review';
 
 
@@ -17,8 +19,10 @@ router.post('/', createReview);
 router.get('/:productId', getReviews);
 router.delete('/:id', deleteReview);
 router.put('/like', likeReview);
+router.delete('/like/:reviewId', removeLike);
 router.get('/like/:reviewId', checkIfUserLiked);
 router.put('/dislike', dislikeReview);
-router.get('/dislike/:reviewId', checkIfUserDisliked)
+router.delete('/dislike/:reviewId', removeDislike);
+router.get('/dislike/:reviewId', checkIfUserDisliked);
 
 export default router;
