@@ -41,9 +41,16 @@ function SignedInLinks({ isAdmin }){
 
             <li>
                 <Link to='/chat' className={`nav-link mr-5 ${msgIcon}`}>
+                    <div className='icon-container'>
+                        
+                        <i className = "fas fa-comment"/>
+                        <span className='ml-3'>Messages</span>
 
-                    <i className = "fas fa-comment"/>
-                    <span className='ml-3'>Messages</span>
+                        <div className='count-box'>
+                            {formatCount(unread)}
+                        </div>
+
+                    </div>
                 </Link>
             </li>
 

@@ -46,13 +46,28 @@
     color: black;
 }
 
-/* .signed-in.navbar-nav .count-box{
+.signed-in.navbar-nav .icon-container{
+    position: relative;
+}
+
+.signed-in.navbar-nav .count-box{
+    position: absolute;
     font-family: 'Arial';
+    font-size: 0.9rem;
     background: orangered;
     color: white;
-} */
+    padding: 10px 15px;
+    right: -40px;
+    top: -7px;
+}
 
 @media screen and (min-width: 991px){
+    .signed-in.navbar-nav .count-box{
+        padding: 3px 7px;
+        top: -15px;
+        right: -10px;
+    }
+
     .signed-in.navbar-nav li {
         border-bottom: none;
         padding: 0;
