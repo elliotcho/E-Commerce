@@ -1,21 +1,48 @@
 .create-product {
     position: relative;
     height: 92vh;
-    overflow: hidden;
+    overflow: auto;
+}
+
+.create-product h1{
+  text-align: center;
+  margin-top: 14px;
 }
 
 .create-product form{
-  max-width: 400px;
+  width: 44%;
   margin: 30px auto;
+  border: double 6px #353941;
+  padding: 2%;
 }
 
 .create-product select{
   min-width: 200px;
   margin-bottom: 20px;
+  width: 49%;
+  padding: 1%;
+  border-radius: 10px;
 }
 
 .create-product input{
-  width: 100%;
+  width: 90%;
   margin-bottom: 20px;
   display: block;
+  border-radius: 7px;
+} 
+
+.create-product textarea{
+  width: 90%;
+  margin-bottom: 20px;
+  display: block;
+  border-radius: 7px;
 }
+
+.create-product button{
+  background-color: #74c7b8;
+  border: ridge 1px black;
+  padding: 1.4%;
+  border-radius: 10px;
+}
+
+
