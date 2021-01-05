@@ -1,5 +1,6 @@
 .review{
     display: grid;
+    font-family: 'Nunito Sans';
     grid-template-columns: 200px auto;
     background: white;
     margin-bottom: 50px;
@@ -25,7 +26,6 @@
 }
 
 .review .likes-section{
-    font-family: 'Nunito Sans';
     margin-top: 80px;
 } 
 
