@@ -15,7 +15,7 @@ export const createReview = async (req, res) => {
 
         const review = await newReview.save();
 
-        res.json({ ok: true, review });
+        res.json({ ok: true });
     }
 }
 

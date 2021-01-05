@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { deleteReview, getReviews } from '../../api/review';
+import ReviewForm from './ReviewForm';
 import Review from './Review';
 import './css/ReviewList.css';
 
@@ -11,6 +12,7 @@ class ReviewList extends Component{
             reviews: []
         }
 
+        this.addReview = this.addReview.bind(this);
         this.removeReview = this.removeReview.bind(this);
     }
 
@@ -30,6 +32,14 @@ class ReviewList extends Component{
             const reviews = await getReviews(productId);
             this.setState({ reviews });
         }
+    }
+
+    async addReview(){
+        const { productId } = this.props;
+
+        const reviews = await getReviews(productId);
+
+        this.setState({ reviews });
     }
 
     async removeReview(id){
@@ -52,21 +62,26 @@ class ReviewList extends Component{
 
     render(){
         const { reviews } = this.state;
+        const { productId } = this.props;
 
         return (
-            <div className='review-list my-3'>
-               {reviews.map(r =>
-                    <Review
-                        key = {r._id}
-                        reviewId = {r._id}
-                        removeReview = {this.removeReview}
-                        username = {r.username}
-                        userPic = {r.userPic}
-                        content = {r.content}
-                        likes = {r.likes}
-                        dislikes = {r.dislikes}
-                    />
-                )}
+            <div className='review-list'>
+               <ReviewForm productId={productId} addReview={this.addReview}/>
+
+                <div className='my-3'>
+                    {reviews.map(r =>
+                        <Review
+                            key = {r._id}
+                            reviewId = {r._id}
+                            removeReview = {this.removeReview}
+                            username = {r.username}
+                            userPic = {r.userPic}
+                            content = {r.content}
+                            likes = {r.likes}
+                            dislikes = {r.dislikes}
+                        />
+                    )}
+                </div>
             </div>
         )
     }

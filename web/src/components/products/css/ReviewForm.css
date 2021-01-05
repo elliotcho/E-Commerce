@@ -1,8 +1,28 @@
 .review-form form{
+    font-family: 'Nunito Sans';
     max-width: 800px;
     margin: auto;
 }
 
-.review-form input{
+.review-form textarea{
     display: block;
+    padding: 5px;
+    min-height: 100px;
+    width: 100%;
+    resize: none;
+}
+
+.review-form label{
+    font-weight: bold;
+}
+
+.review-form button{
+    width: 50%;
+    display: block;
+    margin: auto;
+}
+
+.review-form button:focus{
+    outline: none;
+    box-shadow: none;
 }
