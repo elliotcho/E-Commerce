@@ -33,6 +33,10 @@ class ReviewList extends Component{
     }
 
     async removeReview(id){
+        if(!window.confirm('Are you sure?')){
+            return;
+        }
+
         const { reviews } = this.state;
 
         for(let i=0;i<reviews.length;i++){

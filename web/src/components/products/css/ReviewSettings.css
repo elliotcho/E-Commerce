@@ -1,0 +1,39 @@
+.review-settings{
+    font-family: 'Arial';
+    cursor: pointer;
+}
+
+.review-settings .fa-ellipsis-h{
+    color: gray;
+    font-size: 1.5rem;
+    position: relative;
+    bottom: 15px;
+}
+
+.review-settings .dropdown-content{
+    display: none;
+    position: absolute;
+    right: -7px;
+    background: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 0 5px black;
+    z-index: 1;
+}
+
+.review-settings .dropdown-content .option{
+    font-size: 1.2rem;
+    padding: 10px 20px;
+}
+
+.review-settings .dropdown-content .option:hover{
+    background: darkblue;
+    color: white;
+}
+
+.review-settings:hover .fa-ellipsis-h{
+    color: black;
+}
+
+.review-settings:hover .dropdown-content{
+    display: block;
+}

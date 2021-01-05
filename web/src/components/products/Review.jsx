@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { decodeUser } from '../../utils/decodeUser';
 import { likeReview, checkIfUserLiked, dislikeReview, checkIfUserDisliked } from '../../api/review';
+import ReviewSettings from './ReviewSettings';
 import './css/Review.css';
 
 class Review extends Component{
@@ -93,52 +94,71 @@ class Review extends Component{
     }
 
     render(){
-        const { likes, dislikes  } = this.state;
+        const { likes, dislikes, userLiked, userDisliked } = this.state;
         const { reviewId, userPic, username, content, removeReview } = this.props;
+
+        let likeStyle = 'far fa-thumbs-up';
+        let dislikeStyle = 'far fa-thumbs-down';
+
+        if(userLiked){
+            likeStyle += ' active';
+        }
+
+        if(userDisliked){
+            dislikeStyle += ' active';
+        }
 
         return (
             <div className='review'>
-                <div>
-                    <div>
-                        <img src={userPic} alt='profile pic' />
-                    </div>
-
-                    <h4 className='mt-3'>
-                        Posted By
-                    </h4>
+                <div className='user-section'>
+                    <img src={userPic} alt='profile pic' />
+                  
+                    <h4>Posted By</h4>
                     
-                    <p className='ml-4'>
-                        {username}
-                    </p>
+                    <p>{username}</p>
                 </div>
 
                 <main>
-                    {content}
+                    <div className='row my-0'>
+                         <div className='col-10' />
 
-                    <i 
-                        className = 'fas fa-trash-alt ml-3'
-                        onClick = {() => removeReview(reviewId)}
-                    />
-                    
-                    <div className='mt-5'>
-                        <div>
-                            <i 
-                                className="fas rating fa-thumbs-up mr-3" 
-                                onClick = {this.handleLike}
+                         <div className='col-2'>
+                            <ReviewSettings 
+                                reviewId={reviewId} 
+                                removeReview={removeReview} 
                             />
-
-                            {likes.length}
-                        </div>
-
-                        <div>
-                            <i 
-                                className="fas rating fa-thumbs-down mr-3"
-                                onClick = {this.handleDislike}
-                            />
-
-                                {dislikes.length}
-                        </div>
+                        </div>  
                     </div>
+
+                    <div>
+                        {content}
+                    </div>
+
+                    <section className='likes-section'>
+                        <div className='row'>
+                            <div className='col-8' />   
+
+                            <div className='col-2'>
+                                <i className={likeStyle} onClick={this.handleLike} />
+                            </div>
+
+                            <div className='col-2'>
+                                <i className={dislikeStyle} onClick={this.handleDislike} />
+                            </div>
+                        </div>
+
+                        <div className='row'>
+                            <div className='col-8' />  
+
+                            <div className='col-2'>
+                                <p>{likes.length}</p>
+                            </div>
+
+                            <div className='col-2'>
+                                <p>{dislikes.length}</p>
+                            </div>
+                        </div>
+                    </section>
                 </main>
             </div>
         )

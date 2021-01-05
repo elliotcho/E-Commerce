@@ -91,7 +91,7 @@ export const checkIfUserDisliked = async (req, res) => {
     const { _id } = req.user;
 
     const review = await Review.findOne({ _id: reviewId});
-    const { dislike } = review;
+    const { dislikes } = review;
     
     res.json({ disliked: dislikes.includes(_id) });
 }
