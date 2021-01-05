@@ -46,9 +46,13 @@ function SignedInLinks({ isAdmin }){
                         <i className = "fas fa-comment"/>
                         <span className='ml-3'>Messages</span>
 
-                        <div className='count-box'>
-                            {formatCount(unread)}
-                        </div>
+                        {unread === 0? null : 
+                            (
+                                <div className='count-box'>
+                                    {formatCount(unread)}
+                                </div>
+                            )
+                        }
 
                     </div>
                 </Link>
