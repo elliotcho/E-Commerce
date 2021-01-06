@@ -9,15 +9,16 @@ import{
     dislikeReview,
     checkIfUserDisliked,
     removeLike,
-    removeDislike
+    removeDislike,
+    editReview
 } from '../controllers/review';
-
 
 const router = express.Router();
 
 router.post('/', createReview);
 router.get('/:productId', getReviews);
 router.delete('/:id', deleteReview);
+router.put('/', editReview);
 router.put('/like', likeReview);
 router.delete('/like/:reviewId', removeLike);
 router.get('/like/:reviewId', checkIfUserLiked);

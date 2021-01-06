@@ -13,11 +13,11 @@ function EditReview(props){
         document.getElementById('close-edit').click();
     }
 
-    const saveChanges = () => {
+    const saveChanges = async () => {
         const { reviewId, editReview } = props;
 
         //edit the review and close the modal
-        editReview(reviewId, content);
+        await editReview(reviewId, content);
         closeModal();
     }
 

@@ -36,6 +36,18 @@ export const deleteReview = async (req, res) => {
     res.json({msg: 'Successfully Deleted'});
 }
 
+export const editReview = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        const { reviewId, content } = req.body;
+
+        await Review.updateOne({ _id: reviewId }, { content });
+
+        res.json({ ok: true });
+    }
+}
+
 export const likeReview = async (req, res) => {
     if(!req.user){
         res.json({ ok: false });

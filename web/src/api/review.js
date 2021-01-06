@@ -41,6 +41,19 @@ export const deleteReview = async (id) => {
     authAfterware(response);
 }
 
+export const updateReview = async (data) => {
+    const config = { headers: {'content-type' : 'application/json' } };
+
+    const response = await axios.put(`${API}/api/review`, data, authMiddleware(config));
+    const { ok } = response.data;
+
+    if(ok){
+        authAfterware(response);
+    }
+
+    return ok;
+}
+
 export const likeReview = async (reviewId) => {
     const config = { headers: {'content-type': 'application/json'} };
 

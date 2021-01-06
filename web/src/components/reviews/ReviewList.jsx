@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { deleteReview, getReviews } from '../../api/review';
+import { deleteReview, updateReview, getReviews } from '../../api/review';
 import ReviewForm from './ReviewForm';
 import Review from './Review';
 import './css/ReviewList.css';
@@ -61,16 +61,21 @@ class ReviewList extends Component{
         await deleteReview(id);
     }
 
-    editReview(id, content){
+    async editReview(reviewId, content){
         const { reviews } = this.state;
 
+        if(content.trim().length === 0){
+            return;
+        }
+
         for(let i=0;i<reviews.length;i++){
-            if(reviews[i]._id === id){
+            if(reviews[i]._id === reviewId){
                 reviews[i].content = content;
                 break;
             }
         }
 
+        await updateReview({ reviewId, content });
         this.setState({ reviews });
     }
 
