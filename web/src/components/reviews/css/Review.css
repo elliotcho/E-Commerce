@@ -25,6 +25,10 @@
     font-size: 2rem;
 }
 
+.review #open-edit{
+    display: none;
+}
+
 .review .likes-section{
     margin-top: 80px;
 } 

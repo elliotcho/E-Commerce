@@ -2,6 +2,10 @@ import React from 'react';
 import './css/ReviewSettings.css';
 
 function ReviewSettings({ reviewId, removeReview }){
+    const editReview = () => {
+        document.getElementById('open-edit').click();
+    }
+
     return(
         <div className='review-settings'>
             <i className ='fas fa-ellipsis-h'/>
@@ -14,7 +18,7 @@ function ReviewSettings({ reviewId, removeReview }){
 
                 </div>
 
-                <div className='option'>
+                <div className='option' onClick={() => editReview()}>
 
                     <i className ='fas fa-edit' />
                     <span className='ml-3'>Edit</span>

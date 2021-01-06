@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { decodeUser } from '../../utils/decodeUser';
 import { formatCount } from '../../utils/formatCount';
 import * as reviewAPI from '../../api/review';
+import EditReview from './EditReview';
 import ReviewSettings from './ReviewSettings';
 import './css/Review.css';
 
@@ -128,15 +129,17 @@ class Review extends Component{
 
     render(){
         const { likes, dislikes, userLiked, userDisliked } = this.state;
-        const { reviewId, userPic, username, content, removeReview } = this.props;
+        const { reviewId, userPic, username, content } = this.props;
+
+        const removeReview = () => this.props.removeReview(reviewId);
 
         let likeStyle = 'far fa-thumbs-up';
         let dislikeStyle = 'far fa-thumbs-down';
 
         if(userLiked){
             likeStyle += ' active';
-        }
-
+        } 
+        
         if(userDisliked){
             dislikeStyle += ' active';
         }
@@ -154,11 +157,10 @@ class Review extends Component{
                     <div className='row my-0'>
                          <div className='col-10' />
 
+                         <button id='open-edit' data-toggle='modal' data-target='#edit' />
+
                          <div className='col-2'>
-                            <ReviewSettings 
-                                reviewId={reviewId} 
-                                removeReview={removeReview} 
-                            />
+                            <ReviewSettings removeReview={removeReview}/>
                         </div>  
                     </div>
 
@@ -190,6 +192,8 @@ class Review extends Component{
                         </div>
                     </section>
                 </main>
+
+                <EditReview content={content} editReview={this.props.editReview} />
             </div>
         )
     }

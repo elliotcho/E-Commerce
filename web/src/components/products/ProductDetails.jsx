@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import decode from 'jwt-decode';
 import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
-import ReviewList from './ReviewList';
+import ReviewList from '../reviews/ReviewList';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
 

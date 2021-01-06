@@ -14,6 +14,7 @@ class ReviewList extends Component{
 
         this.addReview = this.addReview.bind(this);
         this.removeReview = this.removeReview.bind(this);
+        this.editReview = this.editReview.bind(this);
     }
 
     async componentDidMount(){
@@ -60,6 +61,19 @@ class ReviewList extends Component{
         await deleteReview(id);
     }
 
+    editReview(id, content){
+        const { reviews } = this.state;
+
+        for(let i=0;i<reviews.length;i++){
+            if(reviews[i]._id === id){
+                reviews[i].content = content;
+                break;
+            }
+        }
+
+        this.setState({ reviews });
+    }
+
     render(){
         const { reviews } = this.state;
         const { productId } = this.props;
@@ -74,6 +88,7 @@ class ReviewList extends Component{
                             key = {r._id}
                             reviewId = {r._id}
                             removeReview = {this.removeReview}
+                            editReview = {this.editReview}
                             username = {r.username}
                             userPic = {r.userPic}
                             content = {r.content}
