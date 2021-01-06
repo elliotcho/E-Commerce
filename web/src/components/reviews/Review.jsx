@@ -193,7 +193,11 @@ class Review extends Component{
                     </section>
                 </main>
 
-                <EditReview content={content} editReview={this.props.editReview} />
+                <EditReview 
+                    reviewId = {reviewId}
+                    editReview = {this.props.editReview} 
+                    content = {content}
+                />
             </div>
         )
     }
