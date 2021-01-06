@@ -7,12 +7,15 @@
 .create-product h1{
   text-align: center;
   margin-top: 14px;
+  font-family: 'Balsamiq Sans', cursive;
+  font-size: 50px;
+  font-weight: 600;
 }
 
 .create-product form{
-  width: 44%;
+  width: 53%;
   margin: 30px auto;
-  border: double 6px #353941;
+  border: double 7px #353941;
   padding: 2%;
 }
 
@@ -20,29 +23,40 @@
   min-width: 200px;
   margin-bottom: 20px;
   width: 49%;
-  padding: 1%;
+  padding: 1.4%;
   border-radius: 10px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 16px;
 }
 
 .create-product input{
   width: 90%;
+  padding: 1.4%;
   margin-bottom: 20px;
   display: block;
   border-radius: 7px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 16px;
 } 
 
 .create-product textarea{
   width: 90%;
+  padding: 1.4%;
   margin-bottom: 20px;
   display: block;
   border-radius: 7px;
+  border: inset 1.7px black;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 16px;
 }
 
 .create-product button{
   background-color: #74c7b8;
   border: ridge 1px black;
-  padding: 1.4%;
+  padding: 1%;
   border-radius: 10px;
+  font-size: 24px;
+  font-family: 'Sansita Swashed', cursive;
 }
 
 
