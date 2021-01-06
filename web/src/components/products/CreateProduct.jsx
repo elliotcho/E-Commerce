@@ -157,7 +157,7 @@ class CreateProduct extends Component {
                         onChange= {this.changeField}
                     />
                     
-                    <button className='btn-block'>Submit Product</button>
+                    <button className='btn-block'>POST</button>
                 </form>
             </div>
         );
