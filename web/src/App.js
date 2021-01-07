@@ -27,9 +27,10 @@ class App extends Component{
 
      socket.on('NEW_MESSAGE', async (data)  => {
         if(data){
-            const { user: { username }, imgURL } = await fetchUser(data.sender);
+            const { user: { _id, username }, imgURL } = await fetchUser(data.sender);
 
             const props = { 
+                userId: _id,
                 content: data.content, 
                 username, 
                 imgURL 

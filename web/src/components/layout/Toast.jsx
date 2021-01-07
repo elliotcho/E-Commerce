@@ -2,9 +2,15 @@ import React from 'react';
 import loading from '../../images/loading.jpg';
 import './css/Toast.css';
 
-function Toast({ username, content, imgURL }){
+function Toast({ userId, username, content, imgURL }){
+    const toChat = () => {
+        if(userId){
+            window.location.href = `/chat/${userId}`;
+        }
+    }
+
     return (
-        <div className='toast row'>
+        <div className='toast row' onClick={toChat}>
             <img 
                 src={imgURL || loading} 
                 className='col-5'
