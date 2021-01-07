@@ -28,7 +28,6 @@ function ChatContainer({ userId }){
         });
 
         socket.on('READ_MESSAGES', () => fetchData());
-        
         socket.on('IS_TYPING', () => setTyping(true));
         socket.on('STOP_TYPING', () => setTyping(false));
 

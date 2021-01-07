@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
+import { fetchUser } from './utils/fetchUser';
 import { API } from './constants';
 import Routes from './Routes';
-import { ToastContainer } from 'react-toastify';
+import Toast from './components/layout/Toast';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
@@ -12,6 +14,7 @@ let socket;
 class App extends Component{
   constructor(){
      super();
+     
      socket = socketIOClient(wsEndpoint);
   }
 
@@ -21,6 +24,23 @@ class App extends Component{
      if(token){
        socket.emit('JOIN', { token });
      }
+
+     socket.on('NEW_MESSAGE', async (data)  => {
+        if(data){
+            const { user: { username }, imgURL } = await fetchUser(data.sender);
+
+            const props = { 
+                content: data.content, 
+                username, 
+                imgURL 
+            };
+
+            toast.success(<Toast {...props} />, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+              draggable: false
+            });
+        }
+     });
   }
 
   render(){

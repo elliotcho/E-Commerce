@@ -13,13 +13,17 @@ const socketEvents = (io) => {
         });
 
         socket.on('NEW_MESSAGE', async payload => {
-            const { receiver, sender } = payload;
+            const { receiver, sender, content } = payload;
 
             const receiverSocketId = await redis.get(receiver);
             const senderSocketId = await redis.get(sender);
 
+
             if(receiverSocketId){   //if online
-                io.sockets.to(receiverSocketId).emit('NEW_MESSAGE');
+                io.sockets.to(receiverSocketId).emit('NEW_MESSAGE', { 
+                    content,
+                    sender
+                });
             }
 
             if(senderSocketId){

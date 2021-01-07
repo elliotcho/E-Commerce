@@ -2,22 +2,20 @@ import React from 'react';
 import loading from '../../images/loading.jpg';
 import './css/Toast.css';
 
-function Toast(){
+function Toast({ username, content, imgURL }){
     return (
         <div className='toast row'>
             <img 
-                src={loading} 
+                src={imgURL || loading} 
                 className='col-5'
                 alt='profile pic' 
             />
 
             <div className='col-7 mt-2 p-0'>
-                <strong>Gugsa Challa: </strong>
+                <strong>{username}: </strong>
 
                 <span>
-                    {`adsfja;sdfkj a;fkjad;sfkja;
-                    ads;fkja;dfkjad;fkjada;sdfkja;
-                    adfadfaffffffff`.substring(0,70)}
+                    {content.length > 70? `${content.substring(0, 67)}...` : content}
                 </span>
             </div>
         </div>
