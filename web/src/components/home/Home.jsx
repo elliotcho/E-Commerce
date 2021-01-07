@@ -5,9 +5,7 @@ import './css/Home.css';
 function Home(){
     return(
         <div className = 'home'>
-            <div id="bg">
-                 <img src={tiger} alt=''/>
-            </div>
+           <h1>Welcome to the thunderdome</h1>
         </div>
     )
 }

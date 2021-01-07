@@ -8,12 +8,12 @@
   text-align: center;
   margin-top: 14px;
   font-family: 'Balsamiq Sans', cursive;
-  font-size: 50px;
+  font-size: 54px;
   font-weight: 600;
 }
 
 .create-product form{
-  width: 53%;
+  width: 49%;
   margin: 30px auto;
   border: double 7px #353941;
   padding: 2%;
