@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { socket } from './MessageCenter';
 import { fetchUser } from '../../utils/fetchUser';
 import { decodeUser } from '../../utils/decodeUser';
 import { readMessages, getSidebarChats } from '../../api/message';
+import { socket } from '../../App';
 import loading from '../../images/loading.jpg';
 import './css/Sidebar.css';
 

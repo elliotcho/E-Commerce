@@ -22,14 +22,14 @@ class ReviewForm extends Component {
     async handleSubmit(e){
         e.preventDefault();
 
-        const { history, productId } = this.props;
+        const { history, productId, addReview } = this.props;
         const { content } = this.state;
 
-        const { ok, review }  = await createReview({ content, productId });
+        const { ok }  = await createReview({ content, productId });
 
         if(ok) {
-            console.log(review);
             this.setState({ content: '' });
+            addReview();
         } else{
             history.push('/login');
         }
@@ -41,13 +41,17 @@ class ReviewForm extends Component {
                 <form onSubmit={ this.handleSubmit }>
                     <label htmlFor='content'>Leave a Review</label>
 
-                    <input
+                    <textarea
                         name='content'
                         type='text'
+                        placeholder = 'Your review here...'
                         onChange={ this.handleChange }
                         value={ this.state.content }
                     />
-                    <button type='submit'>Submit</button>
+
+                    <button className='btn btn-success mt-3'>
+                        Submit
+                    </button>
                 </form>
             </div>
         )

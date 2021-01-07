@@ -1,0 +1,58 @@
+.review{
+    display: grid;
+    font-family: 'Nunito Sans';
+    grid-template-columns: 200px auto;
+    background: white;
+    margin-bottom: 50px;
+    padding: 30px;
+}
+
+.review img{
+    width: 8rem;
+    height: 8rem;
+}
+
+.review .user-section h4{
+    margin-top: 50px;
+}
+
+.review .user-section p{
+    font-size: 1.3rem;
+    margin-left: 30px;
+}
+
+.review main{
+    font-size: 2rem;
+}
+
+.review #open-edit{
+    display: none;
+}
+
+.review .likes-section{
+    margin-top: 80px;
+} 
+
+.review .likes-section p{
+    font-size: 2rem;
+}
+
+.review .likes-section i{
+    cursor: pointer;
+} 
+
+.review .fa-thumbs-up.active{
+    color: #21af21;
+} .review .fa-thumbs-up.active:hover{
+    color: revert;
+} .review .fa-thumbs-up:hover{
+    color: #21af21;
+}
+
+.review .fa-thumbs-down.active{
+    color: red;
+} .review .fa-thumbs-down.active:hover{
+    color: revert;
+} .review .fa-thumbs-down:hover{
+    color: red;
+}

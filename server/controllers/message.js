@@ -120,7 +120,9 @@ export const getUnreadChats = async (req, res) => {
         result = filterChats(result, map, sent, 'receiver');
         result = filterChats(result, map, received, 'sender');
     
-        result = result.filter(c => c.read !== null);
+        result = result.filter(c => 
+            c.read === null && c.sender !== me
+        );
     
         res.json({ ok: true, unread: result.length });
     }

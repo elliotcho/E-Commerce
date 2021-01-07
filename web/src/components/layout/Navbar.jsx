@@ -35,4 +35,4 @@ function Navbar(){
     )
 }
 
-export default withRouter(Navbar)
+export default withRouter(Navbar);

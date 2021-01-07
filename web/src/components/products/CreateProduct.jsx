@@ -81,16 +81,17 @@ class CreateProduct extends Component {
 
         return(
             <div className='create-product' style={style}>
+                <h1>List Your Product</h1>
                 <form onSubmit = {this.handleSubmit}>
                     <input
                         type = 'text'
                         name = 'name'
-                        placeholder = 'Product name...'
+                        placeholder = 'Product title'
                         onChange = {this.changeField}
                         value = {name}
                     />
 
-                    <select  onChange={this.changeField} value={departmentId} name='departmentId'>
+                    <select onChange={this.changeField} value={departmentId} name='departmentId'>
                         <option value="" disabled selected>Select Department </option>
 
                         {departments.map(dept => 
@@ -107,40 +108,42 @@ class CreateProduct extends Component {
                         step = '0.01'
                         onChange = {this.changeField}
                         value = {price}
-                        placeholder='price of a single item...'
+                        placeholder='Price of a single item'
                     />
 
                     <input
+                        className = 'file'
                         type = 'file'
                         onChange = {this.changeImage}
                         accept = 'jpg jpeg png'
                     />
 
-                    <input
-                        type = 'text'
+                    <textarea
+                        maxLength = '499'
+                        type = 'textarea'
                         name = 'content'
-                        placeholder = 'Description...'
+                        placeholder = 'Description'
                         onChange = {this.changeDescription}
                     />
 
                     <input 
                         type = 'text'
                         name = 'color'
-                        placeholder = 'Color...'
+                        placeholder = 'Color'
                         onChange = {this.changeDescription}
                     />
 
                     <input
                         type = 'text'
                         name = 'size'
-                        placeholder = 'Size...'
+                        placeholder = 'Size'
                         onChange = {this.changeDescription}
                     />
 
                     <input
                         type = 'text'
                         name = 'brand'
-                        placeholder = 'Brand...'
+                        placeholder = 'Brand'
                         onChange = {this.changeDescription}
                     />
 
@@ -149,12 +152,12 @@ class CreateProduct extends Component {
                         name = 'quantity'
                         value= {quantity}
                         min = '0'
-                        step = '0.01'
-                        placeholder='quantity in stock...'
+                        step = '1'
+                        placeholder='Quantity of stock'
                         onChange= {this.changeField}
                     />
                     
-                    <button>Submit Product</button>
+                    <button className='btn-block'>POST</button>
                 </form>
             </div>
         );

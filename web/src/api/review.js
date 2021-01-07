@@ -41,11 +41,36 @@ export const deleteReview = async (id) => {
     authAfterware(response);
 }
 
+export const updateReview = async (data) => {
+    const config = { headers: {'content-type' : 'application/json' } };
+
+    const response = await axios.put(`${API}/api/review`, data, authMiddleware(config));
+    const { ok } = response.data;
+
+    if(ok){
+        authAfterware(response);
+    }
+
+    return ok;
+}
+
 export const likeReview = async (reviewId) => {
     const config = { headers: {'content-type': 'application/json'} };
 
     const response = await axios.put(`${API}/api/review/like`, { reviewId }, authMiddleware(config));
     
+    if(response.data.ok){
+        authAfterware(response);
+    }
+
+    return response.data;
+}
+
+export const removeLike = async (reviewId) => {
+    const config = { headers: {'content-type': 'application/json'} };
+
+    const response = await axios.delete(`${API}/api/review/like/${reviewId}`, authMiddleware(config));
+
     if(response.data.ok){
         authAfterware(response);
     }
@@ -74,8 +99,20 @@ export const dislikeReview = async (reviewId) => {
     return response.data;
 }
 
+export const removeDislike = async (reviewId) => {
+    const config = { headers: {'content-type': 'application/json'} };
+
+    const response = await axios.delete(`${API}/api/review/dislike/${reviewId}`, authMiddleware(config));
+
+    if(response.data.ok){
+        authAfterware(response);
+    }
+
+    return response.data;
+}
+
 export const checkIfUserDisliked = async (reviewId) => {
-    const config = {header: {}};
+    const config = { headers: {} };
 
     const response = await axios.get(`${API}/api/review/dislike/${reviewId}`, authMiddleware(config));
     authAfterware(response);

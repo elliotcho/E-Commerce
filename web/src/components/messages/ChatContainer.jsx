@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from 'react';
-import { socket } from './MessageCenter';
 import { decodeUser } from '../../utils/decodeUser';
 import { fetchUser } from '../../utils/fetchUser';
 import { loadMessages, readMessages } from '../../api/message';
+import { socket } from '../../App';
 import loading from '../../images/loading.jpg';
 import './css/ChatContainer.css';
 
@@ -33,6 +33,8 @@ function ChatContainer({ userId }){
         socket.on('STOP_TYPING', () => setTyping(false));
 
         fetchData();
+
+        return () => socket.off('NEW_MESSAGE');
     }, [userId, me]);
 
     return(
