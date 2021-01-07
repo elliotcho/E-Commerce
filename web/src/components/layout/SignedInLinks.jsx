@@ -25,6 +25,8 @@ function SignedInLinks({ isAdmin }){
             setUnread(await getUnreadChats());
         }
 
+        socket.on('READ_MESSAGES', () => fetchData());
+
         fetchData();
     }, []);
 

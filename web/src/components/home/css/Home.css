@@ -1,13 +1,7 @@
-
 .home{
     height: 92vh;
     position: relative;
-    background: lightblue;
-    background-image: url("../../../images/tiger.jpg");
+    background-image: url('../../../images/tiger.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.7;
-
 }
-
-
