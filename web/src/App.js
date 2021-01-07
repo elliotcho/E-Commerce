@@ -24,11 +24,9 @@ class App extends Component{
   }
 
   render(){
-      const toastFont = { fontFamily: 'Trebuchet MS' };
-
       return(
           [
-            <ToastContainer key={'toasts'} style={toastFont}/>,
+            <ToastContainer key={'toasts'} />,
             <Routes key={'routes'}/>
           ]
       )
