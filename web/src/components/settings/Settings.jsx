@@ -19,14 +19,14 @@ function Settings(){
                 <div className='col-9'>
                     <h1>Settings </h1>
                 </div>
-                
+
                 <div className='col-3'>
                     <button onClick={toggleTheme}>
                         {isDark? 'Light mode' : 'night mode'}
                     </button>
                 </div>
             </header>
-        
+
             <UsernameForm/>
             <ChangePasswordForm/>
             <DeleteUser />
