@@ -2,13 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { formatCount } from '../../utils/formatCount';
 import { getUnreadChats } from '../../api/message';
+import { socket } from '../../App';
 import './css/SignedInLinks.css';
+
+const token = window.localStorage.getItem('token');
 
 function SignedInLinks({ isAdmin }){
     const [unread, setUnread] = useState(0);
 
     const logout = (e) => {
         e.preventDefault();
+
+        socket.emit('DISCONNECT', { token });
+        socket.disconnect();
+
         window.localStorage.clear();
         window.location.href = '/';
     }

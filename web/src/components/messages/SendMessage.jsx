@@ -1,6 +1,6 @@
 import React from 'react';
-import { socket } from './MessageCenter';
 import { sendMessage } from '../../api/message';
+import { socket } from '../../App';
 import './css/SendMessage.css';
 
 const ENTER_KEY = 13;

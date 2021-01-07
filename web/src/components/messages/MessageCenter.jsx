@@ -1,8 +1,7 @@
 import React from 'react';
-import socketIOClient from 'socket.io-client';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { API } from '../../constants';
 import { readMessages } from '../../api/message';
+import { socket } from '../../App';
 import Sidebar from './Sidebar';
 import ChatHeader from './ChatHeader';
 import ChatContainer from './ChatContainer';
@@ -12,22 +11,11 @@ import './css/MessageCenter.css';
 const lightStyle = { backgroundColor: '#8ec6c5'};
 const darkStyle = { backgroundColor: '#34626c' };
 
-const wsEndpoint = `${API}`;
-let socket;
 
 class MessageCenter extends React.Component{
     static contextType = ThemeContext;
 
-    constructor(){
-        super();
-        socket = socketIOClient(wsEndpoint);
-    }
-
     async componentDidMount(){
-        socket.emit('JOIN', {
-            token: localStorage.getItem('token')
-        });
-
         const { userId } = this.props.match.params;
 
         if(userId){
@@ -49,14 +37,6 @@ class MessageCenter extends React.Component{
         if(payload.ok){
             socket.emit('READ_MESSAGES', payload);
         }
-    }
-
-    componentWillUnmount(){
-        socket.emit('DISCONNECT', {
-            token: localStorage.getItem('token')
-        });
-
-        socket.disconnect();
     }
 
     render(){
@@ -83,5 +63,4 @@ class MessageCenter extends React.Component{
     }
 }
 
-export { socket };
 export default MessageCenter;
