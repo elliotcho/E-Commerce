@@ -7,3 +7,7 @@
 .h2{
     display: inline-block;
 }
+
+.cart .text-center{
+    display: inline-block;
+}
