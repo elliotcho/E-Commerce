@@ -33,6 +33,8 @@ function ChatContainer({ userId }){
         socket.on('STOP_TYPING', () => setTyping(false));
 
         fetchData();
+
+        return () => socket.off('NEW_MESSAGE');
     }, [userId, me]);
 
     return(
