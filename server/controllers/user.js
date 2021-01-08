@@ -75,8 +75,8 @@ export const changePassword = async (req, res) => {
     if(!uid){
         errors.push({ field: 'token', msg:'token expired' });
     }
-
-    if(!user){
+    
+    else if(!user){
         errors.push({ field: 'token', msg:'user no longer exists' });
     }
 

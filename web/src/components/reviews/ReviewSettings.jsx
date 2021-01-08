@@ -6,8 +6,8 @@ function ReviewSettings({ isOwner, removeReview }){
         document.getElementById('open-edit').click();
     }
 
-    const style = isOwner? {} : {visibility: 'hidden'};
-
+    const style = isOwner? {visibility: 'visible'} : {visibility: 'hidden'};
+    
     return(
         <div className='review-settings' style={style}>
             <i className ='fas fa-ellipsis-h'/>

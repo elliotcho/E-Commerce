@@ -3,6 +3,7 @@
     font-family: 'Nunito Sans';
     grid-template-columns: 200px auto;
     background: white;
+    color: black;
     margin-bottom: 50px;
     padding: 30px;
 }

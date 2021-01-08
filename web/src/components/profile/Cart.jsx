@@ -71,40 +71,34 @@ class Cart extends Component{
         
         return(
             <div className="cart" style={style}>
-                <h1 className="title">Your Shopping Cart </h1>
+                <header className='text-center my-5'>
+                    <h3>
+                        Your Shopping Cart 
+                    </h3>
 
-                <div className='amount'>
-                    <h2 >Total Amount: ${this.calculateTotalAmount()} </h2>
-                </div>
+                    <h2 className='my-3'>
+                        Total Amount: ${this.calculateTotalAmount()} 
+                    </h2>
 
-                <button className="btn" onClick={this.toPayment} >
-                    Continue To Payment 
-                </button>
-                
+                    <button className="btn btn-lg btn-primary" onClick={this.toPayment}>
+                        Continue To Payment 
+                    </button>
+                </header>
                 
                 <div className='items'>
                     {cart.map(p => 
-                        <div key={p._id} className ='text-center' style={{maxWidth: 'fit-content'}}>
+                        <div key={p._id} className ='cart-product text-center'>
                             <Product
                                 productId = {p._id}
-                                description = {p.description}
-                                deleteProduct = {this.removeProduct}
+                                showFooter = {true}
+                                removeFromCart = {() => this.delProductInCart(p._id)}
                                 image = {p.image}
                                 name = {p.name}
                                 price = {p.price}
-                                userId = {p.userId}
-                            />
-
-                            <i  
-                                onClick = {() => this.delProductInCart(p._id)}  
-                                className = 'fas fa-trash-alt' 
-                                style={{cursor: 'pointer'}}
                             />
                         </div>
                     )}
-                </div>
-
-                
+                </div>       
             </div>
         )
         

@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+import { withRouter } from 'react-router-dom';
 import { decodeUser } from '../../utils/decodeUser';
 import { fetchUser } from '../../utils/fetchUser';
 import { loadMessages, readMessages } from '../../api/message';
@@ -6,7 +7,7 @@ import { socket } from '../../App';
 import loading from '../../images/loading.jpg';
 import './css/ChatContainer.css';
 
-function ChatContainer({ userId }){
+function ChatContainer({ userId, history }){
     const [messages, setMessages] = useState([]);
     const [typing, setTyping] = useState(false);
 
@@ -41,6 +42,12 @@ function ChatContainer({ userId }){
         }
     }, [userId, me]);
 
+    const toProfile = (profileId) => {
+        if(profileId){
+            history.push(`/profile/${profileId}`);
+        }
+    }
+
     return(
         <div className='chat-container mt-5'>
             {typing && <TypingBubble userId={userId}/>}
@@ -52,6 +59,7 @@ function ChatContainer({ userId }){
                     reader = {m.receiver}
                     dateSent = {m.dateSent}
                     isOwner = {m.sender === me}
+                    toProfile = {toProfile}
                     content = {m.content}
                     image = {m.image}
                     read = {m.read}
@@ -100,6 +108,7 @@ function MessageBubble({
     reader, 
     dateSent, 
     isOwner, 
+    toProfile,
     content, 
     image, 
     read 
@@ -140,9 +149,13 @@ function MessageBubble({
             data-toggle='tooltip'
             title={dateSentTitle}
         >
-            {!isOwner? 
-                <img src={imgURL? imgURL: loading} alt='owner profile pic'/> : <div/>
-            }
+            {isOwner? <div/> : (
+                <img 
+                    onClick={() => toProfile(userId)}
+                    src={imgURL? imgURL: loading} 
+                    alt='owner profile pic'
+                />
+            )}
 
             <div className='msg-bubble'>
                 <p><strong>{username}</strong></p>
@@ -165,4 +178,4 @@ function MessageBubble({
     )
 }
 
-export default ChatContainer;
+export default withRouter(ChatContainer);

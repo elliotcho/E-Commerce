@@ -7,8 +7,8 @@
 }
 
 .product img{ 
-    max-width: 10rem;
-    max-height: 10rem;
+    width: 10rem;
+    height: 10rem;
 }
 
 .product h5{
@@ -16,4 +16,14 @@
     overflow-wrap: break-word;
     white-space: pre-wrap;
     text-decoration: underline;
+}
+
+.product .card-footer{
+    padding: 2px;
+}
+
+.product .card-footer i{
+    color: red;
+    position: relative;
+    top: 5px;
 }
