@@ -7,9 +7,10 @@
 .create-product h1{
   text-align: center;
   margin-top: 14px;
-  font-family: 'Balsamiq Sans', cursive;
+  font-family: 'Sansita Swashed', cursive;
   font-size: 54px;
   font-weight: 600;
+  word-spacing: 4px;
 }
 
 .create-product form{
@@ -56,7 +57,7 @@
   padding: 1%;
   border-radius: 10px;
   font-size: 24px;
-  font-family: 'Sansita Swashed', cursive;
+  font-family: 'Goldman', cursive;
 }
 
 

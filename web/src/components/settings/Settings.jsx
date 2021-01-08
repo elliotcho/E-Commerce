@@ -22,7 +22,7 @@ function Settings(){
 
                 <div className='col-3'>
                     <button onClick={toggleTheme}>
-                        {isDark? 'Light mode' : 'night mode'}
+                        {isDark? 'Light mode' : 'Night mode'}
                     </button>
                 </div>
             </header>
