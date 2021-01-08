@@ -27,6 +27,8 @@ class MessageCenter extends React.Component{
     }
 
     async componentDidUpdate(prevProps){
+        socket.off('MESSAGE_NOTIFICATION');
+
         const { userId } = this.props.match.params;
 
         if(userId && userId !== prevProps.match.params.userId){

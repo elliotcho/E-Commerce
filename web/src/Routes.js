@@ -23,6 +23,7 @@ import Settings from './components/settings/Settings';
 import AdminHome from './components/admin/AdminHome';
 import MessageCenter from './components/messages/MessageCenter';
 import PaymentForm from './components/payments/PaymentForm';
+import { ToastContainer } from 'react-toastify';
 
 function Routes() {
     return (
@@ -47,6 +48,7 @@ function Routes() {
             <Route path='/' component={DeadPage}/> 
           </Switch>
 
+          <ToastContainer />
         </BrowserRouter>
     );
 }

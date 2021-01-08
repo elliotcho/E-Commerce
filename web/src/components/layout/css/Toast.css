@@ -1,5 +1,6 @@
 .toast{
     font-family: 'Nunito Sans';
+    cursor: pointer;
 }
 
 .Toastify__toast-container button:focus{

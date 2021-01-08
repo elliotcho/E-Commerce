@@ -1,11 +1,18 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import loading from '../../images/loading.jpg';
 import './css/Toast.css';
 
-function Toast({ userId, username, content, imgURL }){
+function Toast({ userId, username, content, imgURL, history }){
+    let text = content;
+
+    if(content.length > 70){
+        text = `${content.substring(0, 67)}...`;
+    }
+
     const toChat = () => {
         if(userId){
-            window.location.href = `/chat/${userId}`;
+            history.push(`/chat/${userId}`);
         }
     }
 
@@ -21,11 +28,11 @@ function Toast({ userId, username, content, imgURL }){
                 <strong>{username}: </strong>
 
                 <span>
-                    {content.length > 70? `${content.substring(0, 67)}...` : content}
+                    {text}
                 </span>
             </div>
         </div>
     )
 }
 
-export default Toast;
+export default withRouter(Toast);
