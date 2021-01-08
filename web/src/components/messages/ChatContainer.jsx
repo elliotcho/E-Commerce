@@ -111,16 +111,22 @@ function MessageBubble({
     const [imgURL, setImgURL] = useState(null);
 
     useEffect(() => {
+        let isSubscribed = true;
+
         const fetchData = async () => {
            const { imgURL, user } = await fetchUser(userId);
            const  { imgURL: readerPic } = await fetchUser(reader);
 
-           setReaderPic(readerPic);
-           setUsername(user.username);
-           setImgURL(imgURL);
+            if(isSubscribed){
+                setReaderPic(readerPic);
+                setUsername(user.username);
+                setImgURL(imgURL);
+            }
         }
 
         fetchData();
+
+        return () => isSubscribed = false;
     }, [userId, reader]);
 
     const isRead = read && isOwner;
