@@ -12,8 +12,8 @@ function Home({history}){
             <h2>Message Customers.</h2>
             <h3>Upload your products.</h3>
 
-            <div class="box-2">
-            <div class="btn btn-two">
+            <div className = "box-2">
+            <div className ="btn btn-two">
                 <span onClick={goToProducts}>Peeps The Products</span>
             </div>
             </div>

@@ -20,7 +20,7 @@ div[class*=box] {
   align-items: center;
 }
 
-.btn {
+.home .btn {
   line-height: 50px;
   height: 75px;
   text-align: center;

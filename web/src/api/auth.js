@@ -38,5 +38,11 @@ export const forgotPassword = async (data) => {
 export const changePassword = async (data) => {
     const response = await axios.post(`${API}/api/user/change_password`, data , config);
     const { user } = response.data;
+
+    if(user){
+        window.localStorage.setItem('token', user.token);
+        window.localStorage.setItem('refreshToken', user.refreshToken);
+    }
+
     return user;
 }

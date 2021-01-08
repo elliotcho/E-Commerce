@@ -13,12 +13,12 @@ import fs from 'fs';
 const profileUpload = createUpload('profile');
 
 export const login = async (req, res) => { 
-    const userResponse = await tryLogin(req);
+    const userResponse = await tryLogin(req.body);
     res.json(userResponse);
 }
 
 export const register = async (req, res) => {
-    const userResponse = await tryRegister(req);    
+    const userResponse = await tryRegister(req.body);    
     res.json(userResponse);
 }
 
@@ -60,17 +60,17 @@ export const forgotPassword = async (req, res) => {
         await redis.set(token, user._id, 'ex', expiresIn);
         await sendEmail(req.body.email, href);
 
-        res.json({success: true});
+        res.json({ success: true });
     }
 }
 
 export const changePassword = async (req, res) => {
     const errors = [];
 
-    const key = 'forget-password:' + req.body.token;
+    const key = req.body.token;
     const uid = await redis.get(key);
 
-    const user = await User.findOne({_id: uid});
+    const user = await User.findOne({ _id: uid });
 
     if(!uid){
         errors.push({ field: 'token', msg:'token expired' });
@@ -81,13 +81,23 @@ export const changePassword = async (req, res) => {
     }
 
     if(user && errors.length === 0){
+        const { newPassword } = req.body;
+
         const salt = await bcyrpt.genSalt();
-        const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt)
+        const hashedPassword = await bcyrpt.hash(newPassword, salt)
 
         await User.updateOne({ _id: uid }, { password: hashedPassword });
-        await redis.del(key);
+       
+        const userResponse = await tryLogin({ 
+            username: user.username, 
+            password: newPassword
+        });
+
+        if(userResponse.user){
+            await redis.del(key);
+        }
         
-        res.json({ user, errors });
+        res.json(userResponse);
     } 
     
     else{

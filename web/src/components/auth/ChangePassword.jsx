@@ -29,7 +29,7 @@ class ChangePassword extends Component{
  
         if(user){
             window.location.reload();
-        }
+        } 
     }
 
     render(){
