@@ -229,17 +229,16 @@ export const loadCart = async (req, res) => {
         const { cart } = user; 
 
         const result = [];
+        const newCart = [];
 
-        //filter out deleted products
-        const newCart = cart.filter(async p_id => {
-            const product = await Product.findOne({ _id: p_id });
-            
+        for(let i=0;i<cart.length;i++){
+            const product = await Product.findOne({ _id: cart[i] });
+
             if(product){
+                newCart.push(product._id);
                 result.push(product);
             }
-
-            return product !== null;
-        });
+        }
 
         await User.updateOne({ _id: req.user._id}, { cart: newCart });
       

@@ -18,9 +18,8 @@ class Cart extends Component{
         }
 
         this.delProductInCart = this.delProductInCart.bind(this);
-        this.toPayment = this.toPayment.bind(this);
         this.calculateTotalAmount = this.calculateTotalAmount.bind(this);
-
+        this.toPayment = this.toPayment.bind(this);
     }
 
     async componentDidMount(){

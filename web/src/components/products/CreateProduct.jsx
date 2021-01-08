@@ -92,7 +92,7 @@ class CreateProduct extends Component {
                     />
 
                     <select onChange={this.changeField} value={departmentId} name='departmentId'>
-                        <option value="" disabled selected>Select Department </option>
+                        <option value="">Select Department </option>
 
                         {departments.map(dept => 
                             <option value={dept._id} key={dept._id}>
