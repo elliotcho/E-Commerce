@@ -1,9 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { getProductsByDepartment, searchProducts } from '../../api/product';
 import Product from './Product';
 import './css/ProductList.css';
 
+const lightStyle = { backgroundColor: '#9ad3bc' };
+const darkStyle = { backgroundColor: '#34626c' };
+
 class ProductList extends Component {
+    static contextType = ThemeContext;
+
     constructor(){
         super();
 
@@ -45,9 +51,12 @@ class ProductList extends Component {
 
     render(){
         const { products } = this.state;
+        const { isDark } = this.context;
+
+        const style = isDark? darkStyle: lightStyle;
 
         return(
-            <div className = 'product-list d-flex justify-content-center'>
+            <div className = 'product-list d-flex justify-content-center' style={style}>
                 {products.map(p => 
                     <Product
                         key = {p._id}

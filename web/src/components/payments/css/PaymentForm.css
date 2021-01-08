@@ -1,18 +1,26 @@
-.background{
+.payment-bg{
     height: 92vh;
     position: relative;
+    font-family: 'Chakra Petch', sans-serif;
     overflow: auto;
-    background-color: rgb(190, 203, 216);
+}
+
+.payment header{
+    margin-bottom: 30px;
 }
 
 .payment{
     color:blue;
-    background-color: lightseagreen;
+    background-color: #88b8c0;
     border: 4px solid #5f5f9b;
     border-radius: 30px/20px;
     margin-left: 150px;
     margin-right: 150px;
     margin-top: 60px;
+}
+
+.payment h1, .payment h2{
+    color: black;
 }
 
 

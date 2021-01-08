@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
+import { createToast } from './utils/createToast';
 import { API } from './constants';
 import Routes from './Routes';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
@@ -19,16 +19,20 @@ class App extends Component{
      const token = window.localStorage.getItem('token');
 
      if(token){
-       socket.emit('JOIN', { token });
+       const data = { token };
+
+       socket.emit('JOIN', data);
+       socket.on('MESSAGE_NOTIFICATION', createToast);
      }
+  }
+
+  componentWillUnmount(){
+    socket.disconnect();
   }
 
   render(){
       return(
-          [
-            <ToastContainer key={'toasts'} />,
-            <Routes key={'routes'}/>
-          ]
+        <Routes />
       )
   }
 }

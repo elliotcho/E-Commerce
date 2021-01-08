@@ -94,6 +94,7 @@ class ReviewList extends Component{
                             reviewId = {r._id}
                             removeReview = {this.removeReview}
                             editReview = {this.editReview}
+                            userId = {r.userId}
                             username = {r.username}
                             userPic = {r.userPic}
                             content = {r.content}

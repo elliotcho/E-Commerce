@@ -17,6 +17,10 @@
     margin: auto;
 }
 
+.message img{
+    cursor: pointer;
+}
+
 .msg-bubble{
     padding: 0.5rem 1.4rem;
     background: white;
