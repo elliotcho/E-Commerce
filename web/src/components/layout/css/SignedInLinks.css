@@ -37,7 +37,7 @@
 }
 
 .signed-in.navbar-nav .option:hover{
-    background: lightblue;
+    background: lightcoral;
 }
 
 .signed-in.navbar-nav .option span,

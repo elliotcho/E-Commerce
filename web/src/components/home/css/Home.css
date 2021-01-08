@@ -46,6 +46,7 @@ div[class*=box] {
   font-weight: 900;
   font-size: 44px;
 }
+
 .home h2{
   color: #f54291;
   position: relative;
@@ -55,6 +56,7 @@ div[class*=box] {
   font-weight: 900;
   font-size: 40px;
 }
+
 .home h3{
   color: #e6739f;
   position: relative;

@@ -25,8 +25,8 @@ class ChangePassword extends Component{
         const { newPassword } = this.state;
         const { token } = this.props.match.params;
 
-        const user = await changePassword({token, newPassword});
-
+        const user = await changePassword({ token, newPassword });
+ 
         if(user){
             window.location.reload();
         }

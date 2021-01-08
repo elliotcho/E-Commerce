@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import './css/Product.css';
 
 function Product({
+    showFooter,
+    removeFromCart,
     productId,
     image, 
     name, 
@@ -30,6 +32,16 @@ function Product({
                     {price.toFixed(2)}$
                 </p>
             </div>
+
+            {showFooter && (
+                <div className = 'card-footer text-center'>
+                    <i  
+                        onClick = {removeFromCart}  
+                        className = 'fas fa-trash-alt' 
+                        style={{cursor: 'pointer'}}
+                    />
+                </div>
+            )}
         </div>
     );
 }
