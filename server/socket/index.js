@@ -60,6 +60,7 @@ const socketEvents = (io) => {
             }
         
             if(mySocketId){
+                io.sockets.to(mySocketId).emit('UPDATE_NAVBAR');
                 io.sockets.to(mySocketId).emit('READ_MESSAGES');
             }
         });
