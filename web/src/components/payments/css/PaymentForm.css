@@ -7,12 +7,16 @@
 
 .payment{
     color:blue;
-    background-color: lightseagreen;
+    background-color: #4e3a4c;
     border: 4px solid #5f5f9b;
     border-radius: 30px/20px;
     margin-left: 150px;
     margin-right: 150px;
     margin-top: 60px;
+}
+
+.payment .text-center{
+    color: beige;
 }
 
 
