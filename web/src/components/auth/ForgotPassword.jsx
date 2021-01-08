@@ -8,7 +8,8 @@ class ForgotPassword extends Component{
 
         this.state = {
             email: '',
-            submitted: false
+            submitted: false,
+            isFetching: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -22,13 +23,17 @@ class ForgotPassword extends Component{
     async handleSubmit(e){
         e.preventDefault();
 
-        await forgotPassword({email: this.state.email});
+        if(!this.state.isFetching){
+            this.setState({ isFetching: true });
 
-        this.setState({submitted: true});
+            await forgotPassword({email: this.state.email});
+
+            this.setState({ submitted: true, isFetching: false });
+        }
     }
 
     render(){
-        const { email, submitted } = this.state;
+        const { email, submitted, isFetching } = this.state;
 
         return(
             <div className="forgot-pwd">
@@ -37,7 +42,8 @@ class ForgotPassword extends Component{
                         (<form onSubmit={this.handleSubmit}>
                             <h2 className = 'mb-4'>
                                 Forgot your password? 
-                                Don't worry, we will send you an email to reset it! 
+                                Don't worry, we will send 
+                                you an email to reset it! 
                             </h2>
                         
                             <input
@@ -49,11 +55,12 @@ class ForgotPassword extends Component{
                             />
 
                             <button className='btn btn-success mt-3'>
-                                Submit
+                                {isFetching? 'Loading...' : 'Submit'}
                             </button>
                         </form>) : 
                         (<h3>
-                            If an account with that email exists, we sent you an email
+                            If an account with that email exists, 
+                            we sent you an email
                         </h3>)
                     }
                 </div>         

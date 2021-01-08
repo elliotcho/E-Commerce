@@ -44,5 +44,5 @@ export const changePassword = async (data) => {
         window.localStorage.setItem('refreshToken', user.refreshToken);
     }
 
-    return user;
+    return response.data;
 }
