@@ -1,3 +1,33 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300';
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-family: 'Goldman', cursive;
+}
+
+div[class*=box] {
+  height: 33.33%;
+  width: 100%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.btn {
+  line-height: 50px;
+  height: 75px;
+  text-align: center;
+  width: 350px;
+  cursor: pointer;
+}
 .home{
     height: 92vh;
     position: relative;
@@ -44,3 +74,50 @@
   font-size: 20px;
   color: #000000;
 }
+.btn-two {
+    color: #f54291;
+    transition: all 0.5s;
+    position: relative;
+    top: 67%; 
+    font-weight: 1000;
+    font-size: 30px;
+  }
+  .btn-two span {
+    z-index: 2; 
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%; 
+  }
+  .btn-two::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: all 0.5s;
+    border: 1px solid rgba(231, 198, 52, 0.2);
+    background-color: rgba(231, 198, 52, 0.2);
+  }
+  .btn-two::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: all 0.5s;
+    border: 1px solid rgba(231, 198, 52, 0.2);
+    background-color: rgba(231, 198, 52, 0.2);
+  }
+  .btn-two:hover::before {
+    transform: rotate(-45deg);
+    background-color: rgba(231, 198, 52, 0.2);
+  }
+  .btn-two:hover::after {
+    transform: rotate(45deg);
+    background-color: rgba(231, 198, 52, 0.2);
+  }
