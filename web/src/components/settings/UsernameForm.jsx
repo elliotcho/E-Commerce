@@ -38,7 +38,7 @@ class UsernameForm extends Component{
                 <label htmlFor="newName">New Username<span> *</span></label>
                 <input 
                     id='newName'
-                    className='form-control'
+                    className='form-control' 
                     type="text"
                     minLength='4'
                     maxLength='30'

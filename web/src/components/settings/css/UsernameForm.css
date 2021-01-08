@@ -12,4 +12,17 @@
 
 .change-username span{
     color: red;
+    font-size: 20px;
+}
+
+.change-username h3{
+    font-family: 'Balsamiq Sans', cursive;
+}
+
+.change-username label{
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+.change-username button{
+    font-family: 'Goldman', cursive;
 }

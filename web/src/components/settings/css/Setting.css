@@ -8,3 +8,9 @@
 .settings header{
     max-width: 600px;
 }
+
+.settings h1{
+    font-size: 43px;
+    font-family: 'Sansita Swashed', cursive;
+    text-decoration: underline;
+}
