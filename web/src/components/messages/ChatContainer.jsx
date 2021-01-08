@@ -33,7 +33,12 @@ function ChatContainer({ userId }){
 
         fetchData();
 
-        return () => socket.off('NEW_MESSAGE');
+        return () => {
+            socket.off('NEW_MESSAGE');
+            socket.off('READ_MESSAGES');
+            socket.off('IS_TYPING');
+            socket.off('STOP_TYPING');
+        }
     }, [userId, me]);
 
     return(
@@ -61,14 +66,20 @@ function TypingBubble({ userId }){
     const [imgURL, setImgURL] = useState(null);
 
     useEffect(() => {
+        let isSubscribed = true;
+
         const fetchData = async () => {
            const { imgURL, user } = await fetchUser(userId);
 
-           setUsername(user.username);
-           setImgURL(imgURL);
+            if(isSubscribed){
+                setUsername(user.username);
+                setImgURL(imgURL);
+            }
         }
 
         fetchData();
+
+        return () => isSubscribed = false;
     }, [userId]);
 
     return(

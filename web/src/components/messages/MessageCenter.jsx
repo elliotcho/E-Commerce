@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import { createToast } from '../../utils/createToast';
 import { readMessages } from '../../api/message';
 import { socket } from '../../App';
 import Sidebar from './Sidebar';
@@ -16,6 +17,8 @@ class MessageCenter extends React.Component{
     static contextType = ThemeContext;
 
     async componentDidMount(){
+        socket.off('MESSAGE_NOTIFICATION');
+
         const { userId } = this.props.match.params;
 
         if(userId){
@@ -37,6 +40,10 @@ class MessageCenter extends React.Component{
         if(payload.ok){
             socket.emit('READ_MESSAGES', payload);
         }
+    }
+
+    componentWillUnmount(){
+        socket.on('MESSAGE_NOTIFICATION', createToast);
     }
 
     render(){
