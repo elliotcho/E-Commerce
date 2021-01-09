@@ -1,7 +1,6 @@
 .product{
     color: black;
     font-family: 'Nunito Sans';
-    max-height: 300px;
     max-width: fit-content;
     margin: 20px;
 }
@@ -16,10 +15,6 @@
     overflow-wrap: break-word;
     white-space: pre-wrap;
     text-decoration: underline;
-}
-
-.product .card-footer{
-    padding: 2px;
 }
 
 .product .card-footer i{

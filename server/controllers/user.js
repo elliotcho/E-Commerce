@@ -1,6 +1,7 @@
 import bcyrpt from 'bcrypt';
 import User from '../models/user';
 import { Product }  from '../models/product';
+import Review from '../models/review';
 import { redis } from '../app'; 
 import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
@@ -191,6 +192,8 @@ export const deleteUser = async (req, res) => {
     } 
 
     await User.deleteOne({ _id });
+    await Product.deleteMany({ userId: _id });
+    await Review.deleteMany({ userId: _id });
 
     res.json( { msg: 'Success' });     
 }
@@ -268,7 +271,12 @@ export const userInfo = async (req, res) => {
             user = await User.findOne({ _id: req.user._id });
         }
 
+        if(!user){
+            user = { username: 'E-Commerce User' };
+        }
+        
         user.password = '';
+
         res.json(user);
     }
 }

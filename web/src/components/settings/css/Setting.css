@@ -1,7 +1,7 @@
 .settings{
     position: relative;
     height: 92vh;
-    font-family: 'Nunito Sans';   
+    font-family: 'Sansita Swashed', cursive;
     overflow: auto;
 }
 
@@ -11,6 +11,59 @@
 
 .settings h1{
     font-size: 43px;
-    font-family: 'Sansita Swashed', cursive;
     text-decoration: underline;
 }
+
+.settings .theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.settings .theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+  
+.settings .theme-switch input {
+    display:none;
+}
+  
+.settings .slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+  
+.settings .slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+  
+.settings input:checked + .slider {
+    background-color: #66bb6a;
+}
+  
+.settings input:checked + .slider:before {
+    transform: translateX(26px);
+}
+  
+.settings .slider.round {
+    border-radius: 34px;
+}
+
+.settings .slider.round:before {
+    border-radius: 50%;
+}  

@@ -15,8 +15,10 @@ function Product({
         history.push(`/product/${productId}`);
     }
 
+    const style = showFooter? {} : {maxHeight: '300px'};
+
     return(
-        <div className='product card p-2'>
+        <div className='product card p-2' style={style}>
             <img
                 src = {image}
                 className = 'card-img-top'
