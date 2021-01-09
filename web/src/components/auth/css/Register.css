@@ -9,15 +9,23 @@
 
 .register form{  
     margin: 40px auto;  
-    max-width: 400px;
+    max-width: 500px;
     color: #0fe9ba;
+    padding: 2%;
+    border: outset 5px #1a1c20;
+    border-radius: 8px 20px;
 }
 
 .register h1{
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Concert One', cursive;
     margin-bottom: 28px;
     text-align: center;
-    font-size: 3rem;
+    font-size: 3.6rem;
+}
+
+.register label, .register input{
+    font-family: 'Nunito Sans';
+    font-size: 1px;
 }
 
 .register input{
@@ -48,4 +56,16 @@
 .register .errors{
     color: red;
     font-weight: bold;
+}
+
+.register button{
+    border-radius: 25px;
+    width: 40%;
+    font-family: 'Goldman', cursive;
+    font-size: 20px;
+}
+
+.register button:focus{
+    outline: none;
+    box-shadow: none;
 }

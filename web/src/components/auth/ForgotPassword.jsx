@@ -48,7 +48,7 @@ class ForgotPassword extends Component{
                                 onChange={this.handleChange}
                             />
 
-                            <button className='btn btn-success mt-3'>
+                            <button className='btn btn-success btn-block mt-3'>
                                 Submit
                             </button>
                         </form>) : 

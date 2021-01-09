@@ -9,19 +9,23 @@
 
 .login form{    
     margin: 50px auto;
-    max-width: 400px;
+    max-width: 500px;
     color: #0fe9ba;
+    padding: 2%;
+    border: outset 5px #1a1c20;
+    border-radius: 8px 20px;
 }
 
 .login h1{
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Concert One', cursive;
     margin-bottom: 40px;
     text-align: center;
-    font-size: 3rem;
+    font-size: 3.6rem;
 }
 
 .login label, .login input{
     font-family: 'Nunito Sans';
+    font-size: 17px;
 }
 
 .login input{
@@ -39,6 +43,8 @@
 .login button{
     border-radius: 25px;
     width: 40%;
+    font-family: 'Goldman', cursive;
+    font-size: 20px;
 }
 
 .login button:focus{
