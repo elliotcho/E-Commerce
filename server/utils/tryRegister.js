@@ -2,10 +2,8 @@ import bcyrpt from 'bcrypt';
 import { createTokens } from './authTokens';
 import User from '../models/user';
 
-export const tryRegister = async (req) => {
-    const { username, password, email, adminCode } = req.body;
-
-    console.log(adminCode)
+export const tryRegister = async (data) => {
+    const { username, password, email, adminCode } = data;
 
     let isAdmin = adminCode === process.env.ADMIN_CODE;
     const errors = [];

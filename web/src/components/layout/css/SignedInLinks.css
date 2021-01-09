@@ -37,7 +37,7 @@
 }
 
 .signed-in.navbar-nav .option:hover{
-    background: lightblue;
+    background: lightcoral;
 }
 
 .signed-in.navbar-nav .option span,
@@ -61,7 +61,7 @@
     top: -7px;
 }
 
-@media screen and (min-width: 991px){
+@media screen and (min-width: 992px){
     .signed-in.navbar-nav .count-box{
         padding: 3px 7px;
         top: -15px;

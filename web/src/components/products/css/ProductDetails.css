@@ -1,7 +1,6 @@
 .product-details-bg{
     height: 92vh;
     position: relative;
-    background-color: lightblue;
     overflow: auto;
 }
 
@@ -10,6 +9,7 @@
     height: 400px;
     font-family: 'Arial';
     background: white;
+    color: black;
     border: 1px solid black;
     margin: 50px auto;
 }

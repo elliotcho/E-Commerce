@@ -29,6 +29,13 @@ function Sidebar({ history, userId: activeId }){
         socket.on('READ_MESSAGES', () => fetchData());
 
         fetchData();
+
+        return () => {
+            socket.off('NEW_MESSAGE');
+            socket.off('READ_MESSAGES');
+
+            setChats([]);
+        }
     }, [activeId]);
 
     const { _id: me } = decodeUser();
@@ -85,14 +92,20 @@ function MessageCard({
     const [imgURL, setImgURL] = useState(null);
 
     useEffect(() => {
+        let isSubscribed = true;
+
         const fetchData = async () => {
             const { imgURL, user } = await fetchUser(userId);
  
-            setUsername(user.username);
-            setImgURL(imgURL);
+            if(isSubscribed){
+                setUsername(user.username);
+                setImgURL(imgURL);
+            }
          }
 
         fetchData();
+
+        return () => isSubscribed = false;
     }, [userId]);
 
     return(

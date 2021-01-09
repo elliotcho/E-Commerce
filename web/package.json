@@ -21,7 +21,6 @@
     "react-scripts": "4.0.0",
     "react-square-payment-form": "^0.7.2",
     "react-toastify": "^6.2.0",
-    "react-toggle": "^4.1.1",
     "socket.io-client": "^3.0.4",
     "uuid": "^8.3.2",
     "web-vitals": "^0.2.4"
@@ -29,8 +28,8 @@
   "scripts": {
     "start": "react-dotenv && react-scripts start",
     "build": "react-dotenv && react-scripts build",
-    "test": "react-dotenv && react-scripts test",
-    "eject": "react-dotenv && react-scripts eject"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -49,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "react-dotenv": {
+     "whitelist" : ["SANDBOX_APPLICATION_ID", "SANDBOX_LOCATION_ID"]
   }
 }

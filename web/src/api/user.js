@@ -36,7 +36,7 @@ export const deleteProfilePic = async () => {
 }
 
 export const loadCart = async() => {
-    const config = {headers: {}};
+    const config = { headers: {} };
     const response = await axios.get(`${API}/api/user/cart`, authMiddleware(config));
     const products = response.data;
 

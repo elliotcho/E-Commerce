@@ -14,8 +14,7 @@ function SignedInLinks({ isAdmin }){
         e.preventDefault();
 
         socket.emit('DISCONNECT', { token });
-        socket.disconnect();
-
+    
         window.localStorage.clear();
         window.location.href = '/';
     }
@@ -25,9 +24,11 @@ function SignedInLinks({ isAdmin }){
             setUnread(await getUnreadChats());
         }
 
-        socket.on('READ_MESSAGES', () => fetchData());
+        socket.on('UPDATE_NAVBAR', () => fetchData());
 
         fetchData();
+
+        return () => socket.off('UPDATE_NAVBAR');
     }, []);
 
     const msgIcon = formatCount(unread) ? 'text-white' : '';
