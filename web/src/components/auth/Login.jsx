@@ -72,7 +72,7 @@ class Login extends Component{
 
                     <div className = 'text-center'>
                         <button  className='btn btn-primary'>
-                            Sign in
+                            Sign In
                         </button>
                     </div>
 

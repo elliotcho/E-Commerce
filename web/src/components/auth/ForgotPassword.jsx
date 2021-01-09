@@ -53,7 +53,7 @@ class ForgotPassword extends Component{
                                 placeholder='Your email here'
                                 onChange={this.handleChange}
                             />
-
+                      
                             <button className='btn btn-success mt-3'>
                                 {isFetching? 'Loading...' : 'Submit'}
                             </button>
