@@ -27,7 +27,10 @@ export const changeUserPassword = async(req, res) => {
     const user = await User.findOne({_id: req.user._id});
     
     if(!user){
-        res.json({msg: "User not found"});
+        res.json({
+            msg: "User not found",
+            error: true
+        });
     }
     
     const valid = await bcyrpt.compare(req.body.currPassword, user.password);
@@ -36,12 +39,30 @@ export const changeUserPassword = async(req, res) => {
         const salt = await bcyrpt.genSalt();
         const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt);
         
-        await User.updateOne({_id: req.user._id}, {password: hashedPassword });
-        res.json({msg: "Success"});
+        try{
+            await User.updateOne(
+                { _id: req.user._id }, 
+                { password: hashedPassword },
+                { runValidators: true }
+            );
+            
+            res.json({
+                msg: "Success",
+                error: false
+            });
+        } catch (err){
+            res.json({
+                msg: 'Passwords must be between 6 and 50 characters',
+                error: true
+            })
+        }
     }
     
     else{
-        res.json({msg: "Invalid current password"});
+        res.json({
+            msg: "Invalid current password",
+            error: true
+        });
     }
 }
 

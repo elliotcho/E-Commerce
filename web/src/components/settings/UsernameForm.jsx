@@ -46,6 +46,7 @@ class UsernameForm extends Component{
                 <input 
                     id='newName'
                     className='form-control' 
+                    placeholder='New Username...'
                     type="text"
                     onChange={this.handleChange}
                     value={newName}

@@ -85,7 +85,7 @@ export const changePassword = async(data) => {
     const response = await axios.post(`${API}/api/user/change_user_password`, data, authMiddleware(config));
     authAfterware(response);
 
-    return response.data.msg;
+    return response.data;
 }
 
 export const deleteAccount = async() => {

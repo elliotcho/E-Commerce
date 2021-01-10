@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { createErrorToast, createSuccessToast } from '../../utils/createToast';
 import { changePassword } from '../../api/user';
 import './css/ChangePasswordForm.css';
 
@@ -24,11 +25,18 @@ class ChangePasswordForm extends Component{
         const data = { currPassword, newPassword, confirmPassword };
        
         if(newPassword === confirmPassword){
-            await changePassword(data);
-        } else{
-            alert("Passwords do not match!");
-        }
+            const { msg, error } = await changePassword(data);
+
+            if(error){
+                createErrorToast(msg);
+            } else {
+                createSuccessToast(msg);
+            }
+        } 
         
+        else{
+            createErrorToast("Passwords do not match");
+        }
     }
 
     handleChange(e){
@@ -48,9 +56,8 @@ class ChangePasswordForm extends Component{
                     <input 
                         id='currPassword'
                         className='form-control'
+                        placeholder='Current Password...'
                         type='password'
-                        minLength='6'
-                        maxLength='49'
                         onChange={this.handleChange}
                         value={currPassword}
                         required
@@ -60,9 +67,8 @@ class ChangePasswordForm extends Component{
                     <input 
                         id='newPassword'
                         className='form-control'
+                        placeholder='New Password...'
                         type="password"
-                        minLength='6'
-                        maxLength='49'
                         onChange = {this.handleChange}
                         value = {newPassword}
                         required
@@ -72,6 +78,7 @@ class ChangePasswordForm extends Component{
                     <input 
                         id='confirmPassword'
                         className='form-control'
+                        placeholder='Confirm New Password...'
                         type="password"
                         onChange={this.handleChange}
                         value={confirmPassword}
