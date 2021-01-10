@@ -7,4 +7,6 @@
 
 .delete-user button{
     font-size: 1.3rem;
+    font-family: 'Goldman', cursive;
+    word-spacing: 4px;
 }

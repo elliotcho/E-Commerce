@@ -1,4 +1,4 @@
-.toast{
+.msg-toast{
     font-family: 'Nunito Sans';
     cursor: pointer;
 }
@@ -8,13 +8,13 @@
     box-shadow: none;
 }
 
-.toast img{
+.msg-toast img{
     width: 100px;
     height: 100px;
     margin: 0 auto;
 }
 
-.toast span{
+.msg-toast span{
     overflow-wrap: break-word;
     white-space: pre-wrap;
 }

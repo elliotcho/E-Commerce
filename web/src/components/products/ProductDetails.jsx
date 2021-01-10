@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import decode from 'jwt-decode';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
 import {getReviews} from '../../api/review';
 import ReviewList from '../reviews/ReviewList';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
 
+const lightStyle = { backgroundColor: '#9ad3bc', color: 'black' };
+const darkStyle = { backgroundColor: '#34626c', color: 'white' };
+
 class ProductDetails extends Component{
+    static contextType = ThemeContext;
+
     constructor(){
         super();
 
@@ -60,6 +66,7 @@ class ProductDetails extends Component{
         } } = this.state;
         const{rating} = this.state;
 
+        const style = this.context.isDark? darkStyle: lightStyle;
         let isOwner = false;
 
         try { 
@@ -70,7 +77,7 @@ class ProductDetails extends Component{
         } catch (err) { }
 
         return(
-            <div className = 'product-details-bg'>
+            <div className = 'product-details-bg' style={style}>
                 <div className = 'product-details p-4'>
                     {this.state.fetching? 
                         (<div className = 'row'>

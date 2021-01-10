@@ -82,7 +82,7 @@ class Profile extends Component{
         const { history } = this.props;
         const { info } = this.state;
 
-        if(info){
+        if(info && info._id){
             history.push(`/chat/${info._id}`);
         }
     }

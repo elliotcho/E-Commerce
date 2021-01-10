@@ -28,9 +28,7 @@ function SignedInLinks({ isAdmin }){
 
         fetchData();
 
-        return () => {
-            socket.off('UPDATE_NAVBAR');
-        }
+        return () => socket.off('UPDATE_NAVBAR');
     }, []);
 
     const msgIcon = formatCount(unread) ? 'text-white' : '';

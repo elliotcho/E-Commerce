@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import { changePassword } from '../../api/auth'; 
 import './css/ChangePassword.css';
 
-
 class ChangePassword extends Component{
     constructor(){
         super();
 
         this.state = {
-            newPassword: ''
+            newPassword: '',
+            errors: []
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -25,15 +25,17 @@ class ChangePassword extends Component{
         const { newPassword } = this.state;
         const { token } = this.props.match.params;
 
-        const user = await changePassword({token, newPassword});
-
+        const { user, errors } = await changePassword({ token, newPassword });
+ 
         if(user){
             window.location.reload();
+        } else{
+            this.setState({ errors });
         }
     }
 
     render(){
-        const { newPassword } = this.state;
+        const { newPassword, errors } = this.state;
 
         return(
             <div className='change-pwd'>
@@ -45,14 +47,18 @@ class ChangePassword extends Component{
                     <input
                         id='newPassword'
                         type='password'
-                        value={newPassword}
                         onChange={this.handleChange}
                         placeholder='New password here...'
+                        value={newPassword}
                     />
 
                     <button className='btn btn-success mt-3'>
                         Submit
                     </button>
+
+                    <div className='errors mt-3'>
+                        {errors.map(err => `${err.field} error: ${err.msg}`)}
+                    </div>
                 </form>
             </div>
         )

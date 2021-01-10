@@ -32,7 +32,7 @@ class Register extends Component{
     }
 
     handleChange(e){
-        this.setState({[e.target.id] : e.target.value});
+        this.setState({ [e.target.id] : e.target.value });
     }
 
     async handleSubmit(e){
@@ -41,23 +41,19 @@ class Register extends Component{
         const{ email, username, password, confirmPassword, adminCode } = this.state;
     
         if(password !== confirmPassword){
-            this.setState({errors: [{
-                    field: 'Password',
-                    msg: 'Passwords do not match'
-                }]
-            });
+            const msg = 'Passwords do not match';
+            const error = { field: 'Password', msg };
 
+            this.setState({ errors: [error] });
             return;
         }
 
-        const userResponse = await register({ email, username, password, adminCode });
+        const { user, errors } = await register({ email, username, password, adminCode });
 
-        if(userResponse.user){
+        if(user){
             window.location.reload();
-        } 
-        
-        else{
-            this.setState({errors: userResponse.errors});
+        } else{
+            this.setState({ errors });
         }
     }
 
@@ -73,8 +69,6 @@ class Register extends Component{
                     <input
                         id='email'
                         type='text'
-                        minLength='6'
-                        maxLength='50'
                         value={email}
                         onChange={this.handleChange}
                         placeholder='Email...'
@@ -86,8 +80,6 @@ class Register extends Component{
                         id='username'
                         type='text'
                         value={username}
-                        minLength='2'
-                        maxLength='30'
                         onChange={this.handleChange}
                         placeholder='Username...'
                         required
@@ -97,8 +89,6 @@ class Register extends Component{
                     <input
                         id='password'
                         type='password'
-                        minLength='6'
-                        maxLength='50'
                         value={password}
                         onChange={this.handleChange}
                         placeholder='Password...'

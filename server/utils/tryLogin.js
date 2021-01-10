@@ -2,8 +2,8 @@ import bcyrpt from 'bcrypt';
 import { createTokens } from './authTokens';
 import User from '../models/user';
 
-export const tryLogin = async (req) => {
-    const {username, password} = req.body;
+export const tryLogin = async (data) => {
+    const { username, password } = data;
 
     let user;
     const errors = [];
@@ -44,5 +44,5 @@ export const tryLogin = async (req) => {
         }
     } 
 
-    return {user, errors};
+    return { user, errors };
 }

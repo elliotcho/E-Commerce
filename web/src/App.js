@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
-import { createToast } from './utils/createToast';
+import { createMessageToast } from './utils/createToast';
 import { API } from './constants';
 import Routes from './Routes';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,7 +22,7 @@ class App extends Component{
        const data = { token };
 
        socket.emit('JOIN', data);
-       socket.on('MESSAGE_NOTIFICATION', createToast);
+       socket.on('MESSAGE_NOTIFICATION', createMessageToast);
      }
   }
 

@@ -130,9 +130,12 @@ class Review extends Component{
 
     render(){
         const { likes, dislikes, userLiked, userDisliked } = this.state;
-        const { reviewId, userPic, username, content } = this.props;
+        const { reviewId, userId, userPic, username, content } = this.props;
 
         const removeReview = () => this.props.removeReview(reviewId);
+
+        const user = decodeUser();
+        const isOwner = user && user._id === userId;
 
         let likeStyle = 'far fa-thumbs-up';
         let dislikeStyle = 'far fa-thumbs-down';
@@ -161,7 +164,7 @@ class Review extends Component{
                          <button id='open-edit' data-toggle='modal' data-target='#edit' />
 
                          <div className='col-2'>
-                            <ReviewSettings removeReview={removeReview}/>
+                            <ReviewSettings isOwner={isOwner} removeReview={removeReview}/>
                         </div>  
                     </div>
 

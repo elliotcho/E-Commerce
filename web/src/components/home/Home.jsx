@@ -16,7 +16,7 @@ function Home({history}){
         history.push('/register');
     }
     return(
-        <div className = 'home'>
+        <div className = 'home img-responsive'>
             <h1>Shop across departments.</h1>
             <h2>Directly Message Sellers to get the best price for you!.</h2>
             <h3>Upload your products.</h3>

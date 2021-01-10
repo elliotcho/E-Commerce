@@ -1,9 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import loading from '../../images/loading.jpg';
-import './css/Toast.css';
+import './css/MessageToast.css';
 
-function Toast({ userId, username, content, imgURL, history }){
+function MessageToast({ userId, username, content, imgURL, history }){
     let text = content;
 
     if(content.length > 70){
@@ -17,7 +17,7 @@ function Toast({ userId, username, content, imgURL, history }){
     }
 
     return (
-        <div className='toast row' onClick={toChat}>
+        <div className='msg-toast row' onClick={toChat}>
             <img 
                 src={imgURL || loading} 
                 className='col-5'
@@ -35,4 +35,4 @@ function Toast({ userId, username, content, imgURL, history }){
     )
 }
 
-export default withRouter(Toast);
+export default withRouter(MessageToast);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { createToast } from '../../utils/createToast';
+import { createMessageToast } from '../../utils/createToast';
 import { readMessages } from '../../api/message';
 import { socket } from '../../App';
 import Sidebar from './Sidebar';
@@ -45,7 +45,7 @@ class MessageCenter extends React.Component{
     }
 
     componentWillUnmount(){
-        socket.on('MESSAGE_NOTIFICATION', createToast);
+        socket.on('MESSAGE_NOTIFICATION', createMessageToast);
     }
 
     render(){
