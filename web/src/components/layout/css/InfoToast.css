@@ -1,0 +1,10 @@
+.info-toast{
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    font-family: 'Nunito Sans';
+}
+
+.Toastify__toast-container button:focus{
+    outline: none;
+    box-shadow: none;
+}

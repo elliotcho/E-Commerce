@@ -13,12 +13,13 @@ const socketEvents = (io) => {
         });
 
         socket.on('NEW_MESSAGE', async payload => {
-            const { receiver, sender } = payload;
+            const { receiver, sender, content } = payload;
 
             const receiverSocketId = await redis.get(receiver);
             const senderSocketId = await redis.get(sender);
 
             if(receiverSocketId){   //if online
+                io.sockets.to(receiverSocketId).emit('MESSAGE_NOTIFICATION', { content, sender });
                 io.sockets.to(receiverSocketId).emit('NEW_MESSAGE');
             }
 
@@ -54,10 +55,12 @@ const socketEvents = (io) => {
             const mySocketId = await redis.get(me);
      
             if(otherSocketId) {
+                io.sockets.to(otherSocketId).emit('UPDATE_NAVBAR');
                 io.sockets.to(otherSocketId).emit('READ_MESSAGES');
             }
         
             if(mySocketId){
+                io.sockets.to(mySocketId).emit('UPDATE_NAVBAR');
                 io.sockets.to(mySocketId).emit('READ_MESSAGES');
             }
         });

@@ -1,12 +1,22 @@
 import React from 'react';
 import './css/Home.css';
 
-function Home(){
+
+function Home({history}){
+    const goToProducts = () => {
+        history.push('/products/all');
+    }
     return(
-        <div className = 'home'>
+        <div className = 'home img-responsive'>
             <h1>Shop across departments.</h1>
             <h2>Message customers.</h2>
-            <h3>List your products.</h3>
+            <h3>Upload your products.</h3>
+
+            <div className = "box-2">
+            <div className ="btn btn-two">
+                <span onClick={goToProducts}>Peeps The Products</span>
+            </div>
+            </div>
             
 
             <p>Copyright © 2021 eLeet Coderz</p>

@@ -36,7 +36,7 @@ export const deleteProfilePic = async () => {
 }
 
 export const loadCart = async() => {
-    const config = {headers: {}};
+    const config = { headers: {} };
     const response = await axios.get(`${API}/api/user/cart`, authMiddleware(config));
     const products = response.data;
 
@@ -76,7 +76,7 @@ export const changeUsername = async (username) => {
     const response = await axios.post(`${API}/api/user/change_username`, {username}, authMiddleware(config));
     authAfterware(response);
 
-    return response.data.msg;
+    return response.data;
 }
 
 export const changePassword = async(data) => {
@@ -85,7 +85,7 @@ export const changePassword = async(data) => {
     const response = await axios.post(`${API}/api/user/change_user_password`, data, authMiddleware(config));
     authAfterware(response);
 
-    return response.data.msg;
+    return response.data;
 }
 
 export const deleteAccount = async() => {

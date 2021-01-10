@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import env from 'react-dotenv';
 import {v4 as uuidv4} from 'uuid';
 import {sendNonce} from '../../api/payments';
-import './css/PaymentForm.css';
 import 'react-square-payment-form/lib/default.css';
+import './css/PaymentForm.css';
 
 import {
     SquarePaymentForm,
@@ -14,7 +15,12 @@ import {
     CreditCardSubmitButton
 } from 'react-square-payment-form';
 
+const lightStyle = { backgroundColor: '#becbd8' };
+const darkStyle = { backgroundColor: '#34626c' };
+
 class PaymentForm extends Component{
+    static contextType = ThemeContext;
+
     constructor(){
         super();
 
@@ -46,7 +52,7 @@ class PaymentForm extends Component{
           return
         }
 
-        this.setState({ errorMessages: [] })
+        this.setState({ errorMessages: [] });
         alert("nonce created: " + nonce + ", buyerVerificationToken: " + buyerVerificationToken);
         this.createPayment(nonce, buyerVerificationToken);
       }
@@ -71,51 +77,56 @@ class PaymentForm extends Component{
 
 
     render(){
-      const total = this.props.match.params.total;
-      
+        const { total } = this.props.match.params;
+        const { isDark } = this.context;
+
+        const style = isDark? darkStyle: lightStyle;
+
         return(
-          <div className='background'> 
-          <div className='payment'>
-            <div className='text-center'>
-              <h1>Payment Page</h1>
-              <h2>Total Amount: ${total}</h2>
-            </div>
-
-            <div className='payment-form'>
-              <SquarePaymentForm
-                  sandbox={true}
-                  applicationId={env.SANDBOX_APPLICATION_ID}
-                  locationId={env.SANDBOX_LOCATION_ID}
-                  cardNonceResponseReceived={this.cardNonceResponseReceived}
-                  createVerificationDetails={this.createVerificationDetails(total)}
-                >
-                    <fieldset className="sq-fieldset">
-                        <CreditCardNumberInput />
-                        <div className="sq-form-third">
-                        <CreditCardExpirationDateInput />
-                        </div>
-
-                        <div className="sq-form-third">
-                        <CreditCardPostalCodeInput />
-                        </div>
-
-                        <div className="sq-form-third">
-                        <CreditCardCVVInput />
-                        </div>
-                    </fieldset>
-
-                    <CreditCardSubmitButton>
-                        Pay $ {total}
-                    </CreditCardSubmitButton>
-                </SquarePaymentForm>
-            </div>
-    
-            <div className="sq-error-message">
-              {this.state.errorMessages.map(errorMessage =>
-                <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
-              )}
-            </div>
-          </div>
+          <div className='payment-bg' style={style}> 
+              {env && (
+                <div className='payment'>
+                  <header className='text-center'>
+                    <h1>Payment Page</h1>
+                    <h2>Total Amount: ${total}</h2>
+                  </header>
+              
+                    <div className='payment-form'>
+                      <SquarePaymentForm
+                        sandbox={true}
+                        applicationId={env.SANDBOX_APPLICATION_ID}
+                        locationId={env.SANDBOX_LOCATION_ID}
+                        cardNonceResponseReceived={this.cardNonceResponseReceived}
+                        createVerificationDetails={this.createVerificationDetails(total)}
+                      >
+                        <fieldset className="sq-fieldset">
+                          <CreditCardNumberInput />
+                                        
+                          <div className="sq-form-third">
+                            <CreditCardExpirationDateInput />
+                          </div>
+              
+                          <div className="sq-form-third">
+                            <CreditCardPostalCodeInput />
+                          </div>
+              
+                          <div className="sq-form-third">
+                            <CreditCardCVVInput />
+                          </div>
+                        </fieldset>
+              
+                          <CreditCardSubmitButton>
+                              Pay $ {total}
+                          </CreditCardSubmitButton>
+                        </SquarePaymentForm>
+                    </div>
+                    
+                  <div className="sq-error-message">
+                    {this.state.errorMessages.map(errorMessage =>
+                      <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
+                    )}
+                  </div>
+              </div>)}
           </div>
         )
     }

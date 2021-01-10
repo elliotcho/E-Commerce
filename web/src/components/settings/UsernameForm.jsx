@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {changeUsername} from '../../api/user';
+import { createErrorToast, createSuccessToast } from '../../utils/createToast';
+import { changeUsername } from '../../api/user';
 import './css/UsernameForm.css';
 
 class UsernameForm extends Component{
@@ -23,7 +24,13 @@ class UsernameForm extends Component{
 
         const { newName } = this.state;
         
-        await changeUsername(newName);       
+        const { error, msg } = await changeUsername(newName);    
+        
+        if(error){
+            createErrorToast(msg);
+        } else{
+            createSuccessToast(msg);
+        }
     }
 
     render(){
@@ -39,9 +46,8 @@ class UsernameForm extends Component{
                 <input 
                     id='newName'
                     className='form-control' 
+                    placeholder='New Username...'
                     type="text"
-                    minLength='4'
-                    maxLength='30'
                     onChange={this.handleChange}
                     value={newName}
                     required

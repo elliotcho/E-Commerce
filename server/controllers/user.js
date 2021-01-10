@@ -1,6 +1,7 @@
 import bcyrpt from 'bcrypt';
 import User from '../models/user';
 import { Product }  from '../models/product';
+import Review from '../models/review';
 import { redis } from '../app'; 
 import { sendEmail } from '../utils/sendEmail';
 import { v4 } from 'uuid';
@@ -13,20 +14,32 @@ import fs from 'fs';
 const profileUpload = createUpload('profile');
 
 export const login = async (req, res) => { 
-    const userResponse = await tryLogin(req);
+    const userResponse = await tryLogin(req.body);
     res.json(userResponse);
 }
 
 export const register = async (req, res) => {
-    const userResponse = await tryRegister(req);    
+    const userResponse = await tryRegister(req.body);    
     res.json(userResponse);
 }
 
 export const changeUserPassword = async(req, res) => {
-    const user = await User.findOne({_id: req.user._id});
+    const { newPassword } = req.body;
+
+    const user = await User.findOne({ _id: req.user._id });
     
     if(!user){
-        res.json({msg: "User not found"});
+        return res.json({
+            msg: "User not authenticated",
+            error: true
+        });
+    }
+
+    if(newPassword.length < 6 || newPassword.length > 50){
+        return res.json({
+            msg: 'Password must be between 6 and 50 characters',
+            error: true
+        });
     }
     
     const valid = await bcyrpt.compare(req.body.currPassword, user.password);
@@ -35,12 +48,22 @@ export const changeUserPassword = async(req, res) => {
         const salt = await bcyrpt.genSalt();
         const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt);
         
-        await User.updateOne({_id: req.user._id}, {password: hashedPassword });
-        res.json({msg: "Success"});
+        await User.updateOne(
+            { _id: req.user._id }, 
+            { password: hashedPassword },
+        );
+        
+        res.json({
+            msg: "Success",
+            error: false
+        });
     }
     
     else{
-        res.json({msg: "Invalid current password"});
+        res.json({
+            msg: "Invalid current password",
+            error: true
+        });
     }
 }
 
@@ -60,34 +83,44 @@ export const forgotPassword = async (req, res) => {
         await redis.set(token, user._id, 'ex', expiresIn);
         await sendEmail(req.body.email, href);
 
-        res.json({success: true});
+        res.json({ success: true });
     }
 }
 
 export const changePassword = async (req, res) => {
     const errors = [];
 
-    const key = 'forget-password:' + req.body.token;
+    const key = req.body.token;
     const uid = await redis.get(key);
 
-    const user = await User.findOne({_id: uid});
+    const user = await User.findOne({ _id: uid });
 
     if(!uid){
         errors.push({ field: 'token', msg:'token expired' });
     }
-
-    if(!user){
+    
+    else if(!user){
         errors.push({ field: 'token', msg:'user no longer exists' });
     }
 
     if(user && errors.length === 0){
+        const { newPassword } = req.body;
+
         const salt = await bcyrpt.genSalt();
-        const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt)
+        const hashedPassword = await bcyrpt.hash(newPassword, salt)
 
         await User.updateOne({ _id: uid }, { password: hashedPassword });
-        await redis.del(key);
+       
+        const userResponse = await tryLogin({ 
+            username: user.username, 
+            password: newPassword
+        });
+
+        if(userResponse.user){
+            await redis.del(key);
+        }
         
-        res.json({ user, errors });
+        res.json(userResponse);
     } 
     
     else{
@@ -99,12 +132,30 @@ export const changeUsername = async (req, res) => {
     const user = await User.findOne({username : req.body.username}); 
 
     if(user){
-        res.json({msg:"Username already exists"});
+        res.json({
+            msg:"Username already exists",
+            error: true
+        });
     }
 
     else{
-        await User.updateOne({ _id: req.user._id } , { username: req.body.username });
-        res.json({msg: 'Username changed successfully'});
+        try {
+            await User.updateOne(
+                { _id: req.user._id } , 
+                { username: req.body.username },
+                { runValidators: true }
+            );
+
+            res.json({
+                msg: 'Username changed successfully',
+                error: false
+            });
+        } catch (err) {
+            res.json({ 
+                msg: 'Username must be between 2 and 30 characters',
+                error: true
+            });
+        }
     }
 }
 
@@ -181,6 +232,25 @@ export const deleteUser = async (req, res) => {
     } 
 
     await User.deleteOne({ _id });
+   
+    const products = await Product.find({ userId: _id });
+
+    for(let i=0;i<products.length;i++){
+        const product = products[i];
+        const { _id, image } = product;
+
+        await Product.deleteOne({ _id });
+
+        if(image){
+            fs.unlink(path.join(__dirname, '../', `images/product/${image}`), err => {
+                if(err){
+                    console.log(err);
+                }
+            });
+        }
+    }
+
+    await Review.deleteMany({ userId: _id });
 
     res.json( { msg: 'Success' });     
 }
@@ -229,17 +299,16 @@ export const loadCart = async (req, res) => {
         const { cart } = user; 
 
         const result = [];
+        const newCart = [];
 
-        //filter out deleted products
-        const newCart = cart.filter(async p_id => {
-            const product = await Product.findOne({ _id: p_id });
-            
+        for(let i=0;i<cart.length;i++){
+            const product = await Product.findOne({ _id: cart[i] });
+
             if(product){
+                newCart.push(product._id);
                 result.push(product);
             }
-
-            return product !== null;
-        });
+        }
 
         await User.updateOne({ _id: req.user._id}, { cart: newCart });
       
@@ -259,7 +328,12 @@ export const userInfo = async (req, res) => {
             user = await User.findOne({ _id: req.user._id });
         }
 
+        if(!user){
+            user = { username: 'E-Commerce User' };
+        }
+        
         user.password = '';
+
         res.json(user);
     }
 }

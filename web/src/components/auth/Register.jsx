@@ -86,8 +86,6 @@ class Register extends Component{
                         id='username'
                         type='text'
                         value={username}
-                        minLength='2'
-                        maxLength='30'
                         onChange={this.handleChange}
                         placeholder='Username...'
                         required
@@ -97,8 +95,6 @@ class Register extends Component{
                     <input
                         id='password'
                         type='password'
-                        minLength='6'
-                        maxLength='50'
                         value={password}
                         onChange={this.handleChange}
                         placeholder='Password...'

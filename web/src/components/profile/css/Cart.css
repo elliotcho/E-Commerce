@@ -1,13 +1,18 @@
 .cart{
     height: 92vh;
+    font-family: 'Nunito Sans';
     position: relative;
     overflow: auto;
 }
 
-.h2{
+.cart .cart-product{
     display: inline-block;
 }
 
-.cart .text-center{
-    display: inline-block;
+.cart .items{
+    min-height: 300px;
+    max-width: 90%;
+    border: solid #393e46 8px;
+    border-radius: 11px;
+    margin: 50px auto;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+import { withRouter } from 'react-router-dom';
 import { decodeUser } from '../../utils/decodeUser';
 import { fetchUser } from '../../utils/fetchUser';
 import { loadMessages, readMessages } from '../../api/message';
@@ -6,7 +7,7 @@ import { socket } from '../../App';
 import loading from '../../images/loading.jpg';
 import './css/ChatContainer.css';
 
-function ChatContainer({ userId }){
+function ChatContainer({ userId, history }){
     const [messages, setMessages] = useState([]);
     const [typing, setTyping] = useState(false);
 
@@ -28,14 +29,24 @@ function ChatContainer({ userId }){
         });
 
         socket.on('READ_MESSAGES', () => fetchData());
-        
         socket.on('IS_TYPING', () => setTyping(true));
         socket.on('STOP_TYPING', () => setTyping(false));
 
         fetchData();
 
-        return () => socket.off('NEW_MESSAGE');
+        return () => {
+            socket.off('NEW_MESSAGE');
+            socket.off('READ_MESSAGES');
+            socket.off('IS_TYPING');
+            socket.off('STOP_TYPING');
+        }
     }, [userId, me]);
+
+    const toProfile = (profileId) => {
+        if(profileId){
+            history.push(`/profile/${profileId}`);
+        }
+    }
 
     return(
         <div className='chat-container mt-5'>
@@ -48,6 +59,7 @@ function ChatContainer({ userId }){
                     reader = {m.receiver}
                     dateSent = {m.dateSent}
                     isOwner = {m.sender === me}
+                    toProfile = {toProfile}
                     content = {m.content}
                     image = {m.image}
                     read = {m.read}
@@ -62,14 +74,20 @@ function TypingBubble({ userId }){
     const [imgURL, setImgURL] = useState(null);
 
     useEffect(() => {
+        let isSubscribed = true;
+
         const fetchData = async () => {
            const { imgURL, user } = await fetchUser(userId);
 
-           setUsername(user.username);
-           setImgURL(imgURL);
+            if(isSubscribed){
+                setUsername(user.username);
+                setImgURL(imgURL);
+            }
         }
 
         fetchData();
+
+        return () => isSubscribed = false;
     }, [userId]);
 
     return(
@@ -90,6 +108,7 @@ function MessageBubble({
     reader, 
     dateSent, 
     isOwner, 
+    toProfile,
     content, 
     image, 
     read 
@@ -101,16 +120,22 @@ function MessageBubble({
     const [imgURL, setImgURL] = useState(null);
 
     useEffect(() => {
+        let isSubscribed = true;
+
         const fetchData = async () => {
            const { imgURL, user } = await fetchUser(userId);
            const  { imgURL: readerPic } = await fetchUser(reader);
 
-           setReaderPic(readerPic);
-           setUsername(user.username);
-           setImgURL(imgURL);
+            if(isSubscribed){
+                setReaderPic(readerPic);
+                setUsername(user.username);
+                setImgURL(imgURL);
+            }
         }
 
         fetchData();
+
+        return () => isSubscribed = false;
     }, [userId, reader]);
 
     const isRead = read && isOwner;
@@ -124,9 +149,13 @@ function MessageBubble({
             data-toggle='tooltip'
             title={dateSentTitle}
         >
-            {!isOwner? 
-                <img src={imgURL? imgURL: loading} alt='owner profile pic'/> : <div/>
-            }
+            {isOwner? <div/> : (
+                <img 
+                    onClick={() => toProfile(userId)}
+                    src={imgURL? imgURL: loading} 
+                    alt='owner profile pic'
+                />
+            )}
 
             <div className='msg-bubble'>
                 <p><strong>{username}</strong></p>
@@ -149,4 +178,4 @@ function MessageBubble({
     )
 }
 
-export default ChatContainer;
+export default withRouter(ChatContainer);

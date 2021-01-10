@@ -26,11 +26,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const addUser = async (req, res, next) => {
-    if(req.body.token){
-        console.log("HELLO")
-    }
-
     const token = req.headers['x-token'];
+    
     if(token){
         try{
             const { user } = jwt.verify(token, process.env.JWT_SECRET);

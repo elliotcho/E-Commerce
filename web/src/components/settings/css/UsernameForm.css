@@ -15,12 +15,12 @@
     font-size: 20px;
 }
 
-.change-username h3{
+.change-username h3, .change-username input{
     font-family: 'Balsamiq Sans', cursive;
 }
 
 .change-username label{
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Sansita Swashed', cursive;
 }
 
 .change-username button{
