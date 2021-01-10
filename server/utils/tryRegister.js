@@ -31,8 +31,22 @@ export const tryRegister = async (data) => {
             msg: 'Email should include the @ sign'
         });
     }
+
+    if(password.length < 6 || password.length > 50){
+        errors.push({
+            field: 'Password',
+            msg: 'Password must be between 6 and 50 characters'
+        });
+    }
+
+    if(email.length < 6 || email.length > 50){
+        errors.push({
+            field: 'Email',
+            msg: 'Email must be between 6 and 50 characters'
+        });
+    }
   
-    user = await User.findOne({email});
+    user = await User.findOne({ email });
     
     if(user){
         errors.push({
@@ -43,7 +57,7 @@ export const tryRegister = async (data) => {
         user = null;
     }
 
-    user = await User.findOne({username});
+    user = await User.findOne({ username });
 
     if(user){
         errors.push({
@@ -58,22 +72,29 @@ export const tryRegister = async (data) => {
         const salt = await bcyrpt.genSalt();
         const hashedPassword = await bcyrpt.hash(password, salt);
         
-        const newUser = new User({
-            username,
-            email, 
-            password: hashedPassword, 
-            cart: [],
-            isAdmin
-        });
-                
-        user = await newUser.save();
-        
-        const refreshTokenSecret = user.password + process.env.REFRESH_SECRET;
-        const [ token , refreshToken ] = await createTokens(user, process.env.JWT_SECRET, refreshTokenSecret);
-
-        user._doc.token = token;
-        user._doc.refreshToken = refreshToken;
-        user.password = '';
+        try {
+            const newUser = new User({
+                username,
+                email, 
+                password: hashedPassword, 
+                cart: [],
+                isAdmin
+            });
+                    
+            user = await newUser.save();
+            
+            const refreshTokenSecret = user.password + process.env.REFRESH_SECRET;
+            const [ token , refreshToken ] = await createTokens(user, process.env.JWT_SECRET, refreshTokenSecret);
+    
+            user._doc.token = token;
+            user._doc.refreshToken = refreshToken;
+            user.password = '';
+        } catch (e){
+            errors.push({
+                field: 'Username',
+                msg: 'username must be between 2 and 30 characters'
+            })
+        }
     }
 
     return { user, errors };

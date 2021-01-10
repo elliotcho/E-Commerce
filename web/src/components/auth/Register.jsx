@@ -73,8 +73,6 @@ class Register extends Component{
                     <input
                         id='email'
                         type='text'
-                        minLength='6'
-                        maxLength='50'
                         value={email}
                         onChange={this.handleChange}
                         placeholder='Email...'

@@ -82,7 +82,7 @@ export const changeUsername = async (username) => {
 export const changePassword = async(data) => {
     const config = {headers: {'content-type': 'application/json'}};
     
-    const response = await axios.post(`${API}/api/user/change_user_password`, data, authMiddleware(config));
+    const response = await axios.post(`${API}/api/user/password_settings`, data, authMiddleware(config));
     authAfterware(response);
 
     return response.data;
@@ -91,4 +91,3 @@ export const changePassword = async(data) => {
 export const deleteAccount = async() => {
     await axios.delete(`${API}/api/user`, authMiddleware({headers: {}}));
 }
-

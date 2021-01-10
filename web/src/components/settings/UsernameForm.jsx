@@ -30,6 +30,7 @@ class UsernameForm extends Component{
             createErrorToast(msg);
         } else{
             createSuccessToast(msg);
+            this.setState({ newName: '' });
         }
     }
 

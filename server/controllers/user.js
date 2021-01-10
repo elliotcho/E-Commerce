@@ -23,7 +23,7 @@ export const register = async (req, res) => {
     res.json(userResponse);
 }
 
-export const changeUserPassword = async(req, res) => {
+export const passwordSettings = async(req, res) => {
     const { newPassword } = req.body;
 
     const user = await User.findOne({ _id: req.user._id });
@@ -37,7 +37,7 @@ export const changeUserPassword = async(req, res) => {
 
     if(newPassword.length < 6 || newPassword.length > 50){
         return res.json({
-            msg: 'Password must be between 6 and 50 characters',
+            msg: 'New password must be between 6 and 50 characters',
             error: true
         });
     }
@@ -220,39 +220,43 @@ export const removeProfilePic = async (req, res) => {
 }
 
 export const deleteUser = async (req, res) => {
-    const user = await User.findOne({ _id : req.user._id });
-    const { _id, profilePic } = user;
-  
-    if(profilePic){
-        fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
-            if(err){
-                console.log(err);
-            }
-        });
-    } 
-
-    await User.deleteOne({ _id });
-   
-    const products = await Product.find({ userId: _id });
-
-    for(let i=0;i<products.length;i++){
-        const product = products[i];
-        const { _id, image } = product;
-
-        await Product.deleteOne({ _id });
-
-        if(image){
-            fs.unlink(path.join(__dirname, '../', `images/product/${image}`), err => {
+    try {
+        const user = await User.findOne({ _id : req.user._id });
+        const { _id, profilePic } = user;
+      
+        if(profilePic){
+            fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
                 if(err){
                     console.log(err);
                 }
             });
+        } 
+    
+        await User.deleteOne({ _id });
+       
+        const products = await Product.find({ userId: _id });
+    
+        for(let i=0;i<products.length;i++){
+            const product = products[i];
+            const { _id, image } = product;
+    
+            await Product.deleteOne({ _id });
+    
+            if(image){
+                fs.unlink(path.join(__dirname, '../', `images/product/${image}`), err => {
+                    if(err){
+                        console.log(err);
+                    }
+                });
+            }
         }
-    }
+    
+        await Review.deleteMany({ userId: _id });
 
-    await Review.deleteMany({ userId: _id });
-
-    res.json( { msg: 'Success' });     
+        res.json({ msg: 'Success' });   
+    } catch (err) {
+        res.json({ msg: 'Failure' });
+    }  
 }
 
 export const addToCart = async (req, res) => {
@@ -333,7 +337,6 @@ export const userInfo = async (req, res) => {
         }
         
         user.password = '';
-
         res.json(user);
     }
 }

@@ -31,6 +31,12 @@ class ChangePasswordForm extends Component{
                 createErrorToast(msg);
             } else {
                 createSuccessToast(msg);
+
+                this.setState({
+                    currPassword: '',
+                    newPassword: '',
+                    confirmPassword: ''
+                });
             }
         } 
         
