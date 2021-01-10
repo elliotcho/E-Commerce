@@ -76,7 +76,7 @@ export const changeUsername = async (username) => {
     const response = await axios.post(`${API}/api/user/change_username`, {username}, authMiddleware(config));
     authAfterware(response);
 
-    return response.data.msg;
+    return response.data;
 }
 
 export const changePassword = async(data) => {

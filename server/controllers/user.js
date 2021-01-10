@@ -110,7 +110,10 @@ export const changeUsername = async (req, res) => {
     const user = await User.findOne({username : req.body.username}); 
 
     if(user){
-        res.json({msg:"Username already exists"});
+        res.json({
+            msg:"Username already exists",
+            error: true
+        });
     }
 
     else{
@@ -121,9 +124,15 @@ export const changeUsername = async (req, res) => {
                 { runValidators: true }
             );
 
-            res.json({msg: 'Username changed successfully'});
+            res.json({
+                msg: 'Username changed successfully',
+                error: false
+            });
         } catch (err) {
-            res.json({ msg: 'Username must be between 2 and 30 characters'});
+            res.json({ 
+                msg: 'Username must be between 2 and 30 characters',
+                error: true
+            });
         }
     }
 }
