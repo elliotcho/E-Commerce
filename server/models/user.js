@@ -14,9 +14,7 @@ const UserSchema = new mongoose.Schema({
         trim: true,
     },
     password: {
-        type: String,
-        minlength: 6,
-        maxlength: 50
+        type: String
     },
     cart: {
         type: [String],

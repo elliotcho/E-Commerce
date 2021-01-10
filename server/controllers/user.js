@@ -24,11 +24,20 @@ export const register = async (req, res) => {
 }
 
 export const changeUserPassword = async(req, res) => {
-    const user = await User.findOne({_id: req.user._id});
+    const { newPassword } = req.body;
+
+    const user = await User.findOne({ _id: req.user._id });
     
     if(!user){
-        res.json({
-            msg: "User not found",
+        return res.json({
+            msg: "User not authenticated",
+            error: true
+        });
+    }
+
+    if(newPassword.length < 6 || newPassword.length > 50){
+        return res.json({
+            msg: 'Password must be between 6 and 50 characters',
             error: true
         });
     }
@@ -39,23 +48,15 @@ export const changeUserPassword = async(req, res) => {
         const salt = await bcyrpt.genSalt();
         const hashedPassword = await bcyrpt.hash(req.body.newPassword, salt);
         
-        try{
-            await User.updateOne(
-                { _id: req.user._id }, 
-                { password: hashedPassword },
-                { runValidators: true }
-            );
-            
-            res.json({
-                msg: "Success",
-                error: false
-            });
-        } catch (err){
-            res.json({
-                msg: 'Passwords must be between 6 and 50 characters',
-                error: true
-            })
-        }
+        await User.updateOne(
+            { _id: req.user._id }, 
+            { password: hashedPassword },
+        );
+        
+        res.json({
+            msg: "Success",
+            error: false
+        });
     }
     
     else{
@@ -231,7 +232,24 @@ export const deleteUser = async (req, res) => {
     } 
 
     await User.deleteOne({ _id });
-    await Product.deleteMany({ userId: _id });
+   
+    const products = await Product.find({ userId: _id });
+
+    for(let i=0;i<products.length;i++){
+        const product = products[i];
+        const { _id, image } = product;
+
+        await Product.deleteOne({ _id });
+
+        if(image){
+            fs.unlink(path.join(__dirname, '../', `images/product/${image}`), err => {
+                if(err){
+                    console.log(err);
+                }
+            });
+        }
+    }
+
     await Review.deleteMany({ userId: _id });
 
     res.json( { msg: 'Success' });     
