@@ -7,9 +7,9 @@ function Home({history}){
         history.push('/products/all');
     }
     return(
-        <div className = 'home'>
+        <div className = 'home img-responsive'>
             <h1>Shop across departments.</h1>
-            <h2>Message Customers.</h2>
+            <h2>Message customers.</h2>
             <h3>Upload your products.</h3>
 
             <div className = "box-2">

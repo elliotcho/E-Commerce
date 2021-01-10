@@ -28,47 +28,47 @@ body {
   cursor: pointer;
 }
 .home{
-    height: 92vh;
-    position: relative;
     background-image: url('../../../images/tiger.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.9;
+    width: 100%;
+    height: 100vh;
+    background-size: 100% 100%;
+  
 }
 
 .home h1 {
   color: #900c3f;
   position: relative;
-  top: 100px;
-  left: 30px;
-  font-family: 'Balsamiq Sans', cursive;
-  font-weight: 900;
-  font-size: 44px;
-}
-
-.home h2{
-  color: #f54291;
-  position: relative;
-  top: 130px;
+  top: 20px;
   left: 30px;
   font-family: 'Balsamiq Sans', cursive;
   font-weight: 900;
   font-size: 40px;
 }
 
-.home h3{
-  color: #e6739f;
+.home h2{
+  color: #f54291;
   position: relative;
-  top: 160px;
+  top: 40px;
   left: 30px;
   font-family: 'Balsamiq Sans', cursive;
   font-weight: 900;
   font-size: 36px;
 }
 
+.home h3{
+  color: #e6739f;
+  position: relative;
+  top: 60px;
+  left: 30px;
+  font-family: 'Balsamiq Sans', cursive;
+  font-weight: 900;
+  font-size: 32px;
+}
+
 .home p{
   position: relative;
-  top: 70%;
+  padding-right: 10%;
+  top: 20%;
   left: 70%;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: 900;
@@ -124,17 +124,65 @@ body {
     background-color: rgba(231, 198, 52, 0.2);
   }
 
-@media screen and (max-width: 900px){
+@media screen and (max-width: 1200px){
   .home h1 {
-    font-size: 34px;
+    font-size: 36px;
   }
-  .home h2 {
-    font-size: 30px;
+  .home h2{
+    font-size: 32px;
   }
-  .home h3 {
-    font-size: 26px;
+  .home h3{
+    font-size: 28px;
   }
-  .home p {
-    font-size: 10px;
+  .home p{
+    font-size: 17px;
+  }
+}
+@media screen and (max-width: 1000px){
+  .home h1 {
+    font-size: 32px;
+  }
+  .home h2{
+    font-size: 28px;
+  }
+  .home h3{
+    font-size: 24px;
+  }
+  .home p{
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 800px){
+  .home h1 {
+    font-size: 28px;
+  }
+  .home h2{
+    font-size: 24px;
+  }
+  .home h3{
+    font-size: 20px;
+  }
+  .home p{
+    position: relative;
+    top: 37%;
+    left: 49%;
+    font-size: 11px;
+  }
+}
+@media screen and (max-width: 600px){
+  .home h1 {
+    font-size: 24px;
+  }
+  .home h2{
+    font-size: 20px;
+  }
+  .home h3{
+    font-size: 16px;
+  }
+  .home p{
+    position: relative;
+    top: 40%;
+    left: 54%;
+    font-size: 11px;
   }
 }
