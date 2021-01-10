@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import decode from 'jwt-decode';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
+import {getReviews} from '../../api/review';
 import ReviewList from '../reviews/ReviewList';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
@@ -18,6 +19,7 @@ class ProductDetails extends Component{
         this.state = {
             product: {},
             fetching: false,
+            rating: ''
         }
 
         this.removeProduct = this.removeProduct.bind(this);
@@ -26,9 +28,20 @@ class ProductDetails extends Component{
 
     async componentDidMount(){
         const { id } = this.props.match.params;
-
+        const reviews = await getReviews(id);
         const product = await getProductById(id);
-    
+        console.log(reviews);
+
+        let numOfReviews = 0;
+        let ratingCounter =0 ;
+        for(let i = 0 ; i < reviews.length; i++){
+            ratingCounter += parseInt(reviews[i].rating)
+            numOfReviews++;
+        }
+        let averageRating = 0;
+        averageRating = (ratingCounter/ numOfReviews);
+        this.setState({rating: averageRating.toString()});
+
         this.setState({ product, fetching: true });
     }
 
@@ -51,6 +64,7 @@ class ProductDetails extends Component{
         const { product: { 
             image, name, price, description, datePosted, userId, username, quantity, _id
         } } = this.state;
+        const{rating} = this.state;
 
         const style = this.context.isDark? darkStyle: lightStyle;
         let isOwner = false;
@@ -84,6 +98,9 @@ class ProductDetails extends Component{
                                         >
                                             {username}
                                         </span>
+                                    </p>
+                                    <p className='rating'>
+                                        Average User Rating: {rating}/5
                                     </p>
                                 </div>
                             </div>

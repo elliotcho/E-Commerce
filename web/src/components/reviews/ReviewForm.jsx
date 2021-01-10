@@ -9,6 +9,7 @@ class ReviewForm extends Component {
 
         this.state = {
             content: '',
+            rating: ''
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,9 +24,10 @@ class ReviewForm extends Component {
         e.preventDefault();
 
         const { history, productId, addReview } = this.props;
-        const { content } = this.state;
-
-        const { ok }  = await createReview({ content, productId });
+        const { content, rating } = this.state;
+        console.log(rating);
+        console.log("calling server...");
+        const { ok }  = await createReview({ content, productId, rating });
 
         if(ok) {
             this.setState({ content: '' });
@@ -48,6 +50,15 @@ class ReviewForm extends Component {
                         onChange={ this.handleChange }
                         value={ this.state.content }
                     />
+
+                    <label for="rating">Your Rating (x/5): </label>
+                    <select name='rating' id='rating' onChange={this.handleChange}>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
 
                     <button className='btn btn-success mt-3'>
                         Submit

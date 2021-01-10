@@ -25,6 +25,7 @@ class Review extends Component{
 
     async componentDidMount(){
         const { likes, dislikes } = this.props;
+        
 
         await this.verifyUserLike();
         await this.verifyUserDislike();

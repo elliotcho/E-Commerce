@@ -4,16 +4,18 @@ export const createReview = async (req, res) => {
     if (!req.user){
         res.json({ ok: false });
     } else{
-        const { productId, content } = req.body;
+        const { productId, content, rating } = req.body;
 
         const newReview = new Review({
             userId: req.user._id,
             productId,
             content,
-            datePosted: new Date()
+            datePosted: new Date(),
+            rating,
         })
 
         const review = await newReview.save();
+        console.log("review saved....");
 
         res.json({ ok: true });
     }

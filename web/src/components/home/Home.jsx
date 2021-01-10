@@ -6,14 +6,39 @@ function Home({history}){
     const goToProducts = () => {
         history.push('/products/all');
     }
+    const goToMessages = () => {
+        history.push('/chat');
+    }
+    const goToUpload = () => {
+        history.push('/create_product');
+    }
+    const goToRegister = () => {
+        history.push('/register');
+    }
     return(
         <div className = 'home img-responsive'>
             <h1>Shop across departments.</h1>
-            <h2>Message customers.</h2>
+            <h2>Directly Message Sellers to get the best price for you!.</h2>
             <h3>Upload your products.</h3>
 
-            <div className = "box-2">
-            <div className ="btn btn-two">
+            <div class="hexagon-wrapper">
+                <div class="hexagon">
+                    <i onClick={goToMessages}>Message Customers</i>
+                </div>
+                </div>
+                <div class="hexagon-wrapper">
+                <div class="hexagon">
+                    <i onClick={goToUpload}>Upload a Product</i>
+                </div>
+                </div>
+                <div class="hexagon-wrapper">
+                <div class="hexagon">
+                    <i onClick={goToRegister}>Create An Account</i>
+                </div>
+            </div>
+
+            <div class="box-2">
+            <div class="btn btn-two">
                 <span onClick={goToProducts}>Peeps The Products</span>
             </div>
             </div>
