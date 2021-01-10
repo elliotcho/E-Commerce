@@ -7,6 +7,11 @@ import { socket } from '../../App';
 import loading from '../../images/loading.jpg';
 import './css/ChatContainer.css';
 
+const NEW_MESSAGE_EVENT = 'NEW_MESSAGE';
+const READ_MESSAGES_EVENT = 'READ_MESSAGES';
+const IS_TYPING_EVENT = 'IS_TYPING';
+const STOP_TYPING_EVENT = 'STOP_TYPING';
+
 function ChatContainer({ userId, history }){
     const [messages, setMessages] = useState([]);
     const [typing, setTyping] = useState(false);
@@ -18,27 +23,27 @@ function ChatContainer({ userId, history }){
             setMessages(await loadMessages(userId));
         }
 
-        socket.on('NEW_MESSAGE', async () => {
+        socket.on(NEW_MESSAGE_EVENT, async () => {
             const payload = await readMessages(userId);
             
             if(payload.ok){
-                socket.emit('READ_MESSAGES', payload);
+                socket.emit(READ_MESSAGES_EVENT, payload);
             }
 
             fetchData();
         });
 
-        socket.on('READ_MESSAGES', () => fetchData());
-        socket.on('IS_TYPING', () => setTyping(true));
-        socket.on('STOP_TYPING', () => setTyping(false));
+        socket.on(READ_MESSAGES_EVENT, () => fetchData());
+        socket.on(IS_TYPING_EVENT, () => setTyping(true));
+        socket.on(STOP_TYPING_EVENT, () => setTyping(false));
 
         fetchData();
 
         return () => {
-            socket.off('NEW_MESSAGE');
-            socket.off('READ_MESSAGES');
-            socket.off('IS_TYPING');
-            socket.off('STOP_TYPING');
+            socket.off(NEW_MESSAGE_EVENT);
+            socket.off(READ_MESSAGES_EVENT);
+            socket.off(IS_TYPING_EVENT);
+            socket.off(STOP_TYPING_EVENT);
         }
     }, [userId, me]);
 
@@ -139,7 +144,6 @@ function MessageBubble({
     }, [userId, reader]);
 
     const isRead = read && isOwner;
-
     const dateSentTitle = `Sent ${new Date(dateSent).toLocaleString()}`;
     const dateReadTitle =  `Read ${new Date(read).toLocaleString()}`;
 
@@ -149,6 +153,7 @@ function MessageBubble({
             data-toggle='tooltip'
             title={dateSentTitle}
         >
+
             {isOwner? <div/> : (
                 <img 
                     onClick={() => toProfile(userId)}
@@ -174,6 +179,7 @@ function MessageBubble({
                     )}
                 </div>
             </div>
+
         </div>
     )
 }

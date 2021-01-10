@@ -33,5 +33,4 @@ function DeadPage(props){
     )
 }
 
-
 export default DeadPage;

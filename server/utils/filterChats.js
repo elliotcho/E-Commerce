@@ -7,7 +7,7 @@ export const filterChats = (result, map, messages, userType) => {
             result.push(msg);
         } 
         
-        else if(map[msg[userType]] < msg.dateSent){
+        else if(map[msg[userType]] <= msg.dateSent){
             map[msg[userType]] = msg.dateSent;
 
             const idx = _.findIndex(result, [userType, msg[userType]]);

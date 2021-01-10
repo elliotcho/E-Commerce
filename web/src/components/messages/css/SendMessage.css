@@ -20,6 +20,7 @@
 }
 
 .send-message label{
+    font-family: 'Segoe UI';
     font-weight: bold;
     font-size: 1.2rem;
     cursor: pointer;

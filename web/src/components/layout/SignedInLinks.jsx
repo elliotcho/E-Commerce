@@ -5,6 +5,10 @@ import { getUnreadChats } from '../../api/message';
 import { socket } from '../../App';
 import './css/SignedInLinks.css';
 
+//socket events
+const DISCONNECT_EVENT = 'DISCONNECT';
+const UPDATE_NAVBAR_EVENT = 'UPDATE_NAVBAR';
+//other constants
 const token = window.localStorage.getItem('token');
 
 function SignedInLinks({ isAdmin }){
@@ -13,7 +17,7 @@ function SignedInLinks({ isAdmin }){
     const logout = (e) => {
         e.preventDefault();
 
-        socket.emit('DISCONNECT', { token });
+        socket.emit(DISCONNECT_EVENT, { token });
     
         window.localStorage.clear();
         window.location.href = '/';
@@ -24,11 +28,11 @@ function SignedInLinks({ isAdmin }){
             setUnread(await getUnreadChats());
         }
 
-        socket.on('UPDATE_NAVBAR', () => fetchData());
+        socket.on(UPDATE_NAVBAR_EVENT, () => fetchData());
 
         fetchData();
 
-        return () => socket.off('UPDATE_NAVBAR');
+        return () => socket.off(UPDATE_NAVBAR_EVENT);
     }, []);
 
     const msgIcon = formatCount(unread) ? 'text-white' : '';

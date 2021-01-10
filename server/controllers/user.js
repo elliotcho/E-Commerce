@@ -8,6 +8,7 @@ import { redis } from '../app';
 import User from '../models/user';
 import { Product }  from '../models/product';
 import Review from '../models/review';
+import Message from '../models/message';
 
 import { createUpload } from '../utils/createUpload';
 import { sendEmail } from '../utils/sendEmail';
@@ -313,6 +314,8 @@ export const deleteUser = async (req, res) => {
         }
     
         await Review.deleteMany({ userId: _id });
+        await Message.deleteMany({ receiver: _id });
+        await Message.deleteMany({ sender: _id });
         await User.deleteOne({ _id });
 
         res.json({ msg: 'Success' });   

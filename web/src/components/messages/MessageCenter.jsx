@@ -12,12 +12,14 @@ import './css/MessageCenter.css';
 const lightStyle = { backgroundColor: '#8ec6c5'};
 const darkStyle = { backgroundColor: '#34626c' };
 
+const MESSAGE_NOTIFICATION_EVENT = 'MESSAGE_NOTIFICATION';
+const READ_MESSAGES_EVENT = 'READ_MESSAGES';
 
 class MessageCenter extends React.Component{
     static contextType = ThemeContext;
 
     async componentDidMount(){
-        socket.off('MESSAGE_NOTIFICATION');
+        socket.off(MESSAGE_NOTIFICATION_EVENT);
 
         const { userId } = this.props.match.params;
 
@@ -27,7 +29,7 @@ class MessageCenter extends React.Component{
     }
 
     async componentDidUpdate(prevProps){
-        socket.off('MESSAGE_NOTIFICATION');
+        socket.off(MESSAGE_NOTIFICATION_EVENT);
 
         const { userId } = this.props.match.params;
 
@@ -40,12 +42,12 @@ class MessageCenter extends React.Component{
         const payload = await readMessages(userId);
 
         if(payload.ok){
-            socket.emit('READ_MESSAGES', payload);
+            socket.emit(READ_MESSAGES_EVENT, payload);
         }
     }
 
     componentWillUnmount(){
-        socket.on('MESSAGE_NOTIFICATION', createMessageToast);
+        socket.on(MESSAGE_NOTIFICATION_EVENT, createMessageToast);
     }
 
     render(){

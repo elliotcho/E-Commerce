@@ -12,9 +12,9 @@ const router = express.Router();
 
 router.get('/', getUserChats);
 router.post('/', createMessage);
+router.put('/', readMessages);
 router.post('/messages', getMessages);
 router.get('/image/:messageId', loadMessagePic);
-router.put('/', readMessages);
 router.get('/unread', getUnreadChats);
 
 export default router;

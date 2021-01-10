@@ -6,6 +6,11 @@ import Routes from './Routes';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
+//socket events
+const JOIN_EVENT = 'JOIN';
+const MESSAGE_NOTIFICATION_EVENT = 'MESSAGE_NOTIFICATION';
+
+//socket config
 const wsEndpoint = `${API}`;
 let socket;
 
@@ -21,8 +26,8 @@ class App extends Component{
      if(token){
        const data = { token };
 
-       socket.emit('JOIN', data);
-       socket.on('MESSAGE_NOTIFICATION', createMessageToast);
+       socket.emit(JOIN_EVENT, data);
+       socket.on(MESSAGE_NOTIFICATION_EVENT, createMessageToast);
      }
   }
 
