@@ -82,8 +82,6 @@ class PaymentForm extends Component{
 
         const style = isDark? darkStyle: lightStyle;
 
-        console.log(env);
-
         return(
           <div className='payment-bg' style={style}> 
               {env && (

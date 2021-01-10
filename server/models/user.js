@@ -3,14 +3,20 @@ import mongoose from 'mongoose';
 const UserSchema = new mongoose.Schema({
     email:{
         type: String,
+        minlength: 6,
+        maxlength: 50,
         trim: true,
     },
     username: {
         type: String,
+        minlength: 2,
+        maxlength: 30,
         trim: true,
     },
     password: {
-        type: String
+        type: String,
+        minlength: 6,
+        maxlength: 50
     },
     cart: {
         type: [String],

@@ -114,8 +114,17 @@ export const changeUsername = async (req, res) => {
     }
 
     else{
-        await User.updateOne({ _id: req.user._id } , { username: req.body.username });
-        res.json({msg: 'Username changed successfully'});
+        try {
+            await User.updateOne(
+                { _id: req.user._id } , 
+                { username: req.body.username },
+                { runValidators: true }
+            );
+
+            res.json({msg: 'Username changed successfully'});
+        } catch (err) {
+            res.json({ msg: 'Username must be between 2 and 30 characters'});
+        }
     }
 }
 

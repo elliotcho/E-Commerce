@@ -40,8 +40,6 @@ class UsernameForm extends Component{
                     id='newName'
                     className='form-control' 
                     type="text"
-                    minLength='4'
-                    maxLength='30'
                     onChange={this.handleChange}
                     value={newName}
                     required
