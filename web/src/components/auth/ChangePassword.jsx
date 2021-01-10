@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { changePassword } from '../../api/auth'; 
 import './css/ChangePassword.css';
 
-
 class ChangePassword extends Component{
     constructor(){
         super();
@@ -48,9 +47,9 @@ class ChangePassword extends Component{
                     <input
                         id='newPassword'
                         type='password'
-                        value={newPassword}
                         onChange={this.handleChange}
                         placeholder='New password here...'
+                        value={newPassword}
                     />
 
                     <button className='btn btn-success mt-3'>

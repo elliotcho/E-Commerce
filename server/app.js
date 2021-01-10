@@ -1,14 +1,19 @@
+//environment variables
 import 'dotenv/config';
 
+//dependencies
 import socket from 'socket.io';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import { refreshTokens } from './utils/authTokens';
 import Redis from 'ioredis';
 
+//util functions
+import { refreshTokens } from './utils/authTokens';
+
+//routes
 import userRouter from './routes/user';
 import productRouter from './routes/product';
 import departmentRouter from './routes/department';
@@ -16,14 +21,14 @@ import messageRouter from './routes/message';
 import paymentRouter from './routes/payment';
 import reviewRouter from './routes/review';
 
+//socket events
 import SubscriptionServer from './socket/index';
-
-const app = express();
 
 export const redis = new Redis();
 
-app.use(cors());
+const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 const addUser = async (req, res, next) => {
     const token = req.headers['x-token'];

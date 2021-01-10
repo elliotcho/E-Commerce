@@ -1,8 +1,8 @@
 import React, { useContext }from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import ChangePasswordForm from './ChangePasswordForm';
 import DeleteUser from './DeleteUser.jsx';
 import UsernameForm from './UsernameForm';
-import ChangePasswordForm from './ChangePasswordForm';
 import './css/Setting.css';
 
 const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
@@ -40,4 +40,5 @@ function Settings(){
         </div>
     )
 };
+
 export default Settings;

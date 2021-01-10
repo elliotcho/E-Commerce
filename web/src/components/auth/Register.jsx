@@ -32,7 +32,7 @@ class Register extends Component{
     }
 
     handleChange(e){
-        this.setState({[e.target.id] : e.target.value});
+        this.setState({ [e.target.id] : e.target.value });
     }
 
     async handleSubmit(e){
@@ -41,23 +41,19 @@ class Register extends Component{
         const{ email, username, password, confirmPassword, adminCode } = this.state;
     
         if(password !== confirmPassword){
-            this.setState({errors: [{
-                    field: 'Password',
-                    msg: 'Passwords do not match'
-                }]
-            });
+            const msg = 'Passwords do not match';
+            const error = { field: 'Password', msg };
 
+            this.setState({ errors: [error] });
             return;
         }
 
-        const userResponse = await register({ email, username, password, adminCode });
+        const { user, errors } = await register({ email, username, password, adminCode });
 
-        if(userResponse.user){
+        if(user){
             window.location.reload();
-        } 
-        
-        else{
-            this.setState({errors: userResponse.errors});
+        } else{
+            this.setState({ errors });
         }
     }
 

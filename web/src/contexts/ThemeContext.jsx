@@ -7,7 +7,6 @@ function ThemeContextProvider({ children }){
     const [isDark, changeTheme] = useState(cached);
 
     const toggleTheme = () => {
-        //if true
         if(!isDark){
             localStorage.setItem('isDark', !isDark);
         } else{
@@ -18,7 +17,7 @@ function ThemeContextProvider({ children }){
     }
 
     return(
-        <ThemeContext.Provider value={{isDark, toggleTheme}}>
+        <ThemeContext.Provider value={{ isDark, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     );

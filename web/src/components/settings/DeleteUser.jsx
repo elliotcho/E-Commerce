@@ -1,6 +1,6 @@
 import React from 'react';
-import { deleteAccount } from '../../api/user';
 import { confirmAlert } from 'react-confirm-alert';
+import { deleteAccount } from '../../api/user';
 import { socket } from '../../App';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import './css/DeleteUser.css';
@@ -23,7 +23,7 @@ function DeleteUser(){
             message: 'Are you sure you want to delete this account',
             buttons: [
                 {label: 'Yes', onClick: confirmDelete},
-                {label: 'No', onClick: () => {return;}}
+                {label: 'No', onClick: () => { return; }}
             ]
         });          
     }

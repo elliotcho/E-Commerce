@@ -22,15 +22,13 @@ class UsernameForm extends Component{
     async handleSubmit(e){
         e.preventDefault();
 
-        const { newName } = this.state;
-        
-        const { error, msg } = await changeUsername(newName);    
+        const { error, msg } = await changeUsername(this.state.newName);    
         
         if(error){
             createErrorToast(msg);
         } else{
-            createSuccessToast(msg);
             this.setState({ newName: '' });
+            createSuccessToast(msg);
         }
     }
 
@@ -51,7 +49,6 @@ class UsernameForm extends Component{
                     type="text"
                     onChange={this.handleChange}
                     value={newName}
-                    required
                 />
     
                 <div className = 'text-center'>
@@ -63,4 +60,5 @@ class UsernameForm extends Component{
         )
     }
 }
+
 export default UsernameForm;

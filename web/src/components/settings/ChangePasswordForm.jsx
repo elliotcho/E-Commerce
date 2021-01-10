@@ -3,7 +3,6 @@ import { createErrorToast, createSuccessToast } from '../../utils/createToast';
 import { changePassword } from '../../api/user';
 import './css/ChangePasswordForm.css';
 
-
 class ChangePasswordForm extends Component{
     constructor(){
         super();
@@ -16,6 +15,10 @@ class ChangePasswordForm extends Component{
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(e){
+        this.setState({[e.target.id]: e.target.value});
     }
 
     async handleSubmit(e){
@@ -45,12 +48,8 @@ class ChangePasswordForm extends Component{
         }
     }
 
-    handleChange(e){
-        this.setState({[e.target.id]: e.target.value});
-    }
-
     render(){
-        const {currPassword, newPassword, confirmPassword} = this.state;
+        const { currPassword, newPassword, confirmPassword } = this.state;
         
         return(
             <form className='change-password my-3 mx-auto' onSubmit={this.handleSubmit}>
@@ -66,7 +65,6 @@ class ChangePasswordForm extends Component{
                         type='password'
                         onChange={this.handleChange}
                         value={currPassword}
-                        required
                     />
 
                     <label htmlFor='newPassword'>New Password<span> *</span></label>
@@ -77,7 +75,6 @@ class ChangePasswordForm extends Component{
                         type="password"
                         onChange = {this.handleChange}
                         value = {newPassword}
-                        required
                     />
 
                     <label htmlFor="confirm-password">Confirm New Password<span> *</span></label>
@@ -88,7 +85,6 @@ class ChangePasswordForm extends Component{
                         type="password"
                         onChange={this.handleChange}
                         value={confirmPassword}
-                        required
                     />
 
                     <div className='text-center'>

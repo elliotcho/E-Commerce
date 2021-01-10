@@ -44,5 +44,5 @@ export const tryLogin = async (data) => {
         }
     } 
 
-    return {user, errors};
+    return { user, errors };
 }

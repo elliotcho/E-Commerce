@@ -38,8 +38,10 @@ class ForgotPassword extends Component{
         return(
             <div className="forgot-pwd">
                 <div className='mx-auto'>
+                    
                     {!submitted?
-                        (<form onSubmit={this.handleSubmit}>
+                       
+                       (<form onSubmit={this.handleSubmit}>
                             <h2 className = 'mb-4'>
                                 Forgot your password? 
                                 Don't worry, we will send 
@@ -48,21 +50,27 @@ class ForgotPassword extends Component{
                         
                             <input
                                 id = 'email'
-                                value = {email}
-                                type = 'email'
                                 placeholder='Your email here'
                                 onChange={this.handleChange}
+                                value = {email}
+                                type = 'email'
                             />
                       
                             <button className='btn btn-success mt-3'>
                                 {isFetching? 'Loading...' : 'Submit'}
                             </button>
                         </form>) : 
-                        (<h3>
-                            If an account with that email exists, 
-                            we sent you an email
-                        </h3>)
+
+                        (<div>
+                            <h3>
+                                If an account with 
+                                that email exists, 
+                                we sent you an email
+                            </h3>
+                        </div>)
+                        
                     }
+
                 </div>         
             </div>
         )

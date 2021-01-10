@@ -57,7 +57,6 @@ class Login extends Component{
                         onChange={this.handleChange} 
                         placeholder ='Username here...'
                         type='text' 
-                        required
                     />
 
                     <label htmlFor='password'>Enter Password </label>
@@ -67,7 +66,6 @@ class Login extends Component{
                         onChange={this.handleChange}
                         placeholder = 'Password here...'
                         type='password' 
-                        required
                     />
 
                     <div className = 'text-center'>
