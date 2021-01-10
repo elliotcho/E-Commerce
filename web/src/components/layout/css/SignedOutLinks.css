@@ -11,9 +11,13 @@
     font-size: 1.2rem;
 }
 
-@media screen and (min-width: 991px){
+@media screen and (min-width: 992px){
     .signed-out.navbar-nav li {
         border-bottom: none;
         padding: 0;
+    }
+
+    .signed-out.navbar-nav i{
+        display: none;
     }
 }

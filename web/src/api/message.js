@@ -40,12 +40,12 @@ export const loadMessages = async (otherUser) => {
 
     for(let i=0;i<messages.length;i++){
         const config = { responseType: 'blob'};
+        const route = `${API}/api/message/image/${messages[i]._id}`;
 
         if(messages[i].image) {
-            const result = await axios.get(`${API}/api/message/image/${messages[i]._id}`, config);
-            const file = result.data;
-        
-            messages[i].image = URL.createObjectURL(file);
+            const result = await axios.get(route, config);
+            const imgURL = URL.createObjectURL(result.data);
+            messages[i].image = imgURL;        
         }
     }
 
