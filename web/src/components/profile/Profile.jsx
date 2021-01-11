@@ -151,6 +151,9 @@ class Profile extends Component{
                             <h2>Personal Stats</h2>
                             <p>Email: {info? info.email : 'Loading...'}</p>
                             <p># of Products Posted: {products.length}</p>
+                            <p>Average product rating: {products.map(p => {
+                                p.id.review
+                            })}</p>
                             <p>Successful Sales: </p>
                         </div>
                     </div>
