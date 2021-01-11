@@ -195,25 +195,25 @@ class Review extends Component{
 
                     <section className='likes-section'>
                         <div className='row'>
-                            <div className='col-6 col-sm-8' />   
+                            <div className='col-4 col-sm-6 col-md-8'/>   
 
-                            <div className='col-3 col-sm-2'>
-                                <i className={likeStyle} onClick={this.handleLike} />
+                            <div className='col-4 col-sm-3 col-md-2'>
+                                <i className={likeStyle} onClick={this.handleLike}/>
                             </div>
 
-                            <div className='col-3 col-sm-2'>
-                                <i className={dislikeStyle} onClick={this.handleDislike} />
+                            <div className='col-4 col-sm-3 col-md-2'>
+                                <i className={dislikeStyle} onClick={this.handleDislike}/>
                             </div>
                         </div>
 
                         <div className='row'>
-                            <div className='col-6 col-sm-8' />  
+                            <div className='col-4 col-sm-6 col-md-8' />  
 
-                            <div className='col-3 col-sm-2'>
+                            <div className='col-4 col-sm-3 col-md-2'>
                                 <p>{formatCount(likes.length) || 0}</p>
                             </div>
 
-                            <div className='col-3 col-sm-2'>
+                            <div className='col-4 col-sm-3 col-md-2'>
                                 <p>{formatCount(dislikes.length) || 0}</p>
                             </div>
                         </div>

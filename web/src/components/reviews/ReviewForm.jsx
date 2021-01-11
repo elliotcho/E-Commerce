@@ -38,7 +38,7 @@ class ReviewForm extends Component {
         const { ok }  = await createReview({ content, productId, rating });
 
         if(ok) {
-            this.setState({ content: '' });
+            this.setState({ content: '', rating: ''});
             addReview();
         } 
         
@@ -48,6 +48,8 @@ class ReviewForm extends Component {
     }
 
     render(){
+        const { content, rating } = this.state;
+
         return(
             <div className='review-form'>
                 <form onSubmit={ this.handleSubmit }>
@@ -58,7 +60,7 @@ class ReviewForm extends Component {
                         type='text'
                         placeholder = 'Your review here...'
                         onChange={ this.handleChange }
-                        value={ this.state.content }
+                        value={ content }
                     />
 
                     <div className='my-4'>
@@ -66,7 +68,7 @@ class ReviewForm extends Component {
                             Your Rating (x/5): 
                         </label>
                         
-                        <select name='rating' onChange={this.handleChange}>
+                        <select name='rating' value={rating} onChange={this.handleChange}>
                             <option value=""></option>
                             <option value={1}>1</option>
                             <option value={2}>2</option>
