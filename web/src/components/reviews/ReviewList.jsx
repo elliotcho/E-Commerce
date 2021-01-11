@@ -38,9 +38,10 @@ class ReviewList extends Component{
     }
 
     async addReview(){
-        const { productId } = this.props;
+        const { productId, getAvgRating } = this.props;
 
         const reviews = await getReviews(productId);
+        await getAvgRating(productId);
 
         this.setState({ reviews });
     }
@@ -48,9 +49,13 @@ class ReviewList extends Component{
     async removeReview(id){
         const confirmDelete = async () => {
             const { reviews } = this.state;
+            const { getAvgRating } = this.props;
+
+            let productId;
 
             for(let i=0;i<reviews.length;i++){
                 if(reviews[i]._id === id){
+                    productId = reviews[i].productId;
                     reviews.splice(i, 1);
                     break;
                 }
@@ -58,6 +63,7 @@ class ReviewList extends Component{
     
             this.setState({ reviews });
             await deleteReview(id);
+            await getAvgRating(productId);
         }
 
         confirmAlert({
@@ -70,22 +76,29 @@ class ReviewList extends Component{
         });  
     }
 
-    async editReview(reviewId, content){
+    async editReview(reviewId, content, rating){
         const { reviews } = this.state;
+        const { getAvgRating } = this.props;
 
         if(content.trim().length === 0){
             createErrorToast('Input cannot be blank');
             return;
         }
 
+        let productId;
+
         for(let i=0;i<reviews.length;i++){
             if(reviews[i]._id === reviewId){
                 reviews[i].content = content;
+                reviews[i].rating = rating;
+                productId = reviews[i].productId;
                 break;
             }
         }
 
-        await updateReview({ reviewId, content });
+        await updateReview({ reviewId, content, rating });
+        await getAvgRating(productId);
+
         this.setState({ reviews });
     }
 

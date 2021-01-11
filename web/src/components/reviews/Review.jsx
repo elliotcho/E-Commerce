@@ -206,6 +206,7 @@ class Review extends Component{
                     reviewId = {reviewId}
                     editReview = {this.props.editReview} 
                     content = {content}
+                    rating = {rating}
                 />
             </div>
         )

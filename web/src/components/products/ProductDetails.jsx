@@ -22,27 +22,33 @@ class ProductDetails extends Component{
             rating: ''
         }
 
+        this.getAvgRating = this.getAvgRating.bind(this);
         this.removeProduct = this.removeProduct.bind(this);
         this.addToCart = this.addToCart.bind(this);
     }
 
     async componentDidMount(){
         const { id } = this.props.match.params;
-        const reviews = await getReviews(id);
         const product = await getProductById(id);
-        console.log(reviews);
 
-        let numOfReviews = 0;
-        let ratingCounter =0 ;
-        for(let i = 0 ; i < reviews.length; i++){
-            ratingCounter += parseInt(reviews[i].rating)
-            numOfReviews++;
-        }
-        let averageRating = 0;
-        averageRating = (ratingCounter/ numOfReviews);
-        this.setState({rating: averageRating.toString()});
-
+        await this.getAvgRating(id);
+     
         this.setState({ product, fetching: true });
+    }
+
+    async getAvgRating(id){
+        const reviews = await getReviews(id);
+
+        let total = 0;
+
+        for(let i = 0 ; i < reviews.length; i++){
+            total += parseInt(reviews[i].rating)
+        }
+
+        let averageRating = 0;
+        averageRating = (total / reviews.length);
+
+        this.setState({ rating: averageRating.toFixed(1) });
     }
 
     async removeProduct(){
@@ -142,7 +148,7 @@ class ProductDetails extends Component{
                     }
                 </div>
   
-                <ReviewList productId={_id}/>
+                <ReviewList productId={_id} getAvgRating={this.getAvgRating}/>
             </div>
         )
     }

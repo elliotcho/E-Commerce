@@ -41,9 +41,9 @@ export const editReview = async (req, res) => {
     if(!req.user){
         res.json({ ok: false });
     } else{
-        const { reviewId, content } = req.body;
+        const { reviewId, content, rating } = req.body;
 
-        await Review.updateOne({ _id: reviewId }, { content });
+        await Review.updateOne({ _id: reviewId }, { content, rating });
 
         res.json({ ok: true });
     }
