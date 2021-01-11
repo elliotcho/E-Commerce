@@ -20,7 +20,7 @@ function DeleteUser(){
 
         confirmAlert({
             title: 'E-Commerce',
-            message: 'Are you sure you want to delete this account',
+            message: 'Are you sure you want to delete this account?',
             buttons: [
                 {label: 'Yes', onClick: confirmDelete},
                 {label: 'No', onClick: () => { return; }}

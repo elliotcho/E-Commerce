@@ -23,7 +23,14 @@ function Settings(){
                 <div className='col-5 mt-3'>
                     <div className="theme-switch-wrapper">
                         <label className="theme-switch" htmlFor="checkbox">
-                            <input type="checkbox" id="checkbox" onClick={toggleTheme}/>
+                            <input 
+                                type="checkbox" 
+                                id="checkbox" 
+                                onClick={toggleTheme} 
+                                checked={isDark}
+                                readOnly
+                            />
+                            
                             <div className="slider round"></div>
                         </label>
                         

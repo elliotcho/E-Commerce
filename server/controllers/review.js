@@ -5,9 +5,10 @@ export const createReview = async (req, res) => {
         res.json({ ok: false });
     } else{
         const { productId, content, rating } = req.body;
+        const me = req.user._id;
 
         const newReview = new Review({
-            userId: req.user._id,
+            userId: me,
             productId,
             content,
             datePosted: new Date(),
@@ -34,7 +35,7 @@ export const deleteReview = async (req, res) => {
 
     await Review.deleteOne({ _id: id });
 
-    res.json({msg: 'Successfully Deleted'});
+    res.json({ msg: 'Success' });
 }
 
 export const editReview = async (req, res) => {
@@ -62,7 +63,6 @@ export const likeReview = async (req, res) => {
         likes.push(_id);
     
         await Review.updateOne({ _id: reviewId }, { likes });
-    
         res.json({ ok: true });
     }
 }
@@ -80,7 +80,6 @@ export const removeLike = async (req, res) => {
         likes.splice(likes.indexOf(_id), 1);
 
         await Review.updateOne({ _id: reviewId }, { likes });
-
         res.json({ ok: true });
     }
 }
@@ -112,7 +111,6 @@ export const dislikeReview = async (req, res) => {
         dislikes.push(_id);
 
         await Review.updateOne({ _id: reviewId }, { dislikes })
-
         res.json({ ok: true });
     }
 }
@@ -130,7 +128,6 @@ export const removeDislike = async (req, res) => {
         dislikes.splice(dislikes.indexOf(_id), 1);
 
         await Review.updateOne({ _id: reviewId }, { dislikes });
-
         res.json({ ok: true });
     }
 }
@@ -147,4 +144,12 @@ export const checkIfUserDisliked = async (req, res) => {
 
         res.json({ disliked: dislikes.includes(_id) });
     }
+}
+
+export const getReviewById = async (req, res) => {
+    const { id } = req.params;
+
+    const review = await Review.findOne({ _id: id });
+
+    res.json(review);
 }

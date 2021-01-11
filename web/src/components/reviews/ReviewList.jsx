@@ -41,21 +41,18 @@ class ReviewList extends Component{
         const { productId, getAvgRating } = this.props;
 
         const reviews = await getReviews(productId);
-        await getAvgRating(productId);
+        await getAvgRating();
 
         this.setState({ reviews });
     }
 
     async removeReview(id){
         const confirmDelete = async () => {
-            const { reviews } = this.state;
             const { getAvgRating } = this.props;
-
-            let productId;
-
+            const { reviews } = this.state;
+         
             for(let i=0;i<reviews.length;i++){
                 if(reviews[i]._id === id){
-                    productId = reviews[i].productId;
                     reviews.splice(i, 1);
                     break;
                 }
@@ -63,12 +60,12 @@ class ReviewList extends Component{
     
             this.setState({ reviews });
             await deleteReview(id);
-            await getAvgRating(productId);
+            await getAvgRating();
         }
 
         confirmAlert({
             title: 'E-Commerce',
-            message: 'Are you sure you want to delete this account',
+            message: 'Are you sure you want to delete this review?',
             buttons: [
                 {label: 'Yes', onClick: confirmDelete},
                 {label: 'No', onClick: () => { return; }}
@@ -77,27 +74,24 @@ class ReviewList extends Component{
     }
 
     async editReview(reviewId, content, rating){
-        const { reviews } = this.state;
         const { getAvgRating } = this.props;
+        const { reviews } = this.state;
 
         if(content.trim().length === 0){
             createErrorToast('Input cannot be blank');
             return;
         }
 
-        let productId;
-
         for(let i=0;i<reviews.length;i++){
             if(reviews[i]._id === reviewId){
                 reviews[i].content = content;
                 reviews[i].rating = rating;
-                productId = reviews[i].productId;
                 break;
             }
         }
 
         await updateReview({ reviewId, content, rating });
-        await getAvgRating(productId);
+        await getAvgRating();
 
         this.setState({ reviews });
     }
@@ -117,6 +111,7 @@ class ReviewList extends Component{
                             reviewId = {r._id}
                             removeReview = {this.removeReview}
                             editReview = {this.editReview}
+                            seeMore = {false}
                             rating = {r.rating}
                             userId = {r.userId}
                             username = {r.username}

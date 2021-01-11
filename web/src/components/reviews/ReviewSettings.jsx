@@ -2,14 +2,15 @@ import React from 'react';
 import './css/ReviewSettings.css';
 
 function ReviewSettings({ isOwner, removeReview }){
-    const editReview = () => {
-        document.getElementById('open-edit').click();
-    }
+    const visibility = isOwner? 'visible' : 'hidden';
 
-    const style = isOwner? {visibility: 'visible'} : {visibility: 'hidden'};
+    const editReview = () => {
+        const openButton = document.getElementById('open-edit');
+        openButton.click();
+    }
     
     return(
-        <div className='review-settings' style={style}>
+        <div className='review-settings' style={{visibility}}>
             <i className ='fas fa-ellipsis-h'/>
 
             <div className='dropdown-content'>

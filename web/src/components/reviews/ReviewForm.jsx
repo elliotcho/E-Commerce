@@ -28,9 +28,11 @@ class ReviewForm extends Component {
         const { content, rating } = this.state;
 
         if(!rating || content.trim().length === 0){
+
             const msg = (!rating) ? 'A rating is required' : 'Input cannot be blank';
             createErrorToast(msg);
             return;
+
         }
    
         const { ok }  = await createReview({ content, productId, rating });

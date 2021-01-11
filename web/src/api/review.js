@@ -17,6 +17,17 @@ export const createReview = async (data) => {
     return response.data;
 }
 
+export const getReviewById = async (reviewId) => {
+    const response = await axios.get(`${API}/api/review/id/${reviewId}`);
+    const review = response.data;
+
+    const { user, imgURL } = await fetchUser(review.userId);
+    review.username = user.username;
+    review.userPic = imgURL;
+
+    return review;
+}
+
 export const getReviews = async (productId) => {
     const response = await axios.get(`${API}/api/review/${productId}`);
     const reviews = response.data;
