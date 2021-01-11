@@ -11,12 +11,11 @@ export const createReview = async (req, res) => {
             productId,
             content,
             datePosted: new Date(),
-            rating,
+            rating
         })
 
-        const review = await newReview.save();
-        console.log("review saved....");
-
+        await newReview.save();
+        
         res.json({ ok: true });
     }
 }
@@ -42,9 +41,9 @@ export const editReview = async (req, res) => {
     if(!req.user){
         res.json({ ok: false });
     } else{
-        const { reviewId, content } = req.body;
+        const { reviewId, content, rating } = req.body;
 
-        await Review.updateOne({ _id: reviewId }, { content });
+        await Review.updateOne({ _id: reviewId }, { content, rating });
 
         res.json({ ok: true });
     }
