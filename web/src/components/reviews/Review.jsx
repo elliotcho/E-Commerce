@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { decodeUser } from '../../utils/decodeUser';
 import { formatCount } from '../../utils/formatCount';
+import { createErrorToast } from '../../utils/createToast';
 import * as reviewAPI from '../../api/review';
 import EditReview from './EditReview';
 import ReviewSettings from './ReviewSettings';
@@ -48,7 +49,7 @@ class Review extends Component{
         const user = decodeUser();
 
         if(!user){
-            alert("User not logged in");
+            createErrorToast("User not logged in");
             return;
         }
 
@@ -81,7 +82,7 @@ class Review extends Component{
         const user = decodeUser();
 
         if(!user){
-            alert('User not logged in');
+            createErrorToast('User not logged in');
             return;
         } 
 
@@ -130,7 +131,7 @@ class Review extends Component{
 
     render(){
         const { likes, dislikes, userLiked, userDisliked } = this.state;
-        const { reviewId, userId, userPic, username, content } = this.props;
+        const { reviewId, rating, userId, userPic, username, content } = this.props;
 
         const removeReview = () => this.props.removeReview(reviewId);
 
@@ -155,6 +156,10 @@ class Review extends Component{
                   
                     <h4>Posted By</h4>
                     <p>{username}</p>
+
+                    <h5 className='mt-5 ml-2'>
+                        Rating: {rating}/5
+                    </h5>
                 </div>
 
                 <main>
@@ -172,25 +177,25 @@ class Review extends Component{
 
                     <section className='likes-section'>
                         <div className='row'>
-                            <div className='col-8' />   
+                            <div className='col-6 col-sm-8' />   
 
-                            <div className='col-2'>
+                            <div className='col-3 col-sm-2'>
                                 <i className={likeStyle} onClick={this.handleLike} />
                             </div>
 
-                            <div className='col-2'>
+                            <div className='col-3 col-sm-2'>
                                 <i className={dislikeStyle} onClick={this.handleDislike} />
                             </div>
                         </div>
 
                         <div className='row'>
-                            <div className='col-8' />  
+                            <div className='col-6 col-sm-8' />  
 
-                            <div className='col-2'>
+                            <div className='col-3 col-sm-2'>
                                 <p>{formatCount(likes.length) || 0}</p>
                             </div>
 
-                            <div className='col-2'>
+                            <div className='col-3 col-sm-2'>
                                 <p>{formatCount(dislikes.length) || 0}</p>
                             </div>
                         </div>

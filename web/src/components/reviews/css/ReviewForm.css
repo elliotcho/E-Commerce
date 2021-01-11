@@ -12,6 +12,15 @@
     resize: none;
 }
 
+.review-form select{
+    width: 7rem;
+    font-family: 'Arial';
+    font-size: 1.0rem;
+    height: 1.3rem;
+    position: relative;
+    top: 2px;
+}
+
 .review-form label{
     font-weight: bold;
 }

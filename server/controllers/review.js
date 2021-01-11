@@ -11,12 +11,11 @@ export const createReview = async (req, res) => {
             productId,
             content,
             datePosted: new Date(),
-            rating,
+            rating
         })
 
-        const review = await newReview.save();
-        console.log("review saved....");
-
+        await newReview.save();
+        
         res.json({ ok: true });
     }
 }

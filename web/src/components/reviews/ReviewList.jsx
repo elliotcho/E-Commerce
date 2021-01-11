@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
 import { deleteReview, updateReview, getReviews } from '../../api/review';
 import ReviewForm from './ReviewForm';
 import Review from './Review';
 import './css/ReviewList.css';
+import { createErrorToast } from '../../utils/createToast';
 
 class ReviewList extends Component{
     constructor(){
@@ -44,27 +46,35 @@ class ReviewList extends Component{
     }
 
     async removeReview(id){
-        if(!window.confirm('Are you sure?')){
-            return;
-        }
+        const confirmDelete = async () => {
+            const { reviews } = this.state;
 
-        const { reviews } = this.state;
-
-        for(let i=0;i<reviews.length;i++){
-            if(reviews[i]._id === id){
-                reviews.splice(i, 1);
-                break;
+            for(let i=0;i<reviews.length;i++){
+                if(reviews[i]._id === id){
+                    reviews.splice(i, 1);
+                    break;
+                }
             }
+    
+            this.setState({ reviews });
+            await deleteReview(id);
         }
 
-        this.setState({ reviews });
-        await deleteReview(id);
+        confirmAlert({
+            title: 'E-Commerce',
+            message: 'Are you sure you want to delete this account',
+            buttons: [
+                {label: 'Yes', onClick: confirmDelete},
+                {label: 'No', onClick: () => { return; }}
+            ]
+        });  
     }
 
     async editReview(reviewId, content){
         const { reviews } = this.state;
 
         if(content.trim().length === 0){
+            createErrorToast('Input cannot be blank');
             return;
         }
 
@@ -94,6 +104,7 @@ class ReviewList extends Component{
                             reviewId = {r._id}
                             removeReview = {this.removeReview}
                             editReview = {this.editReview}
+                            rating = {r.rating}
                             userId = {r.userId}
                             username = {r.username}
                             userPic = {r.userPic}

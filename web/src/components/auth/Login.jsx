@@ -79,7 +79,11 @@ class Login extends Component{
                     </p>
 
                     <div className='errors'>
-                        {errors.map(err => `${err.field} error: ${err.msg}`)}
+                        {errors.map((err, i) => 
+                            <div key={i}>
+                                {`${err.field} error: ${err.msg}`}
+                            </div>
+                        )}
                     </div>
                 </form>
             </div>

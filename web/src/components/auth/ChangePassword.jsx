@@ -57,7 +57,11 @@ class ChangePassword extends Component{
                     </button>
 
                     <div className='errors mt-3'>
-                        {errors.map(err => `${err.field} error: ${err.msg}`)}
+                        {errors.map((err, i) => 
+                            <div key={i}>
+                                {`${err.field} error: ${err.msg}`}
+                            </div>
+                        )}
                     </div>
                 </form>
             </div>

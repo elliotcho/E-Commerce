@@ -14,7 +14,7 @@ const ReviewSchema = new mongoose.Schema({
         type: Date
     },
     rating: {
-        type: String
+        type: Number
     },
     likes: {
         type: [String],
