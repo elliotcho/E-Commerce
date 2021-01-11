@@ -19,11 +19,13 @@ class ProductDetails extends Component{
         this.state = {
             product: {},
             fetching: false,
-            rating: ''
+            rating: '',
+            size: ''
         }
 
         this.removeProduct = this.removeProduct.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     async componentDidMount(){
@@ -54,9 +56,15 @@ class ProductDetails extends Component{
 
     async addToCart(){
         const { product: { _id} } = this.state;
-        await addToUserCart(_id);
+        const{size} = this.state;
+        const data = {size,_id};
+        await addToUserCart(data);
 
         alert("ADDED TO CART");
+    }
+
+    handleChange(e){
+        this.setState({ [e.target.name]: e.target.value });
     }
 
 
@@ -64,7 +72,7 @@ class ProductDetails extends Component{
         const { product: { 
             image, name, price, description, datePosted, userId, username, quantity, _id
         } } = this.state;
-        const{rating} = this.state;
+        const{rating, size} = this.state;
 
         const style = this.context.isDark? darkStyle: lightStyle;
         let isOwner = false;
@@ -127,6 +135,17 @@ class ProductDetails extends Component{
                                 <div className = 'quantity'>
                                     {`Quantity remaning: ${quantity}`}
                                 </div>
+
+                                <div className="size">
+                                <label for='size'>Size: </label>
+                                    <select name='size' id='size' onChange={this.handleChange}>
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                    </select>
+                                    </div>
 
                                 <p className = 'content'>
                                     {description.content}

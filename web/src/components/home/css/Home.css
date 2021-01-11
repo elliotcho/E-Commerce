@@ -16,7 +16,7 @@
   height: 80%;
   margin: auto;
   color: white;
-  background: linear-gradient(-180deg, white, #fda3b2);
+  background: linear-gradient(-180deg, white, #dca3ad);
   display: flex;
   align-content: center;
   justify-content: center;
@@ -29,7 +29,7 @@
   font-size: 30px;
   font-family: 'Goldman', cursive;
   color: transparent;
-  background: linear-gradient(45deg, #866cd1, #e98994);
+  background: linear-gradient(45deg, #866cd1, #eebac1);
   background-clip: text;
   -webkit-background-clip: text;
 }

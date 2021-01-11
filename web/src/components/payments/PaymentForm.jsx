@@ -89,6 +89,7 @@ class PaymentForm extends Component{
                   <header className='text-center'>
                     <h1>Payment Page</h1>
                     <h2>Total Amount: ${total}</h2>
+                    <i>Powered by Stripe ® </i>
                   </header>
               
                     <div className='payment-form'>

@@ -18,7 +18,7 @@ function Home({history}){
     return(
         <div className = 'home img-responsive'>
             <h1>Shop across departments.</h1>
-            <h2>Directly Message Sellers to get the best price for you!.</h2>
+            <h2>Directly Message Sellers</h2>
             <h3>Upload your products.</h3>
 
             <div class="hexagon-wrapper">

@@ -133,6 +133,7 @@ class CreateProduct extends Component {
                         onChange = {this.changeDescription}
                     />
 
+                    
                     <input
                         type = 'text'
                         name = 'size'
