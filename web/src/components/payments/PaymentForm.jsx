@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ThemeContext } from '../../contexts/ThemeContext';
 import { v4 as uuidv4 } from 'uuid';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { sendNonce } from '../../api/payments';
 import 'react-square-payment-form/lib/default.css';
 import './css/PaymentForm.css';
@@ -27,52 +27,52 @@ class PaymentForm extends Component{
             errorMessages: [],
             total: 0
         }
-        //this.setState({total: this.props.match.params.total});
+     
         this.createPayment = this.createPayment.bind(this);
         this.cardNonceResponseReceived = this.cardNonceResponseReceived.bind(this);
+        this.createVerificationDetails = this.createVerificationDetails.bind(this);
     }
 
-    createPayment = async(n, b) =>{
-      const data = {
+    async createPayment(n, b){
+      const { total } = this.props.match.params;
+
+      await sendNonce({
           nonce: n,
           buyerVerificationToken: b,
-          uuid: uuidv4()
-      };
-
-      const response = await sendNonce(data);
-
-      console.log(response);
-      console.log(response.result.payment.receiptUrl);
+          uuid: uuidv4(),
+          total
+      });
     }
 
-    cardNonceResponseReceived(errors, nonce, cardData, buyerVerificationToken)  {
+    async cardNonceResponseReceived(errors, nonce, _, buyerVerificationToken)  {
         if (errors) {
-          this.setState({ errorMessages: errors.map(error => error.message) })
-          return
+          this.setState({ errorMessages: errors.map(error => error.message) });
+          return;
         }
 
+        await this.createPayment(nonce, buyerVerificationToken);
         this.setState({ errorMessages: [] });
-        alert("nonce created: " + nonce + ", buyerVerificationToken: " + buyerVerificationToken);
-        this.createPayment(nonce, buyerVerificationToken);
-      }
+    }
 
-      createVerificationDetails(total) {
-        return {
-          amount: total,
-          currencyCode: "CAD",
-          intent: "CHARGE",
-          billingContact: {
-            familyName: "Smith",
-            givenName: "John",
-            email: "jsmith@example.com",
-            country: "GB",
-            city: "London",
-            addressLines: ["1235 Emperor's Gate"],
-            postalCode: "SW7 4JA",
-            phone: "020 7946 0532"
-          }
+    createVerificationDetails() {
+      const { total } = this.props.match.params;
+
+      return {
+        amount: total,
+        currencyCode: "CAD",
+        intent: "CHARGE",
+        billingContact: {
+          familyName: "Smith",
+          givenName: "John",
+          email: "jsmith@example.com",
+          country: "GB",
+          city: "London",
+          addressLines: ["1235 Emperor's Gate"],
+          postalCode: "SW7 4JA",
+          phone: "020 7946 0532"
         }
       }
+    }
 
 
     render(){
@@ -83,49 +83,48 @@ class PaymentForm extends Component{
 
         return(
           <div className='payment-bg' style={style}> 
-              {(
-                <div className='payment'>
-                  <header className='text-center'>
-                    <h1>Payment Page</h1>
-                    <h2>Total Amount: ${total}</h2>
-                  </header>
+              <div className='payment'>
+                <header className='text-center mb-5'>
+                  <h1>Payment Page</h1>
+                  <h2>Total Amount: ${total}</h2>
+                </header>
               
-                    <div className='payment-form'>
-                      <SquarePaymentForm
-                        sandbox={true}
-                        applicationId={process.env.REACT_APP_SANDBOX_APPLICATION_ID}
-                        locationId={process.env.REACT_APP_SANDBOX_LOCATION_ID}
-                        cardNonceResponseReceived={this.cardNonceResponseReceived}
-                        createVerificationDetails={this.createVerificationDetails(total)}
-                      >
-                        <fieldset className="sq-fieldset">
-                          <CreditCardNumberInput />
+                <div className='payment-form'>
+                    <SquarePaymentForm
+                      sandbox={true}
+                      locationId={process.env.REACT_APP_SANDBOX_LOCATION_ID}
+                      applicationId={process.env.REACT_APP_SANDBOX_APPLICATION_ID}
+                      createVerificationDetails={this.createVerificationDetails}
+                      cardNonceResponseReceived={this.cardNonceResponseReceived}
+                    >
+                      <fieldset className="sq-fieldset">
+                        <CreditCardNumberInput />
                                         
-                          <div className="sq-form-third">
-                            <CreditCardExpirationDateInput />
-                          </div>
+                        <div className="sq-form-third">
+                          <CreditCardExpirationDateInput />
+                        </div>
               
-                          <div className="sq-form-third">
-                            <CreditCardPostalCodeInput />
-                          </div>
+                        <div className="sq-form-third">
+                          <CreditCardPostalCodeInput />
+                        </div>
               
-                          <div className="sq-form-third">
-                            <CreditCardCVVInput />
-                          </div>
-                        </fieldset>
+                        <div className="sq-form-third">
+                          <CreditCardCVVInput />
+                        </div>
+                      </fieldset>
               
-                          <CreditCardSubmitButton>
-                              Pay $ {total}
-                          </CreditCardSubmitButton>
-                        </SquarePaymentForm>
-                    </div>
-                    
-                  <div className="sq-error-message">
-                    {this.state.errorMessages.map(errorMessage =>
-                      <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
-                    )}
+                      <CreditCardSubmitButton>
+                          Pay $ {total}
+                      </CreditCardSubmitButton>
+
+                      <div className="sq-error-message">
+                        {this.state.errorMessages.map(errorMessage =>
+                          <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
+                        )}
+                      </div>
+                    </SquarePaymentForm>
                   </div>
-              </div>)}
+              </div>
           </div>
         )
     }
