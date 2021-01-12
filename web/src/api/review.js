@@ -22,9 +22,9 @@ export const getReviewById = async (reviewId) => {
     const review = response.data;
 
     const { user, imgURL } = await fetchUser(review.userId);
+    
     review.username = user.username;
     review.userPic = imgURL;
-
     return review;
 }
 

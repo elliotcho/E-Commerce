@@ -266,6 +266,40 @@ export const loadCart = async (req, res) => {
     }
 }
 
+export const getAvgRating = async (req, res) => {
+    let userId;
+    let total = 0;
+    let count = 0;
+
+    if(req.params.uid){
+        userId = req.params.uid;
+    } else{
+        userId = req.user._id;
+    }
+
+    const products = await Product.find({ userId });
+
+    for(let i=0;i<products.length;i++){
+        const product = products[i];
+        const { _id } = product;
+
+        const reviews = await Review.find({ productId: _id });
+   
+        for(let j=0;j<reviews.length;j++){
+            const review = reviews[j];
+            const { rating } = review;
+
+            total += rating;
+        }
+
+        count += reviews.length;
+    }
+    
+    const avgRating = (total/count).toFixed(1);
+
+    res.json({ avgRating });
+}
+
 export const userInfo = async (req, res) => {
     if (!req.user && !req.params.uid) {
         res.json({msg: 'User is not authenticated'});
