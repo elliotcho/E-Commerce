@@ -53,10 +53,7 @@ class Cart extends Component{
     }
 
     toPayment(){
-        const { history } = this.props;
-        const total = this.calculateTotal();
-       
-        history.push(`/payment/${total}`);
+        this.props.history.push(`/payment`);
     }
 
     render(){

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { sendNonce } from '../../api/payments';
+import { loadCart } from '../../api/user';
 import 'react-square-payment-form/lib/default.css';
 import './css/PaymentForm.css';
 
@@ -33,8 +34,20 @@ class PaymentForm extends Component{
         this.createVerificationDetails = this.createVerificationDetails.bind(this);
     }
 
+    async componentDidMount(){
+      const cart = await loadCart();
+
+      let total = 0;
+ 
+      for(let i =0;i<cart.length;i++){
+        total += cart[i].price;
+      }
+
+      this.setState({ total });
+    }
+
     async createPayment(n, b){
-      const { total } = this.props.match.params;
+      const { total } = this.state;
 
       await sendNonce({
           nonce: n,
@@ -55,7 +68,7 @@ class PaymentForm extends Component{
     }
 
     createVerificationDetails() {
-      const { total } = this.props.match.params;
+      const { total } = this.state;
 
       return {
         amount: total,
@@ -76,7 +89,7 @@ class PaymentForm extends Component{
 
 
     render(){
-        const { total } = this.props.match.params;
+        const { total } = this.state;
         const { isDark } = this.context;
 
         const style = isDark? darkStyle: lightStyle;

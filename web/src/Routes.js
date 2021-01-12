@@ -46,7 +46,7 @@ function Routes() {
             <AuthenticatedRoute exact path='/settings' component={Settings}/>
             <AdminRoute exact path='/admin' component={AdminHome}/>
             <AuthenticatedRoute exact path='/chat/:userId?' component={MessageCenter}/>
-            <AuthenticatedRoute exact path='/payment/:total?' component={PaymentForm}/>
+            <AuthenticatedRoute exact path='/payment' component={PaymentForm}/>
             <Route exact path='/review/:id' component={ReviewDetails}/>
             <Route path='/' component={DeadPage}/> 
           </Switch>
