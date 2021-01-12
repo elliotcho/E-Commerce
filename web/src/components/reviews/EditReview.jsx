@@ -21,7 +21,11 @@ function EditReview(props){
     }
 
     const closeModal = () => {
-        document.getElementById('close-edit').click();
+        setContent(props.content);
+        setRating(props.rating);
+
+        const closeButton = document.getElementById('close-edit');
+        closeButton.click();
     }
 
     const saveChanges = async () => {

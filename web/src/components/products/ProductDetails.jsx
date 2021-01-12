@@ -38,19 +38,19 @@ class ProductDetails extends Component{
         this.setState({ product, fetching: true });
     }
 
-    async getAvgRating(id){
-        const reviews = await getReviews(id);
+    async getAvgRating(){
+        const { id } = this.props.match.params;
 
+        const reviews = await getReviews(id);
         let total = 0;
 
         for(let i = 0 ; i < reviews.length; i++){
             total += parseInt(reviews[i].rating)
         }
 
-        let averageRating = 0;
-        averageRating = (total / reviews.length);
+        let avgRating = (total / reviews.length);
 
-        this.setState({ rating: averageRating.toFixed(1) });
+        this.setState({ rating: avgRating.toFixed(1) });
     }
 
     async removeProduct(){

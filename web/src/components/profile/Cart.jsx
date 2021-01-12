@@ -18,7 +18,7 @@ class Cart extends Component{
         }
 
         this.delProductInCart = this.delProductInCart.bind(this);
-        this.calculateTotalAmount = this.calculateTotalAmount.bind(this);
+        this.calculateTotal = this.calculateTotal.bind(this);
         this.toPayment = this.toPayment.bind(this);
     }
 
@@ -30,26 +30,23 @@ class Cart extends Component{
     async delProductInCart(id){
         const { cart } = this.state;
 
-        for(let i=0; i<cart.length; i++){
-            console.log(cart[i]);
-
+        for(let i=0;i<cart.length;i++){
             if(cart[i]._id === id){
                 cart.splice(i, 1);
                 break;
             }
         }
 
-        this.setState({ cart }, async () => {
-            await deleteFromCart(id);
-        }); 
+        await deleteFromCart(id);
+        this.setState({ cart }); 
     }
 
-     calculateTotalAmount(){
+     calculateTotal(){
         let amount = 0;
-        const{ cart } = this.state;
+        const { cart } = this.state;
 
-        for(let i =0 ; i < cart.length ; i++){
-            amount = amount + cart[i].price;
+        for(let i =0;i<cart.length;i++){
+            amount += cart[i].price;
         }
 
         return amount;
@@ -58,26 +55,26 @@ class Cart extends Component{
     toPayment(){
         const { history } = this.props;
 
-        const total = this.calculateTotalAmount();
+        const total = this.calculateTotal();
        
         history.push(`/payment/${total}`);
     }
 
     render(){
+        const total = this.calculateTotal();
+
         const { cart } = this.state;
         const { isDark } = this.context;
         
         const style = isDark? darkStyle: lightStyle;
-        
+
         return(
             <div className="cart" style={style}>
                 <header className='text-center my-5'>
-                    <h3>
-                        Your Shopping Cart 
-                    </h3>
+                    <h3>Your Shopping Cart </h3>
 
                     <h2 className='my-3'>
-                        Total Amount: ${this.calculateTotalAmount()} 
+                        Total Amount: ${total} 
                     </h2>
 
                     <button className="btn btn-lg btn-primary" onClick={this.toPayment}>
@@ -104,4 +101,5 @@ class Cart extends Component{
         
     }
 }
+
 export default Cart;

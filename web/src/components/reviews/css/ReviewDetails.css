@@ -1,0 +1,12 @@
+.review-details{
+    height: 92vh;
+    position: relative;
+    padding-top: 50px;
+    overflow: auto;
+}
+
+.review-details main{
+    width: 95%;
+    max-width: 800px;
+    margin: auto;
+}

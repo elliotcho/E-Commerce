@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { decodeUser } from '../../utils/decodeUser';
 import { formatCount } from '../../utils/formatCount';
 import { createErrorToast } from '../../utils/createToast';
@@ -22,6 +23,7 @@ class Review extends Component{
         this.handleLike = this.handleLike.bind(this);
         this.handleDislike = this.handleDislike.bind(this);
         this.verifyUserDislike = this.verifyUserDislike.bind(this);
+        this.toReviewDetails = this.toReviewDetails.bind(this);
     }
 
     async componentDidMount(){
@@ -129,9 +131,17 @@ class Review extends Component{
         this.setState({ userDisliked: disliked });
     }
 
+    toReviewDetails(){
+        const { history, reviewId } = this.props;
+        
+        const path = `/review/${reviewId}`;
+
+        history.push(path);
+    }
+
     render(){
         const { likes, dislikes, userLiked, userDisliked } = this.state;
-        const { reviewId, rating, userId, userPic, username, content } = this.props;
+        const { reviewId, seeMore, rating, userId, userPic, username, content } = this.props;
 
         const removeReview = () => this.props.removeReview(reviewId);
 
@@ -157,45 +167,53 @@ class Review extends Component{
                     <h4>Posted By</h4>
                     <p>{username}</p>
 
-                    <h5 className='mt-5 ml-2'>
-                        Rating: {rating}/5
-                    </h5>
+                    <span>Rating: {rating}/5</span>
                 </div>
 
                 <main>
                     <div className='row my-0'>
-                         <div className='col-10' />
+                        <button id='open-edit' data-toggle='modal' data-target='#edit' />
 
-                         <button id='open-edit' data-toggle='modal' data-target='#edit' />
+                        <div className='col-10 col-sm-11' />
 
-                         <div className='col-2'>
+                         <div className='col-2 col-sm-1'>
                             <ReviewSettings isOwner={isOwner} removeReview={removeReview}/>
                         </div>  
                     </div>
 
-                    <div>{content}</div>
+                    <div className='content'>
+                        {(seeMore || content.length < 200) ? content : (
+                            <div>
+                                {`${content.substring(0,197)}...`}
+
+                                <span onClick={this.toReviewDetails}>
+                                    See More
+                                </span>
+                            </div>
+                        )}
+                    </div>
 
                     <section className='likes-section'>
                         <div className='row'>
-                            <div className='col-6 col-sm-8' />   
+                            <div className='col-4 col-sm-6 col-md-8'/>   
 
-                            <div className='col-3 col-sm-2'>
-                                <i className={likeStyle} onClick={this.handleLike} />
+                            <div className='col-4 col-sm-3 col-md-2'>
+                                <i className={likeStyle} onClick={this.handleLike}/>
                             </div>
 
-                            <div className='col-3 col-sm-2'>
-                                <i className={dislikeStyle} onClick={this.handleDislike} />
+                            <div className='col-4 col-sm-3 col-md-2'>
+                                <i className={dislikeStyle} onClick={this.handleDislike}/>
                             </div>
                         </div>
 
                         <div className='row'>
-                            <div className='col-6 col-sm-8' />  
+                            <div className='col-4 col-sm-6 col-md-8' />  
 
-                            <div className='col-3 col-sm-2'>
+                            <div className='col-4 col-sm-3 col-md-2'>
                                 <p>{formatCount(likes.length) || 0}</p>
                             </div>
 
-                            <div className='col-3 col-sm-2'>
+                            <div className='col-4 col-sm-3 col-md-2'>
                                 <p>{formatCount(dislikes.length) || 0}</p>
                             </div>
                         </div>
@@ -213,4 +231,4 @@ class Review extends Component{
     }
 }
 
-export default Review;
+export default withRouter(Review);
