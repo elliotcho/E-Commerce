@@ -1,4 +1,5 @@
 import { Client, Environment, ApiError } from 'square';
+import { v4 } from 'uuid';
 import User from '../models/user';
 
 const client = new Client({
@@ -34,8 +35,9 @@ export const createPayment = async(req, res) =>{
 
             for(let i=0;i<cart.length;i++){
                 history.push({
-                    productId: cart[i],
-                    datePurchased: new Date()
+                    _id: v4(),
+                    datePurchased: new Date(),
+                    productId: cart[i]
                 });
             }
 
