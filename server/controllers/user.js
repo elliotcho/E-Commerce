@@ -328,13 +328,13 @@ export const deleteUser = async (req, res) => {
 
     try {
         const user = await User.findOne({ _id : req.user._id });
-        const { _id, profilePic } = user;
-      
+        const { _id: userId, profilePic } = user;
+
         if(profilePic){
             fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), cb);
         } 
 
-        const products = await Product.find({ userId: _id });
+        const products = await Product.find({ userId });
     
         for(let i=0;i<products.length;i++){
             const product = products[i];
@@ -347,13 +347,14 @@ export const deleteUser = async (req, res) => {
             await Product.deleteOne({ _id });
         }
     
-        await Review.deleteMany({ userId: _id });
-        await Message.deleteMany({ receiver: _id });
-        await Message.deleteMany({ sender: _id });
-        await User.deleteOne({ _id });
+        await Review.deleteMany({ userId });
+        await Message.deleteMany({ receiver: userId });
+        await Message.deleteMany({ sender: userId });
+        await User.deleteOne({ _id: userId });
 
         res.json({ msg: 'Success' });   
     } catch (err) {
+        console.log('HI')
         res.json({ msg: 'Failure' });
     }  
 }
