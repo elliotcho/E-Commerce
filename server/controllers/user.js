@@ -279,6 +279,30 @@ export const loadHistory = async (req, res) => {
     }
 }
 
+export const removeFromHistory = async (req, res) => {
+    if(!req.user || !req.params.id){
+        res.json({ ok: false });
+    } else {
+        try { 
+            const user = await User.findOne({ _id : req.user._id });
+            const { history } = user;
+
+            for(let i=0;i<history.length;i++){
+                if(history[i]._id === req.params.id){
+                    history.splice(i, 1);
+                    break;
+                }
+            }
+
+            await User.updateOne({ _id: req.user._id }, { history });
+
+            res.json({ ok: true });
+        } catch (err) {
+            res.json({ ok: false });
+        }
+    }
+}
+
 export const clearHistory = async (req, res) => {
     if(!req.user){
         res.json({ ok: false });
