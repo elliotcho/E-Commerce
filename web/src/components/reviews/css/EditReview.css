@@ -25,6 +25,15 @@
     padding: 5px;
 }
 
+.edit-modal select{
+    width: 7rem;
+    font-family: 'Arial';
+    font-size: 1.0rem;
+    height: 1.3rem;
+    position: relative;
+    top: 2px;
+}
+
 .edit-modal .modal-body, .edit-modal .modal-footer{
     background: beige;
 }

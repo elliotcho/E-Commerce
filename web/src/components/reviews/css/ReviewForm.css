@@ -1,7 +1,10 @@
 .review-form form{
-    font-family: 'Nunito Sans';
     max-width: 800px;
-    margin: auto;
+    font-family: 'Nunito Sans';
+    border: 4px solid #8f8f8f;
+    border-radius: 11px;
+    margin: 50px auto;
+    padding: 20px;
 }
 
 .review-form textarea{
@@ -10,6 +13,15 @@
     min-height: 100px;
     width: 100%;
     resize: none;
+}
+
+.review-form select{
+    width: 7rem;
+    font-family: 'Arial';
+    font-size: 1.0rem;
+    height: 1.3rem;
+    position: relative;
+    top: 2px;
 }
 
 .review-form label{

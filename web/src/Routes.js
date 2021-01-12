@@ -23,6 +23,7 @@ import Settings from './components/settings/Settings';
 import AdminHome from './components/admin/AdminHome';
 import MessageCenter from './components/messages/MessageCenter';
 import PaymentForm from './components/payments/PaymentForm';
+import ReviewDetails from './components/reviews/ReviewDetails';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -46,6 +47,7 @@ function Routes() {
             <AdminRoute exact path='/admin' component={AdminHome}/>
             <AuthenticatedRoute exact path='/chat/:userId?' component={MessageCenter}/>
             <AuthenticatedRoute exact path='/payment/:total?' component={PaymentForm}/>
+            <Route exact path='/review/:id' component={ReviewDetails}/>
             <Route path='/' component={DeadPage}/> 
           </Switch>
 

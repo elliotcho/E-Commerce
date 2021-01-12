@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { createErrorToast } from '../../utils/createToast';
 import { createReview} from '../../api/review';
 import './css/ReviewForm.css';
 
@@ -23,21 +24,32 @@ class ReviewForm extends Component {
     async handleSubmit(e){
         e.preventDefault();
 
-        const { history, productId, addReview } = this.props;
+        const { productId, addReview } = this.props;
         const { content, rating } = this.state;
-        console.log(rating);
-        console.log("calling server...");
+
+        if(!rating || content.trim().length === 0){
+
+            const msg = (!rating) ? 'A rating is required' : 'Input cannot be blank';
+            createErrorToast(msg);
+            return;
+
+        }
+   
         const { ok }  = await createReview({ content, productId, rating });
 
         if(ok) {
-            this.setState({ content: '' });
+            this.setState({ content: '', rating: ''});
             addReview();
-        } else{
-            history.push('/login');
+        } 
+        
+        else{
+            createErrorToast('User must be signed in');
         }
     }
 
     render(){
+        const { content, rating } = this.state;
+
         return(
             <div className='review-form'>
                 <form onSubmit={ this.handleSubmit }>
@@ -48,17 +60,23 @@ class ReviewForm extends Component {
                         type='text'
                         placeholder = 'Your review here...'
                         onChange={ this.handleChange }
-                        value={ this.state.content }
+                        value={ content }
                     />
 
-                    <label for="rating">Your Rating (x/5): </label>
-                    <select name='rating' id='rating' onChange={this.handleChange}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
+                    <div className='my-4'>
+                        <label className='mr-3'>
+                            Your Rating (x/5): 
+                        </label>
+                        
+                        <select name='rating' value={rating} onChange={this.handleChange}>
+                            <option value=""></option>
+                            <option value={1}>1</option>
+                            <option value={2}>2</option>
+                            <option value={3}>3</option>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                        </select>
+                    </div>
 
                     <button className='btn btn-success mt-3'>
                         Submit

@@ -15,15 +15,40 @@
 
 .review .user-section h4{
     margin-top: 50px;
-}
+} 
 
 .review .user-section p{
     font-size: 1.3rem;
     margin-left: 30px;
+} 
+
+.review .user-section span{
+    font-family: 'Sansita Swashed', cursive;
+    font-size: 1.2rem;
+    position: relative;
+    margin-left: 10px;
+    top: 20px;
 }
 
 .review main{
     font-size: 2rem;
+}
+
+.review .content{
+    font-size: 1.3rem;
+    display: inline-block;
+    word-break: break-word;
+}
+
+.review .content span{
+    margin-left: 2px;
+    font-weight: bold;
+    cursor: pointer;
+    color: blue;
+}
+
+.review .content span:hover{
+    text-decoration: underline;
 }
 
 .review #open-edit{
@@ -31,16 +56,12 @@
 }
 
 .review .likes-section{
-    margin-top: 80px;
-} 
-
-.review .likes-section p{
+    margin-top: 7rem;
+} .review .likes-section i{
+    cursor: pointer;
+}.review .likes-section p{
     font-size: 2rem;
 }
-
-.review .likes-section i{
-    cursor: pointer;
-} 
 
 .review .fa-thumbs-up.active{
     color: #21af21;

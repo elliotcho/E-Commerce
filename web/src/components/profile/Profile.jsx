@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import decode from 'jwt-decode';
-import { getProfilePic, updateProfilePic, deleteProfilePic, getUserInfo } from '../../api/user';
+import { getProfilePic, updateProfilePic, deleteProfilePic, getUserInfo, getAvgRating } from '../../api/user';
 import { getUserProducts } from '../../api/product';
 import Product from '../products/Product';
 import loading from '../../images/loading.jpg';
@@ -19,6 +19,7 @@ class Profile extends Component{
         this.state = {
             imgURL: null,
             products: [],
+            avgRating: null,
             info: null 
         }
 
@@ -43,23 +44,30 @@ class Profile extends Component{
     async fetchProfileData(){
         const { uid } = this.props.match.params;
 
-        let info;
-        let products = [];
-        let imgURL = null;
+        let infoPromise;
+        let productsPromise;
+        let imagePromise;
+        let avgRatingPromise;
         
         if(uid){
-            info = await getUserInfo(uid);
-            products = await getUserProducts(uid);
-            imgURL = await getProfilePic(uid);
+            infoPromise = getUserInfo(uid);
+            productsPromise = getUserProducts(uid);
+            imagePromise = getProfilePic(uid);
+            avgRatingPromise  = getAvgRating(uid);
         } else{
-            info = await getUserInfo();
-            products = await getUserProducts();
-            imgURL = await getProfilePic();    
+            infoPromise = getUserInfo();
+            productsPromise = getUserProducts();
+            imagePromise = getProfilePic();
+            avgRatingPromise  = getAvgRating();
         }
+
+        const promises = [infoPromise, productsPromise, avgRatingPromise, imagePromise];
+        const [info, products, avgRating, imgURL] = await Promise.all(promises);
 
         this.setState({ 
             imgURL,
             products, 
+            avgRating,
             info
         });
     }
@@ -88,7 +96,7 @@ class Profile extends Component{
     }
 
     render(){
-        const { imgURL, products, info } = this.state; 
+        const { imgURL, products, info, avgRating } = this.state; 
         const { isDark } = this.context;
 
         let isOwner = false;
@@ -151,10 +159,7 @@ class Profile extends Component{
                             <h2>Personal Stats</h2>
                             <p>Email: {info? info.email : 'Loading...'}</p>
                             <p># of Products Posted: {products.length}</p>
-                            <p>Average product rating: {products.map(p => {
-                                p.id.review
-                            })}</p>
-                            <p>Successful Sales: </p>
+                            <p>Average Rating: {avgRating? avgRating: 'N/A'}</p>
                         </div>
                     </div>
                         

@@ -48,11 +48,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "react-dotenv": {
-    "whitelist": [
-      "SANDBOX_APPLICATION_ID",
-      "SANDBOX_LOCATION_ID"
-    ]
   }
 }
