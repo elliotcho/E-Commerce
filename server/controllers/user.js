@@ -265,6 +265,36 @@ export const loadCart = async (req, res) => {
     }
 }
 
+export const loadHistory = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        const user = await User.findOne({ _id: req.user._id });
+
+        if(user){
+            res.json({ ok: true, history: user.history });
+        } else {
+            res.json({ ok: false });
+        }
+    }
+}
+
+export const clearHistory = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        try {
+            const { _id } = req.user;
+
+            await User.updateOne({ _id }, { history: [] });
+    
+            res.json({ ok: true });
+        } catch (err){
+            res.json({ ok: false });
+        }
+    }
+}
+
 export const getAvgRating = async (req, res) => {
     let userId;
     let total = 0;

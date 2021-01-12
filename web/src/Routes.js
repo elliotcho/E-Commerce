@@ -24,6 +24,7 @@ import AdminHome from './components/admin/AdminHome';
 import MessageCenter from './components/messages/MessageCenter';
 import PaymentForm from './components/payments/PaymentForm';
 import ReviewDetails from './components/reviews/ReviewDetails';
+import History from './components/profile/History';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -48,6 +49,7 @@ function Routes() {
             <AuthenticatedRoute exact path='/chat/:userId?' component={MessageCenter}/>
             <AuthenticatedRoute exact path='/payment' component={PaymentForm}/>
             <Route exact path='/review/:id' component={ReviewDetails}/>
+            <AuthenticatedRoute exact path='/history' component={History}/>
             <Route path='/' component={DeadPage}/> 
           </Switch>
 

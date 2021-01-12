@@ -102,3 +102,30 @@ export const getAvgRating = async (uid = '') => {
     authAfterware(response);
     return avgRating;
 }
+
+export const getHistory = async () => {
+    const config = { headers: {} };
+
+    const response = await axios.get(`${API}/api/user/history`, authMiddleware(config));
+    const { ok } = response.data;
+
+    if(ok) {
+        authAfterware(response);
+    }
+
+    return response.data;
+}
+
+export const clearHistory = async () => {
+    const config = { headers: {} };
+
+    
+    const response = await axios.delete(`${API}/api/user/history`, authMiddleware(config));
+    const { ok } = response.data;
+
+    if(ok) {
+        authAfterware(response);
+    }
+
+    return response.data;
+}
