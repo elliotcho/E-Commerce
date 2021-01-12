@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { addDepartment } from '../../api/departments';
+import './css/DepartmentForm.css';
 
 class DepartmentForm extends Component {
     constructor(){
@@ -29,8 +30,8 @@ class DepartmentForm extends Component {
         const { name } = this.state; 
         
         return(
-            <form className='department' onSubmit={this.handleSubmit}>
-                <label htmlFor='name'></label>
+            <form className='department-form' onSubmit={this.handleSubmit}>
+                <label htmlFor='name'>Add a Department: </label>
                 <input 
                     name= 'name'
                     value= {name}
@@ -40,7 +41,7 @@ class DepartmentForm extends Component {
                 />
             
                 <button className='ml-3 btn btn-success'>
-                    Add department
+                    Submit
                 </button>
             </form>
         )
