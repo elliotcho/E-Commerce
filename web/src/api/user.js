@@ -4,35 +4,33 @@ import { authAfterware } from '../utils/authAfterware';
 import axios from 'axios';
 
 export const getProfilePic = async (uid = '') => {
-    const config = {headers: {}, responseType: 'blob'};
+    const config = { headers: {}, responseType: 'blob' };
 
     const response = await axios.get(`${API}/api/user/profile_pic/${uid}`, authMiddleware(config));
-    const file = response.data;
+    const imgURL = URL.createObjectURL(response.data);
 
     authAfterware(response);
-    
-    return URL.createObjectURL(file);
+    return imgURL;
 }
 
 export const updateProfilePic = async (data) => {
-    const config = {headers: {'content-type': 'multipart/form-data'}, responseType: 'blob'};
+    const config = { headers: { 'content-type': 'multipart/form-data' }, responseType: 'blob' };
 
     const response = await axios.post(`${API}/api/user/profile_pic`, data, authMiddleware(config));
-    const file = response.data;
+    const imgURL = URL.createObjectURL(response.data);
 
     authAfterware(response);
-    return URL.createObjectURL(file);
+    return imgURL;
 }
 
 export const deleteProfilePic = async () => {
-    const config = {headers: {}, responseType: 'blob'};
-
+    const config = { headers: {}, responseType: 'blob' };
+ 
     const response = await axios.delete(`${API}/api/user/profile_pic`, authMiddleware(config));
-    const file = response.data;
+    const imgURL = URL.createObjectURL(response.data);
 
     authAfterware(response);
-
-    return URL.createObjectURL(file);
+    return imgURL;
 }
 
 export const loadCart = async() => {
@@ -42,11 +40,13 @@ export const loadCart = async() => {
 
     for(let i=0; i <products.length; i++){
         const config = { responseType: 'blob'};
+        const route = `${API}/api/product/image/${products[i]._id}`;
 
-        const result = await axios.get(`${API}/api/product/image/${products[i]._id}`, config);
-        const file = result.data;
-        
-        products[i].image = URL.createObjectURL(file);
+        if(products[i].image){
+            const result = await axios.get(route, config);
+            const imgURL = URL.createObjectURL(result.data);
+            products[i].image = imgURL;        
+        }
     }
 
     authAfterware(response);
@@ -54,14 +54,15 @@ export const loadCart = async() => {
 }
 
 export const deleteFromCart = async (id) => {
-    const config = {headers: {}};
+    const config = { headers: {} };
 
     const response = await axios.delete(`${API}/api/user/cart/${id}`, authMiddleware(config));
+    
     authAfterware(response);
 }
 
 export const getUserInfo = async (uid = '') => {
-    const config = {headers: {}};
+    const config = { headers: {} };
     
     const response = await axios.get(`${API}/api/user/profile/${uid}`, authMiddleware(config));
     const info = response.data;
@@ -71,16 +72,16 @@ export const getUserInfo = async (uid = '') => {
 }
 
 export const changeUsername = async (username) => {
-    const config = {headers: {}};
+    const config = { headers: {} };
 
-    const response = await axios.post(`${API}/api/user/change_username`, {username}, authMiddleware(config));
+    const response = await axios.post(`${API}/api/user/change_username`, { username }, authMiddleware(config));
     authAfterware(response);
 
     return response.data;
 }
 
 export const changePassword = async(data) => {
-    const config = {headers: {'content-type': 'application/json'}};
+    const config = { headers: {'content-type': 'application/json'} };
     
     const response = await axios.post(`${API}/api/user/password_settings`, data, authMiddleware(config));
     authAfterware(response);
@@ -89,7 +90,7 @@ export const changePassword = async(data) => {
 }
 
 export const deleteAccount = async() => {
-    await axios.delete(`${API}/api/user`, authMiddleware({headers: {}}));
+    await axios.delete(`${API}/api/user`, authMiddleware({ headers: {} }));
 }
 
 export const getAvgRating = async (uid = '') => {

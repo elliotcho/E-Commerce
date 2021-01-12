@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import env from 'react-dotenv';
-import {v4 as uuidv4} from 'uuid';
-import {sendNonce} from '../../api/payments';
+import { v4 as uuidv4 } from 'uuid';
+import { sendNonce } from '../../api/payments';
 import 'react-square-payment-form/lib/default.css';
 import './css/PaymentForm.css';
 
@@ -84,7 +83,7 @@ class PaymentForm extends Component{
 
         return(
           <div className='payment-bg' style={style}> 
-              {env && (
+              {(
                 <div className='payment'>
                   <header className='text-center'>
                     <h1>Payment Page</h1>
@@ -94,8 +93,8 @@ class PaymentForm extends Component{
                     <div className='payment-form'>
                       <SquarePaymentForm
                         sandbox={true}
-                        applicationId={env.SANDBOX_APPLICATION_ID}
-                        locationId={env.SANDBOX_LOCATION_ID}
+                        applicationId={process.env.REACT_APP_SANDBOX_APPLICATION_ID}
+                        locationId={process.env.REACT_APP_SANDBOX_LOCATION_ID}
                         cardNonceResponseReceived={this.cardNonceResponseReceived}
                         createVerificationDetails={this.createVerificationDetails(total)}
                       >
