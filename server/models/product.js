@@ -1,20 +1,18 @@
 import mongoose from 'mongoose';
 
-const DescriptionSchema = new mongoose.Schema({
-    content:{
-        type: String
-    },
-    color: {
-        type: String
-    },
-    brand: {
-        type: String
-    }
-});
-
 const SizeSchema = new mongoose.Schema({
+    productId: {
+        type: String
+    },
+    name: {
+        type: String,
+    },
     quantity : {
         type: Number
+    },
+    sold: {
+        type: Number,
+        default: 0
     }
 });
 
@@ -30,7 +28,7 @@ const ProductSchema = new mongoose.Schema({
         type: Number
     },
     description: {
-        type: DescriptionSchema
+        type: String
     },
     userId: {
         type: String
@@ -40,19 +38,8 @@ const ProductSchema = new mongoose.Schema({
     },
     datePosted: {
         type: Date
-    },
-    quantity: {
-        type: Number
-    },
-    size: {
-        type: [SizeSchema]
-    },
-    quantitySold: {
-        type: Number,
-        default: 0
     }
 });
 
 export const Size = mongoose.model('size', SizeSchema);
-export const Description = mongoose.model('description', DescriptionSchema);
 export const Product = mongoose.model('product', ProductSchema);

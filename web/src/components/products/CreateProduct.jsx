@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { getAllDepartments } from '../../api/departments';
-import { createProduct } from '../../api/product';
+import { createProduct, updateProductQuantity } from '../../api/product';
+import QuantityForm from './QuantityForm';
 import './css/CreateProduct.css';
 
 const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
@@ -15,26 +16,18 @@ class CreateProduct extends Component {
 
         this.state = {
             departments: [],
-            name: '',
             departmentId: '',
-            description: {},
-            image: null,
+            name: '',
+            description: '',
             price: '',
-            quantity: []
+            image: null,
+            quantity: {}
         }
 
         this.changeField = this.changeField.bind(this);
-        this.changeDescription = this.changeDescription.bind(this);
         this.changeImage = this.changeImage.bind(this);
+        this.updateQuantity = this.updateQuantity.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.changeQuantity = this.changeQuantity.bind(this);
-    }
-
-    changeQuantity( e){
-        const {quantity} = this.state;
-        quantity[e.target.name] = e.target.value;
-
-        this.setState({ quantity  })
     }
 
     async componentDidMount(){
@@ -46,43 +39,38 @@ class CreateProduct extends Component {
         this.setState({[e.target.name] : e.target.value});
     }
 
-    changeDescription(e){
-        const { description } = this.state;
-
-        description[e.target.name] = e.target.value;
-
-        this.setState( { description });
-    }
-
     changeImage(e){
         this.setState({image: e.target.files[0]});
     }
 
+    updateQuantity(quantity){
+        this.setState({ quantity });
+    }
+
     async handleSubmit(e){
         e.preventDefault();
+        
         const { name, departmentId, description, image, price, quantity } = this.state;
         const { history } = this.props;
 
         const formData = new FormData();
-
-        for(let key in description){
-            formData.append(key, description[key]);
-        }
         
         formData.append('name', name);
         formData.append('departmentId', departmentId);
+        formData.append('description', description);
         formData.append('image', image);
-        formData.append('price', price);
-        formData.append('quantity', quantity);
-        
+        formData.append('price', price);    
 
         const product = await createProduct(formData);
+        const { _id } = product;
 
-        history.push(`/product/${product._id}`);
+        await updateProductQuantity(_id, quantity);
+
+        history.push(`/product/${_id}`);
     }
 
     render(){
-        const { name, price, departmentId, departments, quantity } = this.state;
+        const { name, price, departmentId, departments } = this.state;
         const { isDark } = this.context;
 
         const style = isDark? darkStyle: lightStyle;
@@ -90,6 +78,7 @@ class CreateProduct extends Component {
         return(
             <div className='create-product' style={style}>
                 <h1>List Your Product</h1>
+                
                 <form onSubmit = {this.handleSubmit}>
                     <input
                         type = 'text'
@@ -112,82 +101,28 @@ class CreateProduct extends Component {
                     <input
                         type = 'number'
                         name = 'price'
-                        min = '0'
-                        step = '0.01'
+                        placeholder='Price of a single item'
                         onChange = {this.changeField}
                         value = {price}
-                        placeholder='Price of a single item'
+                        step = '0.01'
+                        min = '0'
                     />
 
                     <input
-                        className = 'file'
                         type = 'file'
+                        className = 'file'
                         onChange = {this.changeImage}
                         accept = 'jpg jpeg png'
                     />
 
                     <textarea
-                        maxLength = '499'
                         type = 'textarea'
                         name = 'content'
-                        placeholder = 'Description'
-                        onChange = {this.changeDescription}
-                    />
-
-                    <input 
-                        type = 'text'
-                        name = 'color'
-                        placeholder = 'Color'
-                        onChange = {this.changeDescription}
-                    />
-
-                    <input
-                        type = 'text'
-                        name = 'brand'
-                        placeholder = 'Brand'
-                        onChange = {this.changeDescription}
-                    />
-
-                    <input
-                        type = 'number'
-                        name = '0'
-                        value = {quantity[0]}
-                        placeholder= "Quantity of XS Product"
-                        onChange = {this.changeQuantity}
-                        min = '0'
-                    />
-
-                    <input
-                        type = 'number'
-                        name = '1'
-                        value = {quantity[1]}
-                        placeholder= "Quantity of S Product"
+                        placeholder = 'Product description'
                         onChange = {this.changeField}
                     />
 
-                    <input
-                        type = 'number'
-                        name = '2'
-                        value = {quantity[2]}
-                        placeholder= "Quantity of M Product"
-                        onChange = {this.changeField}
-                    />
-
-                    <input
-                        type = 'number'
-                        name = '3'
-                        value = {quantity[3]}
-                        placeholder= "Quantity of L Product"
-                        onChange = {this.changeField}
-                    />
-
-                    <input
-                        type = 'number'
-                        name = '4'
-                        value = {quantity[4]}
-                        placeholder= "Quantity of XL Product"
-                        onChange = {this.changeField}
-                    />
+                    <QuantityForm updateQuantity={this.updateQuantity}/>
                     
                     <button className='btn-block'>POST</button>
                 </form>

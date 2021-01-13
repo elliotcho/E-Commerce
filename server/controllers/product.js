@@ -1,5 +1,5 @@
-import { Product, Description, Review, Size} from '../models/product';
-import { Department } from '../models/departments';
+import { Product, Size } from '../models/product';
+import Department from '../models/departments';
 import { createUpload } from '../utils/createUpload';
 
 import path from 'path';
@@ -16,58 +16,48 @@ export const createProduct = async (req, res) => {
                 console.log(err);
             }
     
-            const { name, price, departmentId, quantity } = req.body;
+            const { name, departmentId } = req.body;
 
             if(!departmentId){
                 throw new Error('Department ID needed');
             }
 
-            const sizes = [
-                new Size({
-                    quantity: req.body.quantity[0]
-                }),
-                new Size({
-                    quantity: req.body.quantity[1]
-                }),
-                new Size({
-                    quantity: req.body.quantity[2]
-                }),
-                new Size({
-                    quantity: req.body.quantity[3]
-                }),
-                new Size({
-                    quantity: req.body.quantity[4]
-                })
-            ];
-            
-            const newDescription = new Description({
-                content: req.body.content,
-                color: req.body.color,
-                size: req.body.size,
-                brand: req.body.brand
-            });
-
             if(name){
                 const newProduct = new Product({
+                    ...req.body,
                     userId: req.user._id,
-                    departmentId,
                     image: req.file.filename,
-                    description: newDescription,
                     datePosted: new Date(),
-                    name,
-                    price,
-                    quantity,
-                    size : sizes
                 });
     
                 const product = await newProduct.save();
 
-                console.log(size[2]);
-    
                 res.json({ ok: true, product });
             }
        });  
     }
+}
+
+export const setProductQuantity = async (req, res) => {
+   if(!req.user){
+       res.json({ ok: false });
+   } else{
+        const { productId, ...sizes } = req.body;
+
+        const keys = Object.keys(sizes);
+
+        for(let i=0;i<keys.length;i++){
+            const key = keys[i];
+
+            await new Size({
+                name: key,
+                quantity: sizes[key],
+                productId
+            }).save();
+        }
+
+        res.json({ ok: true });
+   }
 }
 
 export const deleteProduct = async (req, res) => {

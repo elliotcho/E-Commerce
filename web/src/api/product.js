@@ -15,6 +15,24 @@ export const createProduct = async (data) => {
     }
 } 
 
+export const updateProductQuantity = async (productId, quantity) => {
+    const config = { headers: { 'content-type' : 'application/json' } };
+    const data = { productId };
+    
+    let sizes = ['XS', 'S', 'M', 'L', 'XL'];
+
+    sizes.forEach(s => data[s] = quantity[s] || 0);
+
+    const response = await axios.post(`${API}/api/product/quantity`, data, authMiddleware(config));
+    const { ok } = response.data;
+
+    if(ok){
+        authAfterware(response);
+    }
+
+    return ok;
+}
+
 export const getProductsByDepartment = async (dept) => {
     const response = await axios.get(`${API}/api/product/department/${dept}`);
     const products = response.data;

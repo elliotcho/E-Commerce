@@ -154,7 +154,7 @@ class ProductDetails extends Component{
                                     </div>
 
                                 <p className = 'content'>
-                                    {description.content}
+                                    {description}
                                 </p>
 
                                 <div className='mt-5 text-right'>
