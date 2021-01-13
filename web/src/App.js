@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import { createMessageToast } from './utils/createToast';
-import { decodeUser } from './utils/decodeUser';
 import { API } from './constants';
 import Routes from './Routes';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,8 +36,6 @@ class App extends Component{
   }
 
   render(){
-      console.log(localStorage.getItem('token'),decodeUser())
-
       return(
         <Routes />
       )

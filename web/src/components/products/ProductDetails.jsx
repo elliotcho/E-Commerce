@@ -47,13 +47,23 @@ class ProductDetails extends Component{
         const reviews = await getReviews(id);
         let total = 0;
 
-        for(let i = 0 ; i < reviews.length; i++){
+        for(let i=0;i<reviews.length;i++){
             total += parseInt(reviews[i].rating)
         }
+        
+        let avgRating;
 
-        let avgRating = (total / reviews.length);
+        if(reviews.length !== 0){
+            avgRating = (total / reviews.length);
+            
+            avgRating = avgRating.toFixed(1);
 
-        this.setState({ rating: avgRating.toFixed(1) });
+            avgRating = `${avgRating}/5`;
+        } else{
+            avgRating = 'N/A';
+        }
+
+        this.setState({ rating: avgRating });
     }
 
     async removeProduct(){
@@ -67,11 +77,11 @@ class ProductDetails extends Component{
 
     async addToCart(){
         const { product: { _id} } = this.state;
-        // const { addToUserCart } = productAPI;
+        const { addToUserCart } = productAPI;
 
-        // const{size} = this.state;
-        // const data = {size,_id};
-       // await addToUserCart(data);
+        const{size} = this.state;
+        const data = {size,_id};
+        await addToUserCart(data);
 
         createSuccessToast("ADDED TO CART");
     }
@@ -116,7 +126,7 @@ class ProductDetails extends Component{
                                         </span>
                                     </p>
                                     <p className='rating'>
-                                        Average User Rating: {rating}/5
+                                        Average User Rating: {rating}
                                     </p>
                                 </div>
                             </div>
