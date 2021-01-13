@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import './css/Home.css';
 
-
-function Home({history}){
+function Home({ history }){
     const goToProducts = () => {
         history.push('/products/all');
     }
@@ -15,10 +15,22 @@ function Home({history}){
     const goToRegister = () => {
         history.push('/register');
     }
+
+    const { isDark } = useContext(ThemeContext);
+    let className;
+
+    if(isDark){
+        className = 'home dark';
+    } else{
+        className = 'home light';
+    }
+
     return(
-        <div className = 'home img-responsive'>
+        <div className={className}>
             <h1>Shop across departments.</h1>
+
             <h2>Directly Message Sellers</h2>
+
             <h3>Upload your products.</h3>
 
             <div class="box-2">

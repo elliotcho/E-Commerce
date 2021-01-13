@@ -14,7 +14,8 @@
     width: 6.5rem;
     height: 6.5rem;
     border-radius: 11px;
-    margin: 2rem 0 1rem;
+    margin: 1rem auto;
+    display: block;
 }
 
 .profile header h3{
@@ -26,14 +27,6 @@
     padding: 4px 14px;
     font-size: 21px;
     font-family: 'Sansita Swashed', cursive;
-}
-
-.profile header h3:hover{
-    background-color: #89beb3;
-}
-
-.profile header input{
-    display: none;
 }
 
 .profile header button{
@@ -70,10 +63,6 @@
     font-family: 'Sansita Swashed', cursive;
 }
 
-.profile .stats h2:hover {
-    background-color: #ebcfc4;
-}
-
 @media screen and (max-width: 670px) {
     .profile .stats {
         font-size: smaller;
@@ -84,7 +73,7 @@
     }
 }
 
-@media screen and (max-width: 991px){
+@media screen and (max-width: 992px){
     .profile .user-products{
         justify-content: center;
     }

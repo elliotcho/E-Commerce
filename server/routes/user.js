@@ -14,7 +14,9 @@ import {
     deleteFromCart,
     loadCart,
     passwordSettings,
-    getAvgRating
+    getAvgRating,
+    loadHistory,
+    clearHistory
 } from '../controllers/user';
 
 const router = express.Router();
@@ -31,6 +33,8 @@ router.get('/profile_pic/:uid?', loadProfilePic);
 router.post('/profile_pic', changeProfilePic);
 router.delete('/profile_pic', removeProfilePic);
 router.get('/avg_rating/:uid?', getAvgRating);
+router.get('/history', loadHistory);
+router.delete('/history', clearHistory);
 router.post('/cart', addToCart);
 router.delete('/cart/:productId', deleteFromCart);
 router.get('/cart', loadCart);
