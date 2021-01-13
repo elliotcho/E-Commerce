@@ -101,7 +101,7 @@ class PaymentForm extends Component{
                   <h1>Payment Page</h1>
                   <h2>Total Amount: ${total}</h2>
                 </header>
-              
+
                 <div className='payment-form'>
                     <SquarePaymentForm
                       sandbox={true}

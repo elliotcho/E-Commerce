@@ -28,7 +28,9 @@ function Home({ history }){
     return(
         <div className={className}>
             <h1>Shop across departments.</h1>
-            <h2>Message Sellers to get the best price for you!</h2>
+
+            <h2>Directly Message Sellers</h2>
+
             <h3>Upload your products.</h3>
 
             <div class="box-2">
@@ -37,7 +39,9 @@ function Home({ history }){
                 </div>
             </div>
 
+            
             <div className='row'>
+                
                 <div class="hexagon-wrapper">
                     <div class="hexagon">
                         <i onClick={goToMessages}>Message Customers</i>
@@ -52,8 +56,10 @@ function Home({ history }){
                     <div class="hexagon">
                         <i onClick={goToRegister}>Create An Account</i>
                     </div>
+                    
                 </div>
             </div>
+            
         </div>
     )
 }
