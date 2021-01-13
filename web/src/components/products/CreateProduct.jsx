@@ -20,13 +20,21 @@ class CreateProduct extends Component {
             description: {},
             image: null,
             price: '',
-            quantity: ''
+            quantity: []
         }
 
         this.changeField = this.changeField.bind(this);
         this.changeDescription = this.changeDescription.bind(this);
         this.changeImage = this.changeImage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.changeQuantity = this.changeQuantity.bind(this);
+    }
+
+    changeQuantity( e){
+        const {quantity} = this.state;
+        quantity[e.target.name] = e.target.value;
+
+        this.setState({ quantity  })
     }
 
     async componentDidMount(){
@@ -133,14 +141,6 @@ class CreateProduct extends Component {
                         onChange = {this.changeDescription}
                     />
 
-                    
-                    <input
-                        type = 'text'
-                        name = 'size'
-                        placeholder = 'Size'
-                        onChange = {this.changeDescription}
-                    />
-
                     <input
                         type = 'text'
                         name = 'brand'
@@ -150,12 +150,43 @@ class CreateProduct extends Component {
 
                     <input
                         type = 'number'
-                        name = 'quantity'
-                        value= {quantity}
+                        name = '0'
+                        value = {quantity[0]}
+                        placeholder= "Quantity of XS Product"
+                        onChange = {this.changeQuantity}
                         min = '0'
-                        step = '1'
-                        placeholder='Quantity of stock'
-                        onChange= {this.changeField}
+                    />
+
+                    <input
+                        type = 'number'
+                        name = '1'
+                        value = {quantity[1]}
+                        placeholder= "Quantity of S Product"
+                        onChange = {this.changeField}
+                    />
+
+                    <input
+                        type = 'number'
+                        name = '2'
+                        value = {quantity[2]}
+                        placeholder= "Quantity of M Product"
+                        onChange = {this.changeField}
+                    />
+
+                    <input
+                        type = 'number'
+                        name = '3'
+                        value = {quantity[3]}
+                        placeholder= "Quantity of L Product"
+                        onChange = {this.changeField}
+                    />
+
+                    <input
+                        type = 'number'
+                        name = '4'
+                        value = {quantity[4]}
+                        placeholder= "Quantity of XL Product"
+                        onChange = {this.changeField}
                     />
                     
                     <button className='btn-block'>POST</button>

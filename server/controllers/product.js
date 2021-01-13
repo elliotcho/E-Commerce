@@ -1,4 +1,4 @@
-import { Product, Description, Review } from '../models/product';
+import { Product, Description, Review, Size} from '../models/product';
 import { Department } from '../models/departments';
 import { createUpload } from '../utils/createUpload';
 
@@ -21,6 +21,24 @@ export const createProduct = async (req, res) => {
             if(!departmentId){
                 throw new Error('Department ID needed');
             }
+
+            const sizes = [
+                new Size({
+                    quantity: req.body.quantity[0]
+                }),
+                new Size({
+                    quantity: req.body.quantity[1]
+                }),
+                new Size({
+                    quantity: req.body.quantity[2]
+                }),
+                new Size({
+                    quantity: req.body.quantity[3]
+                }),
+                new Size({
+                    quantity: req.body.quantity[4]
+                })
+            ];
             
             const newDescription = new Description({
                 content: req.body.content,
@@ -38,10 +56,13 @@ export const createProduct = async (req, res) => {
                     datePosted: new Date(),
                     name,
                     price,
-                    quantity
+                    quantity,
+                    size : sizes
                 });
     
                 const product = await newProduct.save();
+
+                console.log(size[2]);
     
                 res.json({ ok: true, product });
             }

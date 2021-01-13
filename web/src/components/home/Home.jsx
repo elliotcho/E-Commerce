@@ -27,7 +27,9 @@ function Home({history}){
                 </div>
             </div>
 
+            
             <div className='row'>
+                
                 <div class="hexagon-wrapper">
                     <div class="hexagon">
                         <i onClick={goToMessages}>Message Customers</i>
@@ -42,8 +44,10 @@ function Home({history}){
                     <div class="hexagon">
                         <i onClick={goToRegister}>Create An Account</i>
                     </div>
+                    
                 </div>
             </div>
+            
         </div>
     )
 }

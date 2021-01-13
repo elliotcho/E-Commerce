@@ -7,11 +7,14 @@ const DescriptionSchema = new mongoose.Schema({
     color: {
         type: String
     },
-    size: {
-        type: String
-    },
     brand: {
         type: String
+    }
+});
+
+const SizeSchema = new mongoose.Schema({
+    quantity : {
+        type: Number
     }
 });
 
@@ -41,11 +44,15 @@ const ProductSchema = new mongoose.Schema({
     quantity: {
         type: Number
     },
+    size: {
+        type: [SizeSchema]
+    },
     quantitySold: {
         type: Number,
         default: 0
     }
 });
 
+export const Size = mongoose.model('size', SizeSchema);
 export const Description = mongoose.model('description', DescriptionSchema);
 export const Product = mongoose.model('product', ProductSchema);
