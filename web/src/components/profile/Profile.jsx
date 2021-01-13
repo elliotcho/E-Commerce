@@ -45,31 +45,22 @@ class Profile extends Component{
         const { uid } = this.props.match.params;
         const { getUserInfo, getProfilePic, getAvgRating } = userAPI; 
 
-        let infoPromise;
-        let productsPromise;
-        let imagePromise;
-        let avgRatingPromise;
+        let info;
+        let products;
+        let imgURL;
+        let avgRating;
         
         if(uid){
-            infoPromise = getUserInfo(uid);
-            productsPromise = getUserProducts(uid);
-            imagePromise = getProfilePic(uid);
-            avgRatingPromise  = getAvgRating(uid);
+            info = await getUserInfo(uid);
+            products = await getUserProducts(uid);
+            imgURL = await getProfilePic(uid);
+            avgRating  = await getAvgRating(uid);
         } else{
-            infoPromise = getUserInfo();
-            productsPromise = getUserProducts();
-            imagePromise = getProfilePic();
-            avgRatingPromise  = getAvgRating();
+            info = await getUserInfo();
+            products = await getUserProducts();
+            imgURL = await getProfilePic();
+            avgRating  = await getAvgRating();
         }
-
-        const promises = [
-            infoPromise, 
-            productsPromise, 
-            avgRatingPromise, 
-            imagePromise
-        ];
-        
-        const [info, products, avgRating, imgURL] = await Promise.all(promises);
 
         this.setState({ 
             imgURL,

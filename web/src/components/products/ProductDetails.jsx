@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import decode from 'jwt-decode';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
+import { createSuccessToast } from '../../utils/createToast';
+import { decodeUser } from '../../utils/decodeUser';
+import * as productAPI from '../../api/product';
 import {getReviews} from '../../api/review';
 import ReviewList from '../reviews/ReviewList';
 import loading from '../../images/loading.jpg';
@@ -31,6 +32,8 @@ class ProductDetails extends Component{
 
     async componentDidMount(){
         const { id } = this.props.match.params;
+        const { getProductById } = productAPI;  
+
         const product = await getProductById(id);
 
         await this.getAvgRating(id);
@@ -40,7 +43,7 @@ class ProductDetails extends Component{
 
     async getAvgRating(){
         const { id } = this.props.match.params;
-
+      
         const reviews = await getReviews(id);
         let total = 0;
 
@@ -55,6 +58,8 @@ class ProductDetails extends Component{
 
     async removeProduct(){
         const { product: { _id } } = this.state;
+        const { deleteProduct } = productAPI;
+
         await deleteProduct(_id);
 
         this.props.history.goBack();
@@ -62,11 +67,13 @@ class ProductDetails extends Component{
 
     async addToCart(){
         const { product: { _id} } = this.state;
-        const{size} = this.state;
-        const data = {size,_id};
-        await addToUserCart(data);
+        // const { addToUserCart } = productAPI;
 
-        alert("ADDED TO CART");
+        // const{size} = this.state;
+        // const data = {size,_id};
+       // await addToUserCart(data);
+
+        createSuccessToast("ADDED TO CART");
     }
 
     handleChange(e){
@@ -81,14 +88,9 @@ class ProductDetails extends Component{
         const{rating, size} = this.state;
 
         const style = this.context.isDark? darkStyle: lightStyle;
-        let isOwner = false;
 
-        try { 
-            const token = localStorage.getItem('token');
-            const { user } = decode(token);
-
-            isOwner = user._id === userId;
-        } catch (err) { }
+        const user = decodeUser();
+        let isOwner = user && user._id === userId;
 
         return(
             <div className = 'product-details-bg' style={style}>

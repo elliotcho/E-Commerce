@@ -74,6 +74,7 @@ export const deleteProduct = async (req, res) => {
         });
 
         await Product.deleteOne({ _id : id });
+        await Size.deleteMany({ productId: id });
 
         res.json({msg: "Product Successfully Deleted"});
     }

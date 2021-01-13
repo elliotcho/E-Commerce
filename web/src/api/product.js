@@ -4,7 +4,7 @@ import { authAfterware } from '../utils/authAfterware';
 import axios from 'axios';
 
 export const createProduct = async (data) => {
-    const config = {headers: {'content-type': 'multipart/form-data'}};
+    const config = { headers: { 'content-type': 'multipart/form-data' } };
 
     const response = await axios.post(`${API}/api/product`, data, authMiddleware(config));
     const { ok, product } = response.data
@@ -96,7 +96,7 @@ export const getProductById = async (id) => {
 }
 
 export const addToUserCart = async (data) =>{
-    const config = {headers: {'content-type': 'multipart/form-data'}};
+    const config = { headers: {'content-type': 'application/json'} };
     const response = await axios.post(`${API}/api/user/cart`, data, authMiddleware(config));
     authAfterware(response);
 }
