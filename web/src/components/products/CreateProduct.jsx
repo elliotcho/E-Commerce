@@ -117,7 +117,7 @@ class CreateProduct extends Component {
 
                     <textarea
                         type = 'textarea'
-                        name = 'content'
+                        name = 'description'
                         placeholder = 'Product description'
                         onChange = {this.changeField}
                     />

@@ -28,7 +28,8 @@ const ProductSchema = new mongoose.Schema({
         type: Number
     },
     description: {
-        type: String
+        type: String,
+        maxlength: 300
     },
     userId: {
         type: String

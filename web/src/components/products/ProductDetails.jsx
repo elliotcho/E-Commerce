@@ -19,26 +19,27 @@ class ProductDetails extends Component{
 
         this.state = {
             product: {},
-            fetching: false,
-            rating: '',
-            size: ''
+            sizes: ['XS', 'S', 'M', 'L', 'XL'],
+            size: 0,
+            rating: 'Loading...',
         }
 
         this.getAvgRating = this.getAvgRating.bind(this);
         this.removeProduct = this.removeProduct.bind(this);
         this.addToCart = this.addToCart.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.toProfile = this.toProfile.bind(this);
+        this.updateSize = this.updateSize.bind(this);
     }
 
     async componentDidMount(){
         const { id } = this.props.match.params;
-        const { getProductById } = productAPI;  
-
+        const { getProductById } = productAPI; 
+        
         const product = await getProductById(id);
 
         await this.getAvgRating(id);
      
-        this.setState({ product, fetching: true });
+        this.setState({ product });
     }
 
     async getAvgRating(){
@@ -55,9 +56,7 @@ class ProductDetails extends Component{
 
         if(reviews.length !== 0){
             avgRating = (total / reviews.length);
-            
             avgRating = avgRating.toFixed(1);
-
             avgRating = `${avgRating}/5`;
         } else{
             avgRating = 'N/A';
@@ -86,17 +85,38 @@ class ProductDetails extends Component{
         createSuccessToast("ADDED TO CART");
     }
 
-    handleChange(e){
-        this.setState({ [e.target.name]: e.target.value });
+    formatDate(date){
+        const dateStr = new Date(date).toLocaleString();
+        const split = dateStr.split(",");
+
+        if(split[0] === 'Invalid Date'){
+            return 'Loading...';
+        }
+
+        return split[0];
     }
 
+    toProfile(){
+        const { product: { userId } } = this.state;
+        const { history } = this.props;
+
+        const route = `/profile/${userId}`;
+
+        history.push(route);
+    }
+
+    updateSize(size){
+        this.setState({ size });
+    }
+
+    //image, name, price, description, datePosted, username, 
+    //sizes, quantity
 
     render(){
         const { product: { 
-            image, name, price, description, datePosted, userId, username, quantity, _id
+            image, name, price, description, datePosted, userId, username, _id
         } } = this.state;
-        const{rating, size} = this.state;
-
+     
         const style = this.context.isDark? darkStyle: lightStyle;
 
         const user = decodeUser();
@@ -105,80 +125,62 @@ class ProductDetails extends Component{
         return(
             <div className = 'product-details-bg' style={style}>
                 <div className = 'product-details p-4'>
-                    {this.state.fetching? 
-                        (<div className = 'row'>
-                            <div className = 'col-5'>
-                                <img src = {image? image: loading} alt = 'product pic' />
+                    <aside>
+                        <img src={image? image: loading} alt='product pic' />
 
-                                <div className = 'ml-3'>
-                                    <p className ='mt-3'>
-                                        { new Date(datePosted).toLocaleString() }
-                                    </p>
-                                    
-                                    <p className ='mt-3'>
-                                        Posted by 
-                                        
-                                        <span className='ml-2' onClick={
-                                                () => this.props.history.push(`/profile/${userId}`)
-                                            }
-                                        >
-                                            {username}
-                                        </span>
-                                    </p>
-                                    <p className='rating'>
-                                        Average User Rating: {rating}
-                                    </p>
-                                </div>
+                         <div className='mt-3'>
+                             <p>Average Rating: {this.state.rating}</p>
+                             <p>Posted on {this.formatDate(datePosted)}</p>
+                             
+                             <p onClick={this.toProfile}>
+                                 Posted by <span>{username || 'Loading...'}</span>
+                             </p>
+                         </div>
+                    </aside>
+                    
+                    <div>       
+                        <header className='row'>
+                            <div className='col-10'>
+                                <h1>{name || 'Loading...'}</h1>
                             </div>
 
-                            <div className = 'col-7 description'>
-                                <header className = 'row'>
-                                    <div className ='col-10'>
-                                        <h1>
-                                            {name} 
-                                        </h1>
-                                    </div>
-
-                                    <div className ='col-2 text-right'>
-                                        {isOwner && (
-                                            <i className='fas fa-trash-alt' onClick={this.removeProduct}/>
-                                        )}
-                                    </div>
-                                </header>
-
-                                <div className = 'price my-3'>
-                                    {`Price: ${price.toFixed(2)}$`}
-                                </div>
-
-                                <div className = 'quantity'>
-                                    {`Quantity remaning: ${quantity}`}
-                                </div>
-
-                                <div className="size">
-                                <label for='size'>Size: </label>
-                                    <select name='size' id='size' onChange={this.handleChange}>
-                                        <option value="XS">XS</option>
-                                        <option value="S">S</option>
-                                        <option value="M">M</option>
-                                        <option value="L">L</option>
-                                        <option value="XL">XL</option>
-                                    </select>
-                                    </div>
-
-                                <p className = 'content'>
-                                    {description}
-                                </p>
-
-                                <div className='mt-5 text-right'>
-                                    {!isOwner && ( 
-                                        <i className='fas fa-cart-plus' onClick={this.addToCart}/>
-                                    )}
-                                </div>
+                            <div className='col-2 text-right'>
+                                {isOwner && <i className='fas fa-trash-alt' onClick={this.removeProduct} />}
+                                {!isOwner && <i className='fas fa-cart-plus' onClick={this.addToCart} />}
                             </div>
-                        </div>) : null
-                    }
+                        </header>
+
+                        <main className='row mt-4'>
+                            <p>{description}</p>
+                        </main>
+
+                        <footer className='mt-4'>
+                            <div>        
+                                {this.state.sizes.map((size, i) =>  {
+                                    let className = 'size-box';
+
+                                    if(this.state.size === i){
+                                        className += ' active';
+                                    }
+
+                                    const onClick = () => this.updateSize(i);
+
+                                    return (
+                                        <div key={i} className={className} onClick={onClick}>
+                                            {size}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+
+                            <div className='mt-3 quantity'>
+                                <p>Quantity: 5</p>
+                                <p>Price: ${price}</p>
+                            </div>
+                        </footer>
+                    </div>
                 </div>
-  
+
                 <ReviewList productId={_id} getAvgRating={this.getAvgRating}/>
             </div>
         )
