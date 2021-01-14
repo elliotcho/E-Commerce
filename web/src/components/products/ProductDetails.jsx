@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { createSuccessToast } from '../../utils/createToast';
 import { decodeUser } from '../../utils/decodeUser';
+import { createErrorToast } from '../../utils/createToast';
 import * as productAPI from '../../api/product';
-import {getReviews} from '../../api/review';
+import { getReviews } from '../../api/review';
+import CartModal from './CartModal';
 import ReviewList from '../reviews/ReviewList';
 import loading from '../../images/loading.jpg';
 import './css/ProductDetails.css';
@@ -20,12 +21,13 @@ class ProductDetails extends Component{
         this.state = {
             product: {},
             rating: 'Loading...',
-            cache: {},
             quantity: 'Loading...',
             sizes: ['XS', 'S', 'M', 'L', 'XL'],
             sizeIdx: 0,
+            cache: {}
         }
 
+        this.fetchData = this.fetchData.bind(this);
         this.getAvgRating = this.getAvgRating.bind(this);
         this.removeProduct = this.removeProduct.bind(this);
         this.addToCart = this.addToCart.bind(this);
@@ -35,13 +37,18 @@ class ProductDetails extends Component{
 
     async componentDidMount(){
         const { id } = this.props.match.params;
+
+        await this.getAvgRating(id);
+        await this.fetchData();  
+    }
+
+    async fetchData(){
+        const { id } = this.props.match.params;
         const { getProductById, getProductQuantities } = productAPI; 
     
         const cache = await getProductQuantities(id);
         const product = await getProductById(id);
-    
-        await this.getAvgRating(id);
-     
+        
         this.setState({ 
             quantity: cache['XS'],
             product, 
@@ -81,15 +88,16 @@ class ProductDetails extends Component{
         this.props.history.goBack();
     }
 
-    async addToCart(){
-        const { product: { _id} } = this.state;
-        const { addToUserCart } = productAPI;
+    addToCart(){
+        const { quantity } = this.state;
 
-        const{size} = this.state;
-        const data = {size,_id};
-        await addToUserCart(data);
-
-        createSuccessToast("ADDED TO CART");
+        if(quantity <= 0){
+            createErrorToast('Item is not available in this size'); 
+        } 
+        
+        else{
+            document.getElementById('open-cart').click();   
+        }
     }
 
     formatDate(date){
@@ -119,10 +127,7 @@ class ProductDetails extends Component{
 
         this.setState({ sizeIdx, quantity });
     }
-
-    //image, name, price, description, datePosted, username, 
-    //sizes, quantity
-
+    
     render(){
         const { product: { 
             image, name, price, description, datePosted, userId, username, _id
@@ -191,6 +196,21 @@ class ProductDetails extends Component{
                         </footer>
                     </div>
                 </div>
+
+                <button 
+                    id='open-cart' 
+                    data-toggle='modal' 
+                    data-target='.cart-modal' 
+                    style={{displaye: 'none'}}
+                />
+
+                <CartModal 
+                    productId={_id}
+                    size={this.state.sizes[this.state.sizeIdx]}
+                    maxQuantity={this.state.quantity}
+                    refetchProduct={this.fetchData}
+                    name={name}
+                />
 
                 <ReviewList productId={_id} getAvgRating={this.getAvgRating}/>
             </div>

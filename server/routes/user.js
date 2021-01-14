@@ -36,7 +36,7 @@ router.get('/avg_rating/:uid?', getAvgRating);
 router.get('/history', loadHistory);
 router.delete('/history', clearHistory);
 router.post('/cart', addToCart);
-router.delete('/cart/:productId', deleteFromCart);
+router.delete('/cart/:itemId', deleteFromCart);
 router.get('/cart', loadCart);
 
 export default router;
