@@ -1,17 +1,18 @@
 import mongoose from 'mongoose';
 
-const DescriptionSchema = new mongoose.Schema({
-    content:{
+const SizeSchema = new mongoose.Schema({
+    productId: {
         type: String
     },
-    color: {
-        type: String
+    name: {
+        type: String,
     },
-    size: {
-        type: String
+    quantity : {
+        type: Number
     },
-    brand: {
-        type: String
+    sold: {
+        type: Number,
+        default: 0
     }
 });
 
@@ -27,7 +28,7 @@ const ProductSchema = new mongoose.Schema({
         type: Number
     },
     description: {
-        type: DescriptionSchema
+        type: String
     },
     userId: {
         type: String
@@ -37,15 +38,8 @@ const ProductSchema = new mongoose.Schema({
     },
     datePosted: {
         type: Date
-    },
-    quantity: {
-        type: Number
-    },
-    quantitySold: {
-        type: Number,
-        default: 0
     }
 });
 
-export const Description = mongoose.model('description', DescriptionSchema);
+export const Size = mongoose.model('size', SizeSchema);
 export const Product = mongoose.model('product', ProductSchema);

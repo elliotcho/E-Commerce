@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { getAllDepartments } from '../../api/departments';
-import { createProduct } from '../../api/product';
+import { createProduct, updateProductQuantity } from '../../api/product';
+import QuantityForm from './QuantityForm';
 import './css/CreateProduct.css';
 
 const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
@@ -15,17 +16,17 @@ class CreateProduct extends Component {
 
         this.state = {
             departments: [],
-            name: '',
             departmentId: '',
-            description: {},
-            image: null,
+            name: '',
+            description: '',
             price: '',
-            quantity: ''
+            image: null,
+            quantity: {}
         }
 
         this.changeField = this.changeField.bind(this);
-        this.changeDescription = this.changeDescription.bind(this);
         this.changeImage = this.changeImage.bind(this);
+        this.updateQuantity = this.updateQuantity.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -38,43 +39,38 @@ class CreateProduct extends Component {
         this.setState({[e.target.name] : e.target.value});
     }
 
-    changeDescription(e){
-        const { description } = this.state;
-
-        description[e.target.name] = e.target.value;
-
-        this.setState( { description });
-    }
-
     changeImage(e){
         this.setState({image: e.target.files[0]});
     }
 
+    updateQuantity(quantity){
+        this.setState({ quantity });
+    }
+
     async handleSubmit(e){
         e.preventDefault();
+        
         const { name, departmentId, description, image, price, quantity } = this.state;
         const { history } = this.props;
 
         const formData = new FormData();
-
-        for(let key in description){
-            formData.append(key, description[key]);
-        }
         
         formData.append('name', name);
         formData.append('departmentId', departmentId);
+        formData.append('description', description);
         formData.append('image', image);
-        formData.append('price', price);
-        formData.append('quantity', quantity);
-        
+        formData.append('price', price);    
 
         const product = await createProduct(formData);
+        const { _id } = product;
 
-        history.push(`/product/${product._id}`);
+        await updateProductQuantity(_id, quantity);
+
+        history.push(`/product/${_id}`);
     }
 
     render(){
-        const { name, price, departmentId, departments, quantity } = this.state;
+        const { name, price, departmentId, departments } = this.state;
         const { isDark } = this.context;
 
         const style = isDark? darkStyle: lightStyle;
@@ -82,6 +78,7 @@ class CreateProduct extends Component {
         return(
             <div className='create-product' style={style}>
                 <h1>List Your Product</h1>
+                
                 <form onSubmit = {this.handleSubmit}>
                     <input
                         type = 'text'
@@ -104,58 +101,28 @@ class CreateProduct extends Component {
                     <input
                         type = 'number'
                         name = 'price'
-                        min = '0'
-                        step = '0.01'
+                        placeholder='Price of a single item'
                         onChange = {this.changeField}
                         value = {price}
-                        placeholder='Price of a single item'
+                        step = '0.01'
+                        min = '0'
                     />
 
                     <input
-                        className = 'file'
                         type = 'file'
+                        className = 'file'
                         onChange = {this.changeImage}
                         accept = 'jpg jpeg png'
                     />
 
                     <textarea
-                        maxLength = '499'
                         type = 'textarea'
                         name = 'content'
-                        placeholder = 'Description'
-                        onChange = {this.changeDescription}
+                        placeholder = 'Product description'
+                        onChange = {this.changeField}
                     />
 
-                    <input 
-                        type = 'text'
-                        name = 'color'
-                        placeholder = 'Color'
-                        onChange = {this.changeDescription}
-                    />
-
-                    <input
-                        type = 'text'
-                        name = 'size'
-                        placeholder = 'Size'
-                        onChange = {this.changeDescription}
-                    />
-
-                    <input
-                        type = 'text'
-                        name = 'brand'
-                        placeholder = 'Brand'
-                        onChange = {this.changeDescription}
-                    />
-
-                    <input
-                        type = 'number'
-                        name = 'quantity'
-                        value= {quantity}
-                        min = '0'
-                        step = '1'
-                        placeholder='Quantity of stock'
-                        onChange= {this.changeField}
-                    />
+                    <QuantityForm updateQuantity={this.updateQuantity}/>
                     
                     <button className='btn-block'>POST</button>
                 </form>

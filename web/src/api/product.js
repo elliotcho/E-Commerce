@@ -4,7 +4,7 @@ import { authAfterware } from '../utils/authAfterware';
 import axios from 'axios';
 
 export const createProduct = async (data) => {
-    const config = {headers: {'content-type': 'multipart/form-data'}};
+    const config = { headers: { 'content-type': 'multipart/form-data' } };
 
     const response = await axios.post(`${API}/api/product`, data, authMiddleware(config));
     const { ok, product } = response.data
@@ -14,6 +14,24 @@ export const createProduct = async (data) => {
         return product;
     }
 } 
+
+export const updateProductQuantity = async (productId, quantity) => {
+    const config = { headers: { 'content-type' : 'application/json' } };
+    const data = { productId };
+    
+    let sizes = ['XS', 'S', 'M', 'L', 'XL'];
+
+    sizes.forEach(s => data[s] = quantity[s] || 0);
+
+    const response = await axios.post(`${API}/api/product/quantity`, data, authMiddleware(config));
+    const { ok } = response.data;
+
+    if(ok){
+        authAfterware(response);
+    }
+
+    return ok;
+}
 
 export const getProductsByDepartment = async (dept) => {
     const response = await axios.get(`${API}/api/product/department/${dept}`);
@@ -77,10 +95,9 @@ export const getProductById = async (id) => {
     return product;
 }
 
-export const addToUserCart = async (productId) =>{
-    const config = {headers: {}};
-    const response = await axios.post(`${API}/api/user/cart`, {productId}, authMiddleware(config));
-
+export const addToUserCart = async (data) =>{
+    const config = { headers: {'content-type': 'application/json'} };
+    const response = await axios.post(`${API}/api/user/cart`, data, authMiddleware(config));
     authAfterware(response);
 }
 

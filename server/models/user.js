@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
         type: [String],
         default: []
     },
+    history: {
+        type: Array,
+        default: []
+    },
     profilePic: {
         type: String,
         default: null

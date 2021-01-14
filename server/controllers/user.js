@@ -81,10 +81,9 @@ export const forgotPassword = async (req, res) => {
 
 export const changePassword = async (req, res) => {
     const errors = [];
-
     const key = req.body.token;
-    const uid = await redis.get(key);
 
+    const uid = await redis.get(key);
     const user = await User.findOne({ _id: uid });
 
     if(!uid){
@@ -119,7 +118,7 @@ export const changePassword = async (req, res) => {
 }
 
 export const changeUsername = async (req, res) => {
-    const user = await User.findOne({username : req.body.username}); 
+    const user = await User.findOne({ username : req.body.username }); 
 
     if(user){
         res.json({ msg:"Username already exists", error: true });
@@ -191,7 +190,7 @@ export const removeProfilePic = async (req, res) => {
         const user = await User.findOne({ _id: req.user._id });
         const { profilePic } = user;
 
-        if( profilePic ){
+        if(profilePic){
             fs.unlink(path.join(__dirname, '../', `images/profile/${profilePic}`), err => {
                 if(err){
                     console.log(err);
@@ -207,27 +206,27 @@ export const removeProfilePic = async (req, res) => {
 
 export const addToCart = async (req, res) => {
     if (!req.user) {
-        res.json({msg: 'User is not authenticated'});
+        res.json({ msg: 'User is not authenticated' });
     } else{
         const { productId } = req.body;
 
-        const user = await User.findOne({_id: req.user._id});
+        const user = await User.findOne({ _id: req.user._id });
         const { cart } = user
         
         cart.push(productId);
 
-        await User.updateOne({_id: req.user._id}, {cart});
+        await User.updateOne({ _id: req.user._id }, { cart });
         res.json({ msg: 'Cart Updated' });
     }
 }
 
 export const deleteFromCart = async (req, res) => {
     if (!req.user) {
-        res.json({msg: 'User is not authenticated'});
+        res.json({ msg: 'User is not authenticated' });
     } else {
         const { productId } = req.params;
 
-        const user = await User.findOne({_id: req.user._id});
+        const user = await User.findOne({ _id: req.user._id });
         const { cart } = user;
 
         for (let i=0; i < cart.length; i++) {
@@ -266,6 +265,60 @@ export const loadCart = async (req, res) => {
     }
 }
 
+export const loadHistory = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        const user = await User.findOne({ _id: req.user._id });
+
+        if(user){
+            res.json({ ok: true, history: user.history });
+        } else {
+            res.json({ ok: false });
+        }
+    }
+}
+
+export const removeFromHistory = async (req, res) => {
+    if(!req.user || !req.params.id){
+        res.json({ ok: false });
+    } else {
+        try { 
+            const user = await User.findOne({ _id : req.user._id });
+            const { history } = user;
+
+            for(let i=0;i<history.length;i++){
+                if(history[i]._id === req.params.id){
+                    history.splice(i, 1);
+                    break;
+                }
+            }
+
+            await User.updateOne({ _id: req.user._id }, { history });
+
+            res.json({ ok: true });
+        } catch (err) {
+            res.json({ ok: false });
+        }
+    }
+}
+
+export const clearHistory = async (req, res) => {
+    if(!req.user){
+        res.json({ ok: false });
+    } else{
+        try {
+            const { _id } = req.user;
+
+            await User.updateOne({ _id }, { history: [] });
+    
+            res.json({ ok: true });
+        } catch (err){
+            res.json({ ok: false });
+        }
+    }
+}
+
 export const getAvgRating = async (req, res) => {
     let userId;
     let total = 0;
@@ -295,7 +348,13 @@ export const getAvgRating = async (req, res) => {
         count += reviews.length;
     }
     
-    const avgRating = (total/count).toFixed(1);
+    let avgRating;
+    
+    if(count !== 0){
+        avgRating = (total/count).toFixed(1);
+    } else{
+        count = 'N/A';
+    }
 
     res.json({ avgRating });
 }
@@ -354,7 +413,6 @@ export const deleteUser = async (req, res) => {
 
         res.json({ msg: 'Success' });   
     } catch (err) {
-        console.log('HI')
         res.json({ msg: 'Failure' });
     }  
 }

@@ -1,4 +1,4 @@
-import {Department} from '../models/departments'; 
+import Department from '../models/departments'; 
 
 export const createDepartment =  async (req, res) => {
     const {name} = req.body;

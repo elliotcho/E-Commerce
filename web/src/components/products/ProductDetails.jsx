@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import decode from 'jwt-decode';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { getProductById, deleteProduct, addToUserCart } from '../../api/product';
+import { createSuccessToast } from '../../utils/createToast';
+import { decodeUser } from '../../utils/decodeUser';
+import * as productAPI from '../../api/product';
 import {getReviews} from '../../api/review';
 import ReviewList from '../reviews/ReviewList';
 import loading from '../../images/loading.jpg';
@@ -19,16 +20,20 @@ class ProductDetails extends Component{
         this.state = {
             product: {},
             fetching: false,
-            rating: ''
+            rating: '',
+            size: ''
         }
 
         this.getAvgRating = this.getAvgRating.bind(this);
         this.removeProduct = this.removeProduct.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     async componentDidMount(){
         const { id } = this.props.match.params;
+        const { getProductById } = productAPI;  
+
         const product = await getProductById(id);
 
         await this.getAvgRating(id);
@@ -38,21 +43,33 @@ class ProductDetails extends Component{
 
     async getAvgRating(){
         const { id } = this.props.match.params;
-
+      
         const reviews = await getReviews(id);
         let total = 0;
 
-        for(let i = 0 ; i < reviews.length; i++){
+        for(let i=0;i<reviews.length;i++){
             total += parseInt(reviews[i].rating)
         }
+        
+        let avgRating;
 
-        let avgRating = (total / reviews.length);
+        if(reviews.length !== 0){
+            avgRating = (total / reviews.length);
+            
+            avgRating = avgRating.toFixed(1);
 
-        this.setState({ rating: avgRating.toFixed(1) });
+            avgRating = `${avgRating}/5`;
+        } else{
+            avgRating = 'N/A';
+        }
+
+        this.setState({ rating: avgRating });
     }
 
     async removeProduct(){
         const { product: { _id } } = this.state;
+        const { deleteProduct } = productAPI;
+
         await deleteProduct(_id);
 
         this.props.history.goBack();
@@ -60,9 +77,17 @@ class ProductDetails extends Component{
 
     async addToCart(){
         const { product: { _id} } = this.state;
-        await addToUserCart(_id);
+        const { addToUserCart } = productAPI;
 
-        alert("ADDED TO CART");
+        const{size} = this.state;
+        const data = {size,_id};
+        await addToUserCart(data);
+
+        createSuccessToast("ADDED TO CART");
+    }
+
+    handleChange(e){
+        this.setState({ [e.target.name]: e.target.value });
     }
 
 
@@ -70,17 +95,12 @@ class ProductDetails extends Component{
         const { product: { 
             image, name, price, description, datePosted, userId, username, quantity, _id
         } } = this.state;
-        const{rating} = this.state;
+        const{rating, size} = this.state;
 
         const style = this.context.isDark? darkStyle: lightStyle;
-        let isOwner = false;
 
-        try { 
-            const token = localStorage.getItem('token');
-            const { user } = decode(token);
-
-            isOwner = user._id === userId;
-        } catch (err) { }
+        const user = decodeUser();
+        let isOwner = user && user._id === userId;
 
         return(
             <div className = 'product-details-bg' style={style}>
@@ -106,7 +126,7 @@ class ProductDetails extends Component{
                                         </span>
                                     </p>
                                     <p className='rating'>
-                                        Average User Rating: {rating}/5
+                                        Average User Rating: {rating}
                                     </p>
                                 </div>
                             </div>
@@ -134,8 +154,19 @@ class ProductDetails extends Component{
                                     {`Quantity remaning: ${quantity}`}
                                 </div>
 
+                                <div className="size">
+                                <label for='size'>Size: </label>
+                                    <select name='size' id='size' onChange={this.handleChange}>
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                    </select>
+                                    </div>
+
                                 <p className = 'content'>
-                                    {description.content}
+                                    {description}
                                 </p>
 
                                 <div className='mt-5 text-right'>

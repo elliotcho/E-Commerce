@@ -1,5 +1,5 @@
-import { Product, Description, Review } from '../models/product';
-import { Department } from '../models/departments';
+import { Product, Size } from '../models/product';
+import Department from '../models/departments';
 import { createUpload } from '../utils/createUpload';
 
 import path from 'path';
@@ -16,37 +16,48 @@ export const createProduct = async (req, res) => {
                 console.log(err);
             }
     
-            const { name, price, departmentId, quantity } = req.body;
+            const { name, departmentId } = req.body;
 
             if(!departmentId){
                 throw new Error('Department ID needed');
             }
-            
-            const newDescription = new Description({
-                content: req.body.content,
-                color: req.body.color,
-                size: req.body.size,
-                brand: req.body.brand
-            });
 
             if(name){
                 const newProduct = new Product({
+                    ...req.body,
                     userId: req.user._id,
-                    departmentId,
                     image: req.file.filename,
-                    description: newDescription,
                     datePosted: new Date(),
-                    name,
-                    price,
-                    quantity
                 });
     
                 const product = await newProduct.save();
-    
+
                 res.json({ ok: true, product });
             }
        });  
     }
+}
+
+export const setProductQuantity = async (req, res) => {
+   if(!req.user){
+       res.json({ ok: false });
+   } else{
+        const { productId, ...sizes } = req.body;
+
+        const keys = Object.keys(sizes);
+
+        for(let i=0;i<keys.length;i++){
+            const key = keys[i];
+
+            await new Size({
+                name: key,
+                quantity: sizes[key],
+                productId
+            }).save();
+        }
+
+        res.json({ ok: true });
+   }
 }
 
 export const deleteProduct = async (req, res) => {
@@ -63,6 +74,7 @@ export const deleteProduct = async (req, res) => {
         });
 
         await Product.deleteOne({ _id : id });
+        await Size.deleteMany({ productId: id });
 
         res.json({msg: "Product Successfully Deleted"});
     }

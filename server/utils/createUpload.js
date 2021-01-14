@@ -17,9 +17,11 @@ export const createUpload = (type) => {
         }
     });
 
+    const fileSize = 1000000000;
+
     const upload = multer({
         storage,
-        limits: {fileSize: 1000000000}
+        limits: { fileSize }
     }).single('image');
 
     return upload;

@@ -53,20 +53,16 @@ class Cart extends Component{
     }
 
     toPayment(){
-        const { history } = this.props;
-
-        const total = this.calculateTotal();
-       
-        history.push(`/payment/${total}`);
+        this.props.history.push(`/payment`);
     }
 
     render(){
-        const total = this.calculateTotal();
-
         const { cart } = this.state;
         const { isDark } = this.context;
         
         const style = isDark? darkStyle: lightStyle;
+
+        const total = this.calculateTotal();
 
         return(
             <div className="cart" style={style}>
@@ -83,22 +79,25 @@ class Cart extends Component{
                 </header>
                 
                 <div className='items'>
-                    {cart.map(p => 
-                        <div key={p._id} className ='cart-product text-center'>
-                            <Product
-                                productId = {p._id}
-                                showFooter = {true}
-                                removeFromCart = {() => this.delProductInCart(p._id)}
-                                image = {p.image}
-                                name = {p.name}
-                                price = {p.price}
-                            />
-                        </div>
-                    )}
+                    {cart.map(p => {
+                        const removeFromCart = () => this.delProductInCart(p._id);
+
+                        return (
+                            <div key={p._id} className ='cart-product text-center'>
+                                <Product
+                                    productId = {p._id}
+                                    showFooter = {true}
+                                    removeFromCart = {removeFromCart}
+                                    image = {p.image}
+                                    name = {p.name}
+                                    price = {p.price}
+                                />
+                            </div>
+                        )
+                    })}
                 </div>       
             </div>
-        )
-        
+        ) 
     }
 }
 

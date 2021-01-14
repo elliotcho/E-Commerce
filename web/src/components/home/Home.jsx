@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import './css/Home.css';
 
-
-function Home({history}){
+function Home({ history }){
     const goToProducts = () => {
         history.push('/products/all');
     }
@@ -15,35 +15,47 @@ function Home({history}){
     const goToRegister = () => {
         history.push('/register');
     }
+
+    const { isDark } = useContext(ThemeContext);
+    let className;
+
+    if(isDark){
+        className = 'home dark';
+    } else{
+        className = 'home light';
+    }
+
     return(
-        <div className = 'home img-responsive'>
+        <div className={className}>
             <h1>Shop across departments.</h1>
-            <h2>Directly Message Sellers to get the best price for you!.</h2>
+
+            <h2>Directly message sellers.</h2>
+
             <h3>Upload your products.</h3>
 
-            <div class="box-2">
-                <div class="btn btn-two">
-                    <span onClick={goToProducts}>Peeps The Products</span>
-                </div>
-            </div>
+            <div onClick={goToProducts} class="button button-1">Go to products</div>
 
+            
             <div className='row'>
-                <div class="hexagon-wrapper">
-                    <div class="hexagon">
+                
+                <div className="hexagon-wrapper">
+                    <div className="hexagon">
                         <i onClick={goToMessages}>Message Customers</i>
                     </div>
                     </div>
-                    <div class="hexagon-wrapper">
-                    <div class="hexagon">
+                    <div className="hexagon-wrapper">
+                    <div className="hexagon">
                         <i onClick={goToUpload}>Upload a Product</i>
                     </div>
                     </div>
-                    <div class="hexagon-wrapper">
-                    <div class="hexagon">
+                    <div className="hexagon-wrapper">
+                    <div className="hexagon">
                         <i onClick={goToRegister}>Create An Account</i>
                     </div>
+                    
                 </div>
             </div>
+            
         </div>
     )
 }
