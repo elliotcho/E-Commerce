@@ -38,6 +38,14 @@ export const createProduct = async (req, res) => {
     }
 }
 
+export const getProductQuantities = async (req, res) => {
+    const { id } = req.params;;
+
+    const quantities = await Size.find({ productId: id });
+
+    res.json(quantities);
+}
+
 export const setProductQuantity = async (req, res) => {
    if(!req.user){
        res.json({ ok: false });
@@ -49,11 +57,13 @@ export const setProductQuantity = async (req, res) => {
         for(let i=0;i<keys.length;i++){
             const key = keys[i];
 
-            await new Size({
+            const newQuantities = new Size({
                 name: key,
                 quantity: sizes[key],
                 productId
-            }).save();
+            });
+
+            await newQuantities.save();
         }
 
         res.json({ ok: true });

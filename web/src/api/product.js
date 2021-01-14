@@ -95,6 +95,22 @@ export const getProductById = async (id) => {
     return product;
 }
 
+export const getProductQuantities = async (productId) => {
+    const response = await axios.get(`${API}/api/product/quantity/${productId}`);
+    const sizes = response.data;
+
+    const cache = {};
+
+    for(let i=0;i<sizes.length;i++){
+        const size = sizes[i];
+        const { name, quantity } = size;
+
+        cache[name] = quantity;
+    }
+
+    return cache;
+}
+
 export const addToUserCart = async (data) =>{
     const config = { headers: {'content-type': 'application/json'} };
     const response = await axios.post(`${API}/api/user/cart`, data, authMiddleware(config));

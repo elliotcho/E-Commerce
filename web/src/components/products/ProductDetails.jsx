@@ -19,9 +19,11 @@ class ProductDetails extends Component{
 
         this.state = {
             product: {},
-            sizes: ['XS', 'S', 'M', 'L', 'XL'],
-            size: 0,
             rating: 'Loading...',
+            cache: {},
+            quantity: 'Loading...',
+            sizes: ['XS', 'S', 'M', 'L', 'XL'],
+            sizeIdx: 0,
         }
 
         this.getAvgRating = this.getAvgRating.bind(this);
@@ -33,13 +35,18 @@ class ProductDetails extends Component{
 
     async componentDidMount(){
         const { id } = this.props.match.params;
-        const { getProductById } = productAPI; 
-        
+        const { getProductById, getProductQuantities } = productAPI; 
+    
+        const cache = await getProductQuantities(id);
         const product = await getProductById(id);
-
+    
         await this.getAvgRating(id);
      
-        this.setState({ product });
+        this.setState({ 
+            quantity: cache['XS'],
+            product, 
+            cache 
+        });
     }
 
     async getAvgRating(){
@@ -105,8 +112,12 @@ class ProductDetails extends Component{
         history.push(route);
     }
 
-    updateSize(size){
-        this.setState({ size });
+    updateSize(sizeIdx){
+        const { cache, sizes } = this.state;
+
+        const quantity = cache[sizes[sizeIdx]];
+
+        this.setState({ sizeIdx, quantity });
     }
 
     //image, name, price, description, datePosted, username, 
@@ -159,7 +170,7 @@ class ProductDetails extends Component{
                                 {this.state.sizes.map((size, i) =>  {
                                     let className = 'size-box';
 
-                                    if(this.state.size === i){
+                                    if(this.state.sizeIdx === i){
                                         className += ' active';
                                     }
 
@@ -174,8 +185,8 @@ class ProductDetails extends Component{
                             </div>
 
                             <div className='mt-3 quantity'>
-                                <p>Quantity: 5</p>
-                                <p>Price: ${price}</p>
+                                <p>Price per quantity: ${price}</p>
+                                <p>Quantity: {this.state.quantity}</p>
                             </div>
                         </footer>
                     </div>
