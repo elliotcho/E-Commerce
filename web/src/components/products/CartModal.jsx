@@ -7,7 +7,6 @@ function CartModal({
     productId, 
     size, 
     maxQuantity, 
-    refetchProduct,
     price,
     name 
 }){
@@ -34,7 +33,7 @@ function CartModal({
         } else {
             createSuccessToast(msg);
         }
-        
+
         closeModal();
     }
 

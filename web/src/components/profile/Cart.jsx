@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { loadCart, deleteFromCart } from '../../api/user';
-import Product from '../products/Product';
+import Item from './Item';
+//import Product from '../products/Product';
 import './css/Cart.css';
 
 const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
@@ -46,7 +47,10 @@ class Cart extends Component{
         const { cart } = this.state;
 
         for(let i =0;i<cart.length;i++){
-            amount += cart[i].price;
+            const item = cart[i];
+            const { price, quantity } = item;
+
+            amount += price * quantity;
         }
 
         return amount;
@@ -83,14 +87,15 @@ class Cart extends Component{
                         const removeFromCart = () => this.delProductInCart(i._id);
 
                         return (
-                            <div key={i._id} className ='cart-product text-center'>
-                                <Product
+                            <div key={i._id} className ='text-center'>
+                                <Item 
                                     productId = {i.productId}
-                                    showFooter = {true}
                                     removeFromCart = {removeFromCart}
+                                    quantity = {i.quantity}
                                     image = {i.image}
-                                    name = {i.name}
                                     price = {i.price}
+                                    name = {i.name}
+                                    size = {i.size}
                                 />
                             </div>
                         )
