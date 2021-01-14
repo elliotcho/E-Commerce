@@ -265,18 +265,28 @@ export const loadCart = async (req, res) => {
         const user = await User.findOne({_id: req.user._id});
         const { cart } = user; 
 
+        const result = [];
         const newCart = [];
 
         for(let i=0;i<cart.length;i++){
-            const product = await Product.findOne({ _id: cart[i].productId });
+            const cartItem = await Product.findOne({ _id: cart[i].productId });
 
-            if(product){
+            if(cartItem){
+
                 newCart.push(cart[i]);
+
+                cartItem._doc._id = cart[i]._id;
+                cartItem._doc.productId = cart[i].productId;
+                cartItem._doc.quantity = cart[i].quantity;
+                cartItem._doc.size = cart[i].size;
+
+                result.push(cartItem);
+        
             }
         }
 
         await User.updateOne({ _id: req.user._id}, { cart: newCart });
-        res.json(newCart);
+        res.json(result);
     }
 }
 

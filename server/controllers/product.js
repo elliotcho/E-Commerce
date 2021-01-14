@@ -105,6 +105,7 @@ export const getProduct = async (req, res) => {
 
 export const getProductImage = async (req, res) => {
     const { id } = req.params;
+   
     const product = await Product.findOne({ _id: id });
  
     if(product && product.image){

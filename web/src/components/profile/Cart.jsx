@@ -79,18 +79,18 @@ class Cart extends Component{
                 </header>
                 
                 <div className='items'>
-                    {cart.map(p => {
-                        const removeFromCart = () => this.delProductInCart(p._id);
+                    {cart.map(i => {
+                        const removeFromCart = () => this.delProductInCart(i._id);
 
                         return (
-                            <div key={p._id} className ='cart-product text-center'>
+                            <div key={i._id} className ='cart-product text-center'>
                                 <Product
-                                    productId = {p._id}
+                                    productId = {i.productId}
                                     showFooter = {true}
                                     removeFromCart = {removeFromCart}
-                                    image = {p.image}
-                                    name = {p.name}
-                                    price = {p.price}
+                                    image = {i.image}
+                                    name = {i.name}
+                                    price = {i.price}
                                 />
                             </div>
                         )
