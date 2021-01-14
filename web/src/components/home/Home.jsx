@@ -29,15 +29,11 @@ function Home({ history }){
         <div className={className}>
             <h1>Shop across departments.</h1>
 
-            <h2>Directly Message Sellers</h2>
+            <h2>Directly message sellers.</h2>
 
             <h3>Upload your products.</h3>
 
-            <div className="box-2">
-                <div className="btn btn-two">
-                    <span onClick={goToProducts}>Peeps The Products</span>
-                </div>
-            </div>
+            <div onClick={goToProducts} class="button button-1">Go to products</div>
 
             
             <div className='row'>

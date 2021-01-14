@@ -22,9 +22,9 @@
 }
 
 .home.light{
-  background-image: url('../../../images/lighthome.jpg');
+  background-image: url('../../../images/lighthome.png');
 } .home.dark{
-  background-image: url('../../../images/darkhome.png');
+  background-image: url('../../../images/darkhome.jpg');
 }
 
 .home h1 {
@@ -68,60 +68,44 @@
   color: #000000;
 }
 
-.btn-two {
-    color: black;
-    transition: all 0.5s;
-    position: relative;
-    top: 67%; 
-    font-weight: 1000;
-    font-size: 30px;
-  }
-  .btn-two span {
-    z-index: 2; 
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%; 
-  }
-  .btn-two::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    transition: all 0.5s;
-    border: 1px solid rgba(231, 198, 52, 0.2);
-    background-color: rgba(231, 198, 52, 0.2);
-  }
-  .btn-two::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    transition: all 0.5s;
-    border: 1px solid rgba(231, 198, 52, 0.2);
-    background-color: rgba(231, 198, 52, 0.2);
-  }
-  .btn-two:hover::before {
-    transform: rotate(-45deg);
-    background-color: rgba(231, 198, 52, 0.2);
-  }
-  .btn-two:hover::after {
-    transform: rotate(45deg);
-    background-color: rgba(231, 198, 52, 0.2);
-  }
+.home .button{
+  position: relative;
+  left: 70%;
+  top: 40px;
+  width: 170px;
+  padding: 20px;
+  text-align: center;
+  color: #000;
+  font-weight: 600;
+  margin-left: 30px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 24px;
+}
 
-  .hexagon-wrapper {
-  margin: auto;
+.button-1 {
+  background-color: transparent;
+  border: 3px solid #88304e;
+  border-radius: 20px 33px;
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color: #88304e;
+}
+.button-1:hover {
+  box-shadow: 0 0 10px 0 #88304e inset, 0 0 20px 2px #88304e;
+  border: 3px solid #88304e;
+  background-color: #ffde7d;
+}
+
+
+
+.hexagon-wrapper {
+  margin: 20% auto 10%;
   display: flex;
   text-align: initial;
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   cursor: pointer;
 }
 
@@ -141,12 +125,13 @@
 .hexagon i {
   z-index: 1;
   margin: auto;
-  font-size: 30px;
+  font-size: 24px;
   font-family: 'Goldman', cursive;
   color: transparent;
   background: linear-gradient(45deg, #866cd1, #e98994);
   background-clip: text;
   -webkit-background-clip: text;
+  color: #252a34;
 }
 
 .hexagon:before,
