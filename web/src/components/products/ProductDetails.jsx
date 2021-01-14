@@ -208,7 +208,7 @@ class ProductDetails extends Component{
                     productId={_id}
                     size={this.state.sizes[this.state.sizeIdx]}
                     maxQuantity={this.state.quantity}
-                    refetchProduct={this.fetchData}
+                    price={price}
                     name={name}
                 />
 

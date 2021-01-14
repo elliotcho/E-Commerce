@@ -33,24 +33,24 @@ export const deleteProfilePic = async () => {
     return imgURL;
 }
 
-export const loadCart = async() => {
+export const loadCart = async () => {
     const config = { headers: {} };
     const response = await axios.get(`${API}/api/user/cart`, authMiddleware(config));
-    const products = response.data;
+    const cart = response.data;
 
-    for(let i=0; i <products.length; i++){
+    for(let i=0; i<cart.length; i++){
         const config = { responseType: 'blob'};
-        const route = `${API}/api/product/image/${products[i]._id}`;
+        const route = `${API}/api/product/image/${cart[i].productId}`;
 
-        if(products[i].image){
+        if(cart[i].image){
             const result = await axios.get(route, config);
             const imgURL = URL.createObjectURL(result.data);
-            products[i].image = imgURL;        
+            cart[i].image = imgURL;        
         }
     }
 
     authAfterware(response);
-    return products;
+    return cart;
 }
 
 export const deleteFromCart = async (id) => {

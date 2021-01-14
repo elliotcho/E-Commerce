@@ -8,6 +8,7 @@ function CartModal({
     size, 
     maxQuantity, 
     refetchProduct,
+    price,
     name 
 }){
     const [quantity, setQuantity] = useState(1);
@@ -18,10 +19,22 @@ function CartModal({
             return;
         }
 
-        await addToUserCart({ productId, size, quantity });
-        await refetchProduct();
+        const data = { 
+            productId,  
+            maxQuantity,
+            quantity,
+            price,
+            size
+        };
 
-        createSuccessToast('Item added to cart');
+        const { error, msg } = await addToUserCart(data);
+
+        if(error){
+            createErrorToast(msg);
+        } else {
+            createSuccessToast(msg);
+        }
+        
         closeModal();
     }
 

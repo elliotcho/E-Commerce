@@ -1,5 +1,4 @@
 import { Client, Environment, ApiError } from 'square';
-import { v4 } from 'uuid';
 import User from '../models/user';
 
 const client = new Client({
@@ -33,11 +32,12 @@ export const createPayment = async(req, res) =>{
             const user = await User.findOne({ _id: req.user._id });
             const { cart, history } = user;
 
+            const datePurchased = new Date();
+
             for(let i=0;i<cart.length;i++){
                 history.push({
-                    _id: v4(),
-                    datePurchased: new Date(),
-                    productId: cart[i]
+                    ...cart[i],
+                    datePurchased
                 });
             }
 

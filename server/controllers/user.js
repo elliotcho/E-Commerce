@@ -206,22 +206,34 @@ export const removeProfilePic = async (req, res) => {
 
 export const addToCart = async (req, res) => {
     if (!req.user) {
-        res.json({ msg: 'User is not authenticated' });
+        res.json({ msg: 'User is not authenticated', error: true });
     } else{
-        const { productId, size, quantity } = req.body;
+        let { productId, maxQuantity, quantity, price, size } = req.body;
 
         const user = await User.findOne({ _id: req.user._id });
-        const { cart } = user
-        
-        cart.push({
-            _id: v4(),
-            productId, 
-            quantity,
-            size
-        });
+        const { cart } = user;
 
-        await User.updateOne({ _id: req.user._id }, { cart });
-        res.json({ msg: 'Cart Updated' });
+        for(let i=0;i<cart.length;i++){
+            if(cart[i].productId === productId){
+                maxQuantity -= cart[i].quantity;
+            }
+        }
+
+        if(maxQuantity - quantity < 0) {
+            res.json({ msg: 'Invalid transaction', error: true });
+        } 
+        
+        else {
+            cart.push({
+                _id: v4(),
+                productId, 
+                quantity,
+                size
+            });
+    
+            await User.updateOne({ _id: req.user._id }, { cart });
+            res.json({ msg: 'Cart Updated', error: false });
+        }
     }
 }
 
