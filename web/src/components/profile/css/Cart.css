@@ -1,8 +1,15 @@
-.cart{
-    height: 92vh;
+.cart header{
     font-family: 'Nunito Sans';
-    position: relative;
-    overflow: auto;
+}   
+
+.cart header p{
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cart header p:hover{
+    text-decoration: underline;
 }
 
 .cart .items{

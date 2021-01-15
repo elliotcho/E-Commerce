@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { formatDate } from '../../utils/formatDate';
 import './css/Item.css';
 
 function Item({
@@ -14,17 +15,6 @@ function Item({
     size
 }){
     const toProduct = () => history.push(`/product/${productId}`);
-
-    const formatDate = (d) => {
-        const dateStr = new Date(d).toLocaleString();
-        const split = dateStr.split(",");
-
-        if(split[0] === 'Invalid Date'){
-            return 'Loading...';
-        }
-
-        return split[0];
-    }
 
     return ( 
         <div className='item my-3 ml-3'>
@@ -47,7 +37,7 @@ function Item({
                         <p>Total Price: ${price * quantity}</p>
                         <p>Quantity: {quantity}</p>
                         <p>Size: {size}</p>
-                        
+
                     </div>
                 </div>
             </main>

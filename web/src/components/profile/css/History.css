@@ -1,7 +1,15 @@
-.history{
-    height: 92vh;
-    position: relative;
-    overflow: auto;
+.history header{
+    font-family: 'Nunito Sans';
+}
+
+.history header p{
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.history header p:hover{
+    text-decoration: underline;
 }
 
 .history .items{

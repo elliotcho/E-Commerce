@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { decodeUser } from '../../utils/decodeUser';
 import { createErrorToast } from '../../utils/createToast';
+import { formatDate } from '../../utils/formatDate';
 import * as productAPI from '../../api/product';
 import { getReviews } from '../../api/review';
 import CartModal from './CartModal';
@@ -100,17 +101,6 @@ class ProductDetails extends Component{
         }
     }
 
-    formatDate(date){
-        const dateStr = new Date(date).toLocaleString();
-        const split = dateStr.split(",");
-
-        if(split[0] === 'Invalid Date'){
-            return 'Loading...';
-        }
-
-        return split[0];
-    }
-
     toProfile(){
         const { product: { userId } } = this.state;
         const { history } = this.props;
@@ -146,7 +136,7 @@ class ProductDetails extends Component{
 
                          <div className='mt-3'>
                              <p>Average Rating: {this.state.rating}</p>
-                             <p>Posted on {this.formatDate(datePosted)}</p>
+                             <p>Posted on {formatDate(datePosted)}</p>
                              
                              <p onClick={this.toProfile}>
                                  Posted by <span>{username || 'Loading...'}</span>

@@ -1,14 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { ThemeContext } from '../../contexts/ThemeContext';
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import { getHistory } from '../../api/user';
 import Item from './Item';
 import './css/History.css';
 
-const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
-const darkStyle = { backgroundColor: '#34626c', color: 'white' };
-
-function History(){
-    const [history, setHistory] = useState([]);
+function History({ history }){
+    const [shoppingHistory, setHistory] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,14 +15,20 @@ function History(){
         fetchData();
     }, []);
 
-    const { isDark } = useContext(ThemeContext);
-
-    const style = isDark? darkStyle: lightStyle;
+    const toCart = () => history.push('/cart');
 
     return(
-        <div className='history' style={style}>
+        <div className='history'>
+            <header className='text-center my-5'>
+                <h3>Shopping History</h3>
+
+                <p onClick={toCart}>
+                    Go to cart
+                </p>
+            </header>
+
             <div className='items'>
-                {history.map(i => {
+                {shoppingHistory.map(i => {
                     const removeFromHistory = () => {alert(i.datePurchased);}
 
                     return (
@@ -48,4 +51,4 @@ function History(){
     )
 }
 
-export default History;
+export default withRouter(History);

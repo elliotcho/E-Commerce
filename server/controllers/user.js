@@ -286,6 +286,7 @@ export const loadCart = async (req, res) => {
         }
 
         await User.updateOne({ _id: req.user._id}, { cart: newCart });
+
         res.json(result);
     }
 }

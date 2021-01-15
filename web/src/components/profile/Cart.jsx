@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import { ThemeContext } from '../../contexts/ThemeContext';
+import { withRouter } from 'react-router-dom';
 import { loadCart, deleteFromCart } from '../../api/user';
 import Item from './Item';
 import './css/Cart.css';
 
-const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
-const darkStyle = { backgroundColor: '#34626c', color: 'white' };
-
 class Cart extends Component{
-    static contextType = ThemeContext;
-
     constructor(){
         super();
 
@@ -19,6 +14,7 @@ class Cart extends Component{
 
         this.delProductInCart = this.delProductInCart.bind(this);
         this.calculateTotal = this.calculateTotal.bind(this);
+        this.toHistory = this.toHistory.bind(this);
         this.toPayment = this.toPayment.bind(this);
     }
 
@@ -55,20 +51,21 @@ class Cart extends Component{
         return amount;
     }
 
+    toHistory(){
+        this.props.history.push('/history');
+    }
+
     toPayment(){
         this.props.history.push(`/payment`);
     }
 
     render(){
         const { cart } = this.state;
-        const { isDark } = this.context;
-        
-        const style = isDark? darkStyle: lightStyle;
 
         const total = this.calculateTotal();
 
         return(
-            <div className="cart" style={style}>
+            <div className='cart'>
                 <header className='text-center my-5'>
                     <h3>Your Shopping Cart </h3>
 
@@ -79,6 +76,8 @@ class Cart extends Component{
                     <button className="btn btn-lg btn-primary" onClick={this.toPayment}>
                         Continue To Payment 
                     </button>
+
+                    <p onClick={this.toHistory}>Go to History</p>
                 </header>
                 
                 <div className='items'>
@@ -105,4 +104,4 @@ class Cart extends Component{
     }
 }
 
-export default Cart;
+export default withRouter(Cart);

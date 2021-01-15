@@ -1,3 +1,11 @@
+.home{
+  height: 92vh;
+  background-size: 100% 100%;
+  font-family: 'Goldman', cursive;
+  background-image: url('../../../images/darkhome.jpg');
+  overflow: hidden;
+}
+
 .home div[class*=box] {
   margin: 100px auto;
   width: 100%; 
@@ -12,19 +20,6 @@
   text-align: center;
   width: 350px;
   cursor: pointer;
-}
-.home{
-    height: 92vh;
-    background-size: 100% 100%;
-    font-family: 'Goldman', cursive;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.home.light{
-  background-image: url('../../../images/lighthome.png');
-} .home.dark{
-  background-image: url('../../../images/darkhome.jpg');
 }
 
 .home h1 {
@@ -242,6 +237,13 @@
     left: 49%;
     font-size: 11px;
   }
+  .home .wrapper{
+    margin-top: 150px;
+  }
+
+  .home .hexagon-wrapper{
+    margin-top: 250px;
+  }
 }
 @media screen and (max-width: 600px){
   .home h1 {
@@ -258,5 +260,11 @@
     top: 40%;
     left: 54%;
     font-size: 11px;
+  }
+}
+@media screen and (max-width: 570px){
+  .home .hexagon-wrapper{
+    margin-top: 200px;
+    width: 33%;
   }
 }
