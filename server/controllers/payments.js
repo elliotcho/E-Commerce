@@ -1,5 +1,6 @@
 import { Client, Environment, ApiError } from 'square';
 import User from '../models/user';
+import { Size } from '../models/product';
 
 const client = new Client({
     environment: Environment.Sandbox,
@@ -35,17 +36,39 @@ export const createPayment = async(req, res) =>{
             const datePurchased = new Date();
 
             for(let i=0;i<cart.length;i++){
-                history.push({
-                    ...cart[i],
-                    datePurchased
-                });
+                const { size, productId, quantity } = cart[i];
+
+                const { quantity: remaining, name, sold } = await Size.findOne({ productId, name: size });
+
+                if(remaining - quantity < 0){
+
+                    let msg = `You have too much ${name}`;
+
+                    return res.status(401).json({
+                        'title' : 'Payment Failure',
+                        'error': true,
+                        'msg' : msg
+                    });
+
+                } else {
+                    const newData = {
+                        quantity: remaining - quantity,
+                        sold: sold + quantity
+                    };
+
+                    await Size.updateOne( { productId, name: size } , newData);
+                }
+
+                history.push({ ...cart[i], datePurchased });
             }
 
             await User.updateOne({ _id: req.user._id }, { cart: [] , history });
 
             res.status(200).json({
                 'title': 'Payment Successful',
-                'result': response.result
+                'result': response.result,
+                'error': false,
+                'msg': 'Success'
             });
 
         } catch (error) {
@@ -59,7 +82,9 @@ export const createPayment = async(req, res) =>{
 
             res.status(500).json({
                 'title': 'Payment Failure',
-                'result': errorResult
+                'result': errorResult,
+                'error': true,
+                'msg': 'Failed'
             });
         }
     }

@@ -107,13 +107,24 @@ export const getHistory = async () => {
     const config = { headers: {} };
 
     const response = await axios.get(`${API}/api/user/history`, authMiddleware(config));
-    const { ok } = response.data;
+    const { history, ok } = response.data;
 
     if(ok) {
         authAfterware(response);
+
+        for(let i=0; i<history.length; i++){
+            const config = { responseType: 'blob'};
+            const route = `${API}/api/product/image/${history[i].productId}`;
+    
+            if(history[i].image){
+                const result = await axios.get(route, config);
+                const imgURL = URL.createObjectURL(result.data);
+                history[i].image = imgURL;        
+            }
+        }
     }
 
-    return response.data;
+    return history || [];
 }
 
 export const clearHistory = async () => {

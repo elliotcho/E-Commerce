@@ -7,8 +7,8 @@ export const sendNonce = async(data) =>{
     const config = { headers: { 'content-type': 'application/json' } };
     
     const response = await axios.post(`${API}/api/payment/send_payment`, data, authMiddleware(config));
-    const { result } = response.data;
-
+ 
     authAfterware(response);
-    return result;
+    
+    return response.data;
 }

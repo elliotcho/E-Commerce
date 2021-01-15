@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { loadCart, deleteFromCart } from '../../api/user';
 import Item from './Item';
-//import Product from '../products/Product';
 import './css/Cart.css';
 
 const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
@@ -90,7 +89,7 @@ class Cart extends Component{
                             <div key={i._id} className ='text-center'>
                                 <Item 
                                     productId = {i.productId}
-                                    removeFromCart = {removeFromCart}
+                                    remove = {removeFromCart}
                                     quantity = {i.quantity}
                                     image = {i.image}
                                     price = {i.price}

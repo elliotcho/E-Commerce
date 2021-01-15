@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import { createErrorToast, createSuccessToast } from '../../utils/createToast';
 import { sendNonce } from '../../api/payments';
 import { loadCart } from '../../api/user';
 import 'react-square-payment-form/lib/default.css';
@@ -40,7 +41,10 @@ class PaymentForm extends Component{
       let total = 0;
  
       for(let i =0;i<cart.length;i++){
-        total += cart[i].price;
+        const item = cart[i];
+        const { price, quantity } = item;
+
+        total += price * quantity;
       }
 
       this.setState({ total });
@@ -49,12 +53,24 @@ class PaymentForm extends Component{
     async createPayment(n, b){
       const { total } = this.state;
 
-      await sendNonce({
+      const { error, msg } = await sendNonce({
           nonce: n,
           buyerVerificationToken: b,
           uuid: uuidv4(),
           total
       });
+
+      if(!error){
+        
+         createSuccessToast(msg);
+
+         const { history } = this.props;
+
+         setTimeout(() => history.goBack(), 3000);
+
+      } else {
+         createErrorToast(msg);
+      }
     }
 
     async cardNonceResponseReceived(errors, nonce, _, buyerVerificationToken)  {
@@ -68,7 +84,7 @@ class PaymentForm extends Component{
     }
 
     createVerificationDetails() {
-      const { total } = this.state;
+      const total = this.state.total  + '';
 
       return {
         amount: total,

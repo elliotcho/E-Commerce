@@ -1,7 +1,8 @@
 .item { 
     background: white;
     max-width: fit-content;
-    margin: auto;
+    border-radius: 11px;
+    font-family: 'Arial';
 }
 
 .item main {

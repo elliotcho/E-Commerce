@@ -1,0 +1,5 @@
+.history{
+    height: 92vh;
+    position: relative;
+    overflow: auto;
+}

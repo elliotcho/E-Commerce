@@ -297,7 +297,30 @@ export const loadHistory = async (req, res) => {
         const user = await User.findOne({ _id: req.user._id });
 
         if(user){
-            res.json({ ok: true, history: user.history });
+            const result = [];
+            const newHistory = [];
+
+            const { history } = user;
+
+            for(let i=0;i<history.length;i++){
+                const item = await Product.findOne({ _id: history[i].productId });
+    
+                if(item){
+                    newHistory.push(history[i]);
+
+                    item._doc._id = history[i]._id;
+                    item._doc.productId = history[i].productId;
+                    item._doc.datePurchased = history[i].datePurchased;
+                    item._doc.quantity = history[i].quantity;
+                    item._doc.size = history[i].size;
+    
+                    result.push(item);
+                }
+            }
+
+            await User.updateOne({ _id: req.user._id }, { history: newHistory });
+
+            res.json({ ok: true, history: result });
         } else {
             res.json({ ok: false });
         }
