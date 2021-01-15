@@ -86,10 +86,10 @@ class CreateProduct extends Component {
             msg = 'Name cannot be blank';
         } else if(!departmentId){
             msg = 'You must select a department!';
+        }  else if(!price || Number(price) === 0){
+            msg = 'You cannot sell an item for free';
         } else if(description.trim().length === 0){
             msg = 'A description is required';
-        } else if(!price || parseFloat(price, 2) === 0){
-            msg = 'You cannnot sell a product for free';
         } else {        
             let sum = 0;
 
