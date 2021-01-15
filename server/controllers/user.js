@@ -208,13 +208,13 @@ export const addToCart = async (req, res) => {
     if (!req.user) {
         res.json({ msg: 'User is not authenticated', error: true });
     } else{
-        let { productId, maxQuantity, quantity, price, size } = req.body;
+        let { productId, maxQuantity, quantity, size } = req.body;
 
         const user = await User.findOne({ _id: req.user._id });
         const { cart } = user;
 
         for(let i=0;i<cart.length;i++){
-            if(cart[i].productId === productId){
+            if(cart[i].productId === productId && size === cart[i].size){
                 maxQuantity -= cart[i].quantity;
             }
         }

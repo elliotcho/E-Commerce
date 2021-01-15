@@ -24,22 +24,23 @@ function History(){
 
     return(
         <div className='history' style={style}>
-            <div className='items text-center'>
+            <div className='items'>
                 {history.map(i => {
                     const removeFromHistory = () => {alert(i.datePurchased);}
 
                     return (
-                        <Item 
-                            key = {i._id}
-                            productId = {i.productId}
-                            datePurchased = {i.datePurchased}
-                            quantity = {i.quantity}
-                            remove = {removeFromHistory}
-                            image = {i.image}
-                            price = {i.price}
-                            name = {i.name}
-                            size = {i.size}
-                        /> 
+                        <div key = {i._id} className = 'history-item'>
+                            <Item 
+                                productId = {i.productId}
+                                datePurchased = {i.datePurchased}
+                                quantity = {i.quantity}
+                                remove = {removeFromHistory}
+                                image = {i.image}
+                                price = {i.price}
+                                name = {i.name}
+                                size = {i.size}
+                            /> 
+                        </div>
                     )     
                 })}
             </div>

@@ -1,6 +1,6 @@
 import { Client, Environment, ApiError } from 'square';
+import { Product, Size } from '../models/product';
 import User from '../models/user';
-import { Size } from '../models/product';
 
 const client = new Client({
     environment: Environment.Sandbox,
@@ -38,13 +38,14 @@ export const createPayment = async(req, res) =>{
             for(let i=0;i<cart.length;i++){
                 const { size, productId, quantity } = cart[i];
 
-                const { quantity: remaining, name, sold } = await Size.findOne({ productId, name: size });
+                const { quantity: remaining, sold } = await Size.findOne({ productId, name: size });
+                const { name } = await Product.findOne({ _id: productId });
 
                 if(remaining - quantity < 0){
 
-                    let msg = `You have too much ${name}`;
+                    let msg = `You have too much ${size} ${name}(s)`;
 
-                    return res.status(401).json({
+                    return res.status(200).json({
                         'title' : 'Payment Failure',
                         'error': true,
                         'msg' : msg

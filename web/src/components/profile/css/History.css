@@ -3,3 +3,16 @@
     position: relative;
     overflow: auto;
 }
+
+.history .items{
+    min-height: 300px;
+    max-width: 90%;
+    border: solid #393e46 8px;
+    border-radius: 11px;
+    margin: 50px auto;
+}
+
+.history-item{
+    display: inline-block;
+    text-align: center;
+}

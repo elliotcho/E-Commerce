@@ -39,11 +39,15 @@ function Item({
                     </p>
                         
                     <div className='mt-3'>
-                        {datePurchased && <p>{formatDate(datePurchased)} </p>}
+
+                        {datePurchased && (
+                            <p> Bought: {formatDate(datePurchased)} </p>
+                        )}
 
                         <p>Total Price: ${price * quantity}</p>
                         <p>Quantity: {quantity}</p>
                         <p>Size: {size}</p>
+                        
                     </div>
                 </div>
             </main>

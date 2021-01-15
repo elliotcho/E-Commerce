@@ -5,14 +5,15 @@
     overflow: auto;
 }
 
-.cart .cart-product{
-    display: inline-block;
-}
-
 .cart .items{
     min-height: 300px;
     max-width: 90%;
     border: solid #393e46 8px;
     border-radius: 11px;
     margin: 50px auto;
+}
+
+.cart-item{
+    display: inline-block;
+    text-align: center;
 }

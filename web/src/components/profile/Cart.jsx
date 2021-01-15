@@ -86,7 +86,7 @@ class Cart extends Component{
                         const removeFromCart = () => this.delProductInCart(i._id);
 
                         return (
-                            <div key={i._id} className ='text-center'>
+                            <div key={i._id} className ='cart-item'>
                                 <Item 
                                     productId = {i.productId}
                                     remove = {removeFromCart}
