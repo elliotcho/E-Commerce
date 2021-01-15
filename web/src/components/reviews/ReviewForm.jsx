@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { decodeUser } from '../../utils/decodeUser';
 import { createErrorToast } from '../../utils/createToast';
 import { createReview} from '../../api/review';
 import './css/ReviewForm.css';
@@ -27,6 +28,11 @@ class ReviewForm extends Component {
         const { productId, addReview } = this.props;
         const { content, rating } = this.state;
 
+        if(!decodeUser()){
+            createErrorToast('User must be signed in');
+            return;
+        }
+
         if(!rating || content.trim().length === 0){
 
             const msg = (!rating) ? 'A rating is required' : 'Input cannot be blank';
@@ -41,10 +47,6 @@ class ReviewForm extends Component {
             this.setState({ content: '', rating: ''});
             addReview();
         } 
-        
-        else{
-            createErrorToast('User must be signed in');
-        }
     }
 
     render(){

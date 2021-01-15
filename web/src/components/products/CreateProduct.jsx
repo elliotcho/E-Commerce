@@ -5,7 +5,6 @@ import { createProduct, updateProductQuantity } from '../../api/product';
 import { getAllDepartments } from '../../api/departments';
 import QuantityForm from './QuantityForm';
 import './css/CreateProduct.css';
-import { parse } from 'ipaddr.js';
 
 const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
 const darkStyle = { backgroundColor: '#34626c', color: 'white' };

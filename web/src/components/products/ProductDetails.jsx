@@ -104,13 +104,17 @@ class ProductDetails extends Component{
     addToCart(){
         const { quantity } = this.state;
 
+        if(!decodeUser()){
+            createErrorToast('User must be signed in');
+            return;
+        }
+        
         if(quantity <= 0){
             createErrorToast('Item is not available in this size'); 
+            return;
         } 
         
-        else{
-            document.getElementById('open-cart').click();   
-        }
+        document.getElementById('open-cart').click();   
     }
 
     toProfile(){
