@@ -84,6 +84,11 @@
     text-align: right;
 }
 
+.product-details footer .quantity span{
+    text-decoration: line-through;
+    color: red;
+}
+
 @media screen and (max-width: 570px){
     .product-details header i{
         display: none;

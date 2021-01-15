@@ -42,11 +42,10 @@ export const loadCart = async () => {
         const config = { responseType: 'blob'};
         const route = `${API}/api/product/image/${cart[i].productId}`;
 
-        if(cart[i].image){
-            const result = await axios.get(route, config);
-            const imgURL = URL.createObjectURL(result.data);
-            cart[i].image = imgURL;        
-        }
+        const result = await axios.get(route, config);
+        const imgURL = URL.createObjectURL(result.data);
+        
+        cart[i].image = imgURL;        
     }
 
     cart.sort(function(a, b) {
@@ -131,12 +130,11 @@ export const getHistory = async () => {
         for(let i=0; i<history.length; i++){
             const config = { responseType: 'blob'};
             const route = `${API}/api/product/image/${history[i].productId}`;
-    
-            if(history[i].image){
-                const result = await axios.get(route, config);
-                const imgURL = URL.createObjectURL(result.data);
-                history[i].image = imgURL;        
-            }
+     
+            const result = await axios.get(route, config);
+            const imgURL = URL.createObjectURL(result.data);
+            
+            history[i].image = imgURL;        
         }
 
         history.sort(function(a, b) {
@@ -147,6 +145,20 @@ export const getHistory = async () => {
     }
 
     return history || [];
+}
+
+export const deleteHistoryItem = async (id) => {
+    const config = { headers: {} };
+
+    
+    const response = await axios.delete(`${API}/api/user/history/${id}`, authMiddleware(config));
+    const { ok } = response.data;
+
+    if(ok) {
+        authAfterware(response);
+    }
+
+    return response.data;
 }
 
 export const clearHistory = async () => {

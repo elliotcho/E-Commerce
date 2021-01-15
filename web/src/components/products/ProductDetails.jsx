@@ -193,7 +193,16 @@ class ProductDetails extends Component{
 
                             <div className='mt-3 quantity'>
                                 <p>Price per quantity: ${price}</p>
-                                <p>Quantity: {this.state.quantity}</p>
+
+                                {this.state.quantity !== 0 && (
+                                    <p>Quantity: {this.state.quantity}</p>
+                                )}
+                               
+                                {this.state.quantity === 0 && (
+                                    <p>
+                                        <span>Quantity: 0</span>
+                                    </p>
+                                )}
                             </div>
                         </footer>
                     </div>

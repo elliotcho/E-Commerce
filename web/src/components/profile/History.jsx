@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { confirmAlert } from 'react-confirm-alert'
 import { withRouter } from 'react-router-dom';
-import { getHistory } from '../../api/user';
+import * as userAPI from '../../api/user';
 import Item from './Item';
 import './css/History.css';
 
@@ -8,6 +9,8 @@ function History({ history }){
     const [shoppingHistory, setHistory] = useState([]);
 
     useEffect(() => {
+        const { getHistory } = userAPI;
+
         const fetchData = async () => {
             setHistory(await getHistory());
         }
@@ -15,12 +18,62 @@ function History({ history }){
         fetchData();
     }, []);
 
+    const removeFromHistory = (id) => {
+        const { deleteHistoryItem } = userAPI;
+
+        const confirmDelete = async () => {
+            for(let i=0;i<shoppingHistory.length;i++){
+                if(shoppingHistory[i]._id === id){
+                    shoppingHistory.splice(i, 1);
+                    break;
+                }
+            }
+
+            await deleteHistoryItem(id);
+            
+            setHistory([...shoppingHistory]);
+        }
+
+        confirmAlert({
+            title: 'E-Commerce',
+            message: 'Are you sure you want to remove this item?',
+            buttons: [
+                {label: 'Yes', onClick: confirmDelete},
+                {label: 'No', onClick: () => { return; }}
+            ]
+        });  
+    }
+
+    const clear = () => {
+        const { clearHistory } = userAPI;
+
+        const confirmDelete = async () => {
+            await clearHistory();
+            setHistory([]);
+        }
+
+        confirmAlert({
+            title: 'E-Commerce',
+            message: 'Are you sure you want to clear history?',
+            buttons: [
+                {label: 'Yes', onClick: confirmDelete},
+                {label: 'No', onClick: () => { return; }}
+            ]
+        });
+    }
+
     const toCart = () => history.push('/cart');
 
     return(
         <div className='history'>
             <header className='text-center my-5'>
-                <h3>Shopping History</h3>
+                <h2 className='mb-3'>
+                    Shopping History
+                </h2>
+
+                <button className="btn btn-lg btn-primary" onClick={clear}>
+                    Clear Shopping History?
+                </button>
 
                 <p onClick={toCart}>
                     Go to cart
@@ -29,7 +82,7 @@ function History({ history }){
 
             <div className='items'>
                 {shoppingHistory.map(i => {
-                    const removeFromHistory = () => {alert(i.datePurchased);}
+                    const remove = () => { removeFromHistory(i._id) }
 
                     return (
                         <div key = {i._id} className = 'history-item'>
@@ -37,7 +90,7 @@ function History({ history }){
                                 productId = {i.productId}
                                 datePurchased = {i.datePurchased}
                                 quantity = {i.quantity}
-                                remove = {removeFromHistory}
+                                remove = {remove}
                                 image = {i.image}
                                 price = {i.price}
                                 name = {i.name}

@@ -8,6 +8,7 @@ import './css/SignedInLinks.css';
 //socket events
 const DISCONNECT_EVENT = 'DISCONNECT';
 const UPDATE_NAVBAR_EVENT = 'UPDATE_NAVBAR';
+
 //other constants
 const token = window.localStorage.getItem('token');
 
