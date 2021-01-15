@@ -17,8 +17,8 @@ import {
     getAvgRating,
     loadHistory,
     clearHistory,
-    getSales,
-    removeFromHistory
+    removeFromHistory,
+    getSales
 } from '../controllers/user';
 
 const router = express.Router();

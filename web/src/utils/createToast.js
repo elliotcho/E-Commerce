@@ -6,10 +6,11 @@ import { toast } from 'react-toastify';
 export const createMessageToast = async (data)  => {
     if(data){
         const { user: { _id, username }, imgURL } = await fetchUser(data.sender);
+        let content = data.content || 'IMAGE';
 
         const props = { 
             userId: _id,
-            content: data.content, 
+            content, 
             username, 
             imgURL 
         };

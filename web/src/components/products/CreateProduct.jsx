@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { getAllDepartments } from '../../api/departments';
+import { createErrorToast } from '../../utils/createToast';
 import { createProduct, updateProductQuantity } from '../../api/product';
+import { getAllDepartments } from '../../api/departments';
 import QuantityForm from './QuantityForm';
 import './css/CreateProduct.css';
+import { parse } from 'ipaddr.js';
 
 const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
 const darkStyle = { backgroundColor: '#34626c', color: 'white' };
@@ -28,6 +30,7 @@ class CreateProduct extends Component {
         this.changeImage = this.changeImage.bind(this);
         this.updateQuantity = this.updateQuantity.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateForm = this.validateForm.bind(this);
     }
 
     async componentDidMount(){
@@ -49,24 +52,58 @@ class CreateProduct extends Component {
 
     async handleSubmit(e){
         e.preventDefault();
+
+        if(!this.validateForm()){
+            return;
+        }
         
-        const { name, departmentId, description, image, price, quantity } = this.state;
-        const { history } = this.props;
+        alert("HI")
+        // const { name, departmentId, description, image, price, quantity } = this.state;
+        // const { history } = this.props;
 
-        const formData = new FormData();
+        // const formData = new FormData();
         
-        formData.append('name', name);
-        formData.append('departmentId', departmentId);
-        formData.append('description', description);
-        formData.append('image', image);
-        formData.append('price', price);    
+        // formData.append('name', name);
+        // formData.append('departmentId', departmentId);
+        // formData.append('description', description);
+        // formData.append('image', image);
+        // formData.append('price', price);    
 
-        const product = await createProduct(formData);
-        const { _id } = product;
+        // const product = await createProduct(formData);
+        // const { _id } = product;
 
-        await updateProductQuantity(_id, quantity);
+        // await updateProductQuantity(_id, quantity);
 
-        history.push(`/product/${_id}`);
+        // history.push(`/product/${_id}`);
+    }
+
+    validateForm(){
+        const { name, departmentId, description, price, quantity } = this.state;
+
+        let msg;
+
+        if(name.trim().length === 0){
+            msg = 'Name cannot be blank';
+        } else if(!departmentId){
+            msg = 'You must select a department!';
+        } else if(description.trim().length === 0){
+            msg = 'A description is required';
+        } else if(!price || parseFloat(price, 2) === 0){
+            msg = 'You cannnot sell a product for free';
+        } else {        
+            let sum = 0;
+
+            Object.keys(quantity).forEach(s => sum += parseInt(quantity[s]));
+
+            if(sum === 0) msg = 'You cannot sell something with 0 quantity';
+        }
+
+        if(msg){
+            createErrorToast(msg);
+            return false;
+        }
+
+        return true;
     }
 
     render(){

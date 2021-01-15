@@ -15,31 +15,23 @@ export const createProduct = async (req, res) => {
             if(err){
                 console.log(err);
             }
-    
-            const { name, departmentId } = req.body;
 
-            if(!departmentId){
-                throw new Error('Department ID needed');
+            let image = null;
+
+            if(req.file) {
+                image = req.file.filename;
             }
 
-            if(name){
-                let image = null;
+            const newProduct = new Product({
+                ...req.body,
+                userId: req.user._id,
+                datePosted: new Date(),
+                image
+            });
 
-                if(req.file) {
-                    image = req.file.filename;
-                }
+            const product = await newProduct.save();
 
-                const newProduct = new Product({
-                    ...req.body,
-                    userId: req.user._id,
-                    datePosted: new Date(),
-                    image
-                });
-    
-                const product = await newProduct.save();
-
-                res.json({ ok: true, product });
-            }
+            res.json({ ok: true, product });
        });  
     }
 }
