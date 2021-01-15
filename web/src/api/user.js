@@ -49,6 +49,12 @@ export const loadCart = async () => {
         }
     }
 
+    cart.sort(function(a, b) {
+        if (a.name > b.name) return -1;
+        if (b.name < a.name) return 1;
+        return 0;
+    });
+
     authAfterware(response);
     return cart;
 }
@@ -103,6 +109,16 @@ export const getAvgRating = async (uid = '') => {
     return avgRating;
 }
 
+export const getSales = async (uid = '') => {
+    const config = { headers: {} };
+
+    const response = await axios.get(`${API}/api/user/sales/${uid}`, authMiddleware(config));
+    const { sold } = response.data;
+
+    authAfterware(response);
+    return sold;
+}
+
 export const getHistory = async () => {
     const config = { headers: {} };
 
@@ -122,6 +138,12 @@ export const getHistory = async () => {
                 history[i].image = imgURL;        
             }
         }
+
+        history.sort(function(a, b) {
+            if (a.datePurchased > b.datePurchased) return -1;
+            if (b.datePurchased < a.datePurchased) return 1;
+            return 0;
+        });
     }
 
     return history || [];

@@ -23,11 +23,17 @@ export const createProduct = async (req, res) => {
             }
 
             if(name){
+                let image = null;
+
+                if(req.file) {
+                    image = req.file.filename;
+                }
+
                 const newProduct = new Product({
                     ...req.body,
                     userId: req.user._id,
-                    image: req.file.filename,
                     datePosted: new Date(),
+                    image
                 });
     
                 const product = await newProduct.save();
@@ -91,7 +97,7 @@ export const deleteProduct = async (req, res) => {
 }
 
 export const getProduct = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     
     try{
         const product = await Product.findOne({ _id: id });
@@ -111,7 +117,7 @@ export const getProductImage = async (req, res) => {
     if(product && product.image){
         res.sendFile(path.join(__dirname, '../', `images/product/${product.image}`));
     } else{
-        res.sendFile(null);
+        res.sendFile(path.join(__dirname, '../', 'images/product/default.png'));
     }
 }
 

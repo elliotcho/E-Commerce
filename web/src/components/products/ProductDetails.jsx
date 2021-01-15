@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { decodeUser } from '../../utils/decodeUser';
 import { createErrorToast } from '../../utils/createToast';
@@ -81,12 +82,23 @@ class ProductDetails extends Component{
     }
 
     async removeProduct(){
-        const { product: { _id } } = this.state;
-        const { deleteProduct } = productAPI;
+        const confirmDelete = async () => {
+            const { product: { _id } } = this.state;
+            const { deleteProduct } = productAPI;
+    
+            await deleteProduct(_id);
+    
+            this.props.history.goBack();
+        }
 
-        await deleteProduct(_id);
-
-        this.props.history.goBack();
+        confirmAlert({
+            title: 'E-Commerce',
+            message: 'Are you sure you want to delete this product?',
+            buttons: [
+                {label: 'Yes', onClick: confirmDelete},
+                {label: 'No', onClick: () => { return; }}
+            ]
+        });  
     }
 
     addToCart(){
@@ -190,8 +202,8 @@ class ProductDetails extends Component{
                 <button 
                     id='open-cart' 
                     data-toggle='modal' 
+                    style={{display: 'none'}}
                     data-target='.cart-modal' 
-                    style={{displaye: 'none'}}
                 />
 
                 <CartModal 

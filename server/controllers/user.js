@@ -6,7 +6,7 @@ import fs from 'fs';
 import { redis } from '../app'; 
 
 import User from '../models/user';
-import { Product }  from '../models/product';
+import { Product, Size }  from '../models/product';
 import Review from '../models/review';
 import Message from '../models/message';
 
@@ -406,6 +406,29 @@ export const getAvgRating = async (req, res) => {
     }
 
     res.json({ avgRating });
+}
+
+export const getSales = async (req, res) => {
+    let sold = 0;
+    let userId;
+
+    if(req.params.uid){
+        userId = req.params.uid;
+    } else{
+        userId = req.user._id;
+    }
+
+    const products = await Product.find({ userId });
+
+    for(let i=0;i<products.length;i++){
+        const sizes = await Size.find({ productId: products[i]._id });
+     
+        for(let i=0;i<sizes.length;i++){
+            sold += sizes[i].sold;
+        }
+    }
+
+    res.json({ sold });
 }
 
 export const userInfo = async (req, res) => {
