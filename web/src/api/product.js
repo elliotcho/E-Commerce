@@ -46,6 +46,12 @@ export const getProductsByDepartment = async (dept) => {
         products[i].image = URL.createObjectURL(file);
     }
 
+    products.sort(function(a, b) {
+        if (a.name > b.name) return -1;
+        if (b.name < a.name) return 1;
+        return 0;
+    });
+
     return products;
 }
 
@@ -63,6 +69,12 @@ export const getUserProducts = async (uid = '') => {
         
         products[i].image = URL.createObjectURL(file);
     }
+
+    products.sort(function(a, b) {
+        if (a.name < b.name) return -1;
+        if (b.name > a.name) return 1;
+        return 0;
+    });
   
     authAfterware(response);
     return products;

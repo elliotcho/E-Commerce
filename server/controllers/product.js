@@ -75,11 +75,13 @@ export const deleteProduct = async (req, res) => {
     if(req.user && product.userId !== req.user._id){
         res.json({msg: 'not authenticated'});
     } else{
-        fs.unlink(path.join(__dirname, '../', `images/product/${product.image}`), err => {
-            if(err) {
-                console.log(err);
-            }
-        });
+        if(product.image){
+            fs.unlink(path.join(__dirname, '../', `images/product/${product.image}`), err => {
+                if(err) {
+                    console.log(err);
+                }
+            });
+        }
 
         await Product.deleteOne({ _id : id });
         await Size.deleteMany({ productId: id });

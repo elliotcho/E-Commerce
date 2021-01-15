@@ -57,24 +57,23 @@ class CreateProduct extends Component {
             return;
         }
         
-        alert("HI")
-        // const { name, departmentId, description, image, price, quantity } = this.state;
-        // const { history } = this.props;
+        const { name, departmentId, description, image, price, quantity } = this.state;
+        const { history } = this.props;
 
-        // const formData = new FormData();
+        const formData = new FormData();
         
-        // formData.append('name', name);
-        // formData.append('departmentId', departmentId);
-        // formData.append('description', description);
-        // formData.append('image', image);
-        // formData.append('price', price);    
+        formData.append('name', name);
+        formData.append('departmentId', departmentId);
+        formData.append('description', description);
+        formData.append('image', image);
+        formData.append('price', price);    
 
-        // const product = await createProduct(formData);
-        // const { _id } = product;
+        const product = await createProduct(formData);
+        const { _id } = product;
 
-        // await updateProductQuantity(_id, quantity);
+        await updateProductQuantity(_id, quantity);
 
-        // history.push(`/product/${_id}`);
+        history.push(`/product/${_id}`);
     }
 
     validateForm(){
@@ -95,7 +94,7 @@ class CreateProduct extends Component {
 
             Object.keys(quantity).forEach(s => sum += parseInt(quantity[s]));
 
-            if(sum === 0) msg = 'You cannot sell something with 0 quantity';
+            msg = (sum !== 0) ? msg: 'You cannot sell something with 0 quantity';
         }
 
         if(msg){
