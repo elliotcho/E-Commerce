@@ -36,7 +36,7 @@ class UsernameForm extends Component{
         const{ newName } = this.state;
         
         return(
-            <form className="change-username my-3 mx-auto" onSubmit={this.handleSubmit}>
+            <form className="change-username" onSubmit={this.handleSubmit}>
                 <h3 className='mb-3 text-center'>
                     Change Username 
                 </h3>

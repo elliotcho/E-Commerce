@@ -39,7 +39,7 @@ class ChangePassword extends Component{
 
         return(
             <div className='change-pwd'>
-                <form className='mx-auto' onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                     <h1 className = 'mb-4'>
                         Change Password
                     </h1>

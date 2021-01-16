@@ -29,7 +29,7 @@ function DeleteUser(){
     }
 
     return(
-        <div className="delete-user my-3 mx-auto text-center">
+        <div className="delete-user text-center">
             <button onClick= {handleClick} className="btn btn-danger">
                 DELETE ACCOUNT
             </button>

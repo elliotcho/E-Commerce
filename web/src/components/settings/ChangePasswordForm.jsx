@@ -52,7 +52,7 @@ class ChangePasswordForm extends Component{
         const { currPassword, newPassword, confirmPassword } = this.state;
         
         return(
-            <form className='change-password my-3 mx-auto' onSubmit={this.handleSubmit}>
+            <form className='change-password' onSubmit={this.handleSubmit}>
                     <h3 className='mb-3 text-center'>
                         Change My Password
                     </h3>

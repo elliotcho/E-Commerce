@@ -10,6 +10,7 @@
 .register form{  
     margin: 18px auto; 
     max-width: 500px;
+    width: 95%;
     color: #0fe9ba;
     padding: 2%;
     border: outset 5px #1a1c20;

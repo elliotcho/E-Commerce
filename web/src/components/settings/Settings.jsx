@@ -41,9 +41,11 @@ function Settings(){
                 </div>
             </header>
 
-            <UsernameForm/>
-            <ChangePasswordForm/>
-            <DeleteUser />
+            <main>
+                <UsernameForm/>
+                <ChangePasswordForm/>
+                <DeleteUser />
+            </main>
         </div>
     )
 };

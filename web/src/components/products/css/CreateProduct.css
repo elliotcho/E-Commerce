@@ -8,15 +8,15 @@
   text-align: center;
   margin-top: 14px;
   font-family: 'Sansita Swashed', cursive;
-  font-size: 54px;
+  font-size: 50px;
   font-weight: 600;
   word-spacing: 4px;
 }
 
 .create-product form{
   width: 49%;
+  min-width: 400px;
   margin: 30px auto;
-  margin-bottom: 70px;
   border: double 7px #353941;
   padding: 2%;
 }
