@@ -6,7 +6,6 @@
 
 .admin h1{
     text-align: center;
-    color: #2a363b;
     margin: 40px;
     font-weight: 900;
     font-family: 'Sansita Swashed', cursive;
@@ -14,10 +13,6 @@
 }
 
 .admin hr{
-    border: 0;
-    height: 0; /* Firefox... */
-    box-shadow: 0 0 10px 1px #69779b;
-}
-.admin hr:after{
-    content: "\00a0";
+    max-width: 40%;
+    border: 1px solid gray;
 }

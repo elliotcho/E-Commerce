@@ -1,6 +1,7 @@
 .navbar { 
     font-family: 'Chakra Petch', sans-serif;
     background: #5f5f9b;
+    z-index: 1;
     min-height: 8vh;
 }
 

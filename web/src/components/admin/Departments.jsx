@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {getAllDepartments, removeDepartment} from '../../api/departments';
+import { confirmAlert } from 'react-confirm-alert';
+import { getAllDepartments, removeDepartment } from '../../api/departments';
 import DepartmentForm from './DepartmentForm';
 import './css/Departments.css';
 
@@ -20,8 +21,19 @@ class Departments extends Component{
     }
 
     async deleteDepartment(id){
-        await removeDepartment(id);
-        window.location.reload();
+        const confirmDelete = async () => {
+            await removeDepartment(id);
+            window.location.reload(); 
+        }
+
+        confirmAlert({
+            title: 'E-Commerce',
+            message: 'Are you sure you want to remove this department?',
+            buttons: [
+                {label: 'Yes', onClick: confirmDelete},
+                {label: 'No', onClick: () => { return; }}
+            ]
+        });
     }
 
     render(){

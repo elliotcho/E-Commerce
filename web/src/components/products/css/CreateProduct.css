@@ -16,12 +16,13 @@
 .create-product form{
   width: 49%;
   margin: 30px auto;
+  margin-bottom: 70px;
   border: double 7px #353941;
   padding: 2%;
 }
 
 .create-product select{
-  min-width: 200px;
+  min-width: 160px;
   margin-bottom: 20px;
   width: 49%;
   padding: 1.4%;

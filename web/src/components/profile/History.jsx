@@ -73,12 +73,12 @@ function History({ history }){
 
     return(
         <div className='history'>
-            <header className='text-center my-5'>
+            <header className='text-center mt-5 mb-4'>
                 <h2 className='mb-3'>
                     Shopping History
                 </h2>
 
-                <button className="btn btn-lg btn-primary" onClick={clear}>
+                <button className="btn btn-md btn-primary" onClick={clear}>
                     Clear Shopping History?
                 </button>
 

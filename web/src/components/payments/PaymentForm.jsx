@@ -26,6 +26,7 @@ class PaymentForm extends Component{
         super();
 
         this.state = {
+            fetching: false,
             errorMessages: [],
             total: 0
         }
@@ -51,7 +52,13 @@ class PaymentForm extends Component{
     }
 
     async createPayment(n, b){
-      const { total } = this.state;
+      const { total, fetching } = this.state;
+
+      if(fetching) {
+         return;
+      }
+
+      this.setState({ fetching: true });
 
       const { error, msg } = await sendNonce({
           nonce: n,
@@ -59,6 +66,8 @@ class PaymentForm extends Component{
           uuid: uuidv4(),
           total
       });
+
+      this.setState({ fetching: false });
 
       if(!error){
          this.props.history.push('/history');
@@ -68,6 +77,10 @@ class PaymentForm extends Component{
     }
 
     async cardNonceResponseReceived(errors, nonce, _, buyerVerificationToken)  {
+        if(this.state.fetching){
+          return;
+        }
+
         if (errors) {
           this.setState({ errorMessages: errors.map(error => error.message) });
           return;
@@ -78,6 +91,10 @@ class PaymentForm extends Component{
     }
 
     createVerificationDetails() {
+      if(this.state.fetching){
+        return;
+      }
+
       const total = this.state.total  + '';
 
       return {
@@ -99,7 +116,7 @@ class PaymentForm extends Component{
 
 
     render(){
-        const { total } = this.state;
+        const { total, fetching } = this.state;
         const { isDark } = this.context;
 
         const style = isDark? darkStyle: lightStyle;
@@ -137,7 +154,7 @@ class PaymentForm extends Component{
                       </fieldset>
               
                       <CreditCardSubmitButton>
-                          Pay $ {total}
+                          {fetching? 'Loading...' : `Pay ${total}`}
                       </CreditCardSubmitButton>
 
                       <div className="sq-error-message">

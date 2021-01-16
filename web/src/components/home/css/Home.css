@@ -3,23 +3,8 @@
   background-size: 100% 100%;
   font-family: 'Goldman', cursive;
   background-image: url('../../../images/darkhome.jpg');
-  overflow: hidden;
-}
-
-.home div[class*=box] {
-  margin: 100px auto;
-  width: 100%; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.home .btn {
-  line-height: 50px;
-  height: 75px;
-  text-align: center;
-  width: 350px;
-  cursor: pointer;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .home h1 {
@@ -50,17 +35,6 @@
   font-family: 'Balsamiq Sans', cursive;
   font-weight: 900;
   font-size: 32px;
-}
-
-.home p{
-  position: relative;
-  padding-right: 10%;
-  top: 20%;
-  left: 70%;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-weight: 900;
-  font-size: 20px;
-  color: #000000;
 }
 
 .home .wrapper{
@@ -123,10 +97,8 @@
   right: -25%;
 }
 
-
-
 .hexagon-wrapper {
-  margin: 20% auto 10%;
+  margin: 10% auto 10%;
   display: flex;
   text-align: initial;
   width: 200px;
@@ -203,6 +175,7 @@
     font-size: 17px;
   }
 }
+
 @media screen and (max-width: 1000px){
   .home h1 {
     font-size: 32px;
@@ -217,6 +190,7 @@
     font-size: 14px;
   }
 }
+
 @media screen and (max-width: 800px){
   .home h1 {
     font-size: 28px;
@@ -241,6 +215,7 @@
     margin-top: 250px;
   }
 }
+
 @media screen and (max-width: 600px){
   .home h1 {
     font-size: 24px;
@@ -258,6 +233,7 @@
     font-size: 11px;
   }
 }
+
 @media screen and (max-width: 570px){
   .home .hexagon-wrapper{
     margin-top: 200px;

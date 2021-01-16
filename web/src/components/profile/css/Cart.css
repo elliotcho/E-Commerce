@@ -3,6 +3,7 @@
 }   
 
 .cart header p{
+    font-family: 'Nunito Sans';
     margin-top: 20px;
     font-weight: bold;
     cursor: pointer;
@@ -17,10 +18,15 @@
     max-width: 90%;
     border: solid #393e46 8px;
     border-radius: 11px;
-    margin: 50px auto;
+    margin: 30px auto;
 }
 
 .cart-item{
     display: inline-block;
     text-align: center;
+}
+
+.cart button:focus{
+    box-shadow: none;
+    outline: none;
 }

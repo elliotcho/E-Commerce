@@ -4,7 +4,7 @@
 }
 
 .department-form h3{
-    font-family: 'Concert One', cursive;
+    font-family: 'Balsamiq Sans', cursive;
     font-size: 36px;
 }
 
@@ -22,17 +22,16 @@
 .department-form button{
     width: 100%;
     margin: 20px auto;
-    padding: 3px;
+    padding: 10px;
+    font-family: 'Balsamiq Sans', cursive;
     font-size: 17px;
-    font-weight: 900;
-    font-family: 'Goldman', cursive;
-    border: 3px solid #000000;
+    border-radius: 11px;;
     background-color: #f67280;
     color: #000000;
 }
 
 .department-form button:hover{
-    background: #b95a5a;
+    background: #f0b1b1;
 }
 
 .department-form button:focus{

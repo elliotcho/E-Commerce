@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
 import { withRouter } from 'react-router-dom';
 import { createErrorToast } from '../../utils/createToast';
 import { loadCart, deleteFromCart } from '../../api/user';
@@ -24,18 +25,29 @@ class Cart extends Component{
         this.setState({ cart });
     }
 
-    async delProductInCart(id){
+    delProductInCart(id){
         const { cart } = this.state;
 
-        for(let i=0;i<cart.length;i++){
-            if(cart[i]._id === id){
-                cart.splice(i, 1);
-                break;
+        const confirmDelete = async () => {
+            for(let i=0;i<cart.length;i++){
+                if(cart[i]._id === id){
+                    cart.splice(i, 1);
+                    break;
+                }
             }
+    
+            await deleteFromCart(id);
+            this.setState({ cart }); 
         }
 
-        await deleteFromCart(id);
-        this.setState({ cart }); 
+        confirmAlert({
+            title: 'E-Commerce',
+            message: 'Are you sure you want to remove this item?',
+            buttons: [
+                {label: 'Yes', onClick: confirmDelete},
+                {label: 'No', onClick: () => { return; }}
+            ]
+        });
     }
 
      calculateTotal(){
@@ -72,14 +84,14 @@ class Cart extends Component{
 
         return(
             <div className='cart'>
-                <header className='text-center my-5'>
-                    <h3>Your Shopping Cart </h3>
+                <header className='text-center mt-5 mb-4'>
+                    <h4>Your Shopping Cart </h4>
 
-                    <h2 className='my-3'>
+                    <h3 className='my-3'>
                         Total Amount: ${total} 
-                    </h2>
+                    </h3>
 
-                    <button className="btn btn-lg btn-primary" onClick={this.toPayment}>
+                    <button className="btn btn-md btn-primary" onClick={this.toPayment}>
                         Continue To Payment 
                     </button>
 
