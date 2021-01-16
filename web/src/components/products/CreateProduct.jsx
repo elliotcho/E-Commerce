@@ -79,6 +79,12 @@ class CreateProduct extends Component {
         const { isDark } = this.context;
 
         const style = isDark? darkStyle: lightStyle;
+        
+        let borderStyle = { border: '1px solid black' }; 
+
+        if(isDark){
+            borderStyle = { border: '1px solid white' };
+        }
 
         return(
             <div className='create-product' style={style}>
@@ -125,6 +131,7 @@ class CreateProduct extends Component {
                         type = 'file'
                         className = 'file'
                         onChange = {this.changeImage}
+                        style = {borderStyle}
                         accept = 'jpg jpeg png'
                     />
 

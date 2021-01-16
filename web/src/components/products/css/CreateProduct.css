@@ -44,7 +44,6 @@
 
 .create-product input[type='file']{
   padding: 20px; 
-  border: 1px solid black;
   margin-bottom: 50px;
   cursor: pointer;
 }
