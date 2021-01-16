@@ -84,6 +84,7 @@ export const deleteProduct = async (id) => {
     const config = {headers: {}};
         
     const response = await axios.delete(`${API}/api/product/${id}`, authMiddleware(config));
+    
     authAfterware(response);
 }   
 

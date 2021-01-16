@@ -19,7 +19,6 @@ class Profile extends Component{
         this.state = {
             imgURL: null,
             products: [],
-            avgRating: null,
             info: null,
             sales: null
         }
@@ -44,32 +43,28 @@ class Profile extends Component{
 
     async fetchProfileData(){
         const { uid } = this.props.match.params;
-        const { getUserInfo, getProfilePic, getAvgRating, getSales } = userAPI; 
+        const { getUserInfo, getProfilePic, getSales } = userAPI; 
 
         let info;
         let products = [];
         let imgURL;
-        let avgRating;
         let sales;
         
         if(uid){
             info = await getUserInfo(uid);
             products = await getUserProducts(uid);
             imgURL = await getProfilePic(uid);
-            avgRating  = await getAvgRating(uid);
             sales = await getSales(uid);
         } else{
             info = await getUserInfo();
             products = await getUserProducts();
             imgURL = await getProfilePic();
-            avgRating  = await getAvgRating();
             sales = await getSales();
         }
 
         this.setState({ 
             imgURL,
             products, 
-            avgRating,
             sales,
             info
         });
@@ -99,7 +94,7 @@ class Profile extends Component{
     }
 
     render(){
-        const { imgURL, products, info, avgRating, sales } = this.state; 
+        const { imgURL, products, info, sales } = this.state; 
         const { isDark } = this.context;
 
         const user = decodeUser();
@@ -153,7 +148,6 @@ class Profile extends Component{
                             <p>Email: {info && info.email? info.email : 'Loading...'}</p>
                             <p># of Successful Sales: {sales || 'N/A'}</p>
                             <p># of Products Posted: {products.length}</p>
-                            <p>Average Rating: {avgRating || 'N/A'}</p>
                         </div>
                     </div>
                         
