@@ -3,6 +3,7 @@ import socketIOClient from 'socket.io-client';
 import { createMessageToast } from './utils/createToast';
 import { API } from './constants';
 import Routes from './Routes';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 

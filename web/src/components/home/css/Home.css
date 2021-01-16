@@ -2,7 +2,7 @@
   height: 92vh;
   background-size: 100% 100%;
   font-family: 'Goldman', cursive;
-  background-image: url('../../../images/darkhome.jpg');
+  background-image: url('../../../images/home.jpg');
   overflow-y: auto;
   overflow-x: hidden;
 }

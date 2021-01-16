@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
+import { createErrorToast } from '../../utils/createToast';
 import { deleteReview, updateReview, getReviews } from '../../api/review';
 import ReviewForm from './ReviewForm';
 import Review from './Review';
 import './css/ReviewList.css';
-import { createErrorToast } from '../../utils/createToast';
 
 class ReviewList extends Component{
     constructor(){

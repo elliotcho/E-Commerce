@@ -2,7 +2,6 @@ import React from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { deleteAccount } from '../../api/user';
 import { socket } from '../../App';
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import './css/DeleteUser.css';
 
 function DeleteUser(){

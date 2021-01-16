@@ -24,15 +24,13 @@ class ChangePasswordForm extends Component{
     async handleSubmit(e){
         e.preventDefault(e);
 
-        const{ currPassword, newPassword, confirmPassword } = this.state;
-        const data = { currPassword, newPassword, confirmPassword };
+        const{ newPassword, confirmPassword } = this.state;
+        const data = { ...this.state };
        
         if(newPassword === confirmPassword){
             const { msg, error } = await changePassword(data);
 
-            if(error){
-                createErrorToast(msg);
-            } else {
+            if(!error) {
                 createSuccessToast(msg);
 
                 this.setState({
@@ -40,6 +38,8 @@ class ChangePasswordForm extends Component{
                     newPassword: '',
                     confirmPassword: ''
                 });
+            } else {
+                createErrorToast(msg);
             }
         } 
         
