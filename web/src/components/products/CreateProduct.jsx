@@ -131,4 +131,4 @@ class CreateProduct extends Component {
     }
 }
 
-export default CreateProduct;
+export default CreateProduct; 
