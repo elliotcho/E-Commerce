@@ -3,3 +3,25 @@
     font-size: 36px;
     margin: 20px;
 }
+
+.department-form input{
+    width: auto;
+    height: 34px;
+    border-radius: 11px;
+}
+
+.department-form button{
+    display: inline-block;
+    margin: 20px;
+    padding: 3px;
+    width: 7%;
+    font-family: 'Goldman', cursive;
+    font-size: 17px;
+    font-weight: 900;
+    background-color: #f67280;
+    color: #000000;
+}
+
+.department-form button{
+    border: 3px solid #000000;
+}
