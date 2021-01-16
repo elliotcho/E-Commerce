@@ -64,14 +64,10 @@
 }
 
 .home .wrapper{
-  position: fixed;
+  position: absolute;
   top: 20%;
   right: 3%;
   transform: translate(-50%, -50%);
-}
-
-.home .wrapper .link_wrapper{
-  position: relative;
 }
 
 .home .wrapper .link_wrapper a{
