@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { confirmAlert } from 'react-confirm-alert'
 import { withRouter } from 'react-router-dom';
+import { createErrorToast } from '../../utils/createToast';
 import * as userAPI from '../../api/user';
 import Item from './Item';
 import './css/History.css';
@@ -45,10 +46,16 @@ function History({ history }){
     }
 
     const clear = () => {
-        const { clearHistory } = userAPI;
+        if(shoppingHistory.length === 0) {
+            createErrorToast('History is already cleared');
+            return;
+        }
 
         const confirmDelete = async () => {
+            const { clearHistory } = userAPI;
+
             await clearHistory();
+
             setHistory([]);
         }
 

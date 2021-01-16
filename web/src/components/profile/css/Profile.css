@@ -63,6 +63,12 @@
     font-family: 'Sansita Swashed', cursive;
 }
 
+.profile .user-products h3{
+    font-family: 'Sansita Swashed', cursive;
+    margin-top: 150px;
+    margin-bottom: 70px;
+}
+
 @media screen and (max-width: 670px) {
     .profile .stats {
         font-size: smaller;
@@ -76,5 +82,9 @@
 @media screen and (max-width: 992px){
     .profile .user-products{
         justify-content: center;
+    }
+
+    .profile .user-products h3{
+        margin-top: 0px;
     }
 }

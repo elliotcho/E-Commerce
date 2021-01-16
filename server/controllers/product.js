@@ -149,9 +149,11 @@ export const searchProducts = async (req, res) => {
 
     let products = [];
 
-    if(dept === 'all'){
-        products = await Product.find({name: { $regex: query, $options: 'i'} });
-    } else{
+    if(dept === 'all' ){
+        products = await Product.find({ name: { $regex: query, $options: 'i'} }) 
+    } 
+
+    else{
         const department = await Department.findOne({ key: dept });
 
         products = await Product.find({

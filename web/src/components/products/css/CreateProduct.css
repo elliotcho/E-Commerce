@@ -33,6 +33,7 @@
 .create-product input{
   width: 90%;
   padding: 1.4%;
+  margin: auto;
   margin-bottom: 20px;
   display: block;
   border-radius: 7px;
@@ -40,23 +41,56 @@
   font-size: 16px;
 } 
 
+.create-product input[type='file']{
+  padding: 20px; 
+  border: 1px solid black;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+
+.create-product input[type='file']:hover{
+  background: #4ebe74; 
+}
+
+.create-product input[type='file']:focus{
+   box-shadow: none;
+   outline: none;
+}
+
+.create-product select{
+  margin-left: 6%;
+}
+
 .create-product textarea{
   width: 90%;
+  height: 6.5rem;
   padding: 1.4%;
-  margin-top: 50px;
-  margin-bottom: 50px;  
+  margin: 50px auto;
   display: block;
   border-radius: 7px;
   border: inset 1.7px black;
   font-family: 'Chakra Petch', sans-serif;
   font-size: 16px;
+  resize: none;
 }
 
 .create-product button{
+  width: 90%;
+  margin: auto;
   background-color: #74c7b8;
   border: ridge 1px black;
   padding: 1%;
   border-radius: 10px;
   font-size: 24px;
   font-family: 'Goldman', cursive;
+  cursor: pointer;
+}
+
+.create-product button:hover{
+  background: #4ebe74;
+}
+
+.create-product button:focus{
+   box-shadow: none;
+   outline: none;
 }

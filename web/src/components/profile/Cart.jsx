@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { createErrorToast } from '../../utils/createToast';
 import { loadCart, deleteFromCart } from '../../api/user';
 import Item from './Item';
 import './css/Cart.css';
@@ -56,6 +57,11 @@ class Cart extends Component{
     }
 
     toPayment(){
+        if(this.state.cart.length === 0){
+            createErrorToast('Cart is empty');
+            return;
+        }
+
         this.props.history.push(`/payment`);
     }
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { createErrorToast } from '../../utils/createToast';
+import { validateProductForm } from '../../utils/validateForm';
 import { createProduct, updateProductQuantity } from '../../api/product';
 import { getAllDepartments } from '../../api/departments';
 import QuantityForm from './QuantityForm';
@@ -29,7 +29,6 @@ class CreateProduct extends Component {
         this.changeImage = this.changeImage.bind(this);
         this.updateQuantity = this.updateQuantity.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.validateForm = this.validateForm.bind(this);
     }
 
     async componentDidMount(){
@@ -52,7 +51,7 @@ class CreateProduct extends Component {
     async handleSubmit(e){
         e.preventDefault();
 
-        if(!this.validateForm()){
+        if(!validateProductForm(this.state)){
             return;
         }
         
@@ -75,35 +74,6 @@ class CreateProduct extends Component {
         history.push(`/product/${_id}`);
     }
 
-    validateForm(){
-        const { name, departmentId, description, price, quantity } = this.state;
-
-        let msg;
-
-        if(name.trim().length === 0){
-            msg = 'Name cannot be blank';
-        } else if(!departmentId){
-            msg = 'You must select a department!';
-        }  else if(!price || Number(price) === 0){
-            msg = 'You cannot sell an item for free';
-        } else if(description.trim().length === 0){
-            msg = 'A description is required';
-        } else {        
-            let sum = 0;
-
-            Object.keys(quantity).forEach(s => sum += parseInt(quantity[s]));
-
-            msg = (sum !== 0) ? msg: 'You cannot sell something with 0 quantity';
-        }
-
-        if(msg){
-            createErrorToast(msg);
-            return false;
-        }
-
-        return true;
-    }
-
     render(){
         const { name, price, departmentId, departments } = this.state;
         const { isDark } = this.context;
@@ -123,16 +93,6 @@ class CreateProduct extends Component {
                         value = {name}
                     />
 
-                    <select onChange={this.changeField} value={departmentId} name='departmentId'>
-                        <option value="">Select Department </option>
-
-                        {departments.map(dept => 
-                            <option value={dept._id} key={dept._id}>
-                                {dept.name}
-                            </option>
-                         )}
-                    </select>
-
                     <input
                         type = 'number'
                         name = 'price'
@@ -143,18 +103,29 @@ class CreateProduct extends Component {
                         min = '0'
                     />
 
-                    <input
-                        type = 'file'
-                        className = 'file'
-                        onChange = {this.changeImage}
-                        accept = 'jpg jpeg png'
-                    />
+                    <select onChange={this.changeField} value={departmentId} name='departmentId'>
+                        <option value="">Select Department </option>
+
+                        {departments.map(dept => 
+                            <option value={dept._id} key={dept._id}>
+                                {dept.name}
+                            </option>
+                         )}
+                    </select>
 
                     <textarea
                         type = 'textarea'
                         name = 'description'
                         placeholder = 'Product description'
                         onChange = {this.changeField}
+                    />
+
+                    
+                    <input
+                        type = 'file'
+                        className = 'file'
+                        onChange = {this.changeImage}
+                        accept = 'jpg jpeg png'
                     />
 
                     <QuantityForm updateQuantity={this.updateQuantity}/>

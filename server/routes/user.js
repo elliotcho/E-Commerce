@@ -35,7 +35,7 @@ router.get('/profile_pic/:uid?', loadProfilePic);
 router.post('/profile_pic', changeProfilePic);
 router.delete('/profile_pic', removeProfilePic);
 router.get('/avg_rating/:uid?', getAvgRating);
-router.get('/sales/:uid', getSales);
+router.get('/sales/:uid?', getSales);
 router.get('/history', loadHistory);
 router.delete('/history/:id', removeFromHistory);
 router.delete('/history', clearHistory);
