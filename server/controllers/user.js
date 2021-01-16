@@ -368,6 +368,46 @@ export const clearHistory = async (req, res) => {
     }
 }
 
+export const getAvgRating = async (req, res) => {
+    let userId;
+    let total = 0;
+    let count = 0;
+
+    if(req.params.uid){
+        userId = req.params.uid;
+    } else{
+        userId = req.user._id;
+    }
+
+    const products = await Product.find({ userId });
+
+    for(let i=0;i<products.length;i++){
+        const product = products[i];
+        const { _id } = product;
+
+        const reviews = await Review.find({ productId: _id });
+   
+        for(let j=0;j<reviews.length;j++){
+            const review = reviews[j];
+            const { rating } = review;
+
+            total += rating;
+        }
+
+        count += reviews.length;
+    }
+    
+    let avgRating;
+    
+    if(count !== 0){
+        avgRating = (total/count).toFixed(1);
+    } else{
+        avgRating = 'N/A';
+    }
+
+    res.json({ avgRating });
+}
+
 export const getSales = async (req, res) => {
     let sold = 0;
     let userId;

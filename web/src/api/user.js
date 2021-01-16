@@ -101,6 +101,16 @@ export const deleteAccount = async() => {
     await axios.delete(`${API}/api/user`, authMiddleware({ headers: {} }));
 }
 
+export const getAvgRating = async (uid = '') => {
+    const config = { headers: {} };
+    
+    const response = await axios.get(`${API}/api/user/avg_rating/${uid}`, authMiddleware(config));
+    const { avgRating } = response.data;
+
+    authAfterware(response);
+    return avgRating
+}
+
 export const getSales = async (uid = '') => {
     const config = { headers: {} };
 

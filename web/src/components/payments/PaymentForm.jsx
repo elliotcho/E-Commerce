@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { createErrorToast, createSuccessToast } from '../../utils/createToast';
+import { createErrorToast } from '../../utils/createToast';
 import { sendNonce } from '../../api/payments';
 import { loadCart } from '../../api/user';
 import 'react-square-payment-form/lib/default.css';
@@ -61,13 +61,7 @@ class PaymentForm extends Component{
       });
 
       if(!error){
-        
-         createSuccessToast(msg);
-
-         const { history } = this.props;
-
-         setTimeout(() => history.goBack(), 3000);
-
+         this.props.history.push('/history');
       } else {
          createErrorToast(msg);
       }
@@ -113,7 +107,7 @@ class PaymentForm extends Component{
         return(
           <div className='payment-bg' style={style}> 
               <div className='payment'>
-                <header className='text-center mb-5'>
+                <header className='mb-5'>
                   <h1>Payment Page</h1>
                   <h2>Total Amount: ${total}</h2>
                 </header>

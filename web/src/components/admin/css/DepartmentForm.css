@@ -1,27 +1,41 @@
-.department-form label{
+.department-form{
+    max-width: 480px; 
+    margin: auto;
+}
+
+.department-form h3{
     font-family: 'Concert One', cursive;
     font-size: 36px;
-    margin: 20px;
 }
 
 .department-form input{
-    width: auto;
-    height: 34px;
+    width: 100%;
+    padding: 11px;
     border-radius: 11px;
+    font-family: 'Nunito Sans';
+}
+
+.department-form input:focus{
+    outline: none;
 }
 
 .department-form button{
-    display: inline-block;
-    margin: 20px;
+    width: 100%;
+    margin: 20px auto;
     padding: 3px;
-    width: 7%;
-    font-family: 'Goldman', cursive;
     font-size: 17px;
     font-weight: 900;
+    font-family: 'Goldman', cursive;
+    border: 3px solid #000000;
     background-color: #f67280;
     color: #000000;
 }
 
-.department-form button{
-    border: 3px solid #000000;
+.department-form button:hover{
+    background: #b95a5a;
+}
+
+.department-form button:focus{
+    box-shadow: none;
+    outline: none;
 }

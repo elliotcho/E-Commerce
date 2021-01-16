@@ -31,11 +31,13 @@ class DepartmentForm extends Component {
         
         return(
             <form className='department-form' onSubmit={this.handleSubmit}>
-                <label htmlFor='name'>Add a Department: </label>
+                <h3>Add a Department</h3>
+
                 <input 
                     name= 'name'
                     value= {name}
-                    onChange= {this.handleChange}    
+                    onChange= {this.handleChange} 
+                    placeholder='Department Name'   
                     type="text"
                     required
                 />
