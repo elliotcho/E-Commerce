@@ -47,7 +47,7 @@ class Profile extends Component{
         const { getUserInfo, getProfilePic, getAvgRating, getSales } = userAPI; 
 
         let info;
-        let products;
+        let products = [];
         let imgURL;
         let avgRating;
         let sales;
@@ -63,7 +63,7 @@ class Profile extends Component{
             products = await getUserProducts();
             imgURL = await getProfilePic();
             avgRating  = await getAvgRating();
-            //sales = await getSales();
+            sales = await getSales();
         }
 
         this.setState({ 

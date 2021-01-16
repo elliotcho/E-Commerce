@@ -36,26 +36,28 @@ export const deleteProfilePic = async () => {
 export const loadCart = async () => {
     const config = { headers: {} };
     const response = await axios.get(`${API}/api/user/cart`, authMiddleware(config));
-    const cart = response.data;
+    const { cart, ok } = response.data;
 
-    for(let i=0; i<cart.length; i++){
-        const config = { responseType: 'blob'};
-        const route = `${API}/api/product/image/${cart[i].productId}`;
-
-        const result = await axios.get(route, config);
-        const imgURL = URL.createObjectURL(result.data);
-        
-        cart[i].image = imgURL;        
+    if(ok){
+        for(let i=0; i<cart.length; i++){
+            const config = { responseType: 'blob'};
+            const route = `${API}/api/product/image/${cart[i].productId}`;
+    
+            const result = await axios.get(route, config);
+            const imgURL = URL.createObjectURL(result.data);
+            
+            cart[i].image = imgURL;        
+        }
+    
+        cart.sort(function(a, b) {
+            if (a.name > b.name) return -1;
+            if (b.name < a.name) return 1;
+            return 0;
+        });
     }
 
-    cart.sort(function(a, b) {
-        if (a.name > b.name) return -1;
-        if (b.name < a.name) return 1;
-        return 0;
-    });
-
     authAfterware(response);
-    return cart;
+    return cart || [];
 }
 
 export const deleteFromCart = async (id) => {

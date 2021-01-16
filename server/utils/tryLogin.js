@@ -43,6 +43,6 @@ export const tryLogin = async (data) => {
             user = null;
         }
     } 
-
+    
     return { user, errors };
 }

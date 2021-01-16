@@ -32,7 +32,7 @@ app.use(cors());
 
 const addUser = async (req, res, next) => {
     const token = req.headers['x-token'];
-    
+
     if(token){
         try{
             const { user } = jwt.verify(token, process.env.JWT_SECRET);

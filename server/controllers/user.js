@@ -260,7 +260,7 @@ export const deleteFromCart = async (req, res) => {
 
 export const loadCart = async (req, res) => {
     if (!req.user) {
-        res.json({ msg: 'User is not authenticated' });
+        res.json({ ok: false });
     } else {
         const user = await User.findOne({_id: req.user._id});
         const { cart } = user; 
@@ -287,7 +287,7 @@ export const loadCart = async (req, res) => {
 
         await User.updateOne({ _id: req.user._id}, { cart: newCart });
 
-        res.json(result);
+        res.json({ ok: true, cart: result });
     }
 }
 

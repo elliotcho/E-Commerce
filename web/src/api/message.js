@@ -28,8 +28,9 @@ export const getSidebarChats = async () => {
     
     if(ok){
         authAfterware(response);
-        return chats;
     }
+
+    return chats || [];
 }
 
 export const loadMessages = async (otherUser) => {
@@ -51,8 +52,9 @@ export const loadMessages = async (otherUser) => {
 
     if(ok){
         authAfterware(response);
-        return messages;
     }
+
+    return messages || [];
 }
 
 export const readMessages = async (otherUser) => {
