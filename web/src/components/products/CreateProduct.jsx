@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { getAllDepartments } from '../../api/departments';
+import { validateProductForm } from '../../utils/validateForm';
 import { createProduct, updateProductQuantity } from '../../api/product';
+import { getAllDepartments } from '../../api/departments';
 import QuantityForm from './QuantityForm';
 import './css/CreateProduct.css';
 
@@ -49,6 +50,10 @@ class CreateProduct extends Component {
 
     async handleSubmit(e){
         e.preventDefault();
+
+        if(!validateProductForm(this.state)){
+            return;
+        }
         
         const { name, departmentId, description, image, price, quantity } = this.state;
         const { history } = this.props;
@@ -88,16 +93,6 @@ class CreateProduct extends Component {
                         value = {name}
                     />
 
-                    <select onChange={this.changeField} value={departmentId} name='departmentId'>
-                        <option value="">Select Department </option>
-
-                        {departments.map(dept => 
-                            <option value={dept._id} key={dept._id}>
-                                {dept.name}
-                            </option>
-                         )}
-                    </select>
-
                     <input
                         type = 'number'
                         name = 'price'
@@ -108,18 +103,29 @@ class CreateProduct extends Component {
                         min = '0'
                     />
 
+                    <select onChange={this.changeField} value={departmentId} name='departmentId'>
+                        <option value="">Select Department </option>
+
+                        {departments.map(dept => 
+                            <option value={dept._id} key={dept._id}>
+                                {dept.name}
+                            </option>
+                         )}
+                    </select>
+
+                    <textarea
+                        type = 'textarea'
+                        name = 'description'
+                        placeholder = 'Product description'
+                        onChange = {this.changeField}
+                    />
+
+                    
                     <input
                         type = 'file'
                         className = 'file'
                         onChange = {this.changeImage}
                         accept = 'jpg jpeg png'
-                    />
-
-                    <textarea
-                        type = 'textarea'
-                        name = 'content'
-                        placeholder = 'Product description'
-                        onChange = {this.changeField}
                     />
 
                     <QuantityForm updateQuantity={this.updateQuantity}/>
@@ -131,4 +137,4 @@ class CreateProduct extends Component {
     }
 }
 
-export default CreateProduct; 
+export default CreateProduct;

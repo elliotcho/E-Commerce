@@ -15,27 +15,33 @@ export const createProduct = async (req, res) => {
             if(err){
                 console.log(err);
             }
-    
-            const { name, departmentId } = req.body;
 
-            if(!departmentId){
-                throw new Error('Department ID needed');
+            let image = null;
+
+            if(req.file) {
+                image = req.file.filename;
             }
 
-            if(name){
-                const newProduct = new Product({
-                    ...req.body,
-                    userId: req.user._id,
-                    image: req.file.filename,
-                    datePosted: new Date(),
-                });
-    
-                const product = await newProduct.save();
+            const newProduct = new Product({
+                ...req.body,
+                userId: req.user._id,
+                datePosted: new Date(),
+                image
+            });
 
-                res.json({ ok: true, product });
-            }
+            const product = await newProduct.save();
+
+            res.json({ ok: true, product });
        });  
     }
+}
+
+export const getProductQuantities = async (req, res) => {
+    const { id } = req.params;;
+
+    const quantities = await Size.find({ productId: id });
+
+    res.json(quantities);
 }
 
 export const setProductQuantity = async (req, res) => {
@@ -49,11 +55,13 @@ export const setProductQuantity = async (req, res) => {
         for(let i=0;i<keys.length;i++){
             const key = keys[i];
 
-            await new Size({
+            const newQuantities = new Size({
                 name: key,
                 quantity: sizes[key],
                 productId
-            }).save();
+            });
+
+            await newQuantities.save();
         }
 
         res.json({ ok: true });
@@ -67,11 +75,13 @@ export const deleteProduct = async (req, res) => {
     if(req.user && product.userId !== req.user._id){
         res.json({msg: 'not authenticated'});
     } else{
-        fs.unlink(path.join(__dirname, '../', `images/product/${product.image}`), err => {
-            if(err) {
-                console.log(err);
-            }
-        });
+        if(product.image){
+            fs.unlink(path.join(__dirname, '../', `images/product/${product.image}`), err => {
+                if(err) {
+                    console.log(err);
+                }
+            });
+        }
 
         await Product.deleteOne({ _id : id });
         await Size.deleteMany({ productId: id });
@@ -81,10 +91,10 @@ export const deleteProduct = async (req, res) => {
 }
 
 export const getProduct = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     
     try{
-        const product = await Product.findOne({_id:id});
+        const product = await Product.findOne({ _id: id });
         product.image = '';
 
         res.json(product);
@@ -95,12 +105,13 @@ export const getProduct = async (req, res) => {
 
 export const getProductImage = async (req, res) => {
     const { id } = req.params;
+   
     const product = await Product.findOne({ _id: id });
  
     if(product && product.image){
         res.sendFile(path.join(__dirname, '../', `images/product/${product.image}`));
     } else{
-        res.sendFile(null);
+        res.sendFile(path.join(__dirname, '../', 'images/product/default.png'));
     }
 }
 
@@ -138,9 +149,11 @@ export const searchProducts = async (req, res) => {
 
     let products = [];
 
-    if(dept === 'all'){
-        products = await Product.find({name: { $regex: query, $options: 'i'} });
-    } else{
+    if(dept === 'all' ){
+        products = await Product.find({ name: { $regex: query, $options: 'i'} }) 
+    } 
+
+    else{
         const department = await Department.findOne({ key: dept });
 
         products = await Product.find({

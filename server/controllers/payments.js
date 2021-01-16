@@ -1,5 +1,5 @@
 import { Client, Environment, ApiError } from 'square';
-import { v4 } from 'uuid';
+import { Product, Size } from '../models/product';
 import User from '../models/user';
 
 const client = new Client({
@@ -33,19 +33,43 @@ export const createPayment = async(req, res) =>{
             const user = await User.findOne({ _id: req.user._id });
             const { cart, history } = user;
 
+            const datePurchased = new Date();
+
             for(let i=0;i<cart.length;i++){
-                history.push({
-                    _id: v4(),
-                    datePurchased: new Date(),
-                    productId: cart[i]
-                });
+                const { size, productId, quantity } = cart[i];
+
+                const { quantity: remaining, sold } = await Size.findOne({ productId, name: size });
+                const { name } = await Product.findOne({ _id: productId });
+
+                if(remaining - quantity < 0){
+
+                    let msg = `You have too much ${size} ${name}(s)`;
+
+                    return res.status(200).json({
+                        'title' : 'Payment Failure',
+                        'error': true,
+                        'msg' : msg
+                    });
+
+                } else {
+                    const newData = {
+                        quantity: remaining - quantity,
+                        sold: sold + quantity
+                    };
+
+                    await Size.updateOne( { productId, name: size } , newData);
+                }
+
+                history.push({ ...cart[i], datePurchased });
             }
 
             await User.updateOne({ _id: req.user._id }, { cart: [] , history });
 
             res.status(200).json({
                 'title': 'Payment Successful',
-                'result': response.result
+                'result': response.result,
+                'error': false,
+                'msg': 'Success'
             });
 
         } catch (error) {
@@ -59,7 +83,9 @@ export const createPayment = async(req, res) =>{
 
             res.status(500).json({
                 'title': 'Payment Failure',
-                'result': errorResult
+                'result': errorResult,
+                'error': true,
+                'msg': 'Failed'
             });
         }
     }

@@ -22,13 +22,15 @@ const ProductSchema = new mongoose.Schema({
         trim: true
     },
     image: {
-        type: String
+        type: String,
+        default: null
     },
     price: {
         type: Number
     },
     description: {
-        type: String
+        type: String,
+        maxlength: 300
     },
     userId: {
         type: String

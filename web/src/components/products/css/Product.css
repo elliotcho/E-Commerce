@@ -2,6 +2,7 @@
     color: black;
     font-family: 'Nunito Sans';
     max-width: fit-content;
+    max-height: 300px;;
     margin: 20px;
 }
 

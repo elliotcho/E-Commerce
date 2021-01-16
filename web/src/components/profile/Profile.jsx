@@ -20,7 +20,8 @@ class Profile extends Component{
             imgURL: null,
             products: [],
             avgRating: null,
-            info: null 
+            info: null,
+            sales: null
         }
 
         this.fetchProfileData = this.fetchProfileData.bind(this);
@@ -43,29 +44,33 @@ class Profile extends Component{
 
     async fetchProfileData(){
         const { uid } = this.props.match.params;
-        const { getUserInfo, getProfilePic, getAvgRating } = userAPI; 
+        const { getUserInfo, getProfilePic, getAvgRating, getSales } = userAPI; 
 
         let info;
         let products;
         let imgURL;
         let avgRating;
+        let sales;
         
         if(uid){
             info = await getUserInfo(uid);
             products = await getUserProducts(uid);
             imgURL = await getProfilePic(uid);
             avgRating  = await getAvgRating(uid);
+            sales = await getSales(uid);
         } else{
             info = await getUserInfo();
             products = await getUserProducts();
             imgURL = await getProfilePic();
             avgRating  = await getAvgRating();
+            //sales = await getSales();
         }
 
         this.setState({ 
             imgURL,
             products, 
             avgRating,
+            sales,
             info
         });
     }
@@ -94,7 +99,7 @@ class Profile extends Component{
     }
 
     render(){
-        const { imgURL, products, info, avgRating } = this.state; 
+        const { imgURL, products, info, avgRating, sales } = this.state; 
         const { isDark } = this.context;
 
         const user = decodeUser();
@@ -146,21 +151,27 @@ class Profile extends Component{
                             <h2>Personal Stats</h2>
                             
                             <p>Email: {info && info.email? info.email : 'Loading...'}</p>
+                            <p># of Successful Sales: {sales || 'N/A'}</p>
                             <p># of Products Posted: {products.length}</p>
-                            <p>Average Rating: {avgRating? avgRating: 'N/A'}</p>
+                            <p>Average Rating: {avgRating || 'N/A'}</p>
                         </div>
                     </div>
                         
                     <div className='col-12 col-xl-9 d-flex user-products'>
-                        {products.map(p => 
-                            <Product
-                                key = {p._id}
-                                productId = {p._id}
-                                image = {p.image}
-                                name = {p.name}
-                                price = {p.price}
-                            />
-                        )}
+                        {products.length !== 0 ? 
+                            products.map(p => 
+                                <Product
+                                    key = {p._id}
+                                    productId = {p._id}
+                                    image = {p.image}
+                                    name = {p.name}
+                                    price = {p.price}
+                                />
+                            ) :
+                            <h3>
+                                No products posted
+                            </h3>
+                        }
                     </div>
                 </main>
             </div>

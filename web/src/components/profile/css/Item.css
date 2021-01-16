@@ -1,0 +1,35 @@
+.item { 
+    background: white;
+    max-width: fit-content;
+    border-radius: 11px;
+    font-family: 'Arial';
+}
+
+.item main {
+    padding: 20px;
+    margin: auto;
+}
+
+.item main img{
+    width: 6.5rem;
+    height: 6.5rem;
+    margin: auto;
+}
+
+.item main span{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.item main p {
+    margin: 10px auto;
+}
+
+.item footer i{
+    cursor: pointer;
+    color: orange;
+} 
+
+.item footer i:hover{
+    color: red;
+}

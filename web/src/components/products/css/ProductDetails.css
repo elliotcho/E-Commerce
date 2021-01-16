@@ -1,73 +1,105 @@
 .product-details-bg{
     height: 92vh;
     position: relative;
+    font-family: 'Arial';
     overflow: auto;
 }
 
 .product-details{
+    display: grid;
+    grid-template-columns: 15rem auto;
+    width: 90%;
     max-width: 800px;
-    height: 400px;
-    font-family: 'Arial';
+    margin: 50px auto;
+    margin-bottom: 10px;
     background: white;
     color: black;
-    border: 1px solid black;
-    margin: 50px auto;
 }
 
 .product-details img{
-    width: 100%;
-    height: 100%;
-    max-width: 15rem;
-    max-height: 15rem;
+   width: 12rem;
+   height: 12rem;
+   margin: 0 auto;
 }
 
-.product-details span:hover{
+.product-details aside p{
+    max-width: 12rem;
+}
+
+.product-details aside span{
     text-decoration: underline;
     cursor: pointer;
 }
 
-.product-details .description{  
-    padding: 20px;
+.product-details header{
+    height: fit-content;
+    font-family: 'Chakra Petch', sans-serif;
+    border-bottom: 1px solid black;
 }
 
-.product-details .description header{
-    border-bottom: 1px solid gray; 
-}
-
-.product-details .fa-trash-alt{
-    position: relative;
-    top: 10px;
-    font-size: 1.5rem;
-    color: lightslategray;
+.product-details header i{
     cursor: pointer;
+    font-size: 1.2rem;
+    position: relative;
+    top: 14px;
 }
 
-.product-details .fa-trash-alt:hover{
+.product-details header .fa-trash-alt{
+    color: orange;
+} .product-details header .fa-trash-alt:hover{
     color: red;
 }
 
-.product-details .description .price{
-    color: darkred;
-    display: inline-block;
-    padding-right: 160px;
-}
-
-.product-details .description .content{
-    font-size: 1.8rem;
-    color: gray;
-}
-
-.product-details .fa-cart-plus{
-    font-size: 2rem;
-    cursor: pointer;
+.product-details header .fa-cart-plus{
     color: blue;
+} .product-details header .fa-cart-plus:hover{
+    color: #14da2e;
 }
 
-.product-details .fa-cart-plus:hover{
-    color: #90ee90;
+.product-details main{
+    min-height: 180px;
 }
 
-.product-details .description .quantity{
-    color: darkred;
+.product-details main p{
+    font-family: 'Nunito Sans';
+    font-size: 1.4rem;
     display: inline-block;
+    word-break: break-word;
+}
+
+.product-details footer .size-box{
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    display: inline-block;
+    background: #646464;
+    color: white;
+}
+
+.product-details footer .size-box.active{
+    background: #a8a8a8;
+}
+
+.product-details footer .quantity{
+    text-align: right;
+}
+
+.product-details footer .quantity span{
+    text-decoration: line-through;
+    color: red;
+}
+
+@media screen and (max-width: 570px){
+    .product-details header i{
+        display: none;
+    }
+
+    .product-details footer .size-box{
+        margin-right: 0;
+        padding: 7px;
+    }
+
+    .product-details footer .quantity{
+        text-align: center;
+    }
 }

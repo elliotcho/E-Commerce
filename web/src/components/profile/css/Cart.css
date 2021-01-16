@@ -1,12 +1,15 @@
-.cart{
-    height: 92vh;
+.cart header{
     font-family: 'Nunito Sans';
-    position: relative;
-    overflow: auto;
+}   
+
+.cart header p{
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.cart .cart-product{
-    display: inline-block;
+.cart header p:hover{
+    text-decoration: underline;
 }
 
 .cart .items{
@@ -15,4 +18,9 @@
     border: solid #393e46 8px;
     border-radius: 11px;
     margin: 50px auto;
+}
+
+.cart-item{
+    display: inline-block;
+    text-align: center;
 }

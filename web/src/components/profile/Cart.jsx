@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { ThemeContext } from '../../contexts/ThemeContext';
+import { withRouter } from 'react-router-dom';
+import { createErrorToast } from '../../utils/createToast';
 import { loadCart, deleteFromCart } from '../../api/user';
-import Product from '../products/Product';
+import Item from './Item';
 import './css/Cart.css';
 
-const lightStyle = { backgroundColor: '#9ad3bc', color: '#3f3e3e' };
-const darkStyle = { backgroundColor: '#34626c', color: 'white' };
-
 class Cart extends Component{
-    static contextType = ThemeContext;
-
     constructor(){
         super();
 
@@ -19,6 +15,7 @@ class Cart extends Component{
 
         this.delProductInCart = this.delProductInCart.bind(this);
         this.calculateTotal = this.calculateTotal.bind(this);
+        this.toHistory = this.toHistory.bind(this);
         this.toPayment = this.toPayment.bind(this);
     }
 
@@ -46,26 +43,35 @@ class Cart extends Component{
         const { cart } = this.state;
 
         for(let i =0;i<cart.length;i++){
-            amount += cart[i].price;
+            const item = cart[i];
+            const { price, quantity } = item;
+
+            amount += price * quantity;
         }
 
         return amount;
     }
 
+    toHistory(){
+        this.props.history.push('/history');
+    }
+
     toPayment(){
+        if(this.state.cart.length === 0){
+            createErrorToast('Cart is empty');
+            return;
+        }
+
         this.props.history.push(`/payment`);
     }
 
     render(){
         const { cart } = this.state;
-        const { isDark } = this.context;
-        
-        const style = isDark? darkStyle: lightStyle;
 
         const total = this.calculateTotal();
 
         return(
-            <div className="cart" style={style}>
+            <div className='cart'>
                 <header className='text-center my-5'>
                     <h3>Your Shopping Cart </h3>
 
@@ -76,21 +82,24 @@ class Cart extends Component{
                     <button className="btn btn-lg btn-primary" onClick={this.toPayment}>
                         Continue To Payment 
                     </button>
+
+                    <p onClick={this.toHistory}>Go to History</p>
                 </header>
                 
                 <div className='items'>
-                    {cart.map(p => {
-                        const removeFromCart = () => this.delProductInCart(p._id);
+                    {cart.map(i => {
+                        const removeFromCart = () => this.delProductInCart(i._id);
 
                         return (
-                            <div key={p._id} className ='cart-product text-center'>
-                                <Product
-                                    productId = {p._id}
-                                    showFooter = {true}
-                                    removeFromCart = {removeFromCart}
-                                    image = {p.image}
-                                    name = {p.name}
-                                    price = {p.price}
+                            <div key={i._id} className ='cart-item'>
+                                <Item 
+                                    productId = {i.productId}
+                                    remove = {removeFromCart}
+                                    quantity = {i.quantity}
+                                    image = {i.image}
+                                    price = {i.price}
+                                    name = {i.name}
+                                    size = {i.size}
                                 />
                             </div>
                         )
@@ -101,4 +110,4 @@ class Cart extends Component{
     }
 }
 
-export default Cart;
+export default withRouter(Cart);

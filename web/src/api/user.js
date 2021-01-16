@@ -33,24 +33,29 @@ export const deleteProfilePic = async () => {
     return imgURL;
 }
 
-export const loadCart = async() => {
+export const loadCart = async () => {
     const config = { headers: {} };
     const response = await axios.get(`${API}/api/user/cart`, authMiddleware(config));
-    const products = response.data;
+    const cart = response.data;
 
-    for(let i=0; i <products.length; i++){
+    for(let i=0; i<cart.length; i++){
         const config = { responseType: 'blob'};
-        const route = `${API}/api/product/image/${products[i]._id}`;
+        const route = `${API}/api/product/image/${cart[i].productId}`;
 
-        if(products[i].image){
-            const result = await axios.get(route, config);
-            const imgURL = URL.createObjectURL(result.data);
-            products[i].image = imgURL;        
-        }
+        const result = await axios.get(route, config);
+        const imgURL = URL.createObjectURL(result.data);
+        
+        cart[i].image = imgURL;        
     }
 
+    cart.sort(function(a, b) {
+        if (a.name > b.name) return -1;
+        if (b.name < a.name) return 1;
+        return 0;
+    });
+
     authAfterware(response);
-    return products;
+    return cart;
 }
 
 export const deleteFromCart = async (id) => {
@@ -103,10 +108,50 @@ export const getAvgRating = async (uid = '') => {
     return avgRating;
 }
 
+export const getSales = async (uid = '') => {
+    const config = { headers: {} };
+
+    const response = await axios.get(`${API}/api/user/sales/${uid}`, authMiddleware(config));
+    const { sold } = response.data;
+
+    authAfterware(response);
+    return sold;
+}
+
 export const getHistory = async () => {
     const config = { headers: {} };
 
     const response = await axios.get(`${API}/api/user/history`, authMiddleware(config));
+    const { history, ok } = response.data;
+
+    if(ok) {
+        authAfterware(response);
+
+        for(let i=0; i<history.length; i++){
+            const config = { responseType: 'blob'};
+            const route = `${API}/api/product/image/${history[i].productId}`;
+     
+            const result = await axios.get(route, config);
+            const imgURL = URL.createObjectURL(result.data);
+            
+            history[i].image = imgURL;        
+        }
+
+        history.sort(function(a, b) {
+            if (a.datePurchased > b.datePurchased) return -1;
+            if (b.datePurchased < a.datePurchased) return 1;
+            return 0;
+        });
+    }
+
+    return history || [];
+}
+
+export const deleteHistoryItem = async (id) => {
+    const config = { headers: {} };
+
+    
+    const response = await axios.delete(`${API}/api/user/history/${id}`, authMiddleware(config));
     const { ok } = response.data;
 
     if(ok) {

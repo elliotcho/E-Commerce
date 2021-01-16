@@ -13,7 +13,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ForgotPassword from './components/auth/ForgotPassword';
 import changePassword from './components/auth/ChangePassword';
-import Cart from './components/profile/Cart';
+import ItemContainer from './components/profile/ItemContainer';
 import ProductList from './components/products/ProductList';
 import CreateProduct from './components/products/CreateProduct';
 import ProductDetails from './components/products/ProductDetails';
@@ -24,7 +24,6 @@ import AdminHome from './components/admin/AdminHome';
 import MessageCenter from './components/messages/MessageCenter';
 import PaymentForm from './components/payments/PaymentForm';
 import ReviewDetails from './components/reviews/ReviewDetails';
-import History from './components/profile/History';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -40,7 +39,8 @@ function Routes() {
             <UnauthenticatedRoute exact path='/forgot_password' component={ForgotPassword}/>
             <UnauthenticatedRoute exact path='/change_password/:token' component={changePassword}/>
             <Route exact path='/profile/:uid?' component={Profile}/>
-            <AuthenticatedRoute exact path='/cart' component={Cart}/>
+            <AuthenticatedRoute exact path='/cart' component={ItemContainer}/>
+            <AuthenticatedRoute exact path='/history' component={ItemContainer}/>
             <Route exact path='/products/:dept/:query?' component={ProductList}/>
             <Route exact path='/product/:id' component={ProductDetails}/>
             <AuthenticatedRoute exact path='/create_product' component={CreateProduct}/>
@@ -49,7 +49,6 @@ function Routes() {
             <AuthenticatedRoute exact path='/chat/:userId?' component={MessageCenter}/>
             <AuthenticatedRoute exact path='/payment' component={PaymentForm}/>
             <Route exact path='/review/:id' component={ReviewDetails}/>
-            <AuthenticatedRoute exact path='/history' component={History}/>
             <Route path='/' component={DeadPage}/> 
           </Switch>
 

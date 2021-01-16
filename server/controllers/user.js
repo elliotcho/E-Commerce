@@ -6,7 +6,7 @@ import fs from 'fs';
 import { redis } from '../app'; 
 
 import User from '../models/user';
-import { Product }  from '../models/product';
+import { Product, Size }  from '../models/product';
 import Review from '../models/review';
 import Message from '../models/message';
 
@@ -206,17 +206,34 @@ export const removeProfilePic = async (req, res) => {
 
 export const addToCart = async (req, res) => {
     if (!req.user) {
-        res.json({ msg: 'User is not authenticated' });
+        res.json({ msg: 'User is not authenticated', error: true });
     } else{
-        const { productId } = req.body;
+        let { productId, maxQuantity, quantity, size } = req.body;
 
         const user = await User.findOne({ _id: req.user._id });
-        const { cart } = user
-        
-        cart.push(productId);
+        const { cart } = user;
 
-        await User.updateOne({ _id: req.user._id }, { cart });
-        res.json({ msg: 'Cart Updated' });
+        for(let i=0;i<cart.length;i++){
+            if(cart[i].productId === productId && size === cart[i].size){
+                maxQuantity -= cart[i].quantity;
+            }
+        }
+
+        if(maxQuantity - quantity < 0) {
+            res.json({ msg: 'Invalid transaction', error: true });
+        } 
+        
+        else {
+            cart.push({
+                _id: v4(),
+                productId, 
+                quantity,
+                size
+            });
+    
+            await User.updateOne({ _id: req.user._id }, { cart });
+            res.json({ msg: 'Cart Updated', error: false });
+        }
     }
 }
 
@@ -224,13 +241,13 @@ export const deleteFromCart = async (req, res) => {
     if (!req.user) {
         res.json({ msg: 'User is not authenticated' });
     } else {
-        const { productId } = req.params;
+        const { itemId } = req.params;
 
         const user = await User.findOne({ _id: req.user._id });
         const { cart } = user;
 
         for (let i=0; i < cart.length; i++) {
-            if (productId === cart[i]) {
+            if (itemId === cart[i]._id) {
                 cart.splice(i, 1);
                 break;
             } 
@@ -252,15 +269,24 @@ export const loadCart = async (req, res) => {
         const newCart = [];
 
         for(let i=0;i<cart.length;i++){
-            const product = await Product.findOne({ _id: cart[i] });
+            const cartItem = await Product.findOne({ _id: cart[i].productId });
 
-            if(product){
-                newCart.push(product._id);
-                result.push(product);
+            if(cartItem){
+
+                newCart.push(cart[i]);
+
+                cartItem._doc._id = cart[i]._id;
+                cartItem._doc.productId = cart[i].productId;
+                cartItem._doc.quantity = cart[i].quantity;
+                cartItem._doc.size = cart[i].size;
+
+                result.push(cartItem);
+        
             }
         }
 
         await User.updateOne({ _id: req.user._id}, { cart: newCart });
+
         res.json(result);
     }
 }
@@ -272,7 +298,30 @@ export const loadHistory = async (req, res) => {
         const user = await User.findOne({ _id: req.user._id });
 
         if(user){
-            res.json({ ok: true, history: user.history });
+            const result = [];
+            const newHistory = [];
+
+            const { history } = user;
+
+            for(let i=0;i<history.length;i++){
+                const item = await Product.findOne({ _id: history[i].productId });
+    
+                if(item){
+                    newHistory.push(history[i]);
+
+                    item._doc._id = history[i]._id;
+                    item._doc.productId = history[i].productId;
+                    item._doc.datePurchased = history[i].datePurchased;
+                    item._doc.quantity = history[i].quantity;
+                    item._doc.size = history[i].size;
+    
+                    result.push(item);
+                }
+            }
+
+            await User.updateOne({ _id: req.user._id }, { history: newHistory });
+
+            res.json({ ok: true, history: result });
         } else {
             res.json({ ok: false });
         }
@@ -357,6 +406,29 @@ export const getAvgRating = async (req, res) => {
     }
 
     res.json({ avgRating });
+}
+
+export const getSales = async (req, res) => {
+    let sold = 0;
+    let userId;
+
+    if(req.params.uid){
+        userId = req.params.uid;
+    } else{
+        userId = req.user._id;
+    }
+
+    const products = await Product.find({ userId });
+
+    for(let i=0;i<products.length;i++){
+        const sizes = await Size.find({ productId: products[i]._id });
+     
+        for(let i=0;i<sizes.length;i++){
+            sold += sizes[i].sold;
+        }
+    }
+
+    res.json({ sold });
 }
 
 export const userInfo = async (req, res) => {

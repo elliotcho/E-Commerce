@@ -1,0 +1,32 @@
+.cart-modal{
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5);
+    font-family: 'Nunito Sans';
+}
+
+.cart-modal .modal-content{
+    padding: 0;
+    border: 0;
+}
+
+.cart-modal #close-edit{
+    display: none;
+}
+
+.cart-modal .modal-header{
+    background:  #34626c;
+    color: white;
+}
+
+.cart-modal .modal-body, .cart-modal .modal-footer{
+    background: beige;
+}
+
+.cart-modal .modal-footer{
+    border: 0;
+}
+
+.cart-modal button:focus{
+    outline: none;
+    box-shadow: none;
+}
