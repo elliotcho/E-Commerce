@@ -5,7 +5,6 @@
     overflow: auto;
 }
 
-
 .product-details{
     display: grid;
     grid-template-columns: 15rem auto;

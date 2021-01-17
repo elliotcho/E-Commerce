@@ -54,16 +54,16 @@ class Profile extends Component{
         
         if(uid){
             info = await getUserInfo(uid);
-            //products = await getUserProducts(uid);
-           // imgURL = await getProfilePic(uid);
-            //avgRating = await getAvgRating(uid);
-            //sales = await getSales(uid);
+            products = await getUserProducts(uid);
+            imgURL = await getProfilePic(uid);
+            avgRating = await getAvgRating(uid);
+            sales = await getSales(uid);
         } else{
-            info = await getUserInfo();
-           // products = await getUserProducts();
-           // imgURL = await getProfilePic();
-            //avgRating = await getAvgRating();
-            //sales = await getSales();
+           info = await getUserInfo();
+           products = await getUserProducts();
+           imgURL = await getProfilePic();
+           avgRating = await getAvgRating();
+           sales = await getSales();
         }
 
         this.setState({ 

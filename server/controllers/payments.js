@@ -21,7 +21,7 @@ export const createPayment = async(req, res) =>{
         let payload = {
             "sourceId": nonce,
             "amountMoney": { // amount_money = $1.00
-            "amount": total,
+            "amount": total * 100,
             "currency": "CAD"
             },
             "autoComplete": true,
@@ -89,9 +89,7 @@ export const createPayment = async(req, res) =>{
 
             res.status(500).json({
                 'title': 'Payment Failure',
-                'result': errorResult,
-                'error': true,
-                'msg': 'Failed'
+                'result': errorResult
             });
         }
     }

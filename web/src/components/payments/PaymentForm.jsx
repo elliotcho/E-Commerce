@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { ThemeContext } from '../../contexts/ThemeContext';
 import { createErrorToast } from '../../utils/createToast';
 import { sendNonce } from '../../api/payments';
 import { loadCart } from '../../api/user';
@@ -16,12 +15,7 @@ import {
     CreditCardSubmitButton
 } from 'react-square-payment-form';
 
-const lightStyle = { backgroundColor: '#becbd8' };
-const darkStyle = { backgroundColor: '#34626c' };
-
 class PaymentForm extends Component{
-    static contextType = ThemeContext;
-
     constructor(){
         super();
 
@@ -48,7 +42,11 @@ class PaymentForm extends Component{
         total += price * quantity;
       }
 
-      this.setState({ total });
+      if(parseInt(total) !== total) {
+         total = parseInt(total) + 1;
+      }
+
+      this.setState({ total: parseInt(total) });
     }
 
     async createPayment(n, b){
@@ -117,12 +115,9 @@ class PaymentForm extends Component{
 
     render(){
         const { total, fetching } = this.state;
-        const { isDark } = this.context;
-
-        const style = isDark? darkStyle: lightStyle;
-
+        
         return(
-          <div className='payment-bg' style={style}> 
+          <div className='payment-bg'> 
               <div className='payment'>
                 <header className='mb-5'>
                   <h1>Payment Page</h1>
@@ -154,7 +149,7 @@ class PaymentForm extends Component{
                       </fieldset>
               
                       <CreditCardSubmitButton>
-                          {fetching? 'Loading...' : `Pay ${total}`}
+                          {fetching? 'Loading...' : `Pay ${total}$`}
                       </CreditCardSubmitButton>
 
                       <div className="sq-error-message">

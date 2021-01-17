@@ -2,6 +2,7 @@
     height: 92vh;
     position: relative;
     font-family: 'Chakra Petch', sans-serif;
+    background:#becbd8;
     overflow: auto;
 }
 

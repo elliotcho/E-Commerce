@@ -61,7 +61,11 @@ class Cart extends Component{
             amount += price * quantity;
         }
 
-        return amount;
+        if(parseInt(amount) !== amount){
+            return parseInt(amount) + 1;
+        }
+
+        return parseInt(amount);
     }
 
     toHistory(){
