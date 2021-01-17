@@ -23,6 +23,7 @@ class ProductDetails extends Component{
         this.state = {
             product: {},
             rating: 'Loading...',
+            numOfRating: 0,
             quantity: 'Loading...',
             sizes: ['XS', 'S', 'M', 'L', 'XL'],
             sizeIdx: 0,
@@ -60,12 +61,14 @@ class ProductDetails extends Component{
 
     async getAvgRating(){
         const { id } = this.props.match.params;
+        let counter = 0;
       
         const reviews = await getReviews(id);
         let total = 0;
 
         for(let i=0;i<reviews.length;i++){
             total += parseInt(reviews[i].rating)
+            counter++;
         }
         
         let avgRating;
@@ -79,6 +82,7 @@ class ProductDetails extends Component{
         }
 
         this.setState({ rating: avgRating });
+        this.setState({ numOfRating: counter });
     }
 
     async removeProduct(){
@@ -151,7 +155,10 @@ class ProductDetails extends Component{
                         <img src={image? image: loading} alt='product pic' />
 
                          <div className='mt-3'>
-                             <p>Average Rating: {this.state.rating}</p>
+                             <i >Average Rating: {this.state.rating}</i>
+                             <br></br>
+                             <i>From {this.state.numOfRating} Users </i>
+
                              <p>Posted on {formatDate(datePosted)}</p>
                              
                              <p onClick={this.toProfile}>
