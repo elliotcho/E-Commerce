@@ -1,7 +1,7 @@
 import Department from '../models/departments'; 
 
 export const createDepartment =  async (req, res) => {
-    const {name} = req.body;
+    const { name } = req.body;
 
     const newDepartment = new Department({ name, key: name.toLowerCase() });
     const dept = await newDepartment.save();
@@ -16,9 +16,9 @@ export const getAllDepartments = async (req, res) => {
 }
 
 export const deleteDepartment = async (req, res) => {
-    const {deptId} = req.params;
+    const { deptId } = req.params;
 
-    await Department.deleteOne({_id:deptId});
+    await Department.deleteOne({ _id: deptId });
 
-    res.json({msg:'succesfully deleted'}); 
+    res.json({ msg:'succesfully deleted' }); 
 }

@@ -43,5 +43,5 @@ const ProductSchema = new mongoose.Schema({
     }
 });
 
-export const Size = mongoose.model('size', SizeSchema);
 export const Product = mongoose.model('product', ProductSchema);
+export const Size = mongoose.model('size', SizeSchema);

@@ -208,22 +208,26 @@ export const addToCart = async (req, res) => {
     if (!req.user) {
         res.json({ msg: 'User is not authenticated', error: true });
     } else{
+
         let { productId, maxQuantity, quantity, size } = req.body;
 
         const user = await User.findOne({ _id: req.user._id });
         const { cart } = user;
 
         for(let i=0;i<cart.length;i++){
-            if(cart[i].productId === productId && size === cart[i].size){
+
+            if(cart[i].productId === productId && cart[i].size === size){
+
                 maxQuantity -= cart[i].quantity;
+
             }
+
         }
 
         if(maxQuantity - quantity < 0) {
             res.json({ msg: 'Invalid transaction', error: true });
-        } 
-        
-        else {
+        } else {
+
             cart.push({
                 _id: v4(),
                 productId, 
@@ -232,8 +236,11 @@ export const addToCart = async (req, res) => {
             });
     
             await User.updateOne({ _id: req.user._id }, { cart });
+            
             res.json({ msg: 'Cart Updated', error: false });
+
         }
+
     }
 }
 
@@ -322,7 +329,9 @@ export const loadHistory = async (req, res) => {
             await User.updateOne({ _id: req.user._id }, { history: newHistory });
 
             res.json({ ok: true, history: result });
-        } else {
+        } 
+        
+        else {
             res.json({ ok: false });
         }
     }
@@ -346,7 +355,9 @@ export const removeFromHistory = async (req, res) => {
             await User.updateOne({ _id: req.user._id }, { history });
 
             res.json({ ok: true });
-        } catch (err) {
+        } 
+        
+        catch (err) {
             res.json({ ok: false });
         }
     }

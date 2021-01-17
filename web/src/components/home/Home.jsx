@@ -3,29 +3,8 @@ import { decodeUser } from '../../utils/decodeUser';
 import './css/Home.css';
 
 function Home({ history }){
-    const goToProducts = () => {
-        history.push('/products/all');
-    }
-
-    const goToMessages = () => {
-        history.push('/chat');
-    }  
-    const goToUpload = () => {
-        history.push('/create_product');
-    }
-    const goToProfile = () => {
-        history.push('/profile');
-    }
-
-
-    const goToRegister = () => {
-        history.push('/register');
-    } 
-    const goToLogin = () => {
-        history.push('/login');
-    }
-    const forgotPassword = () => {
-        history.push('/forgot_password');
+    const navigate = (route) => {
+        history.push(route);
     }
 
     const user = decodeUser();
@@ -33,14 +12,13 @@ function Home({ history }){
     return(
         <div className='home'>
             <h1>Shop across departments.</h1>
-
             <h2>Directly message sellers.</h2>
-
             <h3>Upload your products.</h3>
 
-            <div onClick={goToProducts} className="wrapper">
+            <div onClick={() => navigate('/products/all')} className="wrapper">
                 <div className="link_wrapper">
                     <a href="/products/all">Go to Products</a>
+
                     <div className="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.832 268.832">
                             <path d={`M265.17 125.577l-80-80c-4.88-4.88-12.796-4.88-17.677 0-4.882 4.882-4.882 
@@ -53,45 +31,64 @@ function Home({ history }){
                     </div>
                 </div>
             </div>
-
-            
-            {user && ( <div className='row'>
+   
+            {user && ( 
+                <div className='row'>
                 
-                <div className="hexagon-wrapper">
-                    <div className="hexagon">
-                        <i onClick={goToMessages}>Message Customers</i>
-                    </div>
-                    </div>
                     <div className="hexagon-wrapper">
-                    <div className="hexagon">
-                        <i onClick={goToUpload}>Upload a Product</i>
+                        <div className="hexagon">
+                            <i onClick={() => navigate('/chat')}>
+                                Message Customers
+                            </i>
+                        </div>
                     </div>
-                    </div>
+                    
                     <div className="hexagon-wrapper">
-                    <div className="hexagon">
-                        <i onClick={goToProfile}>Profile page</i>
-                    </div>  
-                </div>
-            </div>)}
+                        <div className="hexagon">
+                            <i onClick={() => navigate('/create_product')}>
+                                Upload a Product
+                            </i>
+                        </div>
+                    </div>
+                        
+                    <div className="hexagon-wrapper">
+                        <div className="hexagon">
+                            <i onClick={() => navigate('/profile')}>
+                                Profile page
+                            </i>
+                        </div>  
+                    </div>
 
-            {!user && ( <div className='row'>
-                
-                <div className="hexagon-wrapper">
-                    <div className="hexagon">
-                        <i onClick={goToRegister}>Create an account</i>
-                    </div>
-                    </div>
-                    <div className="hexagon-wrapper">
-                    <div className="hexagon">
-                        <i onClick={goToLogin}>Already registered?</i>
-                    </div>
-                    </div>
-                    <div className="hexagon-wrapper">
-                    <div className="hexagon">
-                        <i onClick={forgotPassword}>Forgot password?</i>
-                    </div>  
                 </div>
-            </div>)}
+            )}
+
+            {!user && ( 
+                <div className='row'>
+                    <div className="hexagon-wrapper">
+                        <div className="hexagon">
+                            <i onClick={() => navigate('/register')}>
+                                Create an account
+                            </i>
+                        </div>
+                    </div>
+                        
+                    <div className="hexagon-wrapper">
+                        <div className="hexagon">
+                            <i onClick={() => navigate('/login')}>
+                                Already registered?
+                            </i>
+                        </div>
+                    </div>
+                        
+                    <div className="hexagon-wrapper">
+                        <div className="hexagon">
+                            <i onClick={() => navigate('/forgot_password')}>
+                                Forgot password?
+                            </i>
+                        </div>  
+                    </div>
+                </div>
+            )}
             
         </div>
     )

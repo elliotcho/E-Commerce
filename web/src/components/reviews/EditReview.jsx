@@ -33,6 +33,7 @@ function EditReview(props){
 
         //edit the review and close the modal
         await editReview(reviewId, content, rating);
+        
         closeModal();
     }
 

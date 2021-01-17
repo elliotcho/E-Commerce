@@ -17,8 +17,9 @@ export const sendMessage = async (data, isImage) => {
 
     if(ok){
         authAfterware(response);
-        return msg;
     }
+
+    return msg || null;
 }
 
 export const getSidebarChats = async () => {
@@ -34,7 +35,7 @@ export const getSidebarChats = async () => {
 }
 
 export const loadMessages = async (otherUser) => {
-    const config = {headers: {'content-type': 'application/json'}};
+    const config = { headers: {'content-type': 'application/json'} };
 
     const response = await axios.post(`${API}/api/message/messages`, { otherUser }, authMiddleware(config));
     const { ok, messages } = response.data;

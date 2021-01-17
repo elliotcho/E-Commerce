@@ -14,7 +14,9 @@ function AdminHome(){
     return(
         <div className='admin' style={style}>
             <h1>Admin Home</h1>
+            
             <hr /> 
+            
             <Departments /> 
         </div>
     )

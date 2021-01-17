@@ -42,7 +42,7 @@ class ProductList extends Component {
 
         if(query){
             products = await searchProducts({ dept, query });
-        } else{
+        } else {
             products = await getProductsByDepartment(dept);
         }
 

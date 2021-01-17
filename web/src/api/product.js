@@ -11,17 +11,18 @@ export const createProduct = async (data) => {
 
     if(ok){
         authAfterware(response);
-        return product;
     }
+
+    return product || null;
 } 
 
 export const updateProductQuantity = async (productId, quantity) => {
     const config = { headers: { 'content-type' : 'application/json' } };
     const data = { productId };
     
-    let sizes = ['XS', 'S', 'M', 'L', 'XL'];
-
-    sizes.forEach(s => data[s] = quantity[s] || 0);
+    ['XS', 'S', 'M', 'L', 'XL'].forEach(s =>
+         data[s] = quantity[s] || 0
+    );
 
     const response = await axios.post(`${API}/api/product/quantity`, data, authMiddleware(config));
     const { ok } = response.data;
@@ -41,9 +42,9 @@ export const getProductsByDepartment = async (dept) => {
         const config = { responseType: 'blob'};
 
         const result = await axios.get(`${API}/api/product/image/${products[i]._id}`, config);
-        const file = result.data;
+        const imgURL = URL.createObjectURL(result.data);
         
-        products[i].image = URL.createObjectURL(file);
+        products[i].image = imgURL;
     }
 
     products.sort(function(a, b) {
@@ -65,9 +66,9 @@ export const getUserProducts = async (uid = '') => {
         const config = { responseType: 'blob'};
 
         const result = await axios.get(`${API}/api/product/image/${products[i]._id}`, config);
-        const file = result.data;
+        const imgURL = URL.createObjectURL(result.data);
         
-        products[i].image = URL.createObjectURL(file);
+        products[i].image = imgURL;
     }
 
     products.sort(function(a, b) {
@@ -100,10 +101,10 @@ export const getProductById = async (id) => {
     const { username } = userInfo.data;
 
     const result = await axios.get(`${API}/api/product/image/${id}`, {responseType: 'blob'});
-    const file = result.data;
-    
-    product.image = URL.createObjectURL(file);
+    const imgURL = URL.createObjectURL(result.data);
+
     product.username = username;
+    product.image = imgURL;
 
     return product;
 }
@@ -116,6 +117,7 @@ export const getProductQuantities = async (productId) => {
 
     for(let i=0;i<sizes.length;i++){
         const size = sizes[i];
+
         const { name, quantity } = size;
 
         cache[name] = quantity;
@@ -126,15 +128,15 @@ export const getProductQuantities = async (productId) => {
 
 export const addToUserCart = async (data) =>{
     const config = { headers: {'content-type': 'application/json'} };
-    const response = await axios.post(`${API}/api/user/cart`, data, authMiddleware(config));
 
+    const response = await axios.post(`${API}/api/user/cart`, data, authMiddleware(config));
     authAfterware(response);
 
     return response.data;
 }
 
 export const searchProducts = async (data) => {
-    const config = {headers: {'content-type': 'application/json'}};
+    const config = { headers: {'content-type': 'application/json'} };
 
     const response = await axios.post(`${API}/api/product/search`, data, config);
     const products = response.data;
@@ -143,9 +145,9 @@ export const searchProducts = async (data) => {
         const config = { responseType: 'blob'};
 
         const result = await axios.get(`${API}/api/product/image/${products[i]._id}`, config);
-        const file = result.data;
+        const imgURL = URL.createObjectURL(result.data);
         
-        products[i].image = URL.createObjectURL(file);
+        products[i].image = imgURL;
     }
 
     return products;

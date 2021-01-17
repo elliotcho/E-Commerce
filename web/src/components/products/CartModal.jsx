@@ -53,8 +53,8 @@ function CartModal({
 
                         <button 
                             id='close-cart' 
-                            data-dismiss='modal'
                             style={{display: 'none'}}
+                            data-dismiss='modal'
                         />
                     </div>
 

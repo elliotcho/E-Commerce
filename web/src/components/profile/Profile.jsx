@@ -159,18 +159,22 @@ class Profile extends Component{
                         
                     <div className='col-12 col-xl-9 d-flex user-products'>
                         {products.length !== 0 ? 
-                            products.map(p => 
-                                <Product
-                                    key = {p._id}
-                                    productId = {p._id}
-                                    image = {p.image}
-                                    name = {p.name}
-                                    price = {p.price}
-                                />
+                            (
+                                products.map(p => 
+                                    <Product
+                                        key = {p._id}
+                                        productId = {p._id}
+                                        image = {p.image}
+                                        name = {p.name}
+                                        price = {p.price}
+                                    />
+                                )
                             ) :
-                            <h3>
-                                No products posted
-                            </h3>
+                            (
+                                <h3>
+                                    No products posted
+                                </h3>
+                            )
                         }
                     </div>
                 </main>

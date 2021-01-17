@@ -179,13 +179,12 @@ class ProductDetails extends Component{
                         <footer className='mt-4'>
                             <div>        
                                 {this.state.sizes.map((size, i) =>  {
+                                    const onClick = () => this.updateSize(i);
                                     let className = 'size-box';
 
                                     if(this.state.sizeIdx === i){
                                         className += ' active';
                                     }
-
-                                    const onClick = () => this.updateSize(i);
 
                                     return (
                                         <div key={i} className={className} onClick={onClick}>
@@ -203,9 +202,7 @@ class ProductDetails extends Component{
                                 )}
                                
                                 {this.state.quantity === 0 && (
-                                    <p>
-                                        <span>Quantity: 0</span>
-                                    </p>
+                                    <p><span>Quantity: 0</span></p>
                                 )}
                             </div>
                         </footer>

@@ -79,7 +79,7 @@ class Cart extends Component{
 
     render(){
         const { cart } = this.state;
-
+        
         const total = this.calculateTotal();
 
         return(
@@ -95,7 +95,9 @@ class Cart extends Component{
                         Continue To Payment 
                     </button>
 
-                    <p onClick={this.toHistory}>Go to History</p>
+                    <p onClick={this.toHistory}>
+                        Go to History
+                    </p>
                 </header>
                 
                 <div className='items'>

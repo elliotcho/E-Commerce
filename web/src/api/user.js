@@ -35,10 +35,13 @@ export const deleteProfilePic = async () => {
 
 export const loadCart = async () => {
     const config = { headers: {} };
+
     const response = await axios.get(`${API}/api/user/cart`, authMiddleware(config));
     const { cart, ok } = response.data;
 
     if(ok){
+        authAfterware(response);
+
         for(let i=0; i<cart.length; i++){
             const config = { responseType: 'blob'};
             const route = `${API}/api/product/image/${cart[i].productId}`;
@@ -55,8 +58,6 @@ export const loadCart = async () => {
             return 0;
         });
     }
-
-    authAfterware(response);
 
     return cart || [];
 }
@@ -153,7 +154,6 @@ export const getHistory = async () => {
 export const deleteHistoryItem = async (id) => {
     const config = { headers: {} };
 
-    
     const response = await axios.delete(`${API}/api/user/history/${id}`, authMiddleware(config));
     const { ok } = response.data;
 
@@ -166,7 +166,6 @@ export const deleteHistoryItem = async (id) => {
 
 export const clearHistory = async () => {
     const config = { headers: {} };
-
     
     const response = await axios.delete(`${API}/api/user/history`, authMiddleware(config));
     const { ok } = response.data;

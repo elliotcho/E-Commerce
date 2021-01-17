@@ -52,13 +52,11 @@ function ReviewDetails({ match: { params : { id } }, history }){
     }
 
     const { isDark } = useContext(ThemeContext);
-    let style;
+    let style = lightStyle;
 
     if(isDark){
         style = darkStyle;
-    } else{
-        style = lightStyle;
-    }
+    } 
 
     return(
         <div className='review-details' style={style}>

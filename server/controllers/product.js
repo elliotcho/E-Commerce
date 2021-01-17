@@ -69,8 +69,8 @@ export const setProductQuantity = async (req, res) => {
 }
 
 export const deleteProduct = async (req, res) => {
-    const {id} = req.params;
-    const product = await Product.findOne({ _id : id});
+    const { id } = req.params;
+    const product = await Product.findOne({ _id : id });
 
     if(req.user && product.userId !== req.user._id){
         res.json({msg: 'not authenticated'});
@@ -125,7 +125,9 @@ export const getProductsByDepartment = async (req, res) => {
         const { _id } = department;
 
         products = await Product.find({ departmentId : _id });
-    } else{
+    } 
+    
+    else{
         products = await Product.find({});
     }
 

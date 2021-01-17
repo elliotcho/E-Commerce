@@ -12,7 +12,9 @@ export const createPayment = async(req, res) =>{
         res.status(500).json({
             'result': { msg: 'Not authenticated' }
         });
-    } else {
+    } 
+    
+    else {
         const { total, nonce, uuid } = req.body;
         const { paymentsApi } = client;
 
@@ -51,13 +53,15 @@ export const createPayment = async(req, res) =>{
                         'msg' : msg
                     });
 
-                } else {
-                    const newData = {
-                        quantity: remaining - quantity,
-                        sold: sold + quantity
-                    };
+                } 
+                
+                else {
+                    const newData = { quantity: remaining - quantity, sold: sold + quantity };
 
-                    await Size.updateOne( { productId, name: size } , newData);
+                    await Size.updateOne( 
+                        { productId, name: size } , 
+                        newData
+                    );
                 }
 
                 history.push({ ...cart[i], datePurchased });
@@ -72,7 +76,9 @@ export const createPayment = async(req, res) =>{
                 'msg': 'Success'
             });
 
-        } catch (error) {
+        } 
+        
+        catch (error) {
             let errorResult = null;
 
             if( error instanceof ApiError){

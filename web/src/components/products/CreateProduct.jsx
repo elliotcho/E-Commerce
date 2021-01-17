@@ -125,7 +125,6 @@ class CreateProduct extends Component {
                         placeholder = 'Product description'
                         onChange = {this.changeField}
                     />
-
                     
                     <input
                         type = 'file'

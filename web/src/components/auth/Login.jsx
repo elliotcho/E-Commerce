@@ -30,7 +30,7 @@ class Login extends Component{
 
         const { username, password } = this.state;
         
-        const userResponse = await login({username, password});
+        const userResponse = await login({ username, password });
         const { user } = userResponse;
 
         if(user){
@@ -38,7 +38,7 @@ class Login extends Component{
         } 
         
         else{
-            this.setState({errors: userResponse.errors});
+            this.setState({ errors: userResponse.errors });
         }
     }
 

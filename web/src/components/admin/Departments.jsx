@@ -44,16 +44,20 @@ class Departments extends Component{
                 <DepartmentForm />
 
                 <div className='departments mt-4'>
-                    {departments.map((d, i) =>
-                        <div key ={i} className='dept p-3'>
-                            {d.name}
+                    {departments.map((d, i) => {
+                        const onClick = () => this.deleteDepartment(d._id);
+                        const className = 'ml-2 fas fa-trash-alt';
 
-                            <i 
-                                className='ml-2 fas fa-trash-alt' 
-                                onClick={() => this.deleteDepartment(d._id)}
-                            />
-                        </div>
-                    )}
+                        return (
+                            <div key ={i} className='dept p-3'>
+                                {d.name}
+
+                                <span>
+                                    <i className={className} onClick={onClick}/>
+                                </span>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         )

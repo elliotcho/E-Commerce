@@ -1,6 +1,6 @@
 .create-product {
-    position: relative;
     height: 92vh;
+    position: relative;
     overflow: auto;
 }
 

@@ -11,10 +11,7 @@ function DeadPage(props){
     return(
         <div className= 'dead-page text-center'> 
             <h1 className='mt-5'>404</h1>
-
-            <p>
-                The Page You're Looking For Does Not Exist
-            </p>
+            <p>The Page You're Looking For Does Not Exist</p>
 
             <i className = "fas fa-unlink mt-2"/>
 
