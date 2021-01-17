@@ -1,7 +1,7 @@
 <h1>E-Commerce</h1>
 
 <hr>
-E-Commerce is a full stack web application where people post products, buy products, 
+Full stack web application where people post products, buy products, 
 and connect with customers using the website's own built-in messaging platform. 
 Users can review products and post their thoughts about the said product.
 Users can also directly message sellers to negotiate prices and quantities, which is convenient for bulk orders. 
